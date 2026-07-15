@@ -1,0 +1,10 @@
+{
+  "name": "astrology-website-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ./backend run dev",
+    "build": "npm --prefix ./backend run build",
+    "start": "npm --prefix ./backend run start"
+  }
+}

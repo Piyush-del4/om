@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Environment & secrets — NEVER commit
+.env
+.env.*
+!.env.example
+
+# Private keys
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# Build output
+dist/
+build/
+out/
+.next/
+*.tsbuildinfo
+
+# Logs & coverage
+*.log
+npm-debug.log*
+coverage/
+
+# OS noise
+.DS_Store
+Thumbs.db

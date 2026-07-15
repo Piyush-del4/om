@@ -1,0 +1,32 @@
+{
+	"servers": {
+		"mongodb": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mongodb-mcp-server",
+				"--readOnly"
+			],
+			"env": {
+				"MDB_MCP_CONNECTION_STRING": "mongodb+srv://piyushpandey:<db_password>@namami.zzpaisf.mongodb.net/?appName=namami"
+			},
+			"type": "stdio"
+		},
+		"open-design": {
+			"command": "od",
+			"args": [
+				"mcp",
+				"--daemon-url",
+				"http://127.0.0.1:7456"
+			],
+			"type": "stdio"
+		}
+	},
+	"inputs": [
+		{
+			"id": "connection_string",
+			"type": "promptString",
+			"description": "MongoDB connection string"
+		}
+	]
+}
