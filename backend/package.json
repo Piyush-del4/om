@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@sentry/node": "^8.54.0",
+    "@sentry/node": "^10.65.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.10.0",
     "cookie-parser": "^1.4.7",
@@ -28,7 +28,7 @@
     "mongoose": "^8.12.0",
     "morgan": "^1.10.0",
     "multer": "^2.1.1",
-    "nodemailer": "^6.9.13",
+    "nodemailer": "^9.0.3",
     "razorpay": "^2.9.6",
     "winston": "^3.12.0",
     "zod": "^3.24.2"

@@ -1,4 +1,4 @@
-import { google } from 'googleapis';
+const { google } = require('googleapis');
 import { env } from '../config/env';
 import { logger } from '../utils/logger';
 
