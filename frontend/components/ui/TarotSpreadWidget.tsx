@@ -33,6 +33,12 @@ const MAJOR_ARCANA = [
   { name: 'The World', num: 21, meaning: 'Completion, travel, integration, absolute harmony.', reverse: 'Incomplete goals, delays, shortcuts.' }
 ];
 
+function getRandomCard(availableIndices: number[]): { randomIndex: number; isReversed: boolean } {
+  const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+  const isReversed = Math.random() < 0.25;
+  return { randomIndex, isReversed };
+}
+
 interface DrawnCard {
   slotId: number;
   cardIndex: number; // Index in MAJOR_ARCANA
@@ -88,8 +94,7 @@ export function TarotSpreadWidget({ onSuitChange, activeSuit }: TarotSpreadWidge
 
     if (availableIndices.length === 0) return;
 
-    const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
-    const isReversed = Math.random() < 0.25; // 25% chance of card reversal
+    const { randomIndex, isReversed } = getRandomCard(availableIndices);
 
     const newDraw = {
       slotId,
