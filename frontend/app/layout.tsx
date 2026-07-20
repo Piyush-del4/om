@@ -26,6 +26,11 @@ export const metadata: Metadata = {
   description:
     'Expert occult science consultations: Vedic Astrology, Numerology name correction, Tarot card readings, and Graphotherapy. Book a 1-on-1 session with master consultants.',
   keywords: ['astrology', 'numerology', 'tarot', 'graphology', 'vedic astrology', 'occult science', 'horoscope', 'graphotherapy'],
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/favicon.ico',
+    apple: '/apple-icon.png',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
