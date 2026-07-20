@@ -58,8 +58,8 @@ export default function RaajeshProfilePage() {
             <GoldCard theme="dark" flush className="border border-amber-600/30 relative overflow-hidden bg-white">
               <div className="w-full aspect-square relative overflow-hidden bg-white flex items-end justify-center">
                 <img 
-                  src="/images/team_raajesh.png" 
-                  alt="Raajesh S Panday" 
+                  src={member?.image || '/images/team_raajesh.png'} 
+                  alt={member?.name || 'Raajesh S Panday'} 
                   className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-102"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />

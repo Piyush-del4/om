@@ -57,8 +57,8 @@ export default function KusumProfilePage() {
             <GoldCard theme="dark" flush className="border border-rose-600/30 relative overflow-hidden bg-white">
               <div className="w-full aspect-square relative overflow-hidden bg-white flex items-end justify-center">
                 <img 
-                  src="/images/team_kusum.png" 
-                  alt="Kusum Panday" 
+                  src={member?.image || '/images/team_kusum.png'} 
+                  alt={member?.name || 'Kusum Panday'} 
                   className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-102"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
