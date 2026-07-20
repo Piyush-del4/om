@@ -11,6 +11,7 @@ import { GoldButton } from '@/components/ui/GoldButton';
 import { ArrowLeft, Clock, Compass, Phone, MessageSquare, AlertCircle, Calendar, CheckSquare } from 'lucide-react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { env } from '@/lib/env';
+import { FormattedText } from '@/components/ui/FormattedText';
 
 export default function AppointmentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -189,25 +190,33 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
           
           {/* Details Section */}
           <div className="lg:col-span-7 space-y-6">
+            {appType.imageUrl && (
+              <div className="w-full rounded-2xl overflow-hidden border border-neutral-800/80 bg-neutral-900/10">
+                <img 
+                  src={appType.imageUrl} 
+                  alt={appType.name} 
+                  className="w-full h-auto max-h-[360px] object-cover object-center transition-all duration-700"
+                />
+              </div>
+            )}
+
             <div className="space-y-2">
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+              <h1 className="font-sans text-[40px] sm:text-[46px] font-bold tracking-tight text-white leading-tight">
                 {appType.name}
               </h1>
               <div className="flex items-center gap-2 pt-1">
                 <span className="bg-[var(--gold-100)] border border-[var(--gold-200)] text-[var(--gold)] text-[10px] uppercase font-mono tracking-widest px-2.5 py-0.5 rounded-full">
                   {appType.category}
                 </span>
-                <span className="text-gray-500 text-xs font-mono flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-[var(--gold)]" /> {appType.duration} mins Session
+                <span className="text-gray-300 text-sm font-sans flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-[var(--gold)]" /> {appType.duration} mins Session
                 </span>
               </div>
             </div>
 
             <div className="space-y-4 text-gray-300 text-sm leading-relaxed font-light">
               {appType.description ? (
-                appType.description.split('\n').map((para: string, idx: number) => (
-                  <p key={idx}>{para}</p>
-                ))
+                <FormattedText text={appType.description} />
               ) : (
                 <p>Get deep, authentic clarity and direction with this personalized consultation session. Includes comprehensive planetary matching and alchemical remedies.</p>
               )}
@@ -227,11 +236,11 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
                 <div className="space-y-1">
                   <span className="text-gray-500 text-xs font-mono">Vibrational Exchange</span>
                   <div className="flex items-baseline gap-3">
-                    <span className="text-3xl font-bold font-mono text-[var(--gold)]">
+                    <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
                       ₹{(priceVal / 100).toLocaleString()}
                     </span>
                     {hasActiveOffer && (
-                      <span className="text-neutral-500 line-through text-lg font-mono">
+                      <span className="text-neutral-500 line-through text-[28px] font-sans">
                         ₹{(appType.price / 100).toLocaleString()}
                       </span>
                     )}
@@ -309,7 +318,7 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
                               key={slot}
                               type="button"
                               onClick={() => setSelectedTimeSlot(slot)}
-                              className={`py-2 px-3 text-[10px] border rounded-lg transition-all duration-300 font-medium ${
+                              className={`py-2 px-3 text-sm font-sans border rounded-lg transition-all duration-300 font-medium ${
                                 isSelected
                                   ? 'bg-[var(--gold)] text-black border-transparent shadow-[0_0_10px_rgba(204,143,51,0.3)]'
                                   : 'bg-black/40 text-[var(--gold)] border-[var(--gold-200)] hover:bg-[var(--gold-50)]'

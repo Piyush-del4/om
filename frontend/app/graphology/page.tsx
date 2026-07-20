@@ -57,7 +57,6 @@ export default function GraphologyPage() {
             <GoldCard flush theme="dark" className="w-full min-h-[240px] flex-grow transition-spring">
               <div className="relative w-full h-full overflow-hidden">
                 <img src="/images/step_analyze_realistic.png" alt="Graphology Analysis" className="w-full h-full object-cover group-hover:scale-105 transition-spring duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               </div>
             </GoldCard>
           </div>

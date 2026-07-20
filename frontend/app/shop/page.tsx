@@ -12,6 +12,8 @@ import { ShoppingBag, Search, ShoppingCart, Package } from 'lucide-react';
 import { ShopItemSkeleton } from '@/components/ui/Skeleton';
 import { CountdownTimer } from '@/components/shop/CountdownTimer';
 
+import { FormattedText } from '@/components/ui/FormattedText';
+
 export default function ShopPage() {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
@@ -125,14 +127,14 @@ export default function ShopPage() {
                     )}
                     <div className="p-6 flex-grow space-y-2">
                       <div className="flex justify-between items-start gap-2">
-                        <h3 className="font-serif text-lg font-bold text-white transition-colors group-hover:text-[var(--gold)]">{item.title}</h3>
+                        <h3 className="font-sans text-[28px] font-bold text-white transition-colors group-hover:text-[var(--gold)]">{item.title}</h3>
                         {item.inStock !== false && item.stockCount !== undefined && item.stockCount > 0 && item.stockCount < 5 && (
                           <span className="bg-orange-950/40 border border-orange-900/30 text-orange-400 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded whitespace-nowrap">
                             Only {item.stockCount} left
                           </span>
                         )}
                       </div>
-                      <p className="text-gray-400 text-xs leading-relaxed font-light line-clamp-3">{item.description}</p>
+                      <FormattedText text={item.description} className="text-gray-400 text-xs leading-relaxed font-light line-clamp-3" />
                     </div>
                   </div>
                   <div className="p-6 pt-4 border-t border-neutral-800/60 flex items-center justify-between">
@@ -140,10 +142,10 @@ export default function ShopPage() {
                       {hasActiveOffer ? (
                         <>
                           <div className="flex items-baseline gap-2">
-                            <span className="text-[var(--gold)] font-bold text-lg font-mono">
+                            <span className="text-[var(--gold)] font-bold text-[28px] font-sans">
                               ₹{(item.offerPrice / 100).toLocaleString()}
                             </span>
-                            <span className="text-neutral-500 line-through text-xs font-mono">
+                            <span className="text-neutral-500 line-through text-[22px] font-sans">
                               ₹{(item.price / 100).toLocaleString()}
                             </span>
                           </div>
@@ -154,7 +156,7 @@ export default function ShopPage() {
                           )}
                         </>
                       ) : (
-                        <span className="text-[var(--gold)] font-bold text-lg font-mono">
+                        <span className="text-[var(--gold)] font-bold text-[28px] font-sans">
                           ₹{(item.price / 100).toLocaleString()}
                         </span>
                       )}

@@ -72,7 +72,6 @@ export default function CorporateNumerologyPage() {
             <div className="absolute inset-0 bg-[var(--gold)]/10 rounded-2xl blur-xl group-hover:bg-[var(--gold)]/20 transition-all duration-500"></div>
             <GoldCard flush theme="dark" className="border border-[var(--gold-200)] flex-1 overflow-hidden min-h-[240px]">
               <img src="/images/corporate_numerology_realistic.png" alt="Corporate Numerology Chart" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             </GoldCard>
           </div>
         </div>

@@ -16,6 +16,10 @@ export const createAppointmentTypeSchema = z.object({
     .string()
     .optional()
     .default(''),
+  imageUrl: z
+    .string()
+    .optional()
+    .default(''),
   category: z.enum(['Astrology', 'Numerology', 'Tarot Card', 'Graphology'], {
     required_error: 'Category is required',
   }),

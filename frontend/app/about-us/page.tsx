@@ -12,6 +12,7 @@ import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/api/client';
+import { FormattedText } from '@/components/ui/FormattedText';
 
 // Map icon string names from the DB to actual Lucide components
 const iconMap: Record<string, React.ReactNode> = {
@@ -239,7 +240,9 @@ export default function AboutUsPage() {
 
               <div className="h-0.5 w-12 bg-[var(--gold)]" />
 
-              <p className="text-gray-300 text-base leading-relaxed">{member.description}</p>
+              <div className="text-gray-300 text-base leading-relaxed font-bold">
+                <FormattedText text={member.description} />
+              </div>
 
 
               {/* Rating stars */}

@@ -333,13 +333,14 @@ export async function listAppointmentTypes(req: Request, res: Response, next: Ne
 
 export async function createAppointmentType(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { name, price, duration, description, category, specialOfferTitle, offerPrice, offerExpiresAt } = req.body;
+    const { name, price, duration, description, imageUrl, category, specialOfferTitle, offerPrice, offerExpiresAt } = req.body;
 
     const newType = await AppointmentType.create({
       name,
       price,
       duration,
       description: description || '',
+      imageUrl: imageUrl || '',
       category,
       specialOfferTitle: specialOfferTitle || '',
       offerPrice: offerPrice !== undefined ? offerPrice : undefined,
@@ -389,7 +390,7 @@ export async function deleteAppointmentType(req: Request, res: Response, next: N
 export async function updateAppointmentType(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const { id } = req.params;
-    const { name, price, duration, description, category, specialOfferTitle, offerPrice, offerExpiresAt } = req.body;
+    const { name, price, duration, description, imageUrl, category, specialOfferTitle, offerPrice, offerExpiresAt } = req.body;
 
     const appType = await AppointmentType.findById(id);
     if (!appType) {
@@ -407,6 +408,7 @@ export async function updateAppointmentType(req: Request, res: Response, next: N
     if (price !== undefined) appType.price = price;
     if (duration !== undefined) appType.duration = duration;
     if (description !== undefined) appType.description = description;
+    if (imageUrl !== undefined) appType.imageUrl = imageUrl;
     if (category !== undefined) appType.category = category;
     if (specialOfferTitle !== undefined) appType.specialOfferTitle = specialOfferTitle;
     if (offerPrice !== undefined) appType.offerPrice = offerPrice === null ? undefined : offerPrice;

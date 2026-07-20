@@ -5,6 +5,7 @@ export interface IAppointmentType extends Document {
   price: number; // in paise
   duration: number; // in minutes
   description?: string;
+  imageUrl?: string;
   category: 'Astrology' | 'Numerology' | 'Tarot Card' | 'Graphology';
   specialOfferTitle?: string;
   offerPrice?: number;
@@ -20,6 +21,7 @@ const AppointmentTypeSchema = new Schema<IAppointmentType>(
     price: { type: Number, required: true, min: 0 },
     duration: { type: Number, required: true, min: 5 },
     description: { type: String, default: '' },
+    imageUrl: { type: String, default: '' },
     category: {
       type: String,
       required: true,

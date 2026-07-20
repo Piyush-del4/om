@@ -10,6 +10,7 @@ import { GoldButton } from '@/components/ui/GoldButton';
 import { BookOpen, Play, FileText, GraduationCap, ChevronDown, PlusCircle, ArrowLeft, Bell } from 'lucide-react';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { FormattedText } from '@/components/ui/FormattedText';
 
 export default function BatchDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -171,8 +172,8 @@ export default function BatchDetailPage({ params }: { params: Promise<{ id: stri
                       {selectedBatch.category || 'Academy'} Batch
                     </span>
                   </div>
-                  <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white">{selectedBatch.title}</h2>
-                  <p className="text-gray-400 text-xs sm:text-sm font-light leading-relaxed">{selectedBatch.description}</p>
+                  <h2 className="font-sans text-[34px] sm:text-[40px] font-bold text-white">{selectedBatch.title}</h2>
+                  <FormattedText text={selectedBatch.description} className="text-gray-400 text-xs sm:text-sm font-light leading-relaxed" />
                 </div>
               </div>
 
@@ -235,8 +236,8 @@ export default function BatchDetailPage({ params }: { params: Promise<{ id: stri
                       <GoldCard key={lec._id} theme="dark" className="transition-spring hover:border-[var(--gold)]">
                         <div className="space-y-4 flex flex-col justify-between h-full min-h-[140px]">
                           <div>
-                            <h4 className="font-serif text-base font-bold text-white line-clamp-1">{lec.title}</h4>
-                            <p className="text-gray-400 text-[11px] mt-2 line-clamp-2 font-light leading-relaxed">{lec.description}</p>
+                            <h4 className="font-sans text-base font-bold text-white line-clamp-1">{lec.title}</h4>
+                            <FormattedText text={lec.description} className="text-gray-400 text-[11px] mt-2 line-clamp-2 font-light leading-relaxed" />
                           </div>
                           <div className="flex items-center justify-between pt-3 border-t border-neutral-800/60">
                             <span className="text-[10px] text-gray-500 font-mono">Duration: {lec.duration || 'N/A'} mins</span>

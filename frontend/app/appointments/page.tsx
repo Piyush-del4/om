@@ -10,6 +10,7 @@ import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { Calendar, Clock, Plus, Compass, Star, ChevronRight, Phone, MessageSquare, AlertCircle, CheckCircle2, Award } from 'lucide-react';
 import { env } from '@/lib/env';
+import { FormattedText } from '@/components/ui/FormattedText';
 
 export default function AppointmentsPage() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -225,7 +226,7 @@ export default function AppointmentsPage() {
                             )}
                           </div>
   
-                          <p className="text-gray-300 text-xs leading-relaxed line-clamp-2 font-light">{member.description}</p>
+                          <FormattedText text={member.description} className="text-gray-300 text-xs leading-relaxed line-clamp-2 font-bold" />
                         </div>
                         <div className="border-t border-neutral-800 pt-3 flex justify-between items-center">
                           <span className="text-[var(--gold)] text-xs font-bold uppercase font-mono">Premium Consultations</span>
@@ -268,19 +269,19 @@ export default function AppointmentsPage() {
                           <span className="bg-neutral-900 border border-neutral-800 text-gray-400 text-[9px] uppercase font-mono tracking-widest px-2.5 py-0.5 rounded-full">
                             {type.category}
                           </span>
-                          <span className="text-gray-500 text-[10px] font-mono flex items-center gap-1">
-                            <Clock className="w-3 h-3 text-[var(--gold)]" /> {type.duration} mins
+                          <span className="text-gray-300 text-xs font-sans flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5 text-[var(--gold)]" /> {type.duration} mins
                           </span>
                         </div>
-                        <h3 className="font-serif text-base font-bold text-white group-hover:text-[var(--gold)] transition-colors line-clamp-1">{type.name}</h3>
-                        <p className="text-gray-400 text-xs line-clamp-3 leading-relaxed font-light">{type.description || 'Consultation details and custom alchemical remedy selections.'}</p>
+                        <h3 className="font-sans text-[26px] font-bold text-white group-hover:text-[var(--gold)] transition-colors line-clamp-1">{type.name}</h3>
+                        <FormattedText text={type.description || 'Consultation details and custom alchemical remedy selections.'} className="text-gray-400 text-xs line-clamp-3 leading-relaxed font-light" />
                       </div>
                       <div className="space-y-3 border-t border-neutral-900 pt-4 mt-6">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-baseline gap-1.5 flex-wrap">
-                            <span className="text-[var(--gold)] font-bold text-sm">₹{(priceVal / 100).toLocaleString()}</span>
+                          <div className="flex items-baseline gap-1.5 flex-wrap font-sans">
+                            <span className="text-[var(--gold)] font-bold text-[24px]">₹{(priceVal / 100).toLocaleString()}</span>
                             {hasActiveOffer && (
-                              <span className="text-gray-500 line-through text-[10px] font-mono">₹{(originalPriceVal / 100).toLocaleString()}</span>
+                              <span className="text-gray-500 line-through text-[20px]">₹{(originalPriceVal / 100).toLocaleString()}</span>
                             )}
                           </div>
                           <span className="text-[var(--gold)] font-medium text-xs flex items-center gap-0.5 group-hover:underline">

@@ -9,7 +9,7 @@ import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import {
   Users, Plus, Trash2, Pencil, X, Save, ArrowLeft,
-  Star, Award, Loader2, RefreshCw, ChevronDown, ChevronUp,
+  Star, Award, Loader2, RefreshCw, ChevronDown, ChevronUp, Upload,
 } from 'lucide-react';
 
 
@@ -52,6 +52,30 @@ export default function AdminTeamPage() {
   const [editingId, setEditingId] = useState<string | null>(null); // null = not editing, 'new' = creating new
   const [form, setForm] = useState({ ...BLANK_FORM });
   const [seedMsg, setSeedMsg] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('folder', 'team');
+
+    try {
+      const res = await client.post('/uploads', formData);
+      if (res.data?.success) {
+        setForm(prev => ({ ...prev, image: res.data.data.url }));
+      } else {
+        alert('Upload failed');
+      }
+    } catch (err: any) {
+      alert(err.response?.data?.error?.message || 'Failed to upload image');
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   // Auth guard
   React.useEffect(() => {
@@ -75,6 +99,7 @@ export default function AdminTeamPage() {
     onSuccess: (res) => {
       setSeedMsg(`✅ Seeded ${res.data?.data?.length ?? 0} team members successfully!`);
       queryClient.invalidateQueries({ queryKey: ['admin-team'] });
+      queryClient.invalidateQueries({ queryKey: ['team'] });
     },
     onError: (err: any) => {
       const msg = err.response?.data?.error?.message || 'Seed failed';
@@ -88,6 +113,7 @@ export default function AdminTeamPage() {
       client.patch(`/team/${id}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-team'] });
+      queryClient.invalidateQueries({ queryKey: ['team'] });
       setEditingId(null);
     },
     onError: (err: any) => alert(`❌ ${err.response?.data?.error?.message || 'Update failed'}`),
@@ -98,6 +124,7 @@ export default function AdminTeamPage() {
     mutationFn: (data: typeof form) => client.post('/team', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-team'] });
+      queryClient.invalidateQueries({ queryKey: ['team'] });
       setEditingId(null);
       setForm({ ...BLANK_FORM });
     },
@@ -107,7 +134,10 @@ export default function AdminTeamPage() {
   // Delete (soft) mutation
   const deleteMutation = useMutation({
     mutationFn: (id: string) => client.delete(`/team/${id}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-team'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-team'] });
+      queryClient.invalidateQueries({ queryKey: ['team'] });
+    },
     onError: (err: any) => alert(`❌ ${err.response?.data?.error?.message || 'Delete failed'}`),
   });
 
@@ -225,7 +255,7 @@ export default function AdminTeamPage() {
                 <input
                   value={form.name}
                   onChange={e => setForm({ ...form, name: e.target.value })}
-                  placeholder="e.g. Raajesh S. Panday"
+                  placeholder="e.g. Raajesh S Panday"
                   className="w-full bg-black/60 border border-neutral-700 focus:border-[var(--gold)] rounded-lg py-2.5 px-3 text-white text-xs outline-none"
                 />
               </div>
@@ -265,15 +295,38 @@ export default function AdminTeamPage() {
                 />
               </div>
 
-              {/* Photo URL */}
+              {/* Photo Upload */}
               <div className="sm:col-span-2 space-y-1.5">
-                <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-400">Photo URL</label>
-                <input
-                  value={form.image}
-                  onChange={e => setForm({ ...form, image: e.target.value })}
-                  placeholder="/images/team_raajesh.png or full URL"
-                  className="w-full bg-black/60 border border-neutral-700 focus:border-[var(--gold)] rounded-lg py-2.5 px-3 text-white text-xs outline-none"
-                />
+                <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-400">Photo</label>
+                {form.image ? (
+                  <div className="relative border border-neutral-700 rounded-lg p-2.5 bg-black/40 flex items-center gap-3">
+                    <img src={form.image} alt="Team preview" className="w-12 h-12 object-cover rounded-lg border border-neutral-800" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[9px] text-gray-500 truncate font-mono">{form.image}</p>
+                      <button
+                        type="button"
+                        onClick={() => setForm(prev => ({ ...prev, image: '' }))}
+                        className="text-[9px] text-red-400 hover:text-red-300 font-semibold block mt-0.5"
+                      >
+                        Remove Photo
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="relative border border-dashed border-neutral-700 hover:border-[var(--gold)] rounded-lg p-4 flex flex-col items-center justify-center bg-black/40 transition-colors cursor-pointer group">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      disabled={isUploading}
+                    />
+                    <Upload className="w-6 h-6 text-gray-500 group-hover:text-[var(--gold)] transition-colors mb-1.5" />
+                    <span className="text-[10px] text-gray-550 group-hover:text-white transition-colors">
+                      {isUploading ? 'Uploading image...' : 'Click to Upload Image'}
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Image Fit */}

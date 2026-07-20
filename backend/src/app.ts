@@ -1,4 +1,11 @@
 import express from 'express';
+// Bypass strict SSL checking for local development network/antivirus interference
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// Suppress the insecure TLS warning in local console
+process.on('warning', (warning) => {
+  if (warning.message.includes('NODE_TLS_REJECT_UNAUTHORIZED')) return;
+  console.warn(warning.stack);
+});
 import helmet from 'helmet';
 import cors from 'cors';
 import { mongoSanitize } from './middleware/mongoSanitize';

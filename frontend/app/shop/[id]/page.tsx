@@ -12,6 +12,8 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { CountdownTimer } from '@/components/shop/CountdownTimer';
 import { useRouter } from 'next/navigation';
 
+import { FormattedText } from '@/components/ui/FormattedText';
+
 export default function ShopItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const { id } = resolvedParams;
@@ -132,7 +134,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
           {/* Text Info Section */}
           <div className="md:col-span-7 space-y-6">
             <div className="space-y-2">
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+              <h1 className="font-sans text-[40px] sm:text-[46px] font-bold tracking-tight text-white leading-tight">
                 {item.title}
               </h1>
               <div className="flex items-center gap-2 pt-1">
@@ -166,10 +168,10 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
                     <div className="flex items-baseline gap-3 flex-wrap">
                       {hasActiveOffer ? (
                         <>
-                          <span className="text-3xl sm:text-4xl font-bold font-mono text-[var(--gold)]">
+                          <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
                             ₹{(item.offerPrice / 100).toLocaleString()}
                           </span>
-                          <span className="text-neutral-500 line-through text-lg font-mono">
+                          <span className="text-neutral-500 line-through text-[28px] font-sans">
                             ₹{(item.price / 100).toLocaleString()}
                           </span>
                           {item.specialOfferTitle && (
@@ -179,7 +181,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
                           )}
                         </>
                       ) : (
-                        <span className="text-3xl sm:text-4xl font-bold font-mono text-[var(--gold)]">
+                        <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
                           ₹{(item.price / 100).toLocaleString()}
                         </span>
                       )}
@@ -250,11 +252,9 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
               <h3 className="font-serif text-lg font-bold text-[var(--gold)] flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[var(--gold)]" /> Sacred Description
               </h3>
-              <div className="text-gray-300 text-sm leading-relaxed font-light space-y-4">
+              <div className="text-gray-300 text-sm leading-relaxed font-light">
                 {item.description ? (
-                  item.description.split('\n').map((para: string, idx: number) => (
-                    <p key={idx}>{para}</p>
-                  ))
+                  <FormattedText text={item.description} />
                 ) : (
                   <p>No description provided for this alchemical tool.</p>
                 )}

@@ -62,7 +62,6 @@ export default function NameCorrectionPage() {
                   alt="Name Correction Alignment" 
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
               </div>
             </GoldCard>
           </motion.div>

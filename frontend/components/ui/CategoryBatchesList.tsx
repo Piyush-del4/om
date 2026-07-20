@@ -10,6 +10,7 @@ import { GraduationCap, Lock, Key, Check } from 'lucide-react';
 import { GoldButton } from './GoldButton';
 import { GoldCard } from './GoldCard';
 import { BatchCardSkeleton } from './Skeleton';
+import { FormattedText } from './FormattedText';
 
 interface CategoryBatchesListProps {
   category: 'Astrology' | 'Numerology' | 'Tarot Card' | 'Graphology';
@@ -87,15 +88,15 @@ export function CategoryBatchesList({ category }: CategoryBatchesListProps) {
                   </div>
                 )}
                 <div className="space-y-2">
-                  <h5 className="font-serif text-base font-bold text-white transition-colors hover:text-[var(--gold)]">{batch.title}</h5>
-                  <p className="text-gray-400 text-xs leading-relaxed line-clamp-3 font-light">{batch.description}</p>
+                  <h5 className="font-sans text-[26px] font-bold text-white transition-colors hover:text-[var(--gold)]">{batch.title}</h5>
+                  <FormattedText text={batch.description} className="text-gray-400 text-xs leading-relaxed line-clamp-3 font-light" />
                 </div>
               </Link>
 
-              <div className="mt-6 pt-4 border-t border-neutral-800 space-y-4">
+              <div className="mt-6 pt-4 border-t border-neutral-800 space-y-4 font-sans">
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-gray-500">Course Value:</span>
-                  <span className="text-[var(--gold)] font-bold text-base">₹{(batch.price / 100).toLocaleString()}</span>
+                  <span className="text-[var(--gold)] font-bold text-[26px]">₹{(batch.price / 100).toLocaleString()}</span>
                 </div>
 
                 {isEnrolled ? (

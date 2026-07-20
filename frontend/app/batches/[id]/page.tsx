@@ -12,6 +12,7 @@ import { ArrowLeft, GraduationCap, Compass, Sparkles, CheckCircle2, ShieldAlert 
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { CountdownTimer } from '@/components/shop/CountdownTimer';
 import { env } from '@/lib/env';
+import { FormattedText } from '@/components/ui/FormattedText';
 
 export default function PublicBatchDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -159,11 +160,10 @@ export default function PublicBatchDetailPage({ params }: { params: Promise<{ id
               </div>
             </GoldCard>
           </div>
-
           {/* Text and Actions Section */}
           <div className="md:col-span-7 space-y-6">
             <div className="space-y-2">
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+              <h1 className="font-sans text-[40px] sm:text-[46px] font-bold tracking-tight text-white leading-tight">
                 {batch.title}
               </h1>
               <div className="flex items-center gap-2 pt-1">
@@ -191,10 +191,10 @@ export default function PublicBatchDetailPage({ params }: { params: Promise<{ id
                     <div className="flex items-baseline gap-3 flex-wrap">
                       {hasActiveOffer ? (
                         <>
-                          <span className="text-3xl sm:text-4xl font-bold font-mono text-[var(--gold)]">
+                          <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
                             ₹{(batch.offerPrice / 100).toLocaleString()}
                           </span>
-                          <span className="text-neutral-500 line-through text-lg font-mono">
+                          <span className="text-neutral-500 line-through text-[28px] font-sans">
                             ₹{(batch.price / 100).toLocaleString()}
                           </span>
                           {batch.specialOfferTitle && (
@@ -204,7 +204,7 @@ export default function PublicBatchDetailPage({ params }: { params: Promise<{ id
                           )}
                         </>
                       ) : (
-                        <span className="text-3xl sm:text-4xl font-bold font-mono text-[var(--gold)]">
+                        <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
                           ₹{(batch.price / 100).toLocaleString()}
                         </span>
                       )}
@@ -268,11 +268,9 @@ export default function PublicBatchDetailPage({ params }: { params: Promise<{ id
               <h3 className="font-serif text-lg font-bold text-[var(--gold)] flex items-center gap-2">
                 <Compass className="w-4 h-4 text-[var(--gold)]" /> Course Syllabus & Details
               </h3>
-              <div className="text-gray-300 text-sm leading-relaxed font-light space-y-4">
+              <div className="text-gray-300 text-sm leading-relaxed font-light">
                 {batch.description ? (
-                  batch.description.split('\n').map((para: string, idx: number) => (
-                    <p key={idx}>{para}</p>
-                  ))
+                  <FormattedText text={batch.description} />
                 ) : (
                   <p>No description or syllabus details provided for this study course.</p>
                 )}

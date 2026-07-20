@@ -9,7 +9,7 @@ import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import {
   Calendar, Plus, Trash2, Clock, CheckCircle, XCircle,
-  ArrowLeft, Pencil, X, BanIcon, ShieldAlert,
+  ArrowLeft, Pencil, X, BanIcon, ShieldAlert, Upload,
 } from 'lucide-react';
 
 // ── IST time helpers ────────────────────────────────────────────────────────
@@ -79,6 +79,34 @@ export default function AdminAppointmentsPage() {
   const [offerPriceInRupees, setOfferPriceInRupees] = useState('');
   const [offerExpiresAt, setOfferExpiresAt] = useState('');
   const [description, setDescription] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('folder', 'appointments');
+
+    try {
+      const res = await client.post('/uploads', formData);
+      if (res.data?.success) {
+        setImageUrl(res.data.data.url);
+      } else {
+        setErrorMsg('Upload failed');
+      }
+    } catch (err: any) {
+      setErrorMsg(err.response?.data?.error?.message || 'Failed to upload image');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const [category, setCategory] = useState('Astrology');
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -208,6 +236,7 @@ export default function AdminAppointmentsPage() {
     setOfferPriceInRupees(type.offerPrice ? (type.offerPrice / 100).toString() : '');
     setOfferExpiresAt(type.offerExpiresAt ? new Date(type.offerExpiresAt).toISOString().substring(0, 16) : '');
     setDescription(type.description || '');
+    setImageUrl(type.imageUrl || '');
     setCategory(type.category || 'Astrology');
     setErrorMsg('');
     setSuccessMsg('');
@@ -222,6 +251,7 @@ export default function AdminAppointmentsPage() {
     setOfferPriceInRupees('');
     setOfferExpiresAt('');
     setDescription('');
+    setImageUrl('');
     setCategory('Astrology');
     setErrorMsg('');
     setSuccessMsg('');
@@ -237,6 +267,7 @@ export default function AdminAppointmentsPage() {
       price: pricePaise,
       duration: parseInt(duration),
       description,
+      imageUrl: imageUrl || '',
       category,
       specialOfferTitle: specialOfferTitle || undefined,
       offerPrice: offerPricePaise ?? null,
@@ -365,6 +396,39 @@ export default function AdminAppointmentsPage() {
                 </div>
 
                 <div className="space-y-1">
+                  <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-300">Appointment Image (Optional)</label>
+                  {imageUrl ? (
+                    <div className="relative border border-[var(--gold-100)] rounded-lg p-2.5 bg-black/40 flex items-center gap-3">
+                      <img src={imageUrl} alt="Uploaded preview" className="w-12 h-10 object-cover rounded-lg border border-neutral-800" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[9px] text-gray-400 truncate font-mono">{imageUrl}</p>
+                        <button
+                          type="button"
+                          onClick={() => setImageUrl('')}
+                          className="text-[9px] text-red-400 hover:text-red-300 font-semibold block mt-0.5"
+                        >
+                          Remove Image
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="relative border border-dashed border-[var(--gold-100)] hover:border-[var(--gold)] rounded-lg p-4 flex flex-col items-center justify-center bg-black/40 transition-colors cursor-pointer group">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        disabled={isUploading}
+                      />
+                      <Upload className="w-6 h-6 text-gray-400 group-hover:text-[var(--gold)] transition-colors mb-1.5" />
+                      <span className="text-[10px] text-gray-400 group-hover:text-white transition-colors">
+                        {isUploading ? 'Uploading image...' : 'Click to Upload Image'}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-1">
                   <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-300">Description</label>
                   <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Provide consultation summary details..." rows={3} className="w-full bg-black/60 border border-[var(--gold-100)] rounded-lg py-2 px-3 text-white text-xs focus:outline-none focus:ring-1 focus:ring-[var(--gold)]" />
                 </div>
@@ -406,7 +470,7 @@ export default function AdminAppointmentsPage() {
                               {type.category || 'Astrology'}
                             </span>
                           </div>
-                          <p className="text-[10px] text-gray-400 mt-0.5">{type.duration} mins · ₹{(type.price / 100).toLocaleString()}</p>
+                          <p className="text-[10px] text-gray-400 mt-0.5">{type.duration} mins · ₹{(type.price / 100).toLocaleString()}{type.imageUrl ? ' · 🖼️ Image Added' : ''}</p>
                           {type.specialOfferTitle && (
                             <p className="text-[9px] text-amber-400 mt-0.5">🏷 {type.specialOfferTitle}{type.offerPrice ? ` · ₹${(type.offerPrice / 100).toLocaleString()}` : ''}</p>
                           )}

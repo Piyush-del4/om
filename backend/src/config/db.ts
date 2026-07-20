@@ -29,32 +29,11 @@ async function seedDefaultAppointmentTypes(): Promise<void> {
     const { AppointmentType } = require('../modules/appointments/appointmentType.model');
     const defaults = [
       {
-        name: 'Happy Profession & Career Guidance',
-        category: 'Astrology',
-        price: 150000, // in paise
-        duration: 45,
-        description: 'Specialized Vedic career chart reading mapping D1/D9 charts, Amatyakaraka placement, and dasha timelines for career growth.',
-      },
-      {
-        name: 'Lucky Mobile Number Consultation',
-        category: 'Numerology',
-        price: 110000, // in paise
-        duration: 30,
-        description: 'Find your lucky mobile number aligned with your Driver/Conductor numbers to attract positive digital vibrations.',
-      },
-      {
         name: 'Corporate Numerology Consultation',
         category: 'Numerology',
         price: 310000, // in paise
         duration: 60,
         description: 'Corporate branding, spelling total optimization for company name, logo matching, and lucky incorporation date selection.',
-      },
-      {
-        name: 'Marriage Matching Consultation',
-        category: 'Astrology',
-        price: 180000, // in paise
-        duration: 45,
-        description: 'Kundali Matching (Ashta Koota Milan) with deep 36 Gunas analysis, Manglik Dosha compatibility, and relationship longevity remedies.',
       },
     ];
 

@@ -13,6 +13,7 @@ import { GoldButton } from '../components/ui/GoldButton';
 import { GoldCard } from '../components/ui/GoldCard';
 import { CosmicHeroBackground } from '../components/ui/CosmicHeroBackground';
 import { BatchCardSkeleton, ShopItemSkeleton } from '../components/ui/Skeleton';
+import { FormattedText } from '../components/ui/FormattedText';
 
 const testimonials = [
   {
@@ -125,6 +126,15 @@ export default function Home() {
     queryKey: ['public-batches'],
     queryFn: async () => {
       const res = await client.get('/batches');
+      return res.data?.data || [];
+    },
+  });
+
+  // Fetch team members
+  const { data: teamMembers = [] } = useQuery({
+    queryKey: ['team'],
+    queryFn: async () => {
+      const res = await client.get('/team');
       return res.data?.data || [];
     },
   });
@@ -314,6 +324,8 @@ export default function Home() {
       icon: <PenTool className="w-12 h-12 text-[var(--gold)]" />,
       link: '/graphology',
       image: '/images/step_analyze_realistic.png',
+      tagline: 'Sign करें ✍️ , Shine करें ✨...',
+      taglineSize: '24px',
     },
     {
       title: 'Happy Profession & Career Guidance',
@@ -438,7 +450,6 @@ export default function Home() {
                 <GoldCard flush className="h-full flex flex-col items-center text-center justify-between min-h-[400px] border border-[var(--gold-100)] relative group">
                   <div className="w-full h-48 relative overflow-hidden">
                     <img src={svc.image} alt={svc.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-black/60 to-black/55"></div>
                     {/* Golden tagline overlay — only for cards that have one */}
                     {(svc as any).tagline && (
                       <div className="absolute top-0 inset-x-0 flex items-start justify-center pt-4 px-4 z-10">
@@ -517,19 +528,19 @@ export default function Home() {
                         )}
                         <div className="px-6 space-y-2">
                           <div className="flex items-center justify-between gap-2">
-                            <h3 className="font-serif text-base font-bold text-white truncate">{batch.title}</h3>
+                            <h3 className="font-sans text-[26px] font-bold text-white truncate">{batch.title}</h3>
                             <span className="text-[9px] bg-neutral-800 text-[var(--gold)] border border-[var(--gold-100)] rounded-full px-1.5 py-0.5 whitespace-nowrap">
                               {batch.category || 'Astrology'}
                             </span>
                           </div>
-                          <p className="text-gray-400 text-xs leading-relaxed line-clamp-3">{batch.description}</p>
+                          <FormattedText text={batch.description} className="text-gray-400 text-xs leading-relaxed line-clamp-3" />
                         </div>
                       </div>
 
                       <div className="p-6 pt-0 mt-6 border-t border-neutral-800 space-y-3">
                         <div className="flex justify-between items-center pt-3">
                           <span className="text-gray-500 text-xs">Course Fee:</span>
-                          <span className="text-[var(--gold)] font-bold text-base">₹{(batch.price / 100).toLocaleString()}</span>
+                          <span className="text-[var(--gold)] font-bold text-[26px] font-sans">₹{(batch.price / 100).toLocaleString()}</span>
                         </div>
                         {isAuthenticated ? (
                           <Link href="/my-batches" className="block w-full">
@@ -613,13 +624,13 @@ export default function Home() {
                           </div>
                         )}
                         <div className="px-6 space-y-2">
-                          <h3 className="font-serif text-base font-bold text-white group-hover:text-[var(--gold)] transition-colors truncate">{item.title}</h3>
-                          <p className="text-gray-400 text-xs leading-relaxed line-clamp-3">{item.description}</p>
+                          <h3 className="font-sans text-[26px] font-bold text-white group-hover:text-[var(--gold)] transition-colors truncate">{item.title}</h3>
+                          <FormattedText text={item.description} className="text-gray-400 text-xs leading-relaxed line-clamp-3" />
                         </div>
                       </div>
 
                       <div className="p-6 pt-0 mt-6 border-t border-neutral-800 flex items-center justify-between pt-4" onClick={(e) => e.stopPropagation()}>
-                        <span className="text-[var(--gold)] font-bold text-base">₹{(item.price / 100).toLocaleString()}</span>
+                        <span className="text-[var(--gold)] font-bold text-[26px] font-sans">₹{(item.price / 100).toLocaleString()}</span>
                         <GoldButton
                           variant="filled"
                           className="py-1.5 px-4 text-xs flex items-center gap-1.5"
@@ -844,9 +855,10 @@ export default function Home() {
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
         className="relative z-10 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40 overflow-hidden">
-        
+
         {/* Style Tag for Marquee keyframes */}
-        <style dangerouslySetInnerHTML={{ __html: `
+        <style dangerouslySetInnerHTML={{
+          __html: `
           @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -1017,7 +1029,7 @@ export default function Home() {
                   const now = new Date();
                   const hasActiveOffer = type.offerPrice !== undefined && type.offerPrice !== null &&
                     (!type.offerExpiresAt || now < new Date(type.offerExpiresAt));
-                  const priceText = hasActiveOffer 
+                  const priceText = hasActiveOffer
                     ? `₹${(type.offerPrice / 100).toLocaleString()} (Special Offer! Original ₹${(type.price / 100).toLocaleString()})`
                     : `₹${(type.price / 100).toLocaleString()}`;
                   return (
@@ -1070,11 +1082,10 @@ export default function Home() {
                               key={slot}
                               type="button"
                               onClick={() => setSelectedTimeSlot(slot)}
-                              className={`py-2 px-3 text-xs border rounded-lg transition-all duration-300 font-medium ${
-                                isSelected
+                              className={`py-2 px-3 text-xs border rounded-lg transition-all duration-300 font-medium ${isSelected
                                   ? 'bg-[var(--gold)] text-black border-transparent shadow-[0_0_10px_rgba(204,143,51,0.5)]'
                                   : 'bg-black/40 text-[var(--gold)] border-[var(--gold-200)] hover:bg-[var(--gold-50)]'
-                              }`}
+                                }`}
                             >
                               {timeStr}
                             </button>
@@ -1147,11 +1158,14 @@ export default function Home() {
 
         {/* Team preview cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-          {[
-            { name: 'Raajesh S. Panday', role: 'Founder & Chief Consultant', img: '/images/team_raajesh.png', initials: 'RP' },
-            { name: 'Kusum Panday', role: 'Tarot Reader & Wellness Coach', img: '/images/team_kusum.png', initials: 'KP' },
-            { name: 'Aayush Kumar', role: 'Social Media Manager', img: '/images/team_aayush.png', initials: 'AK' },
-          ].map((member, idx) => (
+          {(teamMembers && teamMembers.length > 0
+            ? teamMembers.slice(0, 3).map((m: any) => ({ name: m.name, role: m.role, img: m.image }))
+            : [
+                { name: 'Raajesh S Panday', role: 'Founder & Chief Consultant', img: '/images/team_raajesh.png' },
+                { name: 'Kusum Panday', role: 'Tarot Reader & Wellness Coach', img: '/images/team_kusum.png' },
+                { name: 'Aayush Kumar', role: 'Social Media Manager', img: '/images/team_aayush.png' },
+              ]
+          ).map((member: any, idx: number) => (
             <motion.div
               key={member.name}
               initial={{ opacity: 0, y: 30 }}
@@ -1168,8 +1182,8 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 inset-x-0 p-4">
-                    <h3 className="font-serif text-base font-bold text-white">{member.name}</h3>
-                    <p className="text-[var(--gold)] text-[10px] font-semibold uppercase tracking-wider mt-0.5">{member.role}</p>
+                    <h3 className="font-serif text-xl font-bold" style={{ color: 'white', fontSize: '22px' }}>{member.name}</h3>
+                    <p className="text-xs font-semibold uppercase tracking-wider mt-0.5" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>{member.role}</p>
                   </div>
                 </div>
               </GoldCard>

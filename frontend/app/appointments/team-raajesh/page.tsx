@@ -7,6 +7,7 @@ import { MessageSquare, ArrowLeft, Star, Phone, Award, Loader2 } from 'lucide-re
 import { GoldCard } from '@/components/ui/GoldCard';
 import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/api/client';
+import { FormattedText } from '@/components/ui/FormattedText';
 
 export default function RaajeshProfilePage() {
   const { data: team = [], isLoading } = useQuery({
@@ -89,9 +90,9 @@ export default function RaajeshProfilePage() {
               </div>
             </div>
 
-            <p className="text-gray-300 text-sm md:text-base leading-relaxed font-light">
-              {description}
-            </p>
+            <div className="text-gray-300 text-sm md:text-base leading-relaxed font-bold">
+              <FormattedText text={description} />
+            </div>
 
 
             <div className="space-y-3 pt-2">

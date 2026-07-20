@@ -12,6 +12,7 @@ import { GraduationCap, Search, ArrowLeft, CheckCircle, Compass } from 'lucide-r
 import { BatchCardSkeleton } from '@/components/ui/Skeleton';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { CountdownTimer } from '@/components/shop/CountdownTimer';
+import { FormattedText } from '@/components/ui/FormattedText';
 
 export default function JoinBatchPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -160,29 +161,27 @@ export default function JoinBatchPage() {
                         </span>
                         <div className="flex flex-col items-end">
                           {hasActiveOffer ? (
-                            <div className="flex items-baseline gap-1.5">
-                              <span className="text-[var(--gold)] font-bold text-sm font-mono">
+                            <div className="flex items-baseline gap-1.5 font-sans">
+                              <span className="text-[var(--gold)] font-bold text-[24px]">
                                   ₹{(batch.offerPrice / 100).toLocaleString()}
                               </span>
-                              <span className="text-neutral-500 line-through text-[10px] font-mono">
+                              <span className="text-neutral-500 line-through text-[20px]">
                                 ₹{(batch.price / 100).toLocaleString()}
                               </span>
                             </div>
                           ) : (
-                            <span className="text-[var(--gold)] font-bold text-sm font-mono">
+                            <span className="text-[var(--gold)] font-bold text-[24px] font-sans">
                               ₹{(batch.price / 100).toLocaleString()}
                             </span>
                           )}
                         </div>
                       </div>
                       
-                      <h3 className="font-serif text-lg font-bold text-white transition-colors group-hover:text-[var(--gold)] line-clamp-1">
+                      <h3 className="font-sans text-[28px] font-bold text-white transition-colors group-hover:text-[var(--gold)] line-clamp-1">
                         {batch.title}
                       </h3>
                       
-                      <p className="text-gray-400 text-xs leading-relaxed font-light line-clamp-3">
-                        {batch.description}
-                      </p>
+                      <FormattedText text={batch.description} className="text-gray-400 text-xs leading-relaxed font-light line-clamp-3" />
                     </div>
                   </Link>
 

@@ -157,7 +157,7 @@ export function CategoryBookingWidget({ category, serviceName }: CategoryBooking
         <div className="inline-flex p-2.5 rounded-full bg-[var(--gold-50)] border border-[var(--gold-200)]">
           <Calendar className="w-6 h-6 text-[var(--gold)]" />
         </div>
-        <h3 className="font-serif text-xl md:text-2xl font-bold tracking-wide">Book {serviceName || `${category} Consultation`}</h3>
+        <h3 className="font-sans text-[30px] md:text-[34px] font-bold tracking-wide">Book {serviceName || `${category} Consultation`}</h3>
         <p className="text-gray-400 text-xs">
           Select your consultation type, date and preferred slot dynamically synced with Google Calendar.
         </p>
@@ -240,7 +240,7 @@ export function CategoryBookingWidget({ category, serviceName }: CategoryBooking
                           key={slot}
                           type="button"
                           onClick={() => setSelectedTimeSlot(slot)}
-                          className={`py-2 px-3 text-xs border rounded-lg transition-all duration-300 font-medium ${
+                          className={`py-2 px-3 text-sm font-sans border rounded-lg transition-all duration-300 font-medium ${
                             isSelected
                               ? 'bg-[var(--gold)] text-black border-transparent shadow-[0_0_10px_rgba(204,143,51,0.5)]'
                               : 'bg-black/40 text-[var(--gold)] border-[var(--gold-200)] hover:bg-[var(--gold-50)]'
