@@ -82,8 +82,9 @@ export function CategoryBookingWidget({ category, serviceName }: CategoryBooking
       return res.data?.data;
     },
     onSuccess: async (data: any) => {
+      console.log('Booking mutation success data:', data);
       // Free appointment — confirmed immediately
-      if (!data.paymentRequired) {
+      if (!data || !data.paymentRequired) {
         alert('🎉 Consultation booked successfully! A confirmation email and Google Calendar event have been created.');
         resetForm();
         return;

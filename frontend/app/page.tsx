@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -108,6 +108,10 @@ export default function Home() {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    document.title = 'OM Astrology AMC — Occult Science & Astrology Consultations';
+  }, []);
 
   // Booking states
   const [selectedTypeId, setSelectedTypeId] = useState('');
@@ -358,7 +362,6 @@ export default function Home() {
   return (
     <div className="relative sacred-geometry-bg radial-mesh-bg min-h-screen bg-black overflow-hidden flex flex-col text-white">
       {/* SEO head tags */}
-      {typeof document !== 'undefined' && (() => { document.title = 'OM Astrology AMC — Occult Science & Astrology Consultations'; return null; })()}
       {/* Background sacred geometry SVG lines */}
       <motion.div style={{ y: bgParallaxY }} className="absolute inset-0 z-0 opacity-10 flex items-center justify-center pointer-events-none">
         <svg viewBox="0 0 100 100" className="w-[80vw] h-[80vw] animate-spin-slow">
@@ -392,11 +395,11 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
-            <a href="#book">
+            <Link href="/appointments">
               <GoldButton variant="filled" className="px-8 py-3 text-base">
                 Book a Consultation
               </GoldButton>
-            </a>
+            </Link>
             <Link href="/shop">
               <GoldButton variant="outlined" className="px-8 py-3 text-base">
                 Explore Shop Items
