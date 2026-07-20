@@ -13,17 +13,28 @@ interface CategoryBookingWidgetProps {
   category: 'Astrology' | 'Numerology' | 'Tarot Card' | 'Graphology';
   serviceName?: string;
 }
+
+const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
  
 export function CategoryBookingWidget({ category, serviceName }: CategoryBookingWidgetProps) {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
  
   // Booking states
   const [selectedTypeId, setSelectedTypeId] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   const [bookingMessage, setBookingMessage] = useState('');
- 
+
+
   // Fetch appointment types filtered by category and optionally by service name
   const { data: appointmentTypes, isLoading: isLoadingTypes } = useQuery({
     queryKey: ['appointmentTypes', category, serviceName],
@@ -63,24 +74,71 @@ export function CategoryBookingWidget({ category, serviceName }: CategoryBooking
       if (!selectedTypeId || !selectedTimeSlot) {
         throw new Error('Please select type and time slot');
       }
-      return client.post('/appointments', {
+      const res = await client.post('/appointments', {
         appointmentTypeId: selectedTypeId,
         scheduledAt: selectedTimeSlot,
         message: bookingMessage,
       });
+      return res.data?.data;
     },
-    onSuccess: () => {
-      alert('🎉 Consultation booked successfully! A confirmation email and Google Calendar event have been created.');
-      setSelectedTypeId('');
-      setSelectedDate('');
-      setSelectedTimeSlot('');
-      setBookingMessage('');
+    onSuccess: async (data: any) => {
+      // Free appointment — confirmed immediately
+      if (!data.paymentRequired) {
+        alert('🎉 Consultation booked successfully! A confirmation email and Google Calendar event have been created.');
+        resetForm();
+        return;
+      }
+
+      // Paid appointment — open Razorpay checkout
+      const loaded = await loadRazorpayScript();
+      if (!loaded) {
+        alert('Failed to load payment gateway. Please check your connection.');
+        return;
+      }
+
+      const options = {
+        key: data.key || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency || 'INR',
+        name: 'OM Astrology AMC',
+        description: `Consultation: ${selectedType?.name || category + ' Consultation'}`,
+        order_id: data.razorpayOrderId,
+        handler: async (response: any) => {
+          try {
+            await client.post('/appointments/verify', {
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+            });
+            resetForm();
+            alert('🎉 Payment successful! Your consultation slot has been confirmed. Check your email for the Google Meet link.');
+          } catch (err: any) {
+            alert('Payment verification failed. Please contact support with your payment ID.');
+          }
+        },
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+          contact: user?.phone || '',
+        },
+        theme: { color: '#cc8f33' },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
     },
     onError: (err: any) => {
       const msg = err.response?.data?.error?.message || err.message || 'Booking failed';
       alert(`❌ Error: ${msg}`);
     },
   });
+
+  const resetForm = () => {
+    setSelectedTypeId('');
+    setSelectedDate('');
+    setSelectedTimeSlot('');
+    setBookingMessage('');
+  };
 
   const handleBookSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,11 +182,17 @@ export function CategoryBookingWidget({ category, serviceName }: CategoryBooking
               className="w-full bg-black/60 border border-[var(--gold-200)] rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent text-xs"
             >
               <option value="">-- Choose a {category.toLowerCase()} service --</option>
-              {appointmentTypes.map((type: any) => (
-                <option key={type._id} value={type._id}>
-                  {type.name} - {type.duration} mins (₹{(type.price / 100).toLocaleString()})
-                </option>
-              ))}
+              {appointmentTypes.map((type: any) => {
+                const now = new Date();
+                const hasActiveOffer = type.offerPrice !== undefined && type.offerPrice !== null &&
+                  (!type.offerExpiresAt || now < new Date(type.offerExpiresAt));
+                const displayPrice = hasActiveOffer ? type.offerPrice : type.price;
+                return (
+                  <option key={type._id} value={type._id}>
+                    {type.name} - {type.duration} mins (₹{(displayPrice / 100).toLocaleString()})
+                  </option>
+                );
+              })}
             </select>
           ) : (
             <p className="text-gray-500 text-xs py-2">No {category} consultations available at this moment.</p>

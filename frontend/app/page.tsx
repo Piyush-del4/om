@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useAuth } from '../auth/AuthProvider';
 import { client } from '../lib/api/client';
+import { env } from '../lib/env';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Compass, Hash, Layers, PenTool, Calendar, Check, AlertCircle, ShoppingCart, Star, Quote, HelpCircle, Brain, Briefcase, PhoneCall, Building2, Heart } from 'lucide-react';
 import { GoldButton } from '../components/ui/GoldButton';
@@ -105,7 +106,7 @@ export default function Home() {
   const { scrollY } = useScroll();
   const bgParallaxY = useTransform(scrollY, [0, 800], [0, 120]);
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const queryClient = useQueryClient();
 
   // Booking states
@@ -184,22 +185,78 @@ export default function Home() {
     enabled: !!selectedDate && !!selectedType,
   });
 
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if ((window as any).Razorpay) { resolve(true); return; }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   // Booking mutation
   const bookingMutation = useMutation({
     mutationFn: async () => {
       if (!selectedTypeId || !selectedTimeSlot) {
         throw new Error('Please select type and time slot');
       }
-      return client.post('/appointments', {
+      const res = await client.post('/appointments', {
         appointmentTypeId: selectedTypeId,
         scheduledAt: selectedTimeSlot,
       });
+      return res.data?.data;
     },
-    onSuccess: () => {
-      alert('🎉 Consultation booked successfully! A confirmation email and Google Calendar event have been created.');
-      setSelectedTypeId('');
-      setSelectedDate('');
-      setSelectedTimeSlot('');
+    onSuccess: async (data: any) => {
+      // Free appointment — confirmed immediately
+      if (!data.paymentRequired) {
+        alert('🎉 Consultation booked successfully! A confirmation email and Google Calendar event have been created.');
+        setSelectedTypeId('');
+        setSelectedDate('');
+        setSelectedTimeSlot('');
+        return;
+      }
+
+      // Paid appointment — open Razorpay checkout
+      const loaded = await loadRazorpayScript();
+      if (!loaded) {
+        alert('Failed to load payment gateway. Please check your connection.');
+        return;
+      }
+
+      const options = {
+        key: data.key || env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency || 'INR',
+        name: 'OM Astrology AMC',
+        description: `Consultation: ${selectedType?.name || 'Appointment'}`,
+        order_id: data.razorpayOrderId,
+        handler: async (response: any) => {
+          try {
+            await client.post('/appointments/verify', {
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+            });
+            setSelectedTypeId('');
+            setSelectedDate('');
+            setSelectedTimeSlot('');
+            alert('🎉 Payment successful! Your consultation slot has been confirmed.');
+          } catch (err: any) {
+            alert('Payment verification failed. Please contact support.');
+          }
+        },
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+          contact: user?.phone || '',
+        },
+        theme: { color: '#cc8f33' },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
     },
     onError: (err: any) => {
       const msg = err.response?.data?.error?.message || err.message || 'Booking failed';
