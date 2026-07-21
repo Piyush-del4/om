@@ -312,6 +312,7 @@ html:not(.dark) .bg-black\/75 {
 }
 
 html:not(.dark) .bg-black\/60,
+html:not(.dark) .bg-black\/50,
 html:not(.dark) .bg-black\/40 {
   background-color: rgba(255, 255, 255, 0.6) !important;
   color: #111111 !important;
@@ -547,5 +548,49 @@ html:not(.dark) .testimonial-marquee-fade::after {
   background: linear-gradient(to left, var(--background, #fafafa), transparent) !important;
 }
 
+/* ── Print Media Optimization & Clean Page Formatting ── */
+@media print {
+  @page {
+    margin: 8mm 6mm;
+    size: A4 portrait;
+  }
 
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Prevent sections, tables, charts, and cards from splitting mid-page */
+  div, section, table, tr, figure, .pdf-page-break-avoid {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Hide navigation, site footer, and interactive elements */
+  nav, 
+  footer, 
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Ensure report header and page 1 start immediately on page 1 */
+  #report-pdf-content,
+  #report-pdf-content > div:first-child {
+    page-break-before: avoid !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .report-header-print {
+    position: relative;
+    top: 0;
+    display: block !important;
+  }
+}

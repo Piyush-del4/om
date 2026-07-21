@@ -6,6 +6,7 @@ import { PhoneCall, Star, HelpCircle, ShieldCheck, Hash, Info } from 'lucide-rea
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackground';
+import { FAQSection } from '../../components/ui/FAQSection';
 
 export default function LuckyMobilePage() {
   const numberVibrations = [
@@ -21,10 +22,17 @@ export default function LuckyMobilePage() {
     { combination: 'Aggressive 9s', title: 'Anger & Frictional Communication', desc: 'Repeated 9s (like 999) can increase short-temperedness, arguments, and accident risks.' },
   ];
 
-  const FAQs = [
-    { q: 'Why is a mobile number important in numerology?', a: 'Your mobile number is the most frequently vibrating digital identifier in your life today. It is constantly receiving electromagnetic sound waves and vibrations, which directly influence your thought patterns, customer calls, and financial flows.' },
-    { q: 'How do you calculate the mobile number total?', a: 'You sum all 10 digits of your phone number. For example, if your number is 9876543210, the sum is 45. Add 4 + 5 to get a single digit of 9. We check both this total and the internal doublets (combinations).' },
-    { q: 'Should my mobile total match my birth date?', a: 'Yes. The total and internal combinations must be compatible with your Driver Number (Mulank - day of birth) and Conductor Number (Bhagyank - total birth date sum) to avoid blocks.' },
+  const MOBILE_FAQS = [
+    { q: 'Why does my mobile number matter in numerology?', a: 'Your mobile number is your primary digital identity. It constantly emits an electromagnetic frequency every time you make or receive a call. This frequency interacts with your aura, attracting either positive opportunities or persistent obstacles.' },
+    { q: 'What makes a mobile number "lucky" or "unlucky"?', a: 'A number is lucky if its total sum and internal digit combinations harmonize with your birth date (Driver and Conductor numbers). It is unlucky if it forms hostile combinations that block your specific life path.' },
+    { q: 'How do you calculate the numerological value of a mobile number?', a: 'Add all 10 digits together until you get a single digit (e.g., a total of 45 becomes 4+5 = 9). We also analyze pairs (e.g., 84, 27) which act as micro-vibrations.' },
+    { q: 'What if I cannot change my current mobile number?', a: 'If your number is strictly tied to banking or old clients, you can keep it for incoming calls but use a new lucky number for outgoing calls and new business. However, replacing it entirely is highly recommended.' },
+    { q: 'Does a lucky mobile number guarantee success?', a: 'It guarantees that the "frictional resistance" in your communication and network will be removed. It acts as an accelerator, but you must still put in the required effort and hard work.' },
+    { q: 'Are some numbers universally bad, like 4 or 8?', a: 'In mobile numerology, totals of 4 and 8 are generally avoided because they bring delays, struggles, and sudden losses. However, there are very rare exceptions depending on a person’s exact birth chart.' },
+    { q: 'Should I match my mobile number to my Life Path or Destiny number?', a: 'Yes. The single-digit total of your mobile number should ideally be a friendly number to both your Driver (birth day) and Conductor (total birth date sum) numbers.' },
+    { q: 'Does the country code (+91, +1) count in the calculation?', a: 'No. The country code represents the geographic location and applies to millions of people. Only your unique 10-digit mobile number is used for personal calculation.' },
+    { q: 'Is it better to have repeating digits like 999 or 777?', a: 'Not necessarily. While vanity numbers look good, repeating the same number amplifies its extreme qualities. For example, too many 9s can cause anger issues, and too many 2s can cause emotional instability.' },
+    { q: 'How quickly will I see changes after switching to a lucky number?', a: 'Most people start noticing a shift in the quality of calls, better networking opportunities, and reduced daily friction within 40 to 90 days of actively using the new number.' }
   ];
 
   return (
@@ -118,18 +126,8 @@ export default function LuckyMobilePage() {
         </div>
 
         {/* FAQ Section */}
-        <div className="space-y-6">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3 flex items-center gap-2">
-            <HelpCircle className="w-6 h-6 text-[var(--gold)]" /> Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {FAQs.map((faq, idx) => (
-              <div key={idx} className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
-                <h4 className="text-white text-base font-bold">{faq.q}</h4>
-                <p className="text-gray-400 text-sm font-light">{faq.a}</p>
-              </div>
-            ))}
-          </div>
+        <div className="pt-12">
+          <FAQSection faqs={MOBILE_FAQS} />
         </div>
 
         {/* Category Booking Widget */}

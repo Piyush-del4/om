@@ -8,7 +8,7 @@ import { useAuth } from '../auth/AuthProvider';
 import { client } from '../lib/api/client';
 import { env } from '../lib/env';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Compass, Hash, Layers, PenTool, Calendar, Check, AlertCircle, ShoppingCart, Star, Quote, HelpCircle, Brain, Briefcase, PhoneCall, Building2, Heart } from 'lucide-react';
+import { Compass, Hash, Layers, PenTool, Calendar, Check, AlertCircle, ShoppingCart, Star, Quote, HelpCircle, Brain, Briefcase, PhoneCall, Building2, Heart, ArrowRight } from 'lucide-react';
 import { GoldButton } from '../components/ui/GoldButton';
 import { GoldCard } from '../components/ui/GoldCard';
 import { CosmicHeroBackground } from '../components/ui/CosmicHeroBackground';
@@ -147,6 +147,31 @@ export default function Home() {
       return res.data?.data || [];
     },
   });
+  // Fetch reviews (success stories)
+  const { data: dynamicReviews = [] } = useQuery({
+    queryKey: ['success-stories'],
+    queryFn: async () => {
+      const res = await client.get('/reviews/success-stories');
+      return res.data?.data || [];
+    },
+  });
+
+  // Submit review mutation
+  const submitReviewMutation = useMutation({
+    mutationFn: async (data: { name: string; rating: number; comment: string }) => {
+      return client.post('/reviews', data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['success-stories'] });
+      alert('Thank you! Your review has been submitted successfully.');
+      setReviewForm({ name: '', rating: 5, comment: '' });
+    },
+    onError: (err: any) => {
+      alert(err.response?.data?.error || 'Failed to submit review. Please try again.');
+    },
+  });
+
+  const [reviewForm, setReviewForm] = useState({ name: '', rating: 5, comment: '' });
 
   // Add to cart mutation
   const addToCartMutation = useMutation({
@@ -405,20 +430,85 @@ export default function Home() {
           <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
             Get honest and helpful guidance in Astrology, Numerology, Tarot, and Graphology from our experienced consultants.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
-            <Link href="/appointments">
-              <GoldButton variant="filled" className="px-8 py-3 text-base">
-                Book a Consultation
-              </GoldButton>
-            </Link>
-            <Link href="/shop">
-              <GoldButton variant="outlined" className="px-8 py-3 text-base">
-                Explore Shop Items
-              </GoldButton>
-            </Link>
-          </div>
         </motion.div>
+      </section>
+
+
+
+      {/* Categorized Services Grid */}
+      <section className="relative z-10 py-16 px-4 bg-black/50">
+        <div className="max-w-5xl mx-auto text-center space-y-12">
+          <div className="space-y-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">Our <span className="text-[var(--gold)]">Services</span></h2>
+            <p className="text-gray-400 font-light max-w-2xl mx-auto">Choose the service that fits your needs and start your journey toward clarity.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Consultation Card */}
+            <div className="bg-neutral-900 border border-neutral-800 hover:border-[var(--gold)]/50 rounded-2xl p-8 flex flex-col relative overflow-hidden group transition-colors text-left">
+              <div className="absolute top-4 right-4 text-xs font-semibold bg-[var(--gold)]/20 text-[var(--gold)] px-2 py-1 rounded">1-on-1</div>
+              <div className="w-16 h-16 rounded-full bg-black border border-[var(--gold)]/30 flex items-center justify-center mb-6">
+                <PhoneCall className="w-8 h-8 text-[var(--gold)] group-hover:scale-110 transition-transform" />
+              </div>
+              <h3 className="text-xl font-serif font-bold text-white mb-2">Personal Consultation</h3>
+              <p className="text-gray-400 text-sm mb-8 flex-grow">Get personalized guidance for clear life decisions from our expert astrologers.</p>
+              <Link href="/appointments">
+                <GoldButton variant="outlined" className="w-full">Book Now</GoldButton>
+              </Link>
+            </div>
+
+            {/* Premium Kundli Card */}
+            <div className="bg-neutral-900 border border-neutral-800 hover:border-[var(--gold)]/50 rounded-2xl p-8 flex flex-col relative overflow-hidden group transition-colors text-left">
+              <div className="absolute top-4 right-4 text-xs font-semibold bg-[var(--gold)]/20 text-[var(--gold)] px-2 py-1 rounded">Premium</div>
+              <div className="w-16 h-16 rounded-full bg-black border border-[var(--gold)]/30 flex items-center justify-center mb-6">
+                <Star className="w-8 h-8 text-[var(--gold)] group-hover:scale-110 transition-transform" />
+              </div>
+              <h3 className="text-xl font-serif font-bold text-white mb-2">Premium Personalized Kundli</h3>
+              <p className="text-gray-400 text-sm mb-8 flex-grow">Detailed life guidance through a deeply analyzed customized birth chart.</p>
+              <Link href="/appointments">
+                <GoldButton variant="outlined" className="w-full">Order Now</GoldButton>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Get Free Kundli Massive CTA */}
+      <section className="relative z-10 py-20 px-4">
+        <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden relative">
+          {/* Background gradient & pattern */}
+          <div className="absolute inset-0 bg-neutral-950 dark:bg-gradient-to-br dark:from-neutral-900 dark:to-black border border-[var(--gold)]/20"></div>
+          <div className="absolute inset-0 opacity-10 bg-[url('/images/sacred-geometry.svg')] bg-cover bg-center"></div>
+          
+          <div className="relative p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="text-left max-w-xl space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-[1px] bg-[var(--gold)]"></div>
+                <span className="text-[var(--gold)] font-mono text-sm tracking-widest uppercase">Instantly Available</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-white leading-tight">
+                Get Your <span className="text-[var(--gold)]">Free Kundli</span>
+              </h2>
+              <p className="text-gray-300 text-lg font-light leading-relaxed">
+                Get clear insights into your life, career, relationships, and future with your personalized, highly-accurate Vedic Kundli.
+              </p>
+              <div className="pt-4">
+                <Link href="/free-tools/kundli-generator">
+                  <button className="bg-gradient-to-r from-[var(--gold-300)] via-[var(--gold)] to-[var(--gold-600)] text-black font-semibold px-8 py-4 rounded-full hover:scale-105 transition-transform flex items-center gap-3">
+                    Generate Report Now <ArrowRight className="w-5 h-5" />
+                  </button>
+                </Link>
+              </div>
+            </div>
+            
+            <div className="hidden md:flex w-1/3 justify-center">
+              <div className="w-48 h-48 rounded-full border border-[var(--gold)]/30 flex items-center justify-center bg-black/50 relative">
+                <div className="absolute inset-0 rounded-full border border-[var(--gold)]/10 animate-ping"></div>
+                <Layers className="w-20 h-20 text-[var(--gold)]" />
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Major Sections — Service Cards */}
@@ -885,58 +975,81 @@ export default function Home() {
         <div className="relative w-full overflow-hidden py-4 testimonial-marquee-fade">
           <div className="animate-marquee hover:[animation-play-state:paused] flex gap-8">
             {/* First Set of Cards */}
-            {testimonials.map((test, index) => (
-              <div key={`set1-${index}`} className="w-[350px] shrink-0 text-left">
-                <GoldCard theme="dark" className="border border-[var(--gold-100)]/40 p-6 flex flex-col justify-between h-full min-h-[260px] relative">
-                  <div className="space-y-4">
-                    <div className="flex gap-1 text-[var(--gold)]">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-[var(--gold)]" stroke="none" />
-                      ))}
-                    </div>
-                    <p className="text-xs text-gray-300 italic leading-relaxed">
-                      "{test.quote}"
-                    </p>
-                  </div>
-                  <div className="pt-4 border-t border-neutral-800 flex items-center gap-3 mt-4">
-                    <div className="w-8 h-8 rounded-full bg-[var(--gold-50)] border border-[var(--gold-200)] flex items-center justify-center text-[var(--gold)] font-bold text-xs">
-                      {test.initials}
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-white">{test.name}</h4>
-                      <span className="text-[9px] text-gray-500 block">{test.role}</span>
-                    </div>
-                  </div>
-                </GoldCard>
-              </div>
-            ))}
+            {(() => {
+              const displayReviews = dynamicReviews.length >= 4 
+                ? dynamicReviews.map((r: any) => ({
+                    name: r.name,
+                    initials: r.name.substring(0, 2).toUpperCase(),
+                    role: 'Verified Client',
+                    quote: r.comment,
+                    rating: r.rating
+                  }))
+                : testimonials.map(t => ({ ...t, rating: 5 }));
 
-            {/* Duplicated Second Set of Cards for Seamless Infinite Loop */}
-            {testimonials.map((test, index) => (
-              <div key={`set2-${index}`} className="w-[350px] shrink-0 text-left">
-                <GoldCard theme="dark" className="border border-[var(--gold-100)]/40 p-6 flex flex-col justify-between h-full min-h-[260px] relative">
-                  <div className="space-y-4">
-                    <div className="flex gap-1 text-[var(--gold)]">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-[var(--gold)]" stroke="none" />
-                      ))}
+              return displayReviews.map((test: any, index: number) => (
+                <div key={`set1-${index}`} className="w-[350px] shrink-0 text-left">
+                  <GoldCard theme="dark" className="border border-[var(--gold-100)]/40 p-6 flex flex-col justify-between h-full min-h-[260px] relative">
+                    <div className="space-y-4">
+                      <div className="flex gap-1 text-[var(--gold)]">
+                        {[...Array(test.rating || 5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[var(--gold)]" stroke="none" />
+                        ))}
+                      </div>
+                      <p className="text-xs text-gray-300 italic leading-relaxed">
+                        "{test.quote}"
+                      </p>
                     </div>
-                    <p className="text-xs text-gray-300 italic leading-relaxed">
-                      "{test.quote}"
-                    </p>
-                  </div>
-                  <div className="pt-4 border-t border-neutral-800 flex items-center gap-3 mt-4">
-                    <div className="w-8 h-8 rounded-full bg-[var(--gold-50)] border border-[var(--gold-200)] flex items-center justify-center text-[var(--gold)] font-bold text-xs">
-                      {test.initials}
+                    <div className="mt-6 flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[var(--gold)]/20 border border-[var(--gold)]/30 flex items-center justify-center text-[var(--gold)] font-serif font-bold text-xs">
+                        {test.initials}
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-white">{test.name}</p>
+                        <p className="text-[10px] text-gray-400 uppercase tracking-wider">{test.role}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-white">{test.name}</h4>
-                      <span className="text-[9px] text-gray-500 block">{test.role}</span>
+                  </GoldCard>
+                </div>
+              ));
+            })()}
+            {/* Duplicate for infinite effect */}
+            {(() => {
+              const displayReviews = dynamicReviews.length >= 4 
+                ? dynamicReviews.map((r: any) => ({
+                    name: r.name,
+                    initials: r.name.substring(0, 2).toUpperCase(),
+                    role: 'Verified Client',
+                    quote: r.comment,
+                    rating: r.rating
+                  }))
+                : testimonials.map(t => ({ ...t, rating: 5 }));
+
+              return displayReviews.map((test: any, index: number) => (
+                <div key={`set2-${index}`} className="w-[350px] shrink-0 text-left">
+                  <GoldCard theme="dark" className="border border-[var(--gold-100)]/40 p-6 flex flex-col justify-between h-full min-h-[260px] relative">
+                    <div className="space-y-4">
+                      <div className="flex gap-1 text-[var(--gold)]">
+                        {[...Array(test.rating || 5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[var(--gold)]" stroke="none" />
+                        ))}
+                      </div>
+                      <p className="text-xs text-gray-300 italic leading-relaxed">
+                        "{test.quote}"
+                      </p>
                     </div>
-                  </div>
-                </GoldCard>
-              </div>
-            ))}
+                    <div className="mt-6 flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[var(--gold)]/20 border border-[var(--gold)]/30 flex items-center justify-center text-[var(--gold)] font-serif font-bold text-xs">
+                        {test.initials}
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-white">{test.name}</p>
+                        <p className="text-[10px] text-gray-400 uppercase tracking-wider">{test.role}</p>
+                      </div>
+                    </div>
+                  </GoldCard>
+                </div>
+              ));
+            })()}
           </div>
         </div>
       </motion.section>
@@ -1130,6 +1243,86 @@ export default function Home() {
             </GoldButton>
           </form>
         </GoldCard>
+      </motion.section>
+
+      {/* ── Section: Leave a Review ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        className="relative z-10 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40"
+      >
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-2 mb-10">
+            <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
+              Share Your Experience
+            </span>
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold">Review Our Products & Services</h2>
+            <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
+            <p className="text-gray-400 text-xs pt-2">
+              Have you received a product from our shop or completed a consultation? Share your feedback to help others!
+            </p>
+          </div>
+          
+          <GoldCard theme="dark" className="border border-[var(--gold-100)] p-6 md:p-10">
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                submitReviewMutation.mutate(reviewForm);
+              }}
+              className="space-y-6"
+            >
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Your Name</label>
+                <input 
+                  type="text"
+                  required
+                  value={reviewForm.name}
+                  onChange={(e) => setReviewForm({ ...reviewForm, name: e.target.value })}
+                  placeholder="E.g. Rahul Sharma"
+                  className="w-full bg-black border border-neutral-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[var(--gold)] transition-colors text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Rating</label>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button 
+                      key={star}
+                      type="button"
+                      onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                      className="focus:outline-none transition-transform hover:scale-110"
+                    >
+                      <Star className={`w-8 h-8 ${star <= reviewForm.rating ? 'fill-[var(--gold)] text-[var(--gold)]' : 'text-neutral-700'}`} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Your Review</label>
+                <textarea 
+                  required
+                  value={reviewForm.comment}
+                  onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
+                  placeholder="How was your experience? Did the product meet your expectations?"
+                  className="w-full bg-black border border-neutral-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[var(--gold)] transition-colors text-white min-h-[120px] resize-none"
+                />
+              </div>
+
+              <GoldButton 
+                type="submit" 
+                variant="filled" 
+                className="w-full py-4 font-bold tracking-widest"
+                disabled={submitReviewMutation.isPending}
+              >
+                {submitReviewMutation.isPending ? 'SUBMITTING...' : 'SUBMIT REVIEW'}
+              </GoldButton>
+            </form>
+          </GoldCard>
+        </div>
       </motion.section>
 
       {/* ── Section: About Our Team Preview ── */}

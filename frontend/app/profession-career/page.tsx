@@ -6,6 +6,7 @@ import { Briefcase, Star, HelpCircle, ShieldCheck, ChevronRight, Info } from 'lu
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackground';
+import { FAQSection } from '../../components/ui/FAQSection';
 
 export default function ProfessionCareerPage() {
   const careerHouses = [
@@ -22,10 +23,17 @@ export default function ProfessionCareerPage() {
     { name: 'Budha (Mercury)', role: 'Business & Analytics', desc: 'Governs trade, commerce, software programming, communication, writing, accounting, and media.' },
   ];
 
-  const FAQs = [
-    { q: 'Can astrology predict when I will get a new job?', a: 'Yes. By analyzing your current Vimshottari Mahadasha/Antardasha and the transits of Saturn and Jupiter over your 10th house, we can accurately predict periods of career changes, promotions, or job offers.' },
-    { q: 'How does astrology identify if I should do Business or Job?', a: 'We analyze the strength of the 7th house (business & partnerships) vs the 6th house (service & job) along with the influence of Mercury (trade) and Saturn (service).' },
-    { q: 'What is Amatyakaraka (AmK) and how does it affect my career?', a: 'In Jaimini astrology, the planet with the second-highest degree in your chart is the Amatyakaraka. It signifies your professional inclination, career path, and the tools you use to achieve success.' },
+  const CAREER_FAQS = [
+    { q: 'How does astrology help with career decisions?', a: 'Astrology maps your natural strengths and weaknesses by analyzing the planetary positions at your birth. It reveals whether you are better suited for independent business, corporate leadership, creative fields, or stable service roles, preventing years of trial and error.' },
+    { q: 'What is the 10th House in a birth chart?', a: 'The 10th House (Karma Bhava) is the primary house of profession, status, and public reputation. The planets placed here and the ruler of this house largely dictate the flavor of your career and your relationship with authority.' },
+    { q: 'Can astrology tell me if I will be successful in business?', a: 'Yes. We analyze the 7th house (partnerships/trade), the 11th house (gains/profits), and the condition of Mercury (the planet of commerce). A strong combination here indicates high success in entrepreneurship.' },
+    { q: 'How do you predict job changes and promotions?', a: 'By tracking the current planetary periods (Vimshottari Dasha) and the transits of slow-moving planets like Saturn and Jupiter over your career houses, we can accurately pinpoint timelines for promotions, job switches, or career breaks.' },
+    { q: 'Can numerology help me choose the right profession?', a: 'Yes. Your Life Path and Destiny numbers reveal your core numerical frequency. Matching your career path to these numbers ensures a smoother journey with fewer obstacles and faster recognition.' },
+    { q: 'What if my career is currently blocked or struggling?', a: 'Career blocks usually occur during difficult planetary transits (like Sade Sati or Ashtam Shani) or unfavorable Dashas. We provide specific remedies, behavioral adjustments, and timeline expectations to help you navigate the block.' },
+    { q: 'Is it better to pursue a creative field or a technical field?', a: 'If planets like Venus (creativity/arts) and Moon (imagination) dominate your chart, a creative field is best. If Mars (engineering/logic) and Saturn (structure) are dominant, technical or analytical fields will bring more success.' },
+    { q: 'What is Amatyakaraka and why is it important for career?', a: 'In Jaimini Astrology, the Amatyakaraka is the planet with the second-highest degree. It represents the "Minister" of your chart—the skills, tools, and professional inclinations you must use to achieve your soul\'s purpose in this life.' },
+    { q: 'Can astrology determine the timing of my success?', a: 'Yes. Every birth chart has "activation periods" based on planetary cycles. Some charts promise early success in their 20s, while others have "late-bloomer" yogas that activate after age 36.' },
+    { q: 'Should I change my career path if my chart shows difficulties?', a: 'Not necessarily. Difficulties often indicate lessons you need to learn. However, if your current path completely contradicts your chart\'s strong planets, pivoting to a more aligned field is highly recommended.' }
   ];
 
   return (
@@ -119,18 +127,8 @@ export default function ProfessionCareerPage() {
         </div>
 
         {/* FAQ Section */}
-        <div className="space-y-6">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3 flex items-center gap-2">
-            <HelpCircle className="w-6 h-6 text-[var(--gold)]" /> Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {FAQs.map((faq, idx) => (
-              <div key={idx} className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
-                <h4 className="text-white text-base font-bold">{faq.q}</h4>
-                <p className="text-gray-400 text-sm font-light">{faq.a}</p>
-              </div>
-            ))}
-          </div>
+        <div className="pt-12">
+          <FAQSection faqs={CAREER_FAQS} />
         </div>
 
         {/* Category Booking Widget */}

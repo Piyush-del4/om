@@ -6,6 +6,7 @@ import { Heart, Star, HelpCircle, ShieldCheck, HeartHandshake, Info } from 'luci
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackground';
+import { FAQSection } from '../../components/ui/FAQSection';
 
 export default function MarriageMatchingPage() {
   const matchingKootas = [
@@ -21,10 +22,17 @@ export default function MarriageMatchingPage() {
     { title: 'D9 Navamsha Chart', importance: 'True Marriage Potential', desc: 'While D1 represents public life, the D9 Navamsha chart shows the true, internal compatibility and relationship outcome after marriage.' },
   ];
 
-  const FAQs = [
-    { q: 'Is 36 Guna matching enough for a happy marriage?', a: 'No. Guna matching is only about 10-15% of the story. A high guna score (like 30/36) can still lead to struggles if either partner has individual relationship afflictions (such as a highly afflicted 7th house lord, or bad planetary periods).' },
-    { q: 'What is a good Guna compatibility score?', a: 'A score of 18 or above (out of 36) is considered acceptable for matchmaking, provided there are no major afflictions like Nadi Dosha or Bhakoot Dosha present.' },
-    { q: 'What if we have Nadi Dosha in our compatibility?', a: 'Nadi Dosha can be canceled or mitigated by various factors (such as having the same Moon sign but different nakshatras, or ruling planet friendships). We analyze these cancellations during our sessions.' },
+  const MARRIAGE_FAQS = [
+    { q: 'What is Kundali matching (Ashtakoot Guna Milan)?', a: 'Kundali matching is a Vedic astrological method of analyzing the compatibility between a prospective bride and groom. It checks 8 different parameters (Kootas) to evaluate emotional, physical, and psychological harmony.' },
+    { q: 'How many points (Gunas) are required for a successful marriage?', a: 'Out of 36 possible points (Gunas), a minimum of 18 is considered acceptable. However, a high score does not guarantee success if individual charts have major afflictions, which is why a manual chart analysis is critical.' },
+    { q: 'What is Manglik Dosha in marriage matching?', a: 'Manglik Dosha occurs when Mars is placed in specific houses (1st, 2nd, 4th, 7th, 8th, or 12th) in a birth chart. It signifies high passion and potential aggression. It is usually balanced by marrying another Manglik or performing remedies.' },
+    { q: 'Can two Mangliks marry each other?', a: 'Yes. In fact, it is highly recommended. When two Mangliks marry, their martial energies cancel each other out, leading to a highly energetic and balanced partnership.' },
+    { q: 'What happens if our Kundalis do not match?', a: 'If the Guna score is too low or severe Doshas exist, an expert astrologer will check for "cancellations" (Parihara). If the block is permanent, we provide honest advice and potential remedies, but we do not recommend forcing a highly incompatible match.' },
+    { q: 'Does Nadi Dosha cause problems in childbirth?', a: 'Traditionally, Nadi Dosha indicates a mismatch in the couple\'s genetic/biological energies, which can cause health issues or childbirth complications. However, there are many astrological exceptions that cancel this Dosha.' },
+    { q: 'Is Kundali matching only for arranged marriages?', a: 'No. Many couples in love marriages consult astrologers before tying the knot to understand potential future challenges and learn remedies for their specific relationship dynamics.' },
+    { q: 'What is Bhakoot Dosha?', a: 'Bhakoot Dosha relates to the compatibility of the Moon signs. It can cause financial difficulties, emotional detachment, or family disputes if not cancelled out by other friendly planetary alignments.' },
+    { q: 'Does love marriage require Kundali matching?', a: 'While you may already know you are in love, Kundali matching helps prepare for long-term practical compatibility, health phases, and financial cycles that you will face together in the future.' },
+    { q: 'Are there remedies for a low Kundali matching score?', a: 'Yes. Depending on which Kootas are lacking, specific remedies like Navagraha Shanti poojas, wearing specific gemstones, or lifestyle adjustments can act as shock absorbers for the relationship.' }
   ];
 
   return (
@@ -118,18 +126,8 @@ export default function MarriageMatchingPage() {
         </div>
 
         {/* FAQ Section */}
-        <div className="space-y-6">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3 flex items-center gap-2">
-            <HelpCircle className="w-6 h-6 text-[var(--gold)]" /> Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {FAQs.map((faq, idx) => (
-              <div key={idx} className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
-                <h4 className="text-white text-base font-bold">{faq.q}</h4>
-                <p className="text-gray-400 text-sm font-light">{faq.a}</p>
-              </div>
-            ))}
-          </div>
+        <div className="pt-12">
+          <FAQSection faqs={MARRIAGE_FAQS} />
         </div>
 
         {/* Category Booking Widget */}

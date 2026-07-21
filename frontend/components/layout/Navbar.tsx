@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '../../auth/AuthProvider';
-import { Menu, X, ShoppingCart, User, LogOut, Shield, Sun, Moon, ChevronDown, Sparkles, Hash, Layers, PenTool, Calendar, ArrowRight, LayoutDashboard, Settings, Package, BookOpen } from 'lucide-react';
+import { Menu, X, ShoppingCart, User, LogOut, Shield, Sun, Moon, ChevronDown, Sparkles, Hash, Layers, PenTool, Calendar, ArrowRight, LayoutDashboard, Settings, Package, BookOpen, Star, Heart, Compass, Eye, CheckCircle2, Activity, Palette } from 'lucide-react';
 import { GoldButton } from '../ui/GoldButton';
 import { useQuery } from '@tanstack/react-query';
 import { client } from '../../lib/api/client';
@@ -16,6 +16,8 @@ export function Navbar() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [isServicesHovered, setIsServicesHovered] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const [isFreeToolsHovered, setIsFreeToolsHovered] = useState(false);
+  const [isMobileFreeToolsOpen, setIsMobileFreeToolsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -57,6 +59,24 @@ export function Navbar() {
     },
   ];
 
+  const freeTools = [
+    { name: 'Birth Chart', description: 'Generate your Vedic birth chart.', href: '/free-tools/birth-chart-generator', icon: Sparkles },
+    { name: 'Kundli Generator', description: 'Check full planetary positions.', href: '/free-tools/kundli-generator', icon: Layers },
+    { name: 'Numerology', description: 'Calculate life path and destiny.', href: '/free-tools/numerology-calculator', icon: Hash },
+    { name: 'Lucky Number', description: 'Find your daily lucky digits.', href: '/free-tools/lucky-number-calculator', icon: Star },
+    { name: 'Name Numerology', description: 'Check spelling vibrations.', href: '/free-tools/name-numerology-calculator', icon: PenTool },
+    { name: 'Marriage Match', description: 'Check Ashtakoot Guna milan.', href: '/free-tools/marriage-compatibility-checker', icon: Heart },
+    { name: 'Zodiac Finder', description: 'Find Sun & Moon signs.', href: '/free-tools/zodiac-sign-finder', icon: Compass },
+    { name: 'Moon Sign', description: 'Find your emotional core.', href: '/free-tools/moon-sign-calculator', icon: Moon },
+    { name: 'Ascendant', description: 'Calculate rising sign (Lagna).', href: '/free-tools/ascendant-calculator', icon: Sun },
+    { name: 'Nakshatra', description: 'Find your birth star.', href: '/free-tools/nakshatra-finder', icon: Eye },
+    { name: 'Panchang', description: 'Daily Hindu calendar.', href: '/free-tools/panchang', icon: Calendar },
+    { name: 'Daily Horoscope', description: 'Read daily predictions.', href: '/free-tools/daily-horoscope', icon: BookOpen },
+    { name: 'Muhurat', description: 'Find auspicious timings.', href: '/free-tools/muhurat-calculator', icon: CheckCircle2 },
+    { name: 'Dasha Calc', description: 'Track planetary periods.', href: '/free-tools/dasha-calculator', icon: Activity },
+    { name: 'Lucky Color', description: 'Find colors for success.', href: '/free-tools/lucky-color-calculator', icon: Palette },
+  ];
+
   useEffect(() => {
     const saved = localStorage.getItem('theme');
     if (saved === 'dark') {
@@ -96,14 +116,16 @@ export function Navbar() {
   const navLinks = isAuthenticated
     ? [
         { name: 'Dashboard', path: '/dashboard' },
-        { name: 'Services', path: '#', isMega: true },
+        { name: 'Services', path: '#', isMega: true, megaType: 'services' },
+        { name: 'Free Tools', path: '#', isMega: true, megaType: 'freeTools' },
         { name: 'Appointment', path: '/appointments' },
         { name: 'Shop', path: '/shop' },
         { name: 'Batch', path: '/my-batches' },
       ]
     : [
         { name: 'Home', path: '/' },
-        { name: 'Services', path: '#', isMega: true },
+        { name: 'Services', path: '#', isMega: true, megaType: 'services' },
+        { name: 'Free Tools', path: '#', isMega: true, megaType: 'freeTools' },
         { name: 'Appointment', path: '/appointments' },
         { name: 'Shop', path: '/shop' },
       ];
@@ -111,7 +133,7 @@ export function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="sticky top-0 z-50 bg-black/75 backdrop-blur-md border-b border-[var(--gold-200)] text-white overflow-visible">
+    <nav className="sticky top-0 z-50 bg-black/75 backdrop-blur-md border-b border-[var(--gold-200)] text-white overflow-visible print:hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -128,20 +150,24 @@ export function Navbar() {
           <div className="hidden md:flex items-center space-x-4 lg:space-x-8 h-full">
             {navLinks.map((link) => {
               if (link.isMega) {
+                const isServices = link.megaType === 'services';
+                const isHovered = isServices ? isServicesHovered : isFreeToolsHovered;
+                const setHovered = isServices ? setIsServicesHovered : setIsFreeToolsHovered;
+                
                 return (
                   <div
                     key={link.name}
                     className="relative flex items-center h-full"
-                    onMouseEnter={() => setIsServicesHovered(true)}
-                    onMouseLeave={() => setIsServicesHovered(false)}
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
                   >
                     <button
                       className={`flex items-center gap-1 py-1 text-sm font-medium transition-colors duration-300 hover:text-[var(--gold)] cursor-pointer ${
-                        isServicesHovered ? 'text-[var(--gold)]' : 'text-gray-300'
+                        isHovered ? 'text-[var(--gold)]' : 'text-gray-300'
                       }`}
                     >
                       <span>{link.name}</span>
-                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isServicesHovered ? 'rotate-180 text-[var(--gold)]' : 'text-gray-400 group-hover:text-[var(--gold)]'}`} />
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isHovered ? 'rotate-180 text-[var(--gold)]' : 'text-gray-400 group-hover:text-[var(--gold)]'}`} />
                     </button>
                   </div>
                 );
@@ -342,37 +368,46 @@ export function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navLinks.map((link) => {
               if (link.isMega) {
+                const isServices = link.megaType === 'services';
+                const isMobileOpen = isServices ? isMobileServicesOpen : isMobileFreeToolsOpen;
+                const toggleMobileOpen = () => {
+                  if (isServices) setIsMobileServicesOpen(!isMobileServicesOpen);
+                  else setIsMobileFreeToolsOpen(!isMobileFreeToolsOpen);
+                };
+                const itemsList = isServices ? services : freeTools;
+
                 return (
                   <div key={link.name} className="block">
                     <button
-                      onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                      onClick={toggleMobileOpen}
                       className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[var(--gold)] hover:bg-gray-950 cursor-pointer"
                     >
                       <span>{link.name}</span>
-                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isMobileServicesOpen ? 'rotate-180 text-[var(--gold)]' : 'text-gray-400'}`} />
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isMobileOpen ? 'rotate-180 text-[var(--gold)]' : 'text-gray-400'}`} />
                     </button>
                     
-                    <div className={`overflow-hidden transition-all duration-300 ${isMobileServicesOpen ? 'max-h-96 opacity-100 py-1' : 'max-h-0 opacity-0'}`}>
+                    <div className={`overflow-hidden transition-all duration-300 ${isMobileOpen ? 'max-h-[500px] overflow-y-auto opacity-100 py-1' : 'max-h-0 opacity-0'}`}>
                       <div className="pl-6 pr-2 space-y-1">
-                        {services.map((service) => {
-                          const IconComponent = service.icon;
-                          const isServiceActive = pathname === service.href;
+                        {itemsList.map((item) => {
+                          const IconComponent = item.icon;
+                          const isActiveItem = pathname === item.href;
                           return (
                             <Link
-                              key={service.name}
-                              href={service.href}
+                              key={item.name}
+                              href={item.href}
                               onClick={() => {
                                 setIsOpen(false);
-                                setIsMobileServicesOpen(false);
+                                if (isServices) setIsMobileServicesOpen(false);
+                                else setIsMobileFreeToolsOpen(false);
                               }}
                               className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                                isServiceActive
+                                isActiveItem
                                   ? 'text-[var(--gold)] bg-gray-950/50'
                                   : 'text-gray-400 hover:text-[var(--gold)] hover:bg-gray-950/30'
                               }`}
                             >
                               <IconComponent className="w-4 h-4 text-[var(--gold)]" />
-                              <span>{service.name}</span>
+                              <span>{item.name}</span>
                             </Link>
                           );
                         })}
@@ -496,6 +531,76 @@ export function Navbar() {
                     <GoldButton variant="outlined" className="w-full py-2 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
                       <Calendar className="w-4 h-4" />
                       <span>Schedule Now</span>
+                    </GoldButton>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Free Tools Mega Menu Dropdown */}
+      <div
+        onMouseEnter={() => setIsFreeToolsHovered(true)}
+        onMouseLeave={() => setIsFreeToolsHovered(false)}
+        className={`hidden md:block absolute top-16 left-0 w-full bg-black/95 backdrop-blur-md border-b border-[var(--gold-200)] shadow-2xl transition-all duration-300 z-40 [.dark_&]:bg-black/95 ${
+          isFreeToolsHovered
+            ? 'opacity-100 translate-y-0 pointer-events-auto visible'
+            : 'opacity-0 -translate-y-2 pointer-events-none invisible'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Left Column: Grid of Tools (spans 3 columns) */}
+            <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {freeTools.map((tool) => {
+                const IconComponent = tool.icon;
+                return (
+                  <Link
+                    key={tool.name}
+                    href={tool.href}
+                    onClick={() => setIsFreeToolsHovered(false)}
+                    className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 dark:hover:bg-white/5 border border-transparent hover:border-[var(--gold-100)] transition-all duration-300"
+                  >
+                    <div className="p-3 rounded-lg bg-[var(--gold-50)] text-[var(--gold)] border border-[var(--gold-200)] group-hover/item:bg-[var(--gold)] group-hover/item:text-black transition-all duration-300">
+                      <IconComponent className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif text-sm font-semibold text-white dark:text-white group-hover/item:text-[var(--gold)] transition-colors flex items-center gap-1.5" style={{color: 'white'}}>
+                        {tool.name}
+                      </h4>
+                      <p className="mt-1 text-[10px] text-gray-400 leading-relaxed">
+                        {tool.description}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Right Column: Featured CTA Card (spans 1 column) */}
+            <div className="md:col-span-1">
+              <div className="h-full flex flex-col justify-between p-6 rounded-2xl border border-[var(--gold-200)] bg-[var(--gold-50)]/30 relative overflow-hidden group/cta">
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
+                
+                <div className="relative z-10">
+                  <span className="text-[10px] font-bold tracking-widest text-[var(--gold)] uppercase bg-[var(--gold-100)] px-2 py-1 rounded">
+                    Free Utilities
+                  </span>
+                  <h4 className="font-serif text-lg font-bold mt-3 leading-snug" style={{color: 'white'}}>
+                    Unlimited Calculations
+                  </h4>
+                  <p className="text-xs text-gray-400 mt-2 leading-relaxed">
+                    Use our premium free tools to generate Kundlis, check lucky numbers, and match making.
+                  </p>
+                </div>
+                
+                <div className="mt-6 relative z-10">
+                  <Link href="/appointments" onClick={() => setIsFreeToolsHovered(false)}>
+                    <GoldButton variant="filled" className="w-full py-2 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
+                      <Sparkles className="w-4 h-4 text-black" />
+                      <span className="text-black">Consult Expert</span>
                     </GoldButton>
                   </Link>
                 </div>

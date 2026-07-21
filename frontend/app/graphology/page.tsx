@@ -3,11 +3,25 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { PenTool, Info } from 'lucide-react';
+import { PenTool, Info, Brain, Activity, Target } from 'lucide-react';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { CategoryBatchesList } from '../../components/ui/CategoryBatchesList';
 import { SignatureAnalyzerWidget } from '../../components/ui/SignatureAnalyzerWidget';
+import { FAQSection } from '../../components/ui/FAQSection';
+
+const GRAPHOLOGY_FAQS = [
+  { q: 'What is graphology?', a: 'Graphology is the scientific analysis of handwriting to determine psychological patterns, emotional state, and personality traits. Your brain writes, not your hand, making handwriting a form of "brainwriting."' },
+  { q: 'How does handwriting analysis work?', a: 'A graphologist analyzes elements like slant, size, baseline, pressure, margins, and the specific shapes of letters (like "t" and "y"). Each element corresponds to a specific neurological habit and personality trait.' },
+  { q: 'Can graphology predict the future?', a: 'No, graphology cannot predict the future. It provides a deep psychological profile of who you are right now, highlighting your strengths, weaknesses, fears, and relationship patterns.' },
+  { q: 'What can graphology tell me about my personality?', a: 'It reveals over 100 traits including your level of self-esteem, how you process information, your emotional responsiveness, your drive to achieve, and how you handle stress or relationships.' },
+  { q: 'Is graphology scientific?', a: 'Graphology is an empirical science. It relies on the consistency of neurological muscle movements that reflect brain patterns. It is widely used in Europe for recruitment and clinical psychology.' },
+  { q: 'What is Graphotherapy?', a: 'Graphotherapy is the science of changing your personality by consciously altering specific strokes in your handwriting. By practicing new strokes for 21 days, you form new neural pathways in your brain.' },
+  { q: 'What do you need for a graphology consultation?', a: 'We require a one-page sample of your handwriting on an unruled, blank sheet of paper, written with a ballpoint pen. It must be written naturally and signed at the bottom.' },
+  { q: 'Can graphology detect lies?', a: 'Graphology cannot tell if a specific statement is a lie, but it can identify if a person has deceptive tendencies, is highly secretive, or rationalizes their actions.' },
+  { q: 'Can it help with career choices?', a: 'Yes. By analyzing your drive, focus, and social adaptability, we can determine if you are better suited for analytical work, sales, leadership, or creative professions.' },
+  { q: 'Is signature analysis different from handwriting analysis?', a: 'Yes. Your handwriting reveals your true inner self, while your signature reveals your public persona (how you want the world to see you). Discrepancies between the two are very revealing.' }
+];
 
 export default function GraphologyPage() {
 
@@ -250,6 +264,11 @@ export default function GraphologyPage() {
               </div>
             </GoldCard>
           </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="pt-12">
+          <FAQSection faqs={GRAPHOLOGY_FAQS} />
         </div>
 
         {/* Active Batches Showcase */}

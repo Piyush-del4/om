@@ -11,28 +11,47 @@ import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackgr
 import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/api/client';
 
-interface House { _id: string; num: string; name: string; desc: string; }
-interface Graha { _id: string; name: string; sign: string; desc: string; }
-interface FAQ { _id: string; q: string; a: string; }
+const ASTROLOGY_HOUSES = [
+  { _id: '1', num: '1st', name: 'Lagna (Self)', desc: 'Physical appearance, health, personality, and life path.' },
+  { _id: '2', num: '2nd', name: 'Dhana (Wealth)', desc: 'Finances, family background, speech, and early childhood.' },
+  { _id: '3', num: '3rd', name: 'Sahaja (Courage)', desc: 'Siblings, communication, short journeys, and willpower.' },
+  { _id: '4', num: '4th', name: 'Bandhu (Happiness)', desc: 'Mother, home, properties, vehicles, and peace of mind.' },
+  { _id: '5', num: '5th', name: 'Putra (Intellect)', desc: 'Children, education, romance, creativity, and past karma.' },
+  { _id: '6', num: '6th', name: 'Ari (Obstacles)', desc: 'Health, enemies, daily routines, service, and debts.' },
+  { _id: '7', num: '7th', name: 'Yuvati (Partnership)', desc: 'Marriage, business partners, public life, and legal contracts.' },
+  { _id: '8', num: '8th', name: 'Randhra (Longevity)', desc: 'Unearned wealth, transformation, research, and occult sciences.' },
+  { _id: '9', num: '9th', name: 'Dharma (Luck)', desc: 'Spirituality, higher education, father, fortune, and travel.' },
+  { _id: '10', num: '10th', name: 'Karma (Career)', desc: 'Profession, public status, authority, and accomplishments.' },
+  { _id: '11', num: '11th', name: 'Labha (Gains)', desc: 'Income, elder siblings, social circle, and fulfilled desires.' },
+  { _id: '12', num: '12th', name: 'Vyaya (Losses)', desc: 'Subconscious, spirituality, isolation, foreign travels, and sleep.' },
+];
+
+const ASTROLOGY_GRAHAS = [
+  { _id: '1', name: 'Surya (Sun)', sign: 'Soul & Authority', desc: 'Represents father, government relations, career status, vitality, and inner confidence.' },
+  { _id: '2', name: 'Chandra (Moon)', sign: 'Mind & Emotion', desc: 'Governs mother, emotional health, peace of mind, intuition, and memory capacity.' },
+  { _id: '3', name: 'Mangal (Mars)', sign: 'Energy & Drive', desc: 'Rules courage, physical strength, real estate, anger management, and action.' },
+  { _id: '4', name: 'Budha (Mercury)', sign: 'Intellect & Speech', desc: 'Controls logic, analytical abilities, business acumen, communication, and education.' },
+  { _id: '5', name: 'Guru (Jupiter)', sign: 'Wisdom & Expansion', desc: 'Governs luck, children, higher learning, wealth, and spirituality.' },
+  { _id: '6', name: 'Shukra (Venus)', sign: 'Love & Luxury', desc: 'Represents spouse, vehicle purchase, arts, comfort, relationships, and refinement.' },
+  { _id: '7', name: 'Shani (Saturn)', sign: 'Karma & Discipline', desc: 'Rules structure, lifespan, delay, hard work, lessons, public service, and justice.' },
+  { _id: '8', name: 'Rahu (North Node)', sign: 'Obsession & Future', desc: 'Represents technology, foreign cultures, desires, illusions, and sudden progress.' },
+  { _id: '9', name: 'Ketu (South Node)', sign: 'Detachment & Past', desc: 'Represents spirituality, liberation (Moksha), deep research, isolation, and past life skills.' },
+];
+
+const ASTROLOGY_FAQS = [
+  { _id: '1', q: 'What is Vedic Astrology and how is it different from Western Astrology?', a: 'Vedic Astrology (Jyotish) uses the Sidereal zodiac based on actual star positions, while Western Astrology uses the Tropical zodiac based on seasons. Vedic Astrology is more accurate for predicting life events and timing using the Vimshottari Dasha system.' },
+  { _id: '2', q: 'What information do I need for a birth chart reading?', a: 'You need your exact date of birth, time of birth, and place of birth. The more accurate the birth time, the more precise the reading will be.' },
+  { _id: '3', q: 'Can astrology predict the future exactly?', a: 'Astrology shows the energetic roadmap of your life based on your karma. While it predicts major life trends, timelines (dashas), and possibilities, your free will and actions shape the final outcome.' },
+  { _id: '4', q: 'How can astrology help with career decisions?', a: 'By analyzing the 10th house (career), Amatyakaraka (career significator), and planetary dashas, we can identify the best career paths, timing for job changes, and periods favorable for business growth.' },
+  { _id: '5', q: 'What are planetary remedies in Vedic Astrology?', a: 'Vedic remedies include mantras, gemstones, charity (seva), and lifestyle adjustments that help balance planetary influences in your birth chart. They act as shock absorbers to neutralize difficult planetary periods.' },
+  { _id: '6', q: 'What is a Kundli (Birth Chart)?', a: 'A Kundli is an astrological map of the sky at the exact moment and location of your birth. It contains 12 houses and 9 planets, serving as a blueprint of your personality, past karma, and future potential.' },
+  { _id: '7', q: 'What is Shani Sade Sati and should I fear it?', a: 'Sade Sati is a 7.5-year period when Saturn transits over your natal Moon. While it brings challenges and hard work, it is not inherently bad. It is a period of karmic cleansing, discipline, and maturity that often sets the foundation for future success.' },
+  { _id: '8', q: 'What is Manglik Dosha and how does it affect marriage?', a: 'Manglik Dosha occurs when Mars is placed in specific houses (1st, 2nd, 4th, 7th, 8th, or 12th) in your chart. It indicates high energy and potential friction in marriage. It is managed by matching charts with another Manglik or performing specific remedies.' },
+  { _id: '9', q: 'How long does an astrology consultation session last?', a: 'Sessions typically range from 30 to 60 minutes depending on the consultation package chosen. You can book a session online and join via video call from anywhere.' },
+  { _id: '10', q: 'Are online astrology consultations as accurate as in-person?', a: 'Yes. Astrological calculations are based on mathematics and planetary geometry. The physical location of the reading does not impact its accuracy at all.' },
+];
 
 export default function AstrologyPage() {
-  const { data: houses = [], isLoading: loadingHouses } = useQuery<House[]>({
-    queryKey: ['astrology-houses'],
-    queryFn: async () => (await client.get('/content/astrology/houses')).data?.data ?? [],
-    staleTime: 1000 * 60 * 30,
-  });
-
-  const { data: grahas = [], isLoading: loadingGrahas } = useQuery<Graha[]>({
-    queryKey: ['astrology-grahas'],
-    queryFn: async () => (await client.get('/content/astrology/grahas')).data?.data ?? [],
-    staleTime: 1000 * 60 * 30,
-  });
-
-  const { data: FAQs = [], isLoading: loadingFAQs } = useQuery<FAQ[]>({
-    queryKey: ['astrology-faqs'],
-    queryFn: async () => (await client.get('/content/astrology/faqs?category=Astrology')).data?.data ?? [],
-    staleTime: 1000 * 60 * 30,
-  });
 
   return (
     <div className="relative radial-mesh-bg min-h-screen bg-black overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-white">
@@ -106,10 +125,8 @@ export default function AstrologyPage() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {loadingHouses ? (
-              <div className="col-span-4 flex justify-center py-8"><Loader2 className="w-6 h-6 animate-spin text-[var(--gold)]" /></div>
-            ) : houses.map((house) => (
-              <GoldCard key={house._id ?? house.num} className="border border-neutral-800/60 p-4">
+            {ASTROLOGY_HOUSES.map((house) => (
+              <GoldCard key={house._id} className="border border-neutral-800/60 p-4 hover:border-[var(--gold)] transition-colors duration-300">
                 <span className="text-[var(--gold)] font-mono font-bold text-xs">{house.num} House</span>
                 <h4 className="text-white text-xs font-bold font-serif mt-1">{house.name}</h4>
                 <p className="text-[10px] text-gray-400 leading-normal mt-1">{house.desc}</p>
@@ -174,10 +191,8 @@ export default function AstrologyPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {loadingGrahas ? (
-              <div className="col-span-3 flex justify-center py-8"><Loader2 className="w-6 h-6 animate-spin text-[var(--gold)]" /></div>
-            ) : grahas.map((g) => (
-              <GoldCard key={g._id ?? g.name} className="border border-neutral-800/60 p-5">
+            {ASTROLOGY_GRAHAS.map((g) => (
+              <GoldCard key={g._id} className="border border-neutral-800/60 p-5 hover:border-[var(--gold)] transition-colors duration-300">
                 <div className="flex justify-between items-center w-full">
                   <h4 className="text-[var(--gold)] font-serif font-bold text-sm">{g.name}</h4>
                   <span className="text-[9px] bg-[var(--gold-50)] text-gray-350 px-2 py-0.5 rounded border border-[var(--gold-200)] whitespace-nowrap">{g.sign}</span>
@@ -281,19 +296,37 @@ export default function AstrologyPage() {
             <HelpCircle className="w-6 h-6 text-[var(--gold)]" /> Frequently Asked Questions
           </h2>
           <div className="space-y-4">
-            {loadingFAQs ? (
-              <div className="flex justify-center py-8"><Loader2 className="w-6 h-6 animate-spin text-[var(--gold)]" /></div>
-            ) : FAQs.map((faq) => (
-              <div key={faq._id} className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
+            {ASTROLOGY_FAQS.map((faq) => (
+              <div key={faq._id} className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1 bg-neutral-900/20 p-4 rounded-r-lg">
                 <h4 className="text-white text-base font-bold">{faq.q}</h4>
-                <p className="text-gray-400 text-sm">{faq.a}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
         </div>
 
+        {/* 2026 Planetary Transits */}
+        <div className="pt-12 border-t border-neutral-800/60 mt-12">
+          <div className="text-center mb-8">
+            <h2 className="font-serif text-3xl font-bold text-white mb-2">2026 Planetary Transits</h2>
+            <p className="text-gray-400 text-sm">Discover how the movement of planets in 2026 will impact your life.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 justify-center">
+            {['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn', 'rahu', 'ketu'].map((planet) => (
+              <Link key={planet} href={`/transit/${planet}`}>
+                <div className="bg-[#111] border border-[var(--gold)]/20 hover:border-[var(--gold)] rounded-xl p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(204,143,51,0.2)]">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center">
+                    <img src={`/images/planets/${planet}.png`} alt={`${planet} planet`} className="w-full h-full object-cover rounded-full" />
+                  </div>
+                  <span className="text-sm font-medium text-white text-center capitalize">{planet} Transit</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* Active Batches Showcase */}
-        <div className="border-t border-neutral-800/60 pt-16">
+        <div className="border-t border-neutral-800/60 pt-16 mt-8">
           <CategoryBatchesList category="Astrology" />
         </div>
 

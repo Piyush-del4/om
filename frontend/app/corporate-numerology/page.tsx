@@ -6,6 +6,7 @@ import { Building2, Star, HelpCircle, ShieldCheck, Landmark, Info } from 'lucide
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackground';
+import { FAQSection } from '../../components/ui/FAQSection';
 
 export default function CorporateNumerologyPage() {
   const corporatePillars = [
@@ -22,10 +23,17 @@ export default function CorporateNumerologyPage() {
     { num: 'Number 9 (Mars)', role: 'Defense & Real Estate', desc: 'Best suited for construction, real estate developers, pharmaceutical companies, security services, and metal manufacturers.' },
   ];
 
-  const FAQs = [
-    { q: 'Can corporate numerology help a struggling business?', a: 'Yes. By introducing minor changes to the brand spelling (adding or removing a letter) or shifting the bank account to a lucky numerological total, we can improve business traction and customer relationships.' },
-    { q: 'Which alphabetic system do you use for brand names?', a: 'We primarily use the Chaldean Numerology system, which is highly accurate for calculating sound and letter vibrations, along with Pythagorean comparisons to ensure consistency.' },
-    { q: 'How does corporate numerology prevent partnership disputes?', a: 'We analyze the core birth charts and numerological compatibility of both partners. If there is a driver/conductor conflict, we suggest remedies or name spelling changes to align their goals.' },
+  const CORPORATE_FAQS = [
+    { q: 'What is corporate numerology?', a: 'Corporate numerology is the application of numerological principles to business. It aligns your brand name, launch dates, and office numbers with favorable vibrations to attract success, wealth, and smooth operations.' },
+    { q: 'How does the name of my business affect its success?', a: 'Every letter emits a frequency. If the total numeric value of your brand name conflicts with your industry (e.g., a luxury brand adding up to an austere number like 7), it can cause friction, low sales, and client dissatisfaction.' },
+    { q: 'What is the process of choosing a lucky business name?', a: 'We calculate the life path and destiny numbers of the founders, identify the numerological code of the specific industry, and then construct a brand name spelling that harmonizes both.' },
+    { q: 'Do I need to legally change my business name?', a: 'Not necessarily. You can keep your legal registered entity name as is, but change your public-facing "Doing Business As" (DBA) brand name, logo spelling, and website domain to the lucky spelling.' },
+    { q: 'How can numerology help with branding and logos?', a: 'Beyond spelling, specific numbers correspond to shapes and colors (e.g., Number 1 corresponds to Sun, gold/red, and circles). Aligning your logo design with your brand number amplifies its magnetic draw.' },
+    { q: 'Can numerology help me choose the right business partners?', a: 'Yes. Partnership conflicts are the #1 reason startups fail. We check the core numbers of all founders to ensure their drives and decision-making styles are complementary rather than destructive.' },
+    { q: 'How does a lucky launch date impact my business?', a: 'The day you register the business or launch a product becomes its "Birth Date." Launching on a day that is numerologically friendly to your brand ensures longevity and strong market reception.' },
+    { q: 'What if my current business name has a negative vibration?', a: 'We perform a "Name Correction." This usually involves subtly adding or removing a letter (e.g., changing an "i" to an "ee") so the pronunciation remains the same but the numerical value shifts to a lucky total.' },
+    { q: 'Does the registered address or office number matter?', a: 'Yes. Office numbers carry energy. If your office total is a 4 or 8, you may face constant sudden delays or heavy struggles. We provide simple remedies to correct bad office numbers without moving.' },
+    { q: 'How long does it take to see results after a name correction?', a: 'While energetic shifts happen immediately, tangible business results usually begin manifesting within 30 to 90 days as you update your branding, website, and marketing materials with the new spelling.' }
   ];
 
   return (
@@ -119,18 +127,8 @@ export default function CorporateNumerologyPage() {
         </div>
 
         {/* FAQ Section */}
-        <div className="space-y-6">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3 flex items-center gap-2">
-            <HelpCircle className="w-6 h-6 text-[var(--gold)]" /> Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {FAQs.map((faq, idx) => (
-              <div key={idx} className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
-                <h4 className="text-white text-base font-bold">{faq.q}</h4>
-                <p className="text-gray-400 text-sm font-light">{faq.a}</p>
-              </div>
-            ))}
-          </div>
+        <div className="pt-12">
+          <FAQSection faqs={CORPORATE_FAQS} />
         </div>
 
         {/* Category Booking Widget */}

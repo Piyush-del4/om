@@ -6,6 +6,20 @@ import { PenTool, CheckCircle2, AlertCircle, Sparkles, HelpCircle } from 'lucide
 import { GoldCard } from '@/components/ui/GoldCard';
 import { CategoryBookingWidget } from '@/components/ui/CategoryBookingWidget';
 import { CategoryBatchesList } from '@/components/ui/CategoryBatchesList';
+import { FAQSection } from '@/components/ui/FAQSection';
+
+const NAME_CORRECTION_FAQS = [
+  { q: 'What is Name Correction in numerology?', a: 'Name correction involves slightly altering the spelling of your name (by adding or removing a letter) to align the numerological total of your name with your favorable birth date planets. This removes energetic blockages and attracts success.' },
+  { q: 'How does changing a spelling change my luck?', a: 'Every letter emits a specific sound frequency and numeric vibration. When your name spelling vibrates in disharmony with your birth date, it causes friction. Realigning the spelling creates a smooth, magnetic frequency that attracts better opportunities.' },
+  { q: 'Do I need to legally change my name in official documents?', a: 'No, legal changes are not mandatory. You only need to change your "public" or "social" identity, such as your signature, social media profiles, email signatures, and by practicing writing the new spelling daily.' },
+  { q: 'How long does it take for a name correction to work?', a: 'While the energetic shift begins immediately, it usually takes 40 to 90 days of actively using the new name spelling and practicing the signature to see tangible changes in your career, finances, and relationships.' },
+  { q: 'How do I practice my new name spelling?', a: 'We prescribe a specific method where you write your new name spelling in a notebook 104 times every day using a red or green pen for a set number of days. This reprograms your subconscious mind to accept the new vibration.' },
+  { q: 'Can name correction help with career and financial success?', a: 'Yes. Name correction is highly effective for unblocking stalled careers, accelerating business growth, and attracting wealth by aligning your Expression number with wealth-generating planetary energies like Mercury or Venus.' },
+  { q: 'Should I change my first name or my surname?', a: 'Usually, altering the first name is enough to change the total Expression number. However, if the surname causes a severe clash (like 4 or 8 totals), a minor adjustment to the surname may also be recommended.' },
+  { q: 'Does name correction change my destiny?', a: 'Your destiny (birth date) cannot be changed, but name correction acts as a powerful "shock absorber" and accelerator. It maximizes your positive potential and minimizes the friction of your difficult karmic periods.' },
+  { q: 'Is Chaldean or Pythagorean numerology used for name correction?', a: 'We strictly use Chaldean Numerology for name corrections, as it assigns numeric values based on the sound vibration of letters, which is far more accurate for energetic tuning than the Pythagorean alphabet sequence.' },
+  { q: 'What if my birth chart is weak, can name correction still help?', a: 'Absolutely. In fact, people with weak birth charts benefit the most from name correction, as the newly corrected name acts as an external support system to boost their confidence and luck.' }
+];
 
 export default function NameCorrectionPage() {
   const steps = [
@@ -129,6 +143,11 @@ export default function NameCorrectionPage() {
               </GoldCard>
             ))}
           </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="pt-12">
+          <FAQSection faqs={NAME_CORRECTION_FAQS} />
         </div>
 
         {/* Batches & Booking Section */}

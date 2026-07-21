@@ -3,12 +3,26 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Hash, Calendar, Layers, ShieldCheck, Sparkles, HelpCircle, Star } from 'lucide-react';
+import { Hash, Calendar, Layers, ShieldCheck, Sparkles, HelpCircle, Star, Info, Binary, Check } from 'lucide-react';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { CategoryBatchesList } from '../../components/ui/CategoryBatchesList';
 import { NumerologyHeroBackground } from '../../components/ui/NumerologyHeroBackground';
+import { FAQSection } from '../../components/ui/FAQSection';
+
+const NUMEROLOGY_FAQS = [
+  { q: 'What exactly is a numerology reading?', a: 'A numerology reading is a personalized analysis that uses your birth date and full birth name to calculate core numbers (such as your Life Path and Soul Urge). It acts as a framework to help you understand your natural talents, motivations, and current life cycles.' },
+  { q: 'How does numerology work?', a: 'It operates on the principle that every number from 1 to 9 (and Master Numbers 11, 22, 33) carries a distinct energy. By converting letters and dates into these values, we create a blueprint of your character and path.' },
+  { q: 'What is a "Master Number"?', a: 'Numbers 11, 22, and 33 are considered Master Numbers. Unlike other double-digit numbers, they are not reduced to a single digit because they hold a higher, more intense frequency and spiritual significance.' },
+  { q: 'What can I learn about myself from a reading?', a: 'A reading can reveal your core life themes, hidden strengths, challenges, and relationship dynamics. It helps identify where you naturally thrive in your career and personal life.' },
+  { q: 'How should I prepare for a reading?', a: 'To get the most out of a session, have your exact date of birth and full name as it appears on your birth certificate ready. Enter the session with an open mind and specific questions.' },
+  { q: 'Is numerology scientific?', a: 'Numerology is an ancient occult science based on mathematical patterns. While highly accurate for personal guidance and identifying energetic cycles, it is not an exact science in the modern academic sense.' },
+  { q: 'Can numerology predict the future?', a: 'Rather than predicting fixed events, numerology identifies cycles, trends, and the energy surrounding specific time periods. It serves as a guide to help you make informed decisions.' },
+  { q: 'Does having the same birth date mean the same destiny?', a: 'No. While individuals born on the same date share certain core numbers (like the Life Path), their full names and karmic backgrounds create a unique, individualized chart.' },
+  { q: 'Which numerology system is better: Chaldean or Pythagorean?', a: 'Both are highly effective but serve different purposes. Pythagorean is deeply psychological and character-based, while Chaldean is older and focuses heavily on the mystical vibrations of names and events. We often use Chaldean for precise name corrections.' },
+  { q: 'Can changing my name spelling change my life?', a: 'Yes. Name correction alters the frequency of your Expression number. Aligning your name vibration with your birth date removes blockages and attracts better opportunities.' }
+];
 
 export default function NumerologyPage() {
   const [calcSystem, setCalcSystem] = useState<'pythagorean' | 'chaldean'>('pythagorean');
@@ -416,6 +430,31 @@ export default function NumerologyPage() {
             Numbers are part of our daily life. When your name number matches your birth number, things naturally go well for you. A simple name correction can remove blockages and bring more luck, success, and peace.
           </p>
         </GoldCard>
+
+        {/* FAQ Section */}
+        <div className="pt-12">
+          <FAQSection faqs={NUMEROLOGY_FAQS} />
+        </div>
+
+        {/* Numerology 2026 Predictions */}
+        <div className="pt-12 border-t border-neutral-800/60 mt-12">
+          <div className="text-center mb-8">
+            <h2 className="font-serif text-3xl font-bold text-white mb-2">Numerology 2026 Predictions</h2>
+            <p className="text-gray-400 text-sm">Discover what 2026 holds for your root number.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 justify-center">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+              <Link key={num} href={`/numerology-2026/${num}`}>
+                <div className="bg-[#111] border border-[var(--gold)]/20 hover:border-[var(--gold)] rounded-xl p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(204,143,51,0.2)]">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center">
+                    <img src={`/images/numerology/number-${num}.png`} alt={`Number ${num}`} className="w-full h-full object-cover rounded-full" />
+                  </div>
+                  <span className="text-sm font-medium text-white text-center">Number {num}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
 
         {/* Active Batches Showcase */}
         <div className="border-t border-neutral-800/60 pt-16">

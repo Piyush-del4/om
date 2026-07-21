@@ -20,7 +20,8 @@ export async function connectDB(): Promise<void> {
     await seedDefaultAppointmentTypes();
   } catch (error) {
     logger.error('❌ Failed to connect to MongoDB on startup:', error);
-    process.exit(1);
+    logger.warn('⚠️ Server will start anyway to allow non-DB routes (like API proxy) to function.');
+    // process.exit(1);
   }
 }
 

@@ -9,6 +9,20 @@ import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget
 import { CategoryBatchesList } from '../../components/ui/CategoryBatchesList';
 import { TarotHeroBackground } from '../../components/ui/TarotHeroBackground';
 import { TarotSpreadWidget } from '../../components/ui/TarotSpreadWidget';
+import { FAQSection } from '../../components/ui/FAQSection';
+
+const TAROT_FAQS = [
+  { q: 'What is tarot and how does it work?', a: 'Tarot is a powerful tool for self-reflection and insight. It consists of 78 cards that mirror the human experience. It works by accessing your subconscious and highlighting energetic themes, helping you gain new perspectives on your life.' },
+  { q: 'Does tarot predict the future exactly?', a: 'No, tarot does not predict a fixed future. It highlights current trajectories and potential outcomes based on your present actions. Because you have free will, you can always change the outcome.' },
+  { q: 'Do I need to be psychic to read tarot?', a: 'No. While intuition plays a big role, reading tarot is a learned skill based on understanding universal archetypes, symbols, and numerology present in the cards.' },
+  { q: 'What are the best types of questions to ask during a reading?', a: 'Avoid "Yes/No" questions. Instead, ask empowering, open-ended questions like "What do I need to know about this situation?", "How can I improve my career path?", or "What is this relationship teaching me?"' },
+  { q: 'Can I read tarot for myself?', a: 'Yes, many people pull a daily card for self-reflection. However, it can sometimes be hard to remain objective about your own situation, which is why getting a professional reading offers unbiased clarity.' },
+  { q: 'Are cards like Death, The Devil, or The Tower "bad" luck?', a: 'Not at all. In tarot, "Death" usually means transformation and the end of an old cycle. "The Tower" means breaking down false foundations to rebuild stronger. They are cards of deep growth, not doom.' },
+  { q: 'Is online tarot reading as accurate as in-person?', a: 'Yes. Energy is not bound by physical distance. A skilled reader can connect with your situation just as effectively over a video call or phone call.' },
+  { q: 'How often should I get a tarot reading?', a: 'It depends on your needs, but getting a reading every 3 to 6 months is ideal for major life check-ins. Getting readings too frequently on the same topic can lead to confusion.' },
+  { q: 'Can tarot help me with relationship and career choices?', a: 'Absolutely. Tarot is excellent for untangling complex emotions in relationships and identifying the best strategic moves for your career by showing you hidden obstacles and opportunities.' },
+  { q: 'Is tarot card reading related to dark magic?', a: 'No. This is a common myth. Tarot is simply a deck of cards with archetypal images used for psychological reflection and spiritual guidance. It has nothing to do with dark magic.' }
+];
 
 export default function TarotCardPage() {
   const [suit, setSuit] = useState<'none' | 'wands' | 'cups' | 'swords' | 'pentacles'>('none');
@@ -319,6 +333,11 @@ export default function TarotCardPage() {
             </p>
           </div>
         </GoldCard>
+
+        {/* FAQ Section */}
+        <div className="pt-12">
+          <FAQSection faqs={TAROT_FAQS} />
+        </div>
 
         {/* Active Batches Showcase */}
         <div className="border-t border-neutral-800/60 pt-16">
