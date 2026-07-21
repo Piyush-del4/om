@@ -6,6 +6,7 @@ import { Eye, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { env } from '@/lib/env';
 
 const FAQS = [
   { q: 'What is a Nakshatra?', a: 'A Nakshatra is a lunar mansion in Hindu astrology. There are 27 Nakshatras, each measuring 13°20\'.' },
@@ -63,7 +64,7 @@ export default function NakshatraFinderPage() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('http://localhost:5001/api/v1/astrology/proxy', {
+      const response = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

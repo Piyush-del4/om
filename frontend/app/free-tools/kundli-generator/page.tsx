@@ -21,6 +21,7 @@ import { AdvancedAuditsBanner } from '@/components/ui/AdvancedAuditsBanner';
 import { DownloadPDFButton } from '@/components/ui/DownloadPDFButton';
 import { ReportHeader } from '@/components/ui/ReportHeader';
 import { PlanetsPositionTable } from '@/components/ui/PlanetsPositionTable';
+import { env } from '@/lib/env';
 
 const FAQS = [
   { q: 'What is a Kundli?', a: 'A Kundli is an essential tool in astrology to map your cosmic energies and decode your potential.' },
@@ -57,7 +58,7 @@ export default function KundliGeneratorPage() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('http://localhost:5001/api/v1/astrology/proxy', {
+      const response = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

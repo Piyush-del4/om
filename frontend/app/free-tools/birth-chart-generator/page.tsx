@@ -21,6 +21,7 @@ import { AdvancedAuditsBanner } from '@/components/ui/AdvancedAuditsBanner';
 import { DownloadPDFButton } from '@/components/ui/DownloadPDFButton';
 import { ReportHeader } from '@/components/ui/ReportHeader';
 import { PlanetsPositionTable } from '@/components/ui/PlanetsPositionTable';
+import { env } from '@/lib/env';
 
 const ZODIAC_SIGNS = [
   'Aries', 'Taurus', 'Gemini', 'Cancer', 
@@ -58,7 +59,7 @@ export default function BirthChartGeneratorPage() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('http://localhost:5001/api/v1/astrology/proxy', {
+      const response = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

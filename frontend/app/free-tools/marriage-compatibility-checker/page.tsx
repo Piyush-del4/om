@@ -6,6 +6,7 @@ import { Heart, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { env } from '@/lib/env';
 
 const FAQS = [
   { q: 'What is a Marriage Match?', a: 'A Marriage Match is an essential tool in astrology to map your cosmic energies and decode your potential.' },
@@ -30,7 +31,7 @@ export default function MarriageCompatibilityCheckerPage() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('http://localhost:5001/api/v1/astrology/proxy', {
+      const response = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
