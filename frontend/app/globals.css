@@ -599,3 +599,34 @@ html:not(.dark) .testimonial-marquee-fade::after {
     display: block !important;
   }
 }
+
+/* ── PDF Export Mode Utility Classes ── */
+.pdf-export-mode .pdf-hide-in-export {
+  display: none !important;
+}
+
+.pdf-export-mode .pdf-show-in-export,
+.pdf-export-mode .collapsible-content {
+  display: block !important;
+  height: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+@media print {
+  .collapsible-content {
+    display: block !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .pratyantar-table-container {
+    display: table-row !important;
+  }
+}
+
+.pdf-export-mode .pratyantar-table-container {
+  display: table-row !important;
+}
+
+

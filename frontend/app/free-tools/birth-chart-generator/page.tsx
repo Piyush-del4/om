@@ -20,6 +20,8 @@ import { NumerologyAstroDetails } from '@/components/ui/NumerologyAstroDetails';
 import { AdvancedAuditsBanner } from '@/components/ui/AdvancedAuditsBanner';
 import { DownloadPDFButton } from '@/components/ui/DownloadPDFButton';
 import { ReportHeader } from '@/components/ui/ReportHeader';
+import { ReportSectionFooter } from '@/components/ui/ReportSectionFooter';
+import { ReportThankYouCard } from '@/components/ui/ReportThankYouCard';
 import { PlanetsPositionTable } from '@/components/ui/PlanetsPositionTable';
 import { PlanetaryAspects } from '@/components/ui/PlanetaryAspects';
 import { DivisionalChartsSection } from '@/components/ui/DivisionalChartsSection';
@@ -220,12 +222,8 @@ export default function BirthChartGeneratorPage() {
             <div className="text-center py-2">
               <div id="report-pdf-content" className="pt-0 px-2 pb-2 sm:px-4 sm:pb-4 rounded-2xl bg-white text-black text-left space-y-6">
                 
-                {/* 📖 Header Banner */}
-                <div className="pdf-page-break-avoid w-full">
-                  <ReportHeader isBig={true} />
-                </div>
-
-                {/* 📖 Personal Details */}
+                <ReportHeader />
+                                {/* 📖 Personal Details */}
                 <div className="pdf-page-break-avoid w-full">
                   <BirthDetailsTable 
                     name={formData.name}
@@ -236,39 +234,47 @@ export default function BirthChartGeneratorPage() {
                     lng={formData.lng}
                     timezone={formData.timezone}
                   />
+                  <ReportSectionFooter />
                 </div>
 
                 {/* 📖 Basic Astro Details */}
                 <div className="pdf-page-break-avoid w-full">
                   <BasicAstroDetails data={resultData} />
+                  <ReportSectionFooter />
                 </div>
 
                 {/* 📖 Birth Lagna Chart */}
-                <div className="pdf-page-break-avoid flex justify-center w-full">
+                <div className="pdf-page-break-avoid flex flex-col items-center justify-center w-full">
                   <NorthIndianChart data={resultData} title="Lagna Chart (D-1)" />
+                  <ReportSectionFooter />
                 </div>
 
                 {/* 📖 Planetary Aspects Grid */}
                 <div className="pdf-page-break-avoid w-full">
                   <PlanetaryAspects />
+                  <ReportSectionFooter />
                 </div>
 
                 {/* 📖 Planetary Positions Table */}
                 <div className="pdf-page-break-avoid w-full">
                   <PlanetsPositionTable data={resultData} />
+                  <ReportSectionFooter />
                 </div>
 
                 {/* 📖 Divisional Charts (Vargas) */}
                 <div className="pdf-page-break-avoid w-full">
                   <DivisionalChartsSection data={resultData} />
+                  <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Lo Shu Grid & Numerology Details */}
+                 {/* 📖 Lo Shu Grid & Numerology Details */}
                 <div className="pdf-page-break-avoid w-full">
                   <LoShuGrid dateOfBirthStr={formData.date} />
+                  <ReportSectionFooter />
                 </div>
                 <div className="pdf-page-break-avoid w-full">
                   <NumerologyAstroDetails dateOfBirthStr={formData.date} />
+                  <ReportSectionFooter />
                 </div>
 
                 {/* 📖 Auspicious Lucky Elements & Advanced Audits */}
@@ -277,14 +283,18 @@ export default function BirthChartGeneratorPage() {
                 </div>
                 <div className="pdf-page-break-avoid w-full">
                   <AdvancedAuditsBanner />
+                  <ReportSectionFooter />
                 </div>
 
                 {/* 📖 Vimshottari Dasha & Consultation CTA */}
                 <div className="pdf-page-break-avoid w-full">
                   <VimshottariDashaTable data={resultData} dashaApiData={dashaApiData} birthDateStr={formData.date} />
+                  <ReportSectionFooter />
                 </div>
-                <div className="pdf-page-break-avoid mt-6 max-w-3xl mx-auto">
-                  <BookAppointmentCTA />
+
+                {/* 📖 Closing Thank You Card (PDF E-Book End) */}
+                <div className="pdf-page-break-avoid w-full">
+                  <ReportThankYouCard />
                 </div>
 
               </div>

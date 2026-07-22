@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { NorthIndianChart } from './NorthIndianChart';
-import { calculateVargaChart, VargaType } from '@/lib/vargaCalculator';
+import { calculateVargaChart, VargaType, VARGA_TITLE_MAP } from '@/lib/vargaCalculator';
 
 interface DivisionalChartsProps {
   data: any;
@@ -9,17 +12,26 @@ interface DivisionalChartsProps {
 const VARGA_ITEMS: { key: VargaType; title: string; subtitle: string }[] = [
   { key: 'chandra', title: 'Chandra Kundali', subtitle: 'Moon Chart (Mind & Emotions)' },
   { key: 'navamsa', title: 'Navamsa (D-9)', subtitle: 'Spouse, Destiny & Inner Strength' },
-  { key: 'hora', title: 'Hora (D-2)', subtitle: 'Wealth & Prosperity' },
   { key: 'chalit', title: 'Chalit Chart', subtitle: 'Actual Planetary House Positions' },
-  { key: 'dasamsa', title: 'Dasamsa (D-10)', subtitle: 'Career, Profession & Achievements' },
-  { key: 'saptamsa', title: 'Saptamsa (D-7)', subtitle: 'Children & Progeny' },
-  { key: 'dwadasamsa', title: 'Dwadasamsa (D-12)', subtitle: 'Parents & Lineage' },
+  /* Preserved Other Vargas (Commented for future activation):
+  { key: 'hora', title: 'Hora (D-2)', subtitle: 'Wealth & Financial Prosperity' },
+  { key: 'drekkana', title: 'Drekkana (D-3)', subtitle: 'Siblings, Courage & Endeavors' },
+  { key: 'chaturthamsha', title: 'Chaturthamsha (D-4)', subtitle: 'Property, Residence & Fortune' },
+  { key: 'saptamsa', title: 'Saptamsa (D-7)', subtitle: 'Children, Progeny & Grandchildren' },
+  { key: 'dasamsa', title: 'Dashamsa (D-10)', subtitle: 'Career, Profession & Achievements' },
+  { key: 'dwadasamsa', title: 'Dwadashamsa (D-12)', subtitle: 'Parents, Lineage & Ancestry' },
+  { key: 'shodashamsa', title: 'Shodashamsa (D-16)', subtitle: 'Vehicles, Comforts & Pleasures' },
+  { key: 'vimshamsha', title: 'Vimshamsha (D-20)', subtitle: 'Spiritual Progress & Meditation' },
+  { key: 'chaturvimshamsha', title: 'Chaturvimshamsha (D-24)', subtitle: 'Higher Education & Learning' },
+  { key: 'saptavimshamsha', title: 'Saptavimshamsha (D-27)', subtitle: 'Physical Strength & Vitality' },
+  { key: 'trimshamsha', title: 'Trimshamsha (D-30)', subtitle: 'Misfortunes, Evils & Karmic Audits' },
+  { key: 'khavedamsha', title: 'Khavedamsha (D-40)', subtitle: 'Auspicious & Inauspicious Effects' },
+  { key: 'akshavedamsha', title: 'Akshavedamsha (D-45)', subtitle: 'General Well-being & All Matters' },
+  { key: 'shastiamsa', title: 'Shastiamsa (D-60)', subtitle: 'Past Life Karma & Root Destiny' },
+  */
 ];
 
 export function DivisionalChartsSection({ data }: DivisionalChartsProps) {
-  const [viewMode, setViewMode] = useState<'grid' | 'tabs'>('grid');
-  const [activeTab, setActiveTab] = useState<VargaType>('chandra');
-
   if (!data || !data.output) return null;
 
   // Pre-calculate all varga charts
@@ -28,87 +40,31 @@ export function DivisionalChartsSection({ data }: DivisionalChartsProps) {
     chartData: calculateVargaChart(data, item.key)
   }));
 
-  const activeChart = vargaCharts.find(v => v.key === activeTab) || vargaCharts[0];
-
   return (
-    <div className="w-full max-w-4xl mx-auto my-6 space-y-6">
+    <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
       {/* Title Header */}
-      <div className="text-center space-y-1">
-        <h3 className="font-serif text-2xl md:text-3xl font-bold text-amber-950 dark:text-amber-200">
-          ✦ Divisional Charts (Vargas) ✦
+      <div 
+        /* onClick={() => setIsOpen(!isOpen)} */
+        className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center flex items-center justify-center gap-2 select-none"
+      >
+        <span className="text-xl">☸️</span>
+        <h3 className="font-serif font-bold text-lg md:text-2xl">
+          Key Divisional Charts (Chandra Kundali, Navamsa D-9 & Chalit Chart)
         </h3>
-        <p className="text-xs md:text-sm text-neutral-600 dark:text-gray-400 font-light">
-          Deep Vedic astrological divisional breakdown for precise life analysis
-        </p>
+        {/* <ChevronDown className={`w-6 h-6 transition-transform duration-300 print:hidden ${isOpen ? 'rotate-180' : ''}`} /> */}
       </div>
 
-      {/* Screen View Mode Switcher (Grid vs Tabs) */}
-      <div className="flex justify-center items-center gap-3 print:hidden">
-        <button
-          onClick={() => setViewMode('grid')}
-          className={`px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all ${
-            viewMode === 'grid'
-              ? 'bg-amber-600 text-white shadow-md'
-              : 'bg-amber-100/70 dark:bg-neutral-800 text-amber-950 dark:text-amber-200'
-          }`}
-        >
-          All Charts (Grid View)
-        </button>
-        <button
-          onClick={() => setViewMode('tabs')}
-          className={`px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all ${
-            viewMode === 'tabs'
-              ? 'bg-amber-600 text-white shadow-md'
-              : 'bg-amber-100/70 dark:bg-neutral-800 text-amber-950 dark:text-amber-200'
-          }`}
-        >
-          Single Chart View
-        </button>
-      </div>
-
-      {/* Interactive Tabs (Only when Single Chart View is selected) */}
-      {viewMode === 'tabs' && (
-        <div className="flex flex-wrap justify-center gap-2 print:hidden">
-          {VARGA_ITEMS.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => setActiveTab(item.key)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                activeTab === item.key
-                  ? 'bg-amber-700 text-white shadow-xs'
-                  : 'bg-amber-100 dark:bg-neutral-800 text-neutral-800 dark:text-gray-300'
-              }`}
-            >
-              {item.title}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Single Chart View Display */}
-      {viewMode === 'tabs' && (
-        <div className="print:hidden flex flex-col items-center space-y-3">
-          <p className="text-xs font-semibold text-amber-800 dark:text-amber-300 italic">
-            {activeChart.subtitle}
-          </p>
-          <div className="w-full max-w-2xl">
-            <NorthIndianChart title={activeChart.chartData.chartTitle} data={activeChart.chartData} />
+      {/* <div className={`collapsible-content ${isOpen ? 'block' : 'hidden'} space-y-6`}> */}
+      <div className="space-y-8 pt-2">
+        {vargaCharts.map((item) => (
+          <div key={item.key} className="pdf-page-break-avoid w-full max-w-5xl mx-auto">
+            <NorthIndianChart 
+              title={item.chartData.chartTitle} 
+              subtitle={item.subtitle}
+              data={item.chartData} 
+            />
           </div>
-        </div>
-      )}
-
-      {/* Grid Display (Always visible in Grid mode and for PDF downloads) */}
-      <div className={`${viewMode === 'tabs' ? 'hidden print:block' : 'block'} space-y-6 pt-2`}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {vargaCharts.map((item) => (
-            <div key={item.key} className="pdf-page-break-avoid space-y-1">
-              <p className="text-[11px] font-semibold text-amber-800 dark:text-amber-300 text-center italic">
-                {item.subtitle}
-              </p>
-              <NorthIndianChart title={item.chartData.chartTitle} data={item.chartData} />
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
     </div>
   );

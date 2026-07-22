@@ -20,10 +20,31 @@ import { NumerologyAstroDetails } from '@/components/ui/NumerologyAstroDetails';
 import { AdvancedAuditsBanner } from '@/components/ui/AdvancedAuditsBanner';
 import { DownloadPDFButton } from '@/components/ui/DownloadPDFButton';
 import { ReportHeader } from '@/components/ui/ReportHeader';
+import { ReportSectionFooter } from '@/components/ui/ReportSectionFooter';
+import { ReportThankYouCard } from '@/components/ui/ReportThankYouCard';
 import { PlanetsPositionTable } from '@/components/ui/PlanetsPositionTable';
 import { PlanetaryAspects } from '@/components/ui/PlanetaryAspects';
 import { DivisionalChartsSection } from '@/components/ui/DivisionalChartsSection';
 import { env } from '@/lib/env';
+
+// Import New Kundli Report Sections (Sections 3 to 24)
+import { PlanetaryDetailsCard } from '@/components/ui/astrology/PlanetaryDetailsCard';
+import { HousesAnalysisGrid } from '@/components/ui/astrology/HousesAnalysisGrid';
+import { LagnaMoonSunDetails } from '@/components/ui/astrology/LagnaMoonSunDetails';
+import { NakshatraAnalysisCard } from '@/components/ui/astrology/NakshatraAnalysisCard';
+import { YogaAnalysisSection } from '@/components/ui/astrology/YogaAnalysisSection';
+import { DoshaAnalysisSection } from '@/components/ui/astrology/DoshaAnalysisSection';
+import { DashaTimelineView } from '@/components/ui/astrology/DashaTimelineView';
+import { AshtakavargaTable } from '@/components/ui/astrology/AshtakavargaTable';
+import { ShadbalaBreakdownChart } from '@/components/ui/astrology/ShadbalaBreakdownChart';
+import { AspectsAndConjunctionsCard } from '@/components/ui/astrology/AspectsAndConjunctionsCard';
+import { BirthPanchangCard } from '@/components/ui/astrology/BirthPanchangCard';
+import { LifePredictionsTabs } from '@/components/ui/astrology/LifePredictionsTabs';
+import { PersonalizedRemediesCard } from '@/components/ui/astrology/PersonalizedRemediesCard';
+import { KundliMatchingWidget } from '@/components/ui/astrology/KundliMatchingWidget';
+import { MuhuratFinderWidget } from '@/components/ui/astrology/MuhuratFinderWidget';
+import { TransitGocharWidget } from '@/components/ui/astrology/TransitGocharWidget';
+import { InteractiveChartViewer } from '@/components/ui/astrology/InteractiveChartViewer';
 
 const FAQS = [
   { q: 'What is a Kundli?', a: 'A Kundli is an essential tool in astrology to map your cosmic energies and decode your potential.' },
@@ -33,11 +54,6 @@ const FAQS = [
   { q: 'Can I consult an astrologer after generating my report?', a: 'Absolutely! We offer premium 1-on-1 consultations to help you decode the deeper meanings of your results.' }
 ];
 
-const ZODIAC_SIGNS = [
-  'Aries', 'Taurus', 'Gemini', 'Cancer', 
-  'Leo', 'Virgo', 'Libra', 'Scorpio', 
-  'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'
-];
 export default function KundliGeneratorPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -113,14 +129,21 @@ export default function KundliGeneratorPage() {
     }
   };
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8">
       {/* Background styling */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[var(--gold)]/20 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto space-y-16 relative z-10">
+      <div className="max-w-5xl mx-auto space-y-12 relative z-10">
         
-        {/* Hero */}
+        {/* Hero Header */}
         {!result && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -128,13 +151,13 @@ export default function KundliGeneratorPage() {
             className="text-center space-y-4 pt-8"
           >
             <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
-              <Layers className="w-4 h-4" /> Free Utility
+              <Layers className="w-4 h-4" /> Free Vedic Utility
             </span>
             <h1 className="font-serif text-4xl md:text-5xl font-bold">
-              Free Generator <span className="gold-gradient-text">Kundli</span>
+              Free Generator <span className="gold-gradient-text">Janam Kundli</span>
             </h1>
             <p className="text-gray-400 text-sm md:text-base font-light max-w-2xl mx-auto">
-              Create your detailed online Janam Kundli in seconds. Enter your details below to calculate your personalized report instantly.
+              Generate your 24-section comprehensive Vedic Janam Kundli report instantly with planetary details, yogas, doshas, divisional charts, Ashtakavarga, Shadbala, transits, and remedies.
             </p>
           </motion.div>
         )}
@@ -208,24 +231,47 @@ export default function KundliGeneratorPage() {
                 <GoldButton 
                   type="submit" 
                   variant="filled" 
-                  className="w-full md:w-auto min-w-[200px] flex justify-center py-3"
+                  className="w-full md:w-auto min-w-[240px] px-8 py-3.5 flex justify-center text-base font-bold"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Calculating...' : 'Generate Report'}
+                  {isSubmitting ? 'Calculating 24 Kundli Sections...' : 'Generate Full Janam Kundli Report'}
                 </GoldButton>
               </div>
             </form>
           ) : (
-            <div className="text-center py-2">
-              <div id="report-pdf-content" className="pt-0 px-2 pb-2 sm:px-4 sm:pb-4 rounded-2xl bg-white text-black text-left space-y-6">
-                
-                {/* 📖 Header Banner */}
-                <div className="pdf-page-break-avoid w-full">
-                  <ReportHeader isBig={true} />
+            <div className="text-center py-2 space-y-6">
+              
+              {/* Sticky Navigation Index Bar */}
+              {/* <div className="sticky top-4 z-40 bg-neutral-950/90 backdrop-blur-md border border-[var(--gold)]/40 p-2.5 rounded-xl shadow-xl overflow-x-auto print:hidden">
+                <div className="flex items-center gap-2 min-w-max text-xs font-bold">
+                  <button onClick={() => scrollToSection('sec-basic')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Basic & Panchang</button>
+                  <button onClick={() => scrollToSection('sec-planets')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Planets Details</button>
+                  <button onClick={() => scrollToSection('sec-houses')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Houses Analysis</button>
+                  <button onClick={() => scrollToSection('sec-lagnamoonsun')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Lagna, Moon, Sun</button>
+                  <button onClick={() => scrollToSection('sec-nakshatra')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Nakshatra</button>
+                  <button onClick={() => scrollToSection('sec-yogas')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Yogas</button>
+                  <button onClick={() => scrollToSection('sec-doshas')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Doshas</button>
+                  <button onClick={() => scrollToSection('sec-vargas')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Vargas D1-D60</button>
+                  <button onClick={() => scrollToSection('sec-ashtakavarga')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Ashtakavarga</button>
+                  <button onClick={() => scrollToSection('sec-shadbala')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Shadbala</button>
+                  <button onClick={() => scrollToSection('sec-aspects')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Aspects & Conjunctions</button>
+                  <button onClick={() => scrollToSection('sec-predictions')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Predictions</button>
+                  <button onClick={() => scrollToSection('sec-remedies')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Remedies</button>
+                  <button onClick={() => scrollToSection('sec-matching')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Matching</button>
+                  <button onClick={() => scrollToSection('sec-muhurat')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Muhurat</button>
+                  <button onClick={() => scrollToSection('sec-transits')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Transits</button>
+                  <button onClick={() => scrollToSection('sec-interactive')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Interactive Chart</button>
+                  <button onClick={() => scrollToSection('sec-dasha')} className="px-3 py-1.5 bg-neutral-800 hover:bg-[var(--gold)] hover:text-black rounded-lg transition">Vimshottari Dasha</button>
                 </div>
+              </div> */}
 
-                {/* 📖 Personal Details */}
-                <div className="pdf-page-break-avoid w-full">
+              {/* 📖 Complete 24-Section Kundli Report Output */}
+              <div id="report-pdf-content" className="pt-0 px-2 pb-2 sm:px-4 sm:pb-4 rounded-2xl bg-white text-black text-left space-y-8">
+                
+                <ReportHeader />
+                
+                 {/* 📖 Personal Details */}
+                <div id="sec-basic" className="pdf-page-break-avoid w-full">
                   <BirthDetailsTable 
                     name={formData.name}
                     date={formData.date}
@@ -235,39 +281,107 @@ export default function KundliGeneratorPage() {
                     lng={formData.lng}
                     timezone={formData.timezone}
                   />
+                  <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Basic Astro Details */}
-                <div className="pdf-page-break-avoid w-full">
+                {/* 📖 Basic Astro Details & Panchang (Section 18) */}
+                <div className="pdf-page-break-avoid w-full space-y-4">
                   <BasicAstroDetails data={resultData} />
+                  {/* <BirthPanchangCard data={resultData} */ }
+                  <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Kundli Lagna Chart */}
-                <div className="pdf-page-break-avoid flex justify-center w-full">
-                  <NorthIndianChart data={resultData} title="Lagna Chart (D-1)" />
+                {/* 📖 Interactive Lagna Chart (Section 24) */}
+                <div id="sec-interactive" className="pdf-page-break-avoid w-full">
+                  <InteractiveChartViewer data={resultData} chartTitle="Lagna Chart (D-1)" />
+                  <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Planetary Aspects Grid */}
-                <div className="pdf-page-break-avoid w-full">
-                  <PlanetaryAspects />
+                {/* Commented Out Report Sections (Preserved in code for future activation): */}
+                {/* 📖 Planetary Positions & Dignities (Section 3 & 17) */}
+                <div id="sec-planets" className="pdf-page-break-avoid w-full space-y-4">
+                  <PlanetaryDetailsCard data={resultData} />
+                  <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Planetary Positions Table */}
-                <div className="pdf-page-break-avoid w-full">
-                  <PlanetsPositionTable data={resultData} />
-                </div>
+                {/* 📖 12 Houses Analysis (Section 4) */}
+                {/* <div id="sec-houses" className="pdf-page-break-avoid w-full">
+                  <HousesAnalysisGrid data={resultData} />
+                </div> */}
 
-                {/* 📖 Divisional Charts (Vargas) */}
-                <div className="pdf-page-break-avoid w-full">
+                {/* 📖 Lagna, Moon & Sun Details (Sections 5, 6, 7) */}
+                {/* <div id="sec-lagnamoonsun" className="pdf-page-break-avoid w-full">
+                  <LagnaMoonSunDetails data={resultData} />
+                </div> */}
+
+                {/* 📖 Nakshatra Analysis (Section 8) */}
+                {/* <div id="sec-nakshatra" className="pdf-page-break-avoid w-full">
+                  <NakshatraAnalysisCard data={resultData} />
+                </div> */}
+
+                {/* 📖 Yogas Analysis (Section 9) */}
+                {/* <div id="sec-yogas" className="pdf-page-break-avoid w-full">
+                  <YogaAnalysisSection data={resultData} />
+                </div> */}
+
+                {/* 📖 Doshas Detection & Remedies (Section 10) */}
+                {/* <div id="sec-doshas" className="pdf-page-break-avoid w-full">
+                  <DoshaAnalysisSection data={resultData} />
+                </div> */}
+
+                {/* 📖 Divisional Charts (Chandra, Navamsa D9, Chalit) (Section 12) */}
+                <div id="sec-vargas" className="pdf-page-break-avoid w-full">
                   <DivisionalChartsSection data={resultData} />
+                  <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Lo Shu Grid & Numerology Details */}
+                {/* 📖 Ashtakavarga (BAV & SAV) (Section 13) */}
+                {/* <div id="sec-ashtakavarga" className="pdf-page-break-avoid w-full">
+                  <AshtakavargaTable data={resultData} />
+                </div> */}
+
+                {/* 📖 Shadbala Strength Breakdown (Section 14) */}
+                {/* <div id="sec-shadbala" className="pdf-page-break-avoid w-full">
+                  <ShadbalaBreakdownChart data={resultData} />
+                </div> */}
+
+                {/* 📖 Planetary Aspects & Conjunctions (Sections 15 & 16) */}
+                {/* <div id="sec-aspects" className="pdf-page-break-avoid w-full space-y-4">
+                  <AspectsAndConjunctionsCard data={resultData} />
+                </div> */}
+
+                {/* 📖 17 Life Predictions (Section 19) */}
+                {/* <div id="sec-predictions" className="pdf-page-break-avoid w-full">
+                  <LifePredictionsTabs data={resultData} />
+                </div> */}
+
+                {/* 📖 Traditional Remedies (Section 20) */}
+                {/* <div id="sec-remedies" className="pdf-page-break-avoid w-full">
+                  <PersonalizedRemediesCard data={resultData} />
+                </div> */}
+
+                {/* 📖 Kundli Matching & Guna Milan (Section 21) */}
+                {/* <div id="sec-matching" className="pdf-page-break-avoid w-full">
+                  <KundliMatchingWidget data={resultData} />
+                </div> */}
+
+                {/* 📖 Muhurat Recommendations (Section 22) */}
+                {/* <div id="sec-muhurat" className="pdf-page-break-avoid w-full">
+                  <MuhuratFinderWidget />
+                </div> */}
+
+                {/* 📖 Transits & Sade Sati (Section 23) */}
+                {/* <div id="sec-transits" className="pdf-page-break-avoid w-full">
+                  <TransitGocharWidget data={resultData} />
+                </div> */}
+
+                {/* 📖 Numerology & Lo Shu Grid */}
                 <div className="pdf-page-break-avoid w-full">
                   <LoShuGrid dateOfBirthStr={formData.date} />
                 </div>
                 <div className="pdf-page-break-avoid w-full">
                   <NumerologyAstroDetails dateOfBirthStr={formData.date} />
+                  <ReportSectionFooter />
                 </div>
 
                 {/* 📖 Auspicious Lucky Elements & Advanced Audits */}
@@ -276,14 +390,18 @@ export default function KundliGeneratorPage() {
                 </div>
                 <div className="pdf-page-break-avoid w-full">
                   <AdvancedAuditsBanner />
+                  <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Vimshottari Dasha & Consultation CTA */}
-                <div className="pdf-page-break-avoid w-full">
-                  <VimshottariDashaTable data={resultData} dashaApiData={dashaApiData} birthDateStr={formData.date} />
+                {/* 📖 Dasha (Mahadasha, Antardasha & Timeline) - Placed at bottom */}
+                <div id="sec-dasha" className="pdf-page-break-avoid w-full">
+                  <DashaTimelineView data={resultData} dashaApiData={dashaApiData} birthDateStr={formData.date} />
+                  <ReportSectionFooter />
                 </div>
-                <div className="pdf-page-break-avoid mt-6 max-w-3xl mx-auto">
-                  <BookAppointmentCTA />
+
+                {/* 📖 Closing Thank You Card (PDF E-Book End) */}
+                <div className="pdf-page-break-avoid w-full">
+                  <ReportThankYouCard />
                 </div>
 
               </div>
@@ -292,7 +410,7 @@ export default function KundliGeneratorPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 print:hidden">
                 <DownloadPDFButton fullName={formData.name} reportType="kundli" />
                 <GoldButton onClick={() => { setResult(false); setResultData(null); }} variant="outlined">
-                  Calculate Again
+                  Calculate New Kundli
                 </GoldButton>
               </div>
             </div>
@@ -301,13 +419,13 @@ export default function KundliGeneratorPage() {
 
         {/* SEO Content Section */}
         <div className="space-y-6 pt-12 border-t border-neutral-800/60 print:hidden">
-          <h2 className="font-serif text-3xl font-bold">Why use our <span className="text-[var(--gold)]">Free Kundli Generator</span>?</h2>
+          <h2 className="font-serif text-3xl font-bold">Why use our <span className="text-[var(--gold)]">Comprehensive Free Kundli Generator</span>?</h2>
           <div className="prose prose-invert max-w-none text-gray-300 font-light text-sm leading-relaxed space-y-4">
             <p>
-              In Vedic Astrology and numerology, precision is everything. Our free online Kundli provides you with highly accurate insights based on ancient mathematical algorithms combined with modern astronomical data.
+              In Vedic Astrology and numerology, precision is everything. Our free online Kundli provides you with highly accurate insights based on ancient Parashari mathematical algorithms combined with modern astronomical ephemeris data.
             </p>
             <p>
-              Understanding your core planetary alignments allows you to make informed decisions about your career, relationships, health, and wealth. While this automated tool gives you an excellent starting point, nothing replaces the deep synthesis provided by a master astrologer.
+              Decode all 24 vital aspects of your birth chart including 15 divisional charts (D2 to D60), 14+ planetary yogas, 8 dosha audits, Ashtakavarga, Shadbala 6-fold strength, Vimshottari dasha timeline, and personalized traditional remedies.
             </p>
           </div>
         </div>

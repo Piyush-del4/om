@@ -15,13 +15,13 @@ export function BookAppointmentCTA({
   className = ""
 }: BookAppointmentCTAProps) {
   return (
-    <div className={`bg-gradient-to-r from-amber-50 via-white to-amber-50 dark:from-amber-950/40 dark:via-neutral-900 dark:to-amber-950/40 border border-amber-300 dark:border-[var(--gold)]/30 rounded-2xl p-6 md:p-8 text-center space-y-4 shadow-xl ${className}`}>
-      <div className="w-12 h-12 rounded-full bg-[var(--gold)]/10 border border-[var(--gold)]/30 flex items-center justify-center mx-auto text-amber-800 dark:text-[var(--gold)]">
-        <Sparkles className="w-6 h-6" />
+    <div className={`bg-[#fffef7] dark:bg-neutral-900 border-2 border-amber-300 dark:border-amber-600/50 rounded-3xl p-6 md:p-8 text-center space-y-3 shadow-md ${className}`}>
+      <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-600/40 flex items-center justify-center mx-auto text-amber-800 dark:text-amber-300">
+        <Sparkles className="w-5 h-5" />
       </div>
 
       <div className="max-w-xl mx-auto space-y-2">
-        <h3 className="text-xl md:text-2xl font-serif font-bold text-neutral-900 dark:text-white">
+        <h3 className="text-xl md:text-2xl font-serif font-bold text-amber-950 dark:text-amber-200">
           {title}
         </h3>
         <p className="text-xs md:text-sm text-neutral-700 dark:text-gray-300 font-normal leading-relaxed">
@@ -30,10 +30,11 @@ export function BookAppointmentCTA({
       </div>
 
       <div className="pt-2 flex justify-center">
-        <Link href="/appointments">
-          <GoldButton variant="filled" className="px-8 py-3 flex items-center gap-2 text-base shadow-lg hover:scale-105 transition-transform">
-            <Calendar className="w-5 h-5" /> Book 1-on-1 Appointment <ArrowRight className="w-4 h-4 ml-1" />
-          </GoldButton>
+        <Link 
+          href="/appointments"
+          className="px-6 py-2.5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-full text-xs md:text-sm shadow-md transition-all transform hover:scale-105 flex items-center gap-2 border border-amber-400"
+        >
+          <Calendar className="w-4 h-4" /> Book 1-on-1 Appointment →
         </Link>
       </div>
     </div>

@@ -10,6 +10,8 @@ interface PlanetData {
 interface NorthIndianChartProps {
   data: any;
   title?: string;
+  subtitle?: string;
+  showLegend?: boolean;
 }
 
 const RASHI_NAMES: Record<number, string> = {
@@ -51,7 +53,7 @@ const DEBILITATED_SIGNS: Record<string, number | number[]> = {
   Ketu: [2, 3]  // Taurus / Gemini
 };
 
-export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
+export function NorthIndianChart({ data, title, subtitle, showLegend = true }: NorthIndianChartProps) {
   if (!data || !data.output) return null;
 
   const planetsObj = data.output[1] || {};
@@ -136,32 +138,33 @@ export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
   const size = 600;
   const center = size / 2;
 
-  // Standard Vedic Positions for 600x600 canvas (Strictly Centered Inside House Boundaries)
+  // Standard Vedic Positions for 600x600 canvas
+  // Geometrically calculated centroids so sign and planets stay perfectly inside house boundaries
   const housePositions = [
-    // 1 (Top Center Diamond)
-    { sign: [300, 245], planets: [300, 100] },
-    // 2 (Top Left Triangle - upper)
-    { sign: [150, 110], planets: [150, 45] },
-    // 3 (Top Left Triangle - lower)
-    { sign: [110, 150], planets: [45, 150] },
-    // 4 (Left Center Diamond)
-    { sign: [245, 300], planets: [110, 300] },
-    // 5 (Bottom Left Triangle - upper)
-    { sign: [110, 450], planets: [45, 450] },
-    // 6 (Bottom Left Triangle - lower)
-    { sign: [150, 490], planets: [150, 555] },
-    // 7 (Bottom Center Diamond)
-    { sign: [300, 355], planets: [300, 500] },
-    // 8 (Bottom Right Triangle - lower)
-    { sign: [450, 490], planets: [450, 555] },
-    // 9 (Bottom Right Triangle - upper)
-    { sign: [490, 450], planets: [555, 450] },
-    // 10 (Right Center Diamond)
-    { sign: [355, 300], planets: [490, 300] },
-    // 11 (Top Right Triangle - lower)
-    { sign: [490, 150], planets: [555, 150] },
-    // 12 (Top Right Triangle - upper)
-    { sign: [450, 110], planets: [450, 45] },
+    // 1 (Top Center Diamond) - sign lower body, planets upper body
+    { sign: [300, 245], planets: [300, 110] },
+    // 2 (Top Left Triangle) - sign near bottom point, planets upper wide area
+    { sign: [150, 110], planets: [150, 48] },
+    // 3 (Upper Left Corner Triangle) - sign right inner area, planets left wide area
+    { sign: [110, 150], planets: [52, 150] },
+    // 4 (Left Center Diamond) - sign right inner area, planets center body
+    { sign: [245, 300], planets: [125, 300] },
+    // 5 (Lower Left Corner Triangle) - sign right inner area, planets left wide area
+    { sign: [110, 450], planets: [52, 450] },
+    // 6 (Bottom Left Triangle) - sign upper point, planets lower wide area
+    { sign: [150, 490], planets: [150, 545] },
+    // 7 (Bottom Center Diamond) - sign upper body, planets lower body
+    { sign: [300, 355], planets: [300, 485] },
+    // 8 (Bottom Right Triangle) - sign upper point, planets lower wide area
+    { sign: [450, 490], planets: [450, 545] },
+    // 9 (Lower Right Corner Triangle) - sign left inner area, planets right wide area
+    { sign: [490, 450], planets: [548, 450] },
+    // 10 (Right Center Diamond) - sign left inner area, planets center body
+    { sign: [355, 300], planets: [475, 300] },
+    // 11 (Upper Right Corner Triangle) - sign left inner area, planets right wide area
+    { sign: [490, 150], planets: [548, 150] },
+    // 12 (Top Right Triangle) - sign near bottom point, planets upper wide area
+    { sign: [450, 110], planets: [450, 48] },
   ];
 
   const getVedicName = (name: string) => {
@@ -195,16 +198,23 @@ export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white border-2 border-[var(--gold-300)] relative rounded-2xl shadow-xl p-3">
-      {title && (
-        <div className="text-center pb-2 mb-1 border-b border-[var(--gold-200)]">
-          <h4 className="font-serif font-bold text-lg md:text-xl text-amber-950">
-            ✦ {title} ✦
-          </h4>
+    <div className="w-full bg-white border-2 border-[var(--gold-300)] relative rounded-2xl shadow-xl p-3">
+      {(title || subtitle) && (
+        <div className="text-center pb-2 mb-2 border-b border-[var(--gold-200)] space-y-0.5">
+          {subtitle && (
+            <p className="text-[11px] md:text-xs font-semibold text-amber-800 italic">
+              {subtitle}
+            </p>
+          )}
+          {title && (
+            <h4 className="font-serif font-bold text-base md:text-lg text-amber-950">
+              ✦ {title} ✦
+            </h4>
+          )}
         </div>
       )}
-      <div className="w-full relative min-h-[350px] sm:min-h-[480px] h-[350px] sm:h-[480px] flex items-center justify-center">
-        <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full max-h-full drop-shadow-sm" style={{ width: '100%', height: '100%' }}>
+      <div className="w-full relative aspect-square flex items-center justify-center p-1">
+        <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-auto aspect-square drop-shadow-sm">
         {/* Outer Box */}
         <rect x="0" y="0" width={size} height={size} fill="transparent" stroke="#cc8f33" strokeWidth="2.5" />
         
@@ -220,6 +230,12 @@ export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
           const pos = housePositions[idx];
           const rashiName = RASHI_NAMES[house.signNumber];
 
+          // Vertically center stacked planets around pos.planets[1]
+          const totalOccupants = house.occupants.length;
+          const startY = totalOccupants > 1 
+            ? pos.planets[1] - ((totalOccupants - 1) * 22) / 2 
+            : pos.planets[1];
+
           return (
             <g key={house.houseNumber}>
               {/* Stacked Rashi Number + Rashi Name to prevent line overflow */}
@@ -228,12 +244,12 @@ export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
                 y={pos.sign[1]} 
                 textAnchor="middle" 
                 alignmentBaseline="middle"
-                className="fill-amber-900 font-bold text-[14px] font-sans"
+                className="fill-amber-900 font-bold font-sans"
               >
-                <tspan x={pos.sign[0]} dy="-6" fontSize="15" fontWeight="bold">
+                <tspan x={pos.sign[0]} dy="-7" fontSize="16" fontWeight="bold">
                   {house.signNumber}
                 </tspan>
-                <tspan x={pos.sign[0]} dy="16" fill="#b45309" fontWeight="medium" fontSize="11">
+                <tspan x={pos.sign[0]} dy="16" fill="#92400e" fontWeight="bold" fontSize="11">
                   {rashiName}
                 </tspan>
               </text>
@@ -245,9 +261,9 @@ export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
                   y="180" 
                   textAnchor="middle" 
                   alignmentBaseline="middle"
-                  className="fill-sky-600 font-bold text-sm"
+                  className="fill-sky-600 font-bold text-base"
                 >
-                  <tspan fontSize="11" className="fill-sky-500 font-normal">
+                  <tspan fontSize="11" className="fill-sky-600 font-semibold">
                     {Math.floor(planetsObj["Ascendant"]?.normDegree ?? 0)}°{" "}
                   </tspan>
                   Asc (Lagna)
@@ -257,23 +273,25 @@ export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
               {/* Planets centered in the open space of the house */}
               <text 
                 x={pos.planets[0]} 
-                y={pos.planets[1]} 
+                y={startY} 
                 textAnchor="middle" 
                 alignmentBaseline="middle"
-                className="font-bold text-[16px] tracking-wide"
+                className="font-bold tracking-wide"
               >
                 {house.occupants.map((p, i) => (
                   <tspan 
                     key={p.name} 
                     x={pos.planets[0]} 
-                    dy={i === 0 ? 0 : 24}
+                    dy={i === 0 ? 0 : 22}
                     fill={getColor(p.name)}
                   >
-                    <tspan fontSize="12" fontWeight="normal" opacity="0.85">
+                    <tspan fontSize="11" fontWeight="semibold" opacity="0.9">
                       {p.degree}°{" "}
                     </tspan>
-                    {getVedicName(p.name)}
-                    <tspan fill="#d97706" fontWeight="bold" fontSize="13">
+                    <tspan fontSize="14" fontWeight="bold">
+                      {getVedicName(p.name)}
+                    </tspan>
+                    <tspan fill="#d97706" fontWeight="extrabold" fontSize="12">
                       {p.symbols}
                     </tspan>
                   </tspan>
@@ -286,13 +304,15 @@ export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
       </div>
 
       {/* Symbol Legend */}
-      <div className="mt-3 pt-3 border-t border-[var(--gold-200)] flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-neutral-600 font-medium">
-        <span><strong className="text-amber-700">*</strong> Retrograde</span>
-        <span><strong className="text-amber-700">^</strong> Combust</span>
-        <span><strong className="text-amber-700">↑</strong> Exalted</span>
-        <span><strong className="text-amber-700">↓</strong> Debilitated</span>
-        <span><strong className="text-amber-700">☐</strong> Vargottama</span>
-      </div>
+      {showLegend && (
+        <div className="mt-3 pt-3 border-t border-[var(--gold-200)] flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-neutral-600 font-medium">
+          <span><strong className="text-amber-700">*</strong> Retrograde</span>
+          <span><strong className="text-amber-700">^</strong> Combust</span>
+          <span><strong className="text-amber-700">↑</strong> Exalted</span>
+          <span><strong className="text-amber-700">↓</strong> Debilitated</span>
+          <span><strong className="text-amber-700">☐</strong> Vargottama</span>
+        </div>
+      )}
     </div>
   );
 }

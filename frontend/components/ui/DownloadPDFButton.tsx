@@ -34,7 +34,12 @@ export function DownloadPDFButton({
     if (isGenerating) return;
     setIsGenerating(true);
 
+    const element = document.getElementById(targetId) || document.body;
+
     try {
+      // Add export mode class so hidden PDF content is rendered for html2pdf
+      element.classList.add('pdf-export-mode');
+
       // Scroll page to top so html2canvas captures from y=0
       window.scrollTo(0, 0);
 
@@ -49,16 +54,15 @@ export function DownloadPDFButton({
         });
       }
 
-      const element = document.getElementById(targetId) || document.body;
       const formattedName = (fullName || 'user').trim().replace(/\s+/g, '-').toLowerCase();
       const fileName = `${formattedName}-${reportType}.pdf`;
 
       const opt = {
         margin: [6, 4, 6, 4],
         filename: fileName,
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 0.85 },
         html2canvas: { 
-          scale: 2, 
+          scale: 1.2, 
           useCORS: true, 
           logging: false,
           backgroundColor: '#ffffff',
@@ -79,6 +83,7 @@ export function DownloadPDFButton({
         document.title = originalTitle;
       }, 1000);
     } finally {
+      element.classList.remove('pdf-export-mode');
       resetMouseAbility();
     }
   };

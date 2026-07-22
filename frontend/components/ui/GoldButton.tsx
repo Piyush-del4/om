@@ -16,14 +16,10 @@ export function GoldButton({
   disabled,
   ...props
 }: GoldButtonProps) {
-  // Use a premium spring bezier for scaling and transform active states
   const baseStyle = 'inline-flex items-center justify-center font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--gold)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm hover:scale-[1.025] active:scale-[0.965] active:translate-y-[0.5px] transition-all duration-500 ease-[cubic-bezier(0.25,0.8,0.25,1)] transform shadow-sm';
-  
   const widthStyle = fullWidth ? 'w-full' : '';
-
-  // Extract padding classes to apply them to the inner span in filled variant
   const classes = className.split(' ').filter(Boolean);
-  const paddingClasses = classes.filter(c => 
+  const paddingClasses = classes.filter((c: string) => 
     c.startsWith('p-') || 
     c.startsWith('px-') || 
     c.startsWith('py-') || 
@@ -33,7 +29,7 @@ export function GoldButton({
     c.startsWith('pr-')
   ).join(' ');
 
-  const nonPaddingClasses = classes.filter(c => 
+  const nonPaddingClasses = classes.filter((c: string) => 
     !c.startsWith('p-') && 
     !c.startsWith('px-') && 
     !c.startsWith('py-') && 
@@ -42,6 +38,12 @@ export function GoldButton({
     !c.startsWith('pl-') && 
     !c.startsWith('pr-')
   ).join(' ');
+
+  // Check if horizontal or vertical padding is specified
+  const hasPx = classes.some((c: string) => c.startsWith('px-') || c.startsWith('p-') || c.startsWith('pl-') || c.startsWith('pr-'));
+  const hasPy = classes.some((c: string) => c.startsWith('py-') || c.startsWith('p-') || c.startsWith('pt-') || c.startsWith('pb-'));
+
+  const fallbackPadding = `${hasPx ? '' : 'px-8'} ${hasPy ? '' : 'py-3'}`;
 
   if (variant === 'filled') {
     return (
@@ -53,7 +55,7 @@ export function GoldButton({
         {/* Shine highlight overlay on hover */}
         <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer pointer-events-none z-10"></span>
         
-        <span className={`w-full h-full bg-gradient-to-r from-[var(--gold)] via-[var(--gold-light)] to-[var(--gold)] hover:from-[var(--gold-light)] hover:to-[var(--gold-dark)] text-black rounded-full ${paddingClasses || 'px-5 py-2'} flex items-center justify-center gap-2 transition-all duration-500 ease-out shadow-[0_4px_12px_rgba(204,143,51,0.12)] group-hover:shadow-[0_6px_18px_rgba(204,143,51,0.25)]`}>
+        <span className={`w-full h-full bg-gradient-to-r from-[var(--gold)] via-[var(--gold-light)] to-[var(--gold)] hover:from-[var(--gold-light)] hover:to-[var(--gold-dark)] text-black font-semibold rounded-full ${paddingClasses} ${fallbackPadding} flex items-center justify-center gap-2 transition-all duration-500 ease-out shadow-[0_4px_12px_rgba(204,143,51,0.12)] group-hover:shadow-[0_6px_18px_rgba(204,143,51,0.25)] whitespace-nowrap text-center`}>
           {isLoading ? (
             <LoadingSpinner size="sm" variant="current" />
           ) : (
@@ -86,4 +88,3 @@ export function GoldButton({
     </button>
   );
 }
-

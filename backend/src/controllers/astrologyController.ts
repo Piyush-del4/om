@@ -100,7 +100,7 @@ export const fetchAstrologyData = async (req: Request, res: Response) => {
     console.error('Astrology API Error:', error.response?.data || error.message);
     return res.status(500).json({
       success: false,
-      message: 'Failed to fetch astrological data',
+      message: 'Try after some time',
       error: error.response?.data || error.message,
     });
   }
