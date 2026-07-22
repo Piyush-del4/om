@@ -573,6 +573,11 @@ html:not(.dark) .testimonial-marquee-fade::after {
     break-inside: avoid !important;
   }
 
+  .pdf-page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
   /* Hide navigation, site footer, and interactive elements */
   nav, 
   footer, 

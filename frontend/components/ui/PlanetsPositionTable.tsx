@@ -25,12 +25,28 @@ const YOGAKARAKA_MAP: Record<number, string[]> = {
   12: ['Mars', 'Moon']
 };
 
+const MARAKA_MAP: Record<number, string[]> = {
+  1: ['Venus'],
+  2: ['Mars', 'Mercury'],
+  3: ['Moon', 'Jupiter'],
+  4: ['Saturn', 'Sun'],
+  5: ['Saturn', 'Mercury'],
+  6: ['Venus', 'Jupiter'],
+  7: ['Mars'],
+  8: ['Venus', 'Jupiter'],
+  9: ['Saturn', 'Mercury'],
+  10: ['Moon', 'Saturn'],
+  11: ['Jupiter', 'Sun'],
+  12: ['Mars', 'Mercury']
+};
+
 export function PlanetsPositionTable({ data }: PlanetsTableProps) {
   if (!data || !data.output || !data.output[1]) return null;
 
   const rawPlanets = data.output[1];
   const house1SignNum = rawPlanets[1]?.current_sign || 1;
   const yogakarakaPlanets = YOGAKARAKA_MAP[house1SignNum] || ['Saturn'];
+  const marakaPlanets = MARAKA_MAP[house1SignNum] || [];
 
   // Filter 7 main planets for Atmakaraka (highest degree)
   const main7 = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn'];
@@ -61,9 +77,7 @@ export function PlanetsPositionTable({ data }: PlanetsTableProps) {
             <tr className="bg-amber-200/80 dark:bg-neutral-800 text-amber-950 dark:text-amber-300 font-bold border-b border-amber-800/30">
               <th className="p-3">Planet</th>
               <th className="p-3">Sign</th>
-              <th className="p-3">Degree</th>
               <th className="p-3">House</th>
-              <th className="p-3">Retrograde</th>
               <th className="p-3">Special Karakas</th>
               <th className="p-3">Relation</th>
             </tr>
@@ -74,6 +88,7 @@ export function PlanetsPositionTable({ data }: PlanetsTableProps) {
               .map(([planet, details]: any) => {
                 const isYogakaraka = yogakarakaPlanets.includes(planet);
                 const isAtmakaraka = planet === atmakarakaName;
+                const isMaraka = marakaPlanets.includes(planet);
                 const isRetro = details.isRetro === 'true';
 
                 // Relationship: Friend, Enemy, or Sam (Neutral)
@@ -83,22 +98,19 @@ export function PlanetsPositionTable({ data }: PlanetsTableProps) {
 
                 return (
                   <tr key={planet} className="hover:bg-amber-200/30 dark:hover:bg-neutral-800/40 transition-colors">
-                    <td className="p-3 font-bold text-amber-950 dark:text-white flex items-center gap-1.5">
-                      {planet}
-                      {isAtmakaraka && (
-                        <span className="px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-amber-500 text-black">AK</span>
-                      )}
+                    <td className="p-3 font-bold text-amber-950 dark:text-white">
+                      <div className="flex items-center gap-1.5">
+                        {planet}
+                        {isAtmakaraka && (
+                          <span className="px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-amber-500 text-black">AK</span>
+                        )}
+                      </div>
+                      <div className="text-xs sm:text-[13px] font-mono font-bold text-amber-900/90 dark:text-amber-300 mt-0.5">
+                        {details.normDegree ? `(${details.normDegree.toFixed(2)}°)` : '-'}
+                      </div>
                     </td>
                     <td className="p-3">{ZODIAC_SIGNS[details.current_sign - 1] || '-'}</td>
-                    <td className="p-3 font-mono font-semibold">{details.normDegree ? details.normDegree.toFixed(2) + '°' : '-'}</td>
                     <td className="p-3 font-bold">{details.house_number || '-'}</td>
-                    <td className="p-3">
-                      {isRetro ? (
-                        <span className="px-2.5 py-1 bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 rounded-md font-bold text-xs">Yes</span>
-                      ) : (
-                        <span className="px-2.5 py-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 rounded-md font-bold text-xs">No</span>
-                      )}
-                    </td>
                     <td className="p-3">
                       <div className="flex flex-wrap gap-1 items-center">
                         {isYogakaraka && (
@@ -111,7 +123,12 @@ export function PlanetsPositionTable({ data }: PlanetsTableProps) {
                             Atmakaraka (AK)
                           </span>
                         )}
-                        {!isYogakaraka && !isAtmakaraka && (
+                        {isMaraka && (
+                          <span className="px-2 py-0.5 bg-rose-300 text-rose-950 font-bold rounded-md text-xs shadow-xs">
+                            Marak
+                          </span>
+                        )}
+                        {!isYogakaraka && !isAtmakaraka && !isMaraka && (
                           <span className="text-gray-400 font-normal">-</span>
                         )}
                       </div>

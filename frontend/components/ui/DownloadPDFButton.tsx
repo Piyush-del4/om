@@ -54,7 +54,7 @@ export function DownloadPDFButton({
       const fileName = `${formattedName}-${reportType}.pdf`;
 
       const opt = {
-        margin: [0, 4, 4, 4],
+        margin: [6, 4, 6, 4],
         filename: fileName,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
@@ -66,7 +66,7 @@ export function DownloadPDFButton({
           windowTop: 0
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['css', 'legacy'] }
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
       await (window as any).html2pdf().set(opt).from(element).save();

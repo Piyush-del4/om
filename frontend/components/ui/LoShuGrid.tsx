@@ -78,7 +78,7 @@ export function LoShuGrid({ dateOfBirthStr }: LoShuGridProps) {
             Standard LoShu Grid
           </h4>
 
-          <div className="grid grid-cols-3 gap-0 aspect-square max-w-[280px] mx-auto border-2 border-amber-900/40 overflow-hidden rounded-lg">
+          <div className="grid grid-cols-3 gap-0 w-full max-w-[280px] h-[220px] md:h-[240px] mx-auto border-2 border-amber-900/40 overflow-hidden rounded-lg">
             {STANDARD_GRID.map((row, rIdx) => (
               row.map((cell, cIdx) => (
                 <div 
@@ -99,7 +99,7 @@ export function LoShuGrid({ dateOfBirthStr }: LoShuGridProps) {
             <Sparkles className="w-4 h-4 text-[var(--gold)]" /> Birth LoShu Grid
           </h4>
 
-          <div className="grid grid-cols-3 gap-0 aspect-square max-w-[280px] mx-auto border-2 border-amber-900/40 overflow-hidden rounded-lg">
+          <div className="grid grid-cols-3 gap-0 w-full max-w-[280px] h-[220px] md:h-[240px] mx-auto border-2 border-amber-900/40 overflow-hidden rounded-lg">
             {GRID_NUM_LAYOUT.map((row, rIdx) => (
               row.map((num, cIdx) => {
                 const count = counts[num] || 0;

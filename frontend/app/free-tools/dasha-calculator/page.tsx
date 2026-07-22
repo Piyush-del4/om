@@ -6,6 +6,10 @@ import { Activity, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { VimshottariDashaTable } from '@/components/ui/VimshottariDashaTable';
+import { CitySearchInput } from '@/components/ui/CitySearchInput';
+import { TimePicker12Hour } from '@/components/ui/TimePicker12Hour';
+import { BookAppointmentCTA } from '@/components/ui/BookAppointmentCTA';
 import { env } from '@/lib/env';
 
 const FAQS = [
@@ -21,50 +25,66 @@ export default function DashaCalculatorPage() {
     name: '',
     date: '',
     time: '',
-    location: ''
+    location: '',
+    lat: 28.6139,
+    lng: 77.2090,
+    timezone: 5.5
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState(false);
 
   const [resultData, setResultData] = useState<any>(null);
+  const [dashaApiData, setDashaApiData] = useState<any>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
-      const response = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          endpoint: 'planets',
-          data: {
-            year: parseInt(formData.date.split('-')[0]),
-            month: parseInt(formData.date.split('-')[1]),
-            date: parseInt(formData.date.split('-')[2]),
-            hours: parseInt(formData.time.split(':')[0] || '0'),
-            minutes: parseInt(formData.time.split(':')[1] || '0'),
-            seconds: 0,
-            latitude: 28.6139,
-            longitude: 77.2090,
-            timezone: 5.5,
-            config: {
-              observation_point: 'topocentric',
-              ayanamsha: 'lahiri'
-            }
-          }
-        }),
-      });
+      const payloadData = {
+        year: parseInt(formData.date.split('-')[0]),
+        month: parseInt(formData.date.split('-')[1]),
+        date: parseInt(formData.date.split('-')[2]),
+        hours: parseInt(formData.time.split(':')[0] || '0'),
+        minutes: parseInt(formData.time.split(':')[1] || '0'),
+        seconds: 0,
+        latitude: formData.lat || 28.6139,
+        longitude: formData.lng || 77.2090,
+        timezone: formData.timezone || 5.5,
+        config: {
+          observation_point: 'topocentric',
+          ayanamsha: 'lahiri'
+        }
+      };
 
-      const data = await response.json();
-      if (data.success) {
-        setResultData(data.data);
+      const [planetsRes, dashaRes] = await Promise.all([
+        fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ endpoint: 'planets', data: payloadData }),
+        }),
+        fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ endpoint: 'vimsottari/maha-dasas-and-antar-dasas', data: payloadData }),
+        }).catch(err => {
+          console.error('Dasha API error:', err);
+          return null;
+        })
+      ]);
+
+      const planetsJson = await planetsRes.json();
+      const dashaJson = dashaRes ? await dashaRes.json() : null;
+
+      if (planetsJson.success) {
+        setResultData(planetsJson.data);
+        if (dashaJson && dashaJson.success) {
+          setDashaApiData(dashaJson.data);
+        }
         setResult(true);
       } else {
-        alert('Failed to calculate: ' + (data.message || 'Unknown error'));
+        alert('Failed to calculate: ' + (planetsJson.message || 'Unknown error'));
       }
     } catch (err) {
       console.error(err);
@@ -82,21 +102,23 @@ export default function DashaCalculatorPage() {
       <div className="max-w-4xl mx-auto space-y-16 relative z-10">
         
         {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4 pt-8"
-        >
-          <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
-            <Activity className="w-4 h-4" /> Free Utility
-          </span>
-          <h1 className="font-serif text-4xl md:text-5xl font-bold">
-            Dasha Calculator <span className="gold-gradient-text">Vimshottari Dasha</span>
-          </h1>
-          <p className="text-gray-400 text-sm md:text-base font-light max-w-2xl mx-auto">
-            Track your current planetary periods and major life cycles. Enter your details below to calculate your personalized report instantly.
-          </p>
-        </motion.div>
+        {!result && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center space-y-4 pt-8"
+          >
+            <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
+              <Activity className="w-4 h-4" /> Free Utility
+            </span>
+            <h1 className="font-serif text-4xl md:text-5xl font-bold">
+              Dasha Calculator <span className="gold-gradient-text">Vimshottari Dasha</span>
+            </h1>
+            <p className="text-gray-400 text-sm md:text-base font-light max-w-2xl mx-auto">
+              Track your major planetary periods and sub-periods. Enter your details below to calculate your personalized report instantly.
+            </p>
+          </motion.div>
+        )}
 
         {/* Main Form Section */}
         <GoldCard theme="dark" className="border border-[var(--gold-200)] p-6 md:p-8">
@@ -127,29 +149,27 @@ export default function DashaCalculatorPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm text-gray-300 font-medium">Time of Birth</label>
-                  <input 
-                    type="time" 
-                    required
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--gold)] transition-colors [color-scheme:dark]"
-                    value={formData.time}
-                    onChange={(e) => setFormData({...formData, time: e.target.value})}
+                  <label className="text-sm text-gray-300 font-medium">Place of Birth</label>
+                  <CitySearchInput 
+                    value={formData.location}
+                    onChange={(city, lat, lng, tz) => {
+                      setFormData(prev => ({
+                        ...prev,
+                        location: city,
+                        lat: lat ?? prev.lat,
+                        lng: lng ?? prev.lng,
+                        timezone: tz ?? prev.timezone
+                      }));
+                    }}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm text-gray-300 font-medium">Place of Birth</label>
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                    <input 
-                      type="text" 
-                      required
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-[var(--gold)] transition-colors"
-                      placeholder="City, Country"
-                      value={formData.location}
-                      onChange={(e) => setFormData({...formData, location: e.target.value})}
-                    />
-                  </div>
+                  <label className="text-sm text-gray-300 font-medium">Time of Birth</label>
+                  <TimePicker12Hour 
+                    value={formData.time || '12:00'}
+                    onChange={(time24) => setFormData(prev => ({ ...prev, time: time24 }))}
+                  />
                 </div>
               </div>
 
@@ -165,65 +185,18 @@ export default function DashaCalculatorPage() {
               </div>
             </form>
           ) : (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center space-y-6 py-8"
-            >
-              <div className="w-16 h-16 bg-[var(--gold-50)] rounded-full flex items-center justify-center mx-auto border border-[var(--gold-200)]">
-                <Activity className="w-8 h-8 text-[var(--gold)]" />
+            <div className="text-center py-2 space-y-6">
+              <div className="bg-white text-black p-6 rounded-2xl text-left shadow-lg">
+                <VimshottariDashaTable data={resultData} dashaApiData={dashaApiData} birthDateStr={formData.date} />
+                <div className="mt-8">
+                  <BookAppointmentCTA />
+                </div>
               </div>
-              <div>
-                <h3 className="text-2xl font-serif font-bold text-white mb-2">Report Generated!</h3>
-                <p className="text-gray-400 text-sm mb-6">
-                  Here are the current major planetary positions for <span className="capitalize text-[var(--gold)]">{formData.name}</span>.
-                </p>
-                {(() => {
-                  const rahu = resultData?.output?.[1]?.Rahu;
-                  const ketu = resultData?.output?.[1]?.Ketu;
-                  const saturn = resultData?.output?.[1]?.Saturn;
-                  
-                  if (!rahu || !ketu || !saturn) return null;
 
-                  return (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-                      <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 relative overflow-hidden group hover:border-[var(--gold)] transition-colors">
-                        <div className="text-[var(--gold)] text-xs uppercase tracking-wider mb-2 font-semibold flex items-center justify-between">
-                          <span>Saturn (Shani)</span>
-                          <span className="text-gray-500">Karma</span>
-                        </div>
-                        <div className="text-3xl font-serif text-white mb-2">{saturn.fullDegree ? saturn.fullDegree.toFixed(2) : '-'}°</div>
-                        <div className="text-gray-400 text-sm">House: <span className="text-white">{saturn.house_number || '-'}</span></div>
-                        <div className="text-gray-400 text-sm mt-1">Retrograde: <span className="text-white">{saturn.isRetro === 'true' ? 'Yes' : 'No'}</span></div>
-                      </div>
-
-                      <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 relative overflow-hidden group hover:border-[var(--gold)] transition-colors">
-                        <div className="text-[var(--gold)] text-xs uppercase tracking-wider mb-2 font-semibold flex items-center justify-between">
-                          <span>North Node (Rahu)</span>
-                          <span className="text-gray-500">Desire</span>
-                        </div>
-                        <div className="text-3xl font-serif text-white mb-2">{rahu.fullDegree ? rahu.fullDegree.toFixed(2) : '-'}°</div>
-                        <div className="text-gray-400 text-sm">House: <span className="text-white">{rahu.house_number || '-'}</span></div>
-                        <div className="text-gray-400 text-sm mt-1">Retrograde: <span className="text-white">{rahu.isRetro === 'true' ? 'Yes' : 'No'}</span></div>
-                      </div>
-
-                      <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 relative overflow-hidden group hover:border-[var(--gold)] transition-colors">
-                        <div className="text-[var(--gold)] text-xs uppercase tracking-wider mb-2 font-semibold flex items-center justify-between">
-                          <span>South Node (Ketu)</span>
-                          <span className="text-gray-500">Moksha</span>
-                        </div>
-                        <div className="text-3xl font-serif text-white mb-2">{ketu.fullDegree ? ketu.fullDegree.toFixed(2) : '-'}°</div>
-                        <div className="text-gray-400 text-sm">House: <span className="text-white">{ketu.house_number || '-'}</span></div>
-                        <div className="text-gray-400 text-sm mt-1">Retrograde: <span className="text-white">{ketu.isRetro === 'true' ? 'Yes' : 'No'}</span></div>
-                      </div>
-                    </div>
-                  );
-                })()}
-              </div>
-              <GoldButton onClick={() => { setResult(false); setResultData(null); }} variant="outlined" className="mt-8">
+              <GoldButton onClick={() => { setResult(false); setResultData(null); setDashaApiData(null); }} variant="outlined" className="mt-4">
                 Calculate Again
               </GoldButton>
-            </motion.div>
+            </div>
           )}
         </GoldCard>
 
@@ -232,10 +205,7 @@ export default function DashaCalculatorPage() {
           <h2 className="font-serif text-3xl font-bold">Why use our <span className="text-[var(--gold)]">Dasha Calculator</span>?</h2>
           <div className="prose prose-invert max-w-none text-gray-300 font-light text-sm leading-relaxed space-y-4">
             <p>
-              In Vedic Astrology and numerology, precision is everything. Our free online Vimshottari Dasha provides you with highly accurate insights based on ancient mathematical algorithms combined with modern astronomical data.
-            </p>
-            <p>
-              Understanding your core planetary alignments allows you to make informed decisions about your career, relationships, health, and wealth. While this automated tool gives you an excellent starting point, nothing replaces the deep synthesis provided by a master astrologer.
+              In Vedic Astrology, planetary cycles called Dashas dictate major life stages. Our free Vimshottari Dasha calculator generates exact Mahadasha and Antardasha dates using high-precision Swiss Ephemeris data.
             </p>
           </div>
         </div>

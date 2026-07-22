@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Sparkles, Clock, Calendar } from 'lucide-react';
+import React from 'react';
 
 interface VimshottariDashaProps {
-  data: any;
-  birthDateStr: string; // YYYY-MM-DD
+  data?: any;
+  dashaApiData?: any;
+  birthDateStr?: string; // YYYY-MM-DD
 }
 
 const DASHA_LORDS = [
@@ -18,258 +18,205 @@ const DASHA_LORDS = [
   { name: 'Mercury', vedic: 'Budh', years: 17 }
 ];
 
-export function VimshottariDashaTable({ data, birthDateStr }: VimshottariDashaProps) {
-  const [activeTab, setActiveTab] = useState<'mahadasha' | 'antardasha' | 'pratyantardasha'>('mahadasha');
+const VEDIC_MAP: Record<string, string> = {
+  Sun: 'Surya',
+  Moon: 'Chandra',
+  Mars: 'Mangal',
+  Mercury: 'Budh',
+  Jupiter: 'Guru',
+  Venus: 'Shukra',
+  Saturn: 'Shani',
+  Rahu: 'Rahu',
+  Ketu: 'Ketu'
+};
 
-  if (!data || !data.output) return null;
-
-  const planetsObj = data.output[1] || {};
-  const moonObj = planetsObj["Moon"] || {};
-  const moonFullDegree = moonObj.fullDegree ?? 0;
-
-  // Nakshatra & Starting Lord Calculation
-  const nakshatraIndex = Math.floor(moonFullDegree / 13.333333333333334);
-  const lordIndex = nakshatraIndex % 9;
-  
-  const degInNak = moonFullDegree % 13.333333333333334;
-  const elapsedFraction = degInNak / 13.333333333333334;
-
-  const firstDashaTotalYears = DASHA_LORDS[lordIndex].years;
-  const passedYearsAtBirth = elapsedFraction * firstDashaTotalYears;
-
-  // Parse birth date
-  const birthDateParts = birthDateStr ? birthDateStr.split('-') : ['1990', '01', '01'];
-  const birthYear = parseInt(birthDateParts[0]) || 1990;
-  const birthMonth = (parseInt(birthDateParts[1]) || 1) - 1;
-  const birthDay = parseInt(birthDateParts[2]) || 1;
-
-  const birthDateObj = new Date(birthYear, birthMonth, birthDay);
-  const now = new Date();
-
-  // Helper to add exact calendar time
-  const addCalendarTime = (baseDate: Date, totalYears: number) => {
-    const fullYears = Math.floor(totalYears);
-    const floatMonths = (totalYears - fullYears) * 12;
-    const fullMonths = Math.floor(floatMonths);
-    const floatDays = Math.round((floatMonths - fullMonths) * 30.4375);
-
-    const result = new Date(baseDate);
-    result.setFullYear(result.getFullYear() + fullYears);
-    result.setMonth(result.getMonth() + fullMonths);
-    result.setDate(result.getDate() + floatDays);
-    return result;
-  };
-
-  const formatDate = (d: Date) => {
-    const day = d.getDate().toString().padStart(2, '0');
+export function VimshottariDashaTable({ data, dashaApiData, birthDateStr }: VimshottariDashaProps) {
+  const formatApiDate = (dateStr: string) => {
+    if (!dateStr) return '-';
+    const parts = dateStr.split(' ')[0].split('-');
+    if (parts.length < 3) return dateStr;
+    const y = parts[0];
+    const mIdx = (parseInt(parts[1]) || 1) - 1;
+    const d = (parts[2] || '01').padStart(2, '0');
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const month = months[d.getMonth()];
-    const year = d.getFullYear();
-    return `${day}/${month}/${year}`;
+    const month = months[mIdx] || 'Jan';
+    return `${d}/${month}/${y}`;
   };
 
-  const firstMahaStartDate = addCalendarTime(birthDateObj, -passedYearsAtBirth);
-  let currentMahaDate = new Date(firstMahaStartDate);
+  let displayTimeline: any[] = [];
 
-  // Build full 3-level timeline
-  const mahaTimeline = Array.from({ length: 9 }).map((_, mIdx) => {
-    const mahaLordIdx = (lordIndex + mIdx) % 9;
-    const mahaLord = DASHA_LORDS[mahaLordIdx];
-    const mahaDurationYears = mahaLord.years;
+  // 1. Primary: Parse official Swiss Ephemeris Dasha API Data
+  if (dashaApiData) {
+    try {
+      let rawObj = dashaApiData;
+      if (rawObj.data) rawObj = rawObj.data;
+      if (rawObj.output) rawObj = rawObj.output;
+      if (typeof rawObj === 'string') {
+        rawObj = JSON.parse(rawObj);
+      }
 
-    const mahaStartDate = new Date(currentMahaDate);
-    const mahaEndDate = addCalendarTime(mahaStartDate, mahaDurationYears);
-    currentMahaDate = new Date(mahaEndDate);
+      if (rawObj && typeof rawObj === 'object') {
+        displayTimeline = Object.entries(rawObj).map(([mahaName, antarsObj]: [string, any]) => {
+          const antarEntries = Object.entries(antarsObj || {});
+          const firstAntar: any = antarEntries[0]?.[1] || {};
+          const lastAntar: any = antarEntries[antarEntries.length - 1]?.[1] || {};
 
-    const isMahaActive = now >= mahaStartDate && now <= mahaEndDate;
+          const antardashas = antarEntries.map(([antarName, timeObj]: [string, any]) => ({
+            lord: { name: antarName, vedic: VEDIC_MAP[antarName] || antarName },
+            startDateStr: formatApiDate(timeObj.start_time),
+            endDateStr: formatApiDate(timeObj.end_time)
+          }));
 
-    // Antardashas
-    let currentAntarDate = new Date(mahaStartDate);
-    const antardashas = Array.from({ length: 9 }).map((_, aIdx) => {
-      const antarLordIdx = (mahaLordIdx + aIdx) % 9;
-      const antarLord = DASHA_LORDS[antarLordIdx];
-      const antarDurationYears = (mahaDurationYears * antarLord.years) / 120;
+          return {
+            lord: { name: mahaName, vedic: VEDIC_MAP[mahaName] || mahaName },
+            startDateStr: formatApiDate(firstAntar.start_time),
+            endDateStr: formatApiDate(lastAntar.end_time),
+            antardashas
+          };
+        });
+      }
+    } catch (err) {
+      console.error('Failed to parse API dasha response:', err);
+    }
+  }
 
-      const antarStartDate = new Date(currentAntarDate);
-      const antarEndDate = addCalendarTime(antarStartDate, antarDurationYears);
-      currentAntarDate = new Date(antarEndDate);
+  // 2. Fallback: Calculation starting on Birth Date
+  if (displayTimeline.length === 0 && data && data.output) {
+    const planetsObj = data.output[1] || {};
+    const moonObj = planetsObj["Moon"] || {};
+    const moonFullDegree = moonObj.fullDegree ?? 0;
 
-      const isAntarActive = now >= antarStartDate && now <= antarEndDate;
+    const nakshatraIndex = Math.floor(moonFullDegree / 13.333333333333334);
+    const lordIndex = nakshatraIndex % 9;
 
-      // Pratyantardashas
-      let currentPratDate = new Date(antarStartDate);
-      const pratyantardashas = Array.from({ length: 9 }).map((_, pIdx) => {
-        const pratLordIdx = (antarLordIdx + pIdx) % 9;
-        const pratLord = DASHA_LORDS[pratLordIdx];
-        const pratDurationYears = (antarDurationYears * pratLord.years) / 120;
+    const birthDateParts = birthDateStr ? birthDateStr.split('-') : ['1990', '01', '01'];
+    const birthYear = parseInt(birthDateParts[0]) || 1990;
+    const birthMonth = (parseInt(birthDateParts[1]) || 1) - 1;
+    const birthDay = parseInt(birthDateParts[2]) || 1;
 
-        const pratStartDate = new Date(currentPratDate);
-        const pratEndDate = addCalendarTime(pratStartDate, pratDurationYears);
-        currentPratDate = new Date(pratEndDate);
+    const birthDateObj = new Date(birthYear, birthMonth, birthDay);
 
-        const isPratActive = now >= pratStartDate && now <= pratEndDate;
+    const addYearsExact = (baseDate: Date, years: number) => {
+      const res = new Date(baseDate);
+      res.setFullYear(res.getFullYear() + years);
+      return res;
+    };
+
+    const formatDate = (d: Date) => {
+      const day = d.getDate().toString().padStart(2, '0');
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const month = months[d.getMonth()];
+      const year = d.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
+    let currentMahaStart = new Date(birthDateObj);
+
+    displayTimeline = Array.from({ length: 9 }).map((_, mIdx) => {
+      const mahaLordIdx = (lordIndex + mIdx) % 9;
+      const mahaLord = DASHA_LORDS[mahaLordIdx];
+      const mahaYears = mahaLord.years;
+
+      const mahaStartDate = new Date(currentMahaStart);
+      const mahaEndDate = addYearsExact(mahaStartDate, mahaYears);
+      currentMahaStart = new Date(mahaEndDate);
+
+      let currentAntarStart = new Date(mahaStartDate);
+      let accumAntarYears = 0;
+
+      const antardashas = Array.from({ length: 9 }).map((_, aIdx) => {
+        const antarLordIdx = (mahaLordIdx + aIdx) % 9;
+        const antarLord = DASHA_LORDS[antarLordIdx];
+        accumAntarYears += antarLord.years;
+
+        let antarEndDate: Date;
+        if (aIdx === 8) {
+          antarEndDate = new Date(mahaEndDate);
+        } else {
+          const totalDays = (mahaYears * accumAntarYears * 365.2425) / 120;
+          antarEndDate = new Date(mahaStartDate.getTime() + Math.round(totalDays) * 86400000);
+        }
+
+        const antarStartDate = new Date(currentAntarStart);
+        currentAntarStart = new Date(antarEndDate);
 
         return {
-          lord: pratLord,
-          startDate: pratStartDate,
-          endDate: pratEndDate,
-          isActive: isPratActive
+          lord: antarLord,
+          startDateStr: formatDate(antarStartDate),
+          endDateStr: formatDate(antarEndDate)
         };
       });
 
       return {
-        lord: antarLord,
-        startDate: antarStartDate,
-        endDate: antarEndDate,
-        isActive: isAntarActive,
-        pratyantardashas
+        lord: mahaLord,
+        startDateStr: formatDate(mahaStartDate),
+        endDateStr: formatDate(mahaEndDate),
+        antardashas
       };
     });
+  }
 
-    return {
-      lord: mahaLord,
-      startDate: mahaStartDate,
-      endDate: mahaEndDate,
-      isActive: isMahaActive,
-      antardashas
-    };
-  });
-
-  const activeMaha = mahaTimeline.find(m => m.isActive) || mahaTimeline[0];
-  const activeAntar = activeMaha.antardashas.find(a => a.isActive) || activeMaha.antardashas[0];
+  if (displayTimeline.length === 0) return null;
 
   return (
-    <div className="w-full max-w-4xl mx-auto my-8 space-y-4">
+    <div className="w-full max-w-4xl mx-auto my-8 space-y-6">
       {/* Title Header */}
-      <div className="text-center space-y-1">
-        <h4 className="text-xl md:text-2xl font-serif font-bold text-amber-950 dark:text-amber-200 flex items-center justify-center gap-2">
-          ✦ Vimshottari Dasha Timeline ✦
-        </h4>
-        {activeMaha && activeAntar && (
-          <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
-            Active Period: <strong>{activeMaha.lord.vedic} &gt; {activeAntar.lord.vedic}</strong> (until {formatDate(activeAntar.endDate)})
-          </p>
-        )}
+      <h3 className="text-xl md:text-2xl font-serif font-bold text-amber-950 dark:text-amber-200 text-center flex items-center justify-center gap-2">
+        ✦ Vimshottari Mahadasha & Antardasha ✦
+      </h3>
+
+      {/* Main Mahadasha Table */}
+      <div className="pdf-page-break-avoid border-2 border-amber-600 rounded-xl overflow-hidden shadow-md bg-[#fef9c3] dark:bg-neutral-900 max-w-xl mx-auto">
+        <table className="w-full text-center border-collapse">
+          <thead>
+            <tr className="bg-[#f59e0b] text-black font-bold text-sm md:text-base border-b-2 border-amber-600">
+              <th className="p-2.5 border-r border-amber-600 font-serif">Mahadasha</th>
+              <th className="p-2.5 border-r border-amber-600 font-serif">Start</th>
+              <th className="p-2.5 font-serif">End</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-amber-600/40 text-xs md:text-sm font-semibold text-neutral-900 dark:text-amber-100">
+            {displayTimeline.map((maha, idx) => (
+              <tr key={idx} className="hover:bg-amber-200/50">
+                <td className="p-2 border-r border-amber-600/40 font-serif font-bold">{maha.lord.vedic}</td>
+                <td className="p-2 border-r border-amber-600/40 font-mono">{maha.startDateStr}</td>
+                <td className="p-2 font-mono">{maha.endDateStr}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {/* Tab Selectors */}
-      <div className="flex justify-center gap-2 print:hidden">
-        <button
-          onClick={() => setActiveTab('mahadasha')}
-          className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
-            activeTab === 'mahadasha'
-              ? 'bg-[var(--gold)] text-black shadow-md'
-              : 'bg-neutral-800 text-gray-300 hover:bg-neutral-700'
-          }`}
-        >
-          Mahadasha
-        </button>
-        <button
-          onClick={() => setActiveTab('antardasha')}
-          className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
-            activeTab === 'antardasha'
-              ? 'bg-[var(--gold)] text-black shadow-md'
-              : 'bg-neutral-800 text-gray-300 hover:bg-neutral-700'
-          }`}
-        >
-          Antardasha ({activeMaha.lord.vedic})
-        </button>
-        <button
-          onClick={() => setActiveTab('pratyantardasha')}
-          className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
-            activeTab === 'pratyantardasha'
-              ? 'bg-[var(--gold)] text-black shadow-md'
-              : 'bg-neutral-800 text-gray-300 hover:bg-neutral-700'
-          }`}
-        >
-          Pratyantardasha ({activeMaha.lord.vedic} &gt; {activeAntar.lord.vedic})
-        </button>
+      {/* Grid of 9 Antardasha Tables */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        {displayTimeline.map((maha, mIdx) => (
+          <div key={mIdx} className="pdf-page-break-avoid border-2 border-amber-600 rounded-xl overflow-hidden shadow-md bg-[#fef9c3] dark:bg-neutral-900">
+            <table className="w-full text-center border-collapse">
+              <thead>
+                <tr className="bg-[#f59e0b] text-black font-bold text-xs md:text-sm border-b border-amber-600">
+                  <th className="p-2 border-r border-amber-600 font-serif w-1/3">Antardasha</th>
+                  <th className="p-2 border-r border-amber-600 font-serif w-1/3">Start</th>
+                  <th className="p-2 font-serif w-1/3">End</th>
+                </tr>
+                <tr className="bg-[#fef08a] dark:bg-amber-950/80 text-amber-950 dark:text-amber-200 font-bold text-xs border-b border-amber-600">
+                  <td colSpan={3} className="py-1.5 font-serif font-extrabold text-center tracking-wide">
+                    Mahadasha: {maha.lord.vedic}
+                  </td>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-amber-600/30 text-xs font-medium text-neutral-900 dark:text-amber-100">
+                {maha.antardashas.map((antar: any, aIdx: number) => (
+                  <tr key={aIdx} className="hover:bg-amber-200/40">
+                    <td className="p-1.5 border-r border-amber-600/30 font-serif font-bold">{antar.lord.vedic}</td>
+                    <td className="p-1.5 border-r border-amber-600/30 font-mono text-[11px] sm:text-xs">{antar.startDateStr}</td>
+                    <td className="p-1.5 font-mono text-[11px] sm:text-xs">{antar.endDateStr}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
       </div>
-
-      {/* Mahadasha Table (Exact Image Match) */}
-      {(activeTab === 'mahadasha' || true) && (
-        <div className={`border-2 border-amber-600 rounded-xl overflow-hidden shadow-lg bg-[#fef3c7] dark:bg-neutral-900 ${activeTab !== 'mahadasha' ? 'hidden print:block mb-6' : ''}`}>
-          <table className="w-full text-center border-collapse">
-            <thead>
-              <tr className="bg-[#f59e0b] text-amber-950 font-bold text-sm md:text-base border-b-2 border-amber-600">
-                <th className="p-3 border-r border-amber-600 font-serif">Mahadasha</th>
-                <th className="p-3 border-r border-amber-600 font-serif">Start</th>
-                <th className="p-3 font-serif">End</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-amber-600/40 text-sm md:text-base font-semibold text-neutral-900 dark:text-amber-100">
-              {mahaTimeline.map((maha, idx) => (
-                <tr key={idx} className={`${maha.isActive ? 'bg-amber-300/80 font-bold text-amber-950' : 'hover:bg-amber-200/50'}`}>
-                  <td className="p-2.5 border-r border-amber-600/40 font-serif">
-                    {maha.lord.vedic} {maha.isActive && <span className="text-[10px] bg-amber-900 text-white px-1.5 py-0.5 rounded ml-1 font-sans">Active</span>}
-                  </td>
-                  <td className="p-2.5 border-r border-amber-600/40 font-mono">{formatDate(maha.startDate)}</td>
-                  <td className="p-2.5 font-mono">{formatDate(maha.endDate)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {/* Antardasha Table */}
-      {(activeTab === 'antardasha' || true) && (
-        <div className={`border-2 border-amber-600 rounded-xl overflow-hidden shadow-lg bg-[#fef3c7] dark:bg-neutral-900 ${activeTab !== 'antardasha' ? 'hidden print:block mb-6' : ''}`}>
-          <div className="bg-amber-700 text-white p-2 text-center text-xs font-bold uppercase tracking-wider">
-            Antardasha under {activeMaha.lord.vedic} Mahadasha
-          </div>
-          <table className="w-full text-center border-collapse">
-            <thead>
-              <tr className="bg-[#f59e0b] text-amber-950 font-bold text-sm md:text-base border-b-2 border-amber-600">
-                <th className="p-3 border-r border-amber-600 font-serif">Antardasha</th>
-                <th className="p-3 border-r border-amber-600 font-serif">Start</th>
-                <th className="p-3 font-serif">End</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-amber-600/40 text-sm md:text-base font-semibold text-neutral-900 dark:text-amber-100">
-              {activeMaha.antardashas.map((antar, idx) => (
-                <tr key={idx} className={`${antar.isActive ? 'bg-amber-300/80 font-bold text-amber-950' : 'hover:bg-amber-200/50'}`}>
-                  <td className="p-2.5 border-r border-amber-600/40 font-serif">
-                    {activeMaha.lord.vedic} &gt; {antar.lord.vedic}
-                  </td>
-                  <td className="p-2.5 border-r border-amber-600/40 font-mono">{formatDate(antar.startDate)}</td>
-                  <td className="p-2.5 font-mono">{formatDate(antar.endDate)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {/* Pratyantardasha Table */}
-      {(activeTab === 'pratyantardasha' || true) && (
-        <div className={`border-2 border-amber-600 rounded-xl overflow-hidden shadow-lg bg-[#fef3c7] dark:bg-neutral-900 ${activeTab !== 'pratyantardasha' ? 'hidden print:block' : ''}`}>
-          <div className="bg-amber-700 text-white p-2 text-center text-xs font-bold uppercase tracking-wider">
-            Pratyantardasha under {activeMaha.lord.vedic} &gt; {activeAntar.lord.vedic}
-          </div>
-          <table className="w-full text-center border-collapse">
-            <thead>
-              <tr className="bg-[#f59e0b] text-amber-950 font-bold text-sm md:text-base border-b-2 border-amber-600">
-                <th className="p-3 border-r border-amber-600 font-serif">Pratyantardasha</th>
-                <th className="p-3 border-r border-amber-600 font-serif">Start</th>
-                <th className="p-3 font-serif">End</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-amber-600/40 text-sm md:text-base font-semibold text-neutral-900 dark:text-amber-100">
-              {activeAntar.pratyantardashas.map((prat, idx) => (
-                <tr key={idx} className={`${prat.isActive ? 'bg-amber-300/80 font-bold text-amber-950' : 'hover:bg-amber-200/50'}`}>
-                  <td className="p-2.5 border-r border-amber-600/40 font-serif">
-                    {activeMaha.lord.vedic} &gt; {activeAntar.lord.vedic} &gt; {prat.lord.vedic}
-                  </td>
-                  <td className="p-2.5 border-r border-amber-600/40 font-mono">{formatDate(prat.startDate)}</td>
-                  <td className="p-2.5 font-mono">{formatDate(prat.endDate)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
     </div>
   );
 }

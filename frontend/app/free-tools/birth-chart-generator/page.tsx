@@ -21,6 +21,8 @@ import { AdvancedAuditsBanner } from '@/components/ui/AdvancedAuditsBanner';
 import { DownloadPDFButton } from '@/components/ui/DownloadPDFButton';
 import { ReportHeader } from '@/components/ui/ReportHeader';
 import { PlanetsPositionTable } from '@/components/ui/PlanetsPositionTable';
+import { PlanetaryAspects } from '@/components/ui/PlanetaryAspects';
+import { DivisionalChartsSection } from '@/components/ui/DivisionalChartsSection';
 import { env } from '@/lib/env';
 
 const ZODIAC_SIGNS = [
@@ -53,43 +55,56 @@ export default function BirthChartGeneratorPage() {
   const [result, setResult] = useState(false);
 
   const [resultData, setResultData] = useState<any>(null);
+  const [dashaApiData, setDashaApiData] = useState<any>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
-      const response = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          endpoint: 'planets',
-          data: {
-            year: parseInt(formData.date.split('-')[0]),
-            month: parseInt(formData.date.split('-')[1]),
-            date: parseInt(formData.date.split('-')[2]),
-            hours: parseInt(formData.time.split(':')[0] || '0'),
-            minutes: parseInt(formData.time.split(':')[1] || '0'),
-            seconds: 0,
-            latitude: formData.lat || 28.6139,
-            longitude: formData.lng || 77.2090,
-            timezone: formData.timezone || 5.5,
-            config: {
-              observation_point: 'topocentric',
-              ayanamsha: 'lahiri'
-            }
-          }
-        }),
-      });
+      const payloadData = {
+        year: parseInt(formData.date.split('-')[0]),
+        month: parseInt(formData.date.split('-')[1]),
+        date: parseInt(formData.date.split('-')[2]),
+        hours: parseInt(formData.time.split(':')[0] || '0'),
+        minutes: parseInt(formData.time.split(':')[1] || '0'),
+        seconds: 0,
+        latitude: formData.lat || 28.6139,
+        longitude: formData.lng || 77.2090,
+        timezone: formData.timezone || 5.5,
+        config: {
+          observation_point: 'topocentric',
+          ayanamsha: 'lahiri'
+        }
+      };
 
-      const data = await response.json();
-      if (data.success) {
-        setResultData(data.data);
+      const [planetsRes, dashaRes] = await Promise.all([
+        fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ endpoint: 'planets', data: payloadData }),
+        }),
+        fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/astrology/proxy`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ endpoint: 'vimsottari/maha-dasas-and-antar-dasas', data: payloadData }),
+        }).catch(err => {
+          console.error('Dasha API error:', err);
+          return null;
+        })
+      ]);
+
+      const planetsJson = await planetsRes.json();
+      const dashaJson = dashaRes ? await dashaRes.json() : null;
+
+      if (planetsJson.success) {
+        setResultData(planetsJson.data);
+        if (dashaJson && dashaJson.success) {
+          setDashaApiData(dashaJson.data);
+        }
         setResult(true);
       } else {
-        alert('Failed to calculate: ' + (data.message || 'Unknown error'));
+        alert('Failed to calculate: ' + (planetsJson.message || 'Unknown error'));
       }
     } catch (err) {
       console.error(err);
@@ -202,69 +217,74 @@ export default function BirthChartGeneratorPage() {
               </div>
             </form>
           ) : (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-2"
-            >
-              <div id="report-pdf-content" className="pt-0 px-2 pb-2 sm:px-4 sm:pb-4 rounded-2xl bg-white dark:bg-neutral-950 text-left">
+            <div className="text-center py-2">
+              <div id="report-pdf-content" className="pt-0 px-2 pb-2 sm:px-4 sm:pb-4 rounded-2xl bg-white text-black text-left space-y-6">
                 
-                {/* 📖 PAGE 1: Personal Details & Basic Astro Details (Grand Big Header) */}
-                <div className="mb-6 w-full">
+                {/* 📖 Header Banner */}
+                <div className="pdf-page-break-avoid w-full">
                   <ReportHeader isBig={true} />
-                  <div className="mb-6 w-full">
-                    <BirthDetailsTable 
-                      name={formData.name}
-                      date={formData.date}
-                      time={formData.time}
-                      location={formData.location}
-                      lat={formData.lat}
-                      lng={formData.lng}
-                      timezone={formData.timezone}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <BasicAstroDetails data={resultData} />
-                  </div>
                 </div>
 
-                {/* 📖 PAGE 2: Birth Chart & Planets Position Table */}
-                <div className="pdf-page-break pt-2 mb-6">
-                  <ReportHeader isBig={false} />
-                  <div className="mb-6 flex justify-center w-full">
-                    <NorthIndianChart data={resultData} />
-                  </div>
-                  <div className="w-full">
-                    <PlanetsPositionTable data={resultData} />
-                  </div>
+                {/* 📖 Personal Details */}
+                <div className="pdf-page-break-avoid w-full">
+                  <BirthDetailsTable 
+                    name={formData.name}
+                    date={formData.date}
+                    time={formData.time}
+                    location={formData.location}
+                    lat={formData.lat}
+                    lng={formData.lng}
+                    timezone={formData.timezone}
+                  />
                 </div>
 
-                {/* 📖 PAGE 3: Lo Shu Grid & Numerology Compatibility */}
-                <div className="pdf-page-break pt-2 mb-6">
-                  <ReportHeader />
-                  <div className="mb-6 w-full">
-                    <LoShuGrid dateOfBirthStr={formData.date} />
-                  </div>
-                  <div className="w-full">
-                    <NumerologyAstroDetails dateOfBirthStr={formData.date} />
-                  </div>
+                {/* 📖 Basic Astro Details */}
+                <div className="pdf-page-break-avoid w-full">
+                  <BasicAstroDetails data={resultData} />
                 </div>
 
-                {/* 📖 PAGE 4: Auspicious Lucky Elements, Advanced Audits, Mahadasha & Consultation CTA */}
-                <div className="pdf-page-break pt-2">
-                  <ReportHeader />
-                  <div className="mb-6 w-full">
-                    <LuckyElementsBanner dateOfBirthStr={formData.date} />
-                  </div>
-                  <div className="mb-6 w-full">
-                    <AdvancedAuditsBanner />
-                  </div>
-                  <div className="mb-6 w-full">
-                    <VimshottariDashaTable data={resultData} birthDateStr={formData.date} />
-                  </div>
-                  <div className="mt-6 max-w-3xl mx-auto">
-                    <BookAppointmentCTA />
-                  </div>
+                {/* 📖 Birth Lagna Chart */}
+                <div className="pdf-page-break-avoid flex justify-center w-full">
+                  <NorthIndianChart data={resultData} title="Lagna Chart (D-1)" />
+                </div>
+
+                {/* 📖 Planetary Aspects Grid */}
+                <div className="pdf-page-break-avoid w-full">
+                  <PlanetaryAspects />
+                </div>
+
+                {/* 📖 Planetary Positions Table */}
+                <div className="pdf-page-break-avoid w-full">
+                  <PlanetsPositionTable data={resultData} />
+                </div>
+
+                {/* 📖 Divisional Charts (Vargas) */}
+                <div className="pdf-page-break-avoid w-full">
+                  <DivisionalChartsSection data={resultData} />
+                </div>
+
+                {/* 📖 Lo Shu Grid & Numerology Details */}
+                <div className="pdf-page-break-avoid w-full">
+                  <LoShuGrid dateOfBirthStr={formData.date} />
+                </div>
+                <div className="pdf-page-break-avoid w-full">
+                  <NumerologyAstroDetails dateOfBirthStr={formData.date} />
+                </div>
+
+                {/* 📖 Auspicious Lucky Elements & Advanced Audits */}
+                <div className="pdf-page-break-avoid w-full">
+                  <LuckyElementsBanner dateOfBirthStr={formData.date} />
+                </div>
+                <div className="pdf-page-break-avoid w-full">
+                  <AdvancedAuditsBanner />
+                </div>
+
+                {/* 📖 Vimshottari Dasha & Consultation CTA */}
+                <div className="pdf-page-break-avoid w-full">
+                  <VimshottariDashaTable data={resultData} dashaApiData={dashaApiData} birthDateStr={formData.date} />
+                </div>
+                <div className="pdf-page-break-avoid mt-6 max-w-3xl mx-auto">
+                  <BookAppointmentCTA />
                 </div>
 
               </div>
@@ -276,7 +296,7 @@ export default function BirthChartGeneratorPage() {
                   Calculate Again
                 </GoldButton>
               </div>
-            </motion.div>
+            </div>
           )}
         </GoldCard>
 

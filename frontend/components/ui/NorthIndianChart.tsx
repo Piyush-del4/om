@@ -9,6 +9,7 @@ interface PlanetData {
 
 interface NorthIndianChartProps {
   data: any;
+  title?: string;
 }
 
 const RASHI_NAMES: Record<number, string> = {
@@ -50,7 +51,7 @@ const DEBILITATED_SIGNS: Record<string, number | number[]> = {
   Ketu: [2, 3]  // Taurus / Gemini
 };
 
-export function NorthIndianChart({ data }: NorthIndianChartProps) {
+export function NorthIndianChart({ data, title }: NorthIndianChartProps) {
   if (!data || !data.output) return null;
 
   const planetsObj = data.output[1] || {};
@@ -194,8 +195,16 @@ export function NorthIndianChart({ data }: NorthIndianChartProps) {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto aspect-square bg-white border-2 border-[var(--gold-300)] relative rounded-2xl shadow-xl p-3">
-      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full drop-shadow-sm">
+    <div className="w-full max-w-2xl mx-auto bg-white border-2 border-[var(--gold-300)] relative rounded-2xl shadow-xl p-3">
+      {title && (
+        <div className="text-center pb-2 mb-1 border-b border-[var(--gold-200)]">
+          <h4 className="font-serif font-bold text-lg md:text-xl text-amber-950">
+            ✦ {title} ✦
+          </h4>
+        </div>
+      )}
+      <div className="w-full relative min-h-[350px] sm:min-h-[480px] h-[350px] sm:h-[480px] flex items-center justify-center">
+        <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full max-h-full drop-shadow-sm" style={{ width: '100%', height: '100%' }}>
         {/* Outer Box */}
         <rect x="0" y="0" width={size} height={size} fill="transparent" stroke="#cc8f33" strokeWidth="2.5" />
         
@@ -274,6 +283,7 @@ export function NorthIndianChart({ data }: NorthIndianChartProps) {
           );
         })}
       </svg>
+      </div>
 
       {/* Symbol Legend */}
       <div className="mt-3 pt-3 border-t border-[var(--gold-200)] flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-neutral-600 font-medium">
