@@ -30,6 +30,7 @@ import { calculateVargaChart } from '@/lib/vargaCalculator';
 import { env } from '@/lib/env';
 
 // Import New Kundli Report Sections (Sections 3 to 24)
+import { LagnaRashiCards } from '@/components/ui/astrology/LagnaRashiCards';
 import { PlanetaryDetailsCard } from '@/components/ui/astrology/PlanetaryDetailsCard';
 import { HousesAnalysisGrid } from '@/components/ui/astrology/HousesAnalysisGrid';
 import { LagnaMoonSunDetails } from '@/components/ui/astrology/LagnaMoonSunDetails';
@@ -289,6 +290,7 @@ export default function KundliGeneratorPage() {
                 {/* 2. Astro Info */}
                 <div className="pdf-page-break-avoid w-full space-y-4">
                   <BasicAstroDetails data={resultData} />
+                  <LagnaRashiCards data={resultData} />
                   <ReportSectionFooter />
                 </div>
 
