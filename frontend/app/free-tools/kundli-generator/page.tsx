@@ -322,7 +322,7 @@ export default function KundliGeneratorPage() {
                     </div>
                     
                     {/* Charts Grid 50-50 */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-[5px] w-full">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 w-full">
                       {/* Lagna Chart */}
                       <div className="bg-white dark:bg-neutral-800 rounded-xl p-0 space-y-2 flex flex-col items-center justify-center w-full h-full">
                         <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
