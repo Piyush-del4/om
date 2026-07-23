@@ -6,15 +6,15 @@ interface LuckyElementsProps {
 }
 
 const FRIENDLY_MAP: Record<number, number[]> = {
-  1: [1, 2, 3, 5, 9],
+  1: [1, 2, 3, 5, 6, 9],
   2: [1, 2, 3, 5],
-  3: [1, 2, 3, 5, 7, 9],
-  4: [1, 5, 6, 7],
+  3: [1, 2, 3, 5],
+  4: [1, 5, 7, 6],
   5: [1, 2, 3, 5, 6],
-  6: [5, 6, 8],
-  7: [1, 3, 5, 6],
-  8: [5, 6, 7],
-  9: [1, 2, 3, 5]
+  6: [1, 4, 5, 6, 7],
+  7: [1, 3, 5, 4, 6],
+  8: [5, 3, 6, 7],
+  9: [1, 3, 5]
 };
 
 const LUCKY_DATA: Record<number, { colors: string[]; days: string; gem: string; bgColors: string[] }> = {
