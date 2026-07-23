@@ -46,12 +46,45 @@ export function LuckyElementsBanner({ dateOfBirthStr }: LuckyElementsProps) {
   }
 
   const friendlyList = FRIENDLY_MAP[mulank] || [1, 2, 3, 5];
-  const luckyNumbersList = friendlyList.filter(num => !presentSet.has(num));
+  const luckyNumbersList = friendlyList.filter(num => !presentSet.has(num) && num !== 4 && num !== 7 && num !== 8);
   const finalLuckyNumbersText = luckyNumbersList.length > 0 
     ? luckyNumbersList.join(', ') 
-    : friendlyList.slice(0, 3).join(', ');
+    : friendlyList.filter(n => n !== 4 && n !== 7 && n !== 8).slice(0, 3).join(', ');
 
-  const lucky = LUCKY_DATA[mulank] || LUCKY_DATA[3];
+  const rawLucky = LUCKY_DATA[mulank] || LUCKY_DATA[3];
+  
+  const colorsToExclude = new Set([
+    'Metallic Blue', 'Grey', 'Khaki',
+    'Light Yellow', 'White', 'Light Green',
+    'Dark Blue', 'Black', 'Dark Brown'
+  ]);
+  const hexToExclude = new Set([
+    '#2563eb', '#64748b', '#a16207',
+    '#fde047', '#ffffff', '#4ade80',
+    '#1e3a8a', '#000000', '#451a03'
+  ]);
+
+  const filteredColors: string[] = [];
+  const filteredBgColors: string[] = [];
+
+  rawLucky.colors.forEach((c, idx) => {
+    const bg = rawLucky.bgColors[idx];
+    if (!colorsToExclude.has(c) && !hexToExclude.has(bg)) {
+      filteredColors.push(c);
+      filteredBgColors.push(bg);
+    }
+  });
+
+  if (filteredColors.length === 0) {
+    filteredColors.push('Red');
+    filteredBgColors.push('#dc2626');
+  }
+
+  const lucky = {
+    ...rawLucky,
+    colors: filteredColors,
+    bgColors: filteredBgColors
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto my-10 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 border-2 border-[var(--gold)]/40 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">

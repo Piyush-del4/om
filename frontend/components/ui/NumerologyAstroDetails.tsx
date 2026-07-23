@@ -82,13 +82,13 @@ export function NumerologyAstroDetails({
   const enemyText = ENEMY_MAP[m] || '6';
   const neutralText = NEUTRAL_MAP[m] || '4, 7, 8';
 
-  // Rule: Lucky numbers = Friendly numbers which are NOT present in birth Lo Shu Grid
-  const luckyNumbersList = friendlyList.filter(num => !presentSet.has(num));
+  // Rule: Lucky numbers = Friendly numbers which are NOT present in birth Lo Shu Grid, and can NEVER be 4, 7, or 8
+  const luckyNumbersList = friendlyList.filter(num => !presentSet.has(num) && num !== 4 && num !== 7 && num !== 8);
 
   // Fallback if all friendly numbers exist in grid
   const finalLuckyText = luckyNumbersList.length > 0 
     ? luckyNumbersList.join(', ') 
-    : friendlyList.slice(0, 3).join(', ');
+    : friendlyList.filter(n => n !== 4 && n !== 7 && n !== 8).slice(0, 3).join(', ');
 
   return (
     <div className="w-full max-w-full mx-auto my-8 space-y-3">
