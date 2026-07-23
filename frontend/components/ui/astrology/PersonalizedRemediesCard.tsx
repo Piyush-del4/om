@@ -220,24 +220,32 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {[
-            { planet: 'सूर्य (रविवार)', sanskrit: 'ॐ घृणिः सूर्याय नमः', english: 'Om Ghrini Suryaya Namah', color: 'border-orange-500/20 bg-orange-50/30 text-orange-950 dark:text-orange-300' },
-            { planet: 'चन्द्र (सोमवार)', sanskrit: 'ॐ सो सोमाय नमः', english: 'Om Som Somaya Namah', color: 'border-blue-400/20 bg-blue-50/30 text-blue-950 dark:text-blue-300' },
-            { planet: 'मंगल (मंगलवार)', sanskrit: 'ॐ अंग अंगारकाय नमः', english: 'Om Ang Angarkaya Namah', color: 'border-red-500/20 bg-red-50/30 text-red-950 dark:text-red-300' },
-            { planet: 'बुध (बुधवार)', sanskrit: 'ॐ बुं बुधाय नमः', english: 'Om Bum Budhaya Namah', color: 'border-emerald-500/20 bg-emerald-50/30 text-emerald-950 dark:text-emerald-300' },
-            { planet: 'गुरु/बृहस्पति (गुरुवार)', sanskrit: 'ॐ ब्रहम् वृहस्पतेय नमः', english: 'Om Braham Brihaspataye Namah', color: 'border-yellow-500/20 bg-yellow-50/30 text-yellow-950 dark:text-yellow-300' },
-            { planet: 'शुक्र (शुक्रवार)', sanskrit: 'ॐ गुं शुक्राय नमः', english: 'Om Shum Shukraya Namah', color: 'border-teal-500/20 bg-teal-50/30 text-teal-950 dark:text-teal-300' },
-            { planet: 'शनि (शनिवार)', sanskrit: 'ॐ शं शनैश्चराय नमः', english: 'Om Shan Shanaishcharaya Namah', color: 'border-slate-500/20 bg-slate-50/30 text-slate-950 dark:text-slate-300' },
-            { planet: 'राहु', sanskrit: 'ॐ रां राहवे नमः', english: 'Om Ram Rahave Namah', color: 'border-purple-500/20 bg-purple-50/30 text-purple-950 dark:text-purple-300' },
-            { planet: 'केतु', sanskrit: 'ॐ के केतवे नमः', english: 'Om Kem Ketave Namah', color: 'border-pink-500/20 bg-pink-50/30 text-pink-950 dark:text-pink-300' }
+            { planet: 'सूर्य (रविवार)', icon: '☀️', sanskrit: 'ॐ घृणिः सूर्याय नमः', english: 'Om Ghrini Suryaya Namah', iconBg: 'bg-orange-100 dark:bg-orange-900/40', border: 'border-orange-400/30', text: 'text-orange-950 dark:text-orange-200' },
+            { planet: 'चन्द्र (सोमवार)', icon: '🌙', sanskrit: 'ॐ सो सोमाय नमः', english: 'Om Som Somaya Namah', iconBg: 'bg-blue-100 dark:bg-blue-900/40', border: 'border-blue-400/30', text: 'text-blue-950 dark:text-blue-200' },
+            { planet: 'मंगल (मंगलवार)', icon: '🔴', sanskrit: 'ॐ अंग अंगारकाय नमः', english: 'Om Ang Angarkaya Namah', iconBg: 'bg-red-100 dark:bg-red-900/40', border: 'border-red-400/30', text: 'text-red-950 dark:text-red-200' },
+            { planet: 'बुध (बुधवार)', icon: '💚', sanskrit: 'ॐ बुं बुधाय नमः', english: 'Om Bum Budhaya Namah', iconBg: 'bg-emerald-100 dark:bg-emerald-900/40', border: 'border-emerald-400/30', text: 'text-emerald-950 dark:text-emerald-200' },
+            { planet: 'गुरु/बृहस्पति (गुरुवार)', icon: '🟡', sanskrit: 'ॐ ब्रहम् वृहस्पतेय नमः', english: 'Om Braham Brihaspataye Namah', iconBg: 'bg-yellow-100 dark:bg-yellow-900/40', border: 'border-yellow-400/30', text: 'text-yellow-950 dark:text-yellow-200' },
+            { planet: 'शुक्र (शुक्रवार)', icon: '⭐', sanskrit: 'ॐ गुं शुक्राय नमः', english: 'Om Shum Shukraya Namah', iconBg: 'bg-teal-100 dark:bg-teal-900/40', border: 'border-teal-400/30', text: 'text-teal-950 dark:text-teal-200' },
+            { planet: 'शनि (शनिवार)', icon: '🪐', sanskrit: 'ॐ शं शनैश्चराय नमः', english: 'Om Shan Shanaishcharaya Namah', iconBg: 'bg-slate-100 dark:bg-slate-900/40', border: 'border-slate-400/30', text: 'text-slate-950 dark:text-slate-200' },
+            { planet: 'राहु', icon: '🌑', sanskrit: 'ॐ रां राहवे नमः', english: 'Om Ram Rahave Namah', iconBg: 'bg-purple-100 dark:bg-purple-900/40', border: 'border-purple-400/30', text: 'text-purple-950 dark:text-purple-200' },
+            { planet: 'केतु', icon: '☄️', sanskrit: 'ॐ के केतवे नमः', english: 'Om Kem Ketave Namah', iconBg: 'bg-pink-100 dark:bg-pink-900/40', border: 'border-pink-400/30', text: 'text-pink-950 dark:text-pink-200' }
           ].map((m, idx) => (
-            <div key={idx} className={`p-4 border rounded-2xl flex flex-col justify-between space-y-2 shadow-xs transition-transform hover:scale-[1.02] duration-300 bg-white dark:bg-neutral-800 ${m.color}`}>
-              <div>
-                <span className="text-xs font-extrabold uppercase tracking-wide opacity-80">{m.planet}</span>
-                <p className="text-base font-bold font-sans mt-1.5 leading-snug">{m.sanskrit}</p>
+            <div
+              key={idx}
+              className={`flex items-center gap-5 p-4 md:p-5 bg-white dark:bg-neutral-800 border-2 ${m.border} rounded-2xl hover:border-amber-400 dark:hover:border-amber-500 transition-all duration-300 shadow-sm hover:shadow-md group`}
+            >
+              {/* Planet Icon Circle */}
+              <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex-shrink-0 ${m.iconBg} border-2 ${m.border} flex items-center justify-center text-3xl sm:text-4xl shadow-sm group-hover:scale-105 transition-transform duration-300`}>
+                {m.icon}
               </div>
-              <p className="text-xs font-semibold italic opacity-85 font-sans leading-tight pt-1 border-t border-black/5 dark:border-white/5">{m.english}</p>
+              {/* Mantra Info */}
+              <div className="flex-1 min-w-0 space-y-1">
+                <span className={`text-xs font-extrabold uppercase tracking-wide ${m.text} opacity-80 block`}>{m.planet}</span>
+                <p className={`text-base sm:text-lg font-bold font-sans leading-snug ${m.text}`}>{m.sanskrit}</p>
+                <p className="text-xs sm:text-sm font-semibold italic text-neutral-500 dark:text-gray-400 leading-tight">{m.english}</p>
+              </div>
             </div>
           ))}
         </div>
