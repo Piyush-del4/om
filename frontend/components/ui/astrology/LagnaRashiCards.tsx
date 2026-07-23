@@ -27,8 +27,8 @@ export function LagnaRashiCards({ data }: Props) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mx-auto my-6 px-4">
       {/* 1. Lagna Card */}
-      <div className="bg-amber-50/50 dark:bg-neutral-900 border-2 border-amber-300/60 dark:border-neutral-800 rounded-3xl p-6 flex flex-col items-center justify-center text-center shadow-md space-y-4 hover:border-amber-400 dark:hover:border-neutral-700 transition-all duration-300">
-        <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-amber-100 to-amber-50 dark:from-neutral-800 dark:to-neutral-900 flex items-center justify-center shadow-inner border border-amber-200 dark:border-neutral-800 p-2 overflow-hidden">
+      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700/60 rounded-3xl p-6 flex flex-col items-center justify-center text-center shadow-md space-y-4 hover:border-amber-400 dark:hover:border-neutral-600 transition-all duration-300">
+        <div className="w-44 h-44 sm:w-52 sm:h-52 overflow-hidden flex items-center justify-center">
           <img 
             src={`/images/zodiac_${house1SignNum}.png`} 
             alt={`${lagnaName} Lagna`} 
@@ -41,8 +41,8 @@ export function LagnaRashiCards({ data }: Props) {
       </div>
 
       {/* 2. Rashi Card */}
-      <div className="bg-amber-50/50 dark:bg-neutral-900 border-2 border-amber-300/60 dark:border-neutral-800 rounded-3xl p-6 flex flex-col items-center justify-center text-center shadow-md space-y-4 hover:border-amber-400 dark:hover:border-neutral-700 transition-all duration-300">
-        <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-amber-100 to-amber-50 dark:from-neutral-800 dark:to-neutral-900 flex items-center justify-center shadow-inner border border-amber-200 dark:border-neutral-800 p-2 overflow-hidden">
+      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700/60 rounded-3xl p-6 flex flex-col items-center justify-center text-center shadow-md space-y-4 hover:border-amber-400 dark:hover:border-neutral-600 transition-all duration-300">
+        <div className="w-44 h-44 sm:w-52 sm:h-52 overflow-hidden flex items-center justify-center">
           <img 
             src={`/images/zodiac_${moonSignNum}.png`} 
             alt={`${rashiName} Rashi`} 
