@@ -69,8 +69,8 @@ export function LoShuGrid({ dateOfBirthStr }: LoShuGridProps) {
         </p>
       </div>
 
-      {/* Grid Container Side-by-Side */}
-      <div className="grid grid-cols-2 gap-6 items-center max-w-2xl mx-auto">
+      {/* Grid Container 50-50 Side-by-Side */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch w-full max-w-4xl mx-auto">
         
         {/* 1. Standard Lo Shu Grid */}
         <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 shadow-sm text-center space-y-3">

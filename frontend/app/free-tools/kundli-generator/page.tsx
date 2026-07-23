@@ -327,7 +327,7 @@ export default function KundliGeneratorPage() {
                       <div className="bg-amber-700 dark:bg-amber-800 text-white py-2 px-6 rounded-lg text-center font-bold text-sm md:text-base">
                         Lo Shu Grid
                       </div>
-                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-6 w-full max-w-md mx-auto flex items-center justify-center shadow-sm">
+                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 md:p-6 w-full max-w-4xl mx-auto shadow-sm">
                         <LoShuGrid dateOfBirthStr={formData.date} />
                       </div>
                       
