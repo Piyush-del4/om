@@ -133,21 +133,21 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
             Why Rudraksha is Mandatory?
           </h3>
           
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs md:text-sm font-medium">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs md:text-sm font-medium text-amber-50">
             <li className="flex items-center gap-2.5">
-              <Activity className="w-5 h-5 text-[var(--gold)] flex-shrink-0" />
+              <Activity className="w-5 h-5 text-amber-300 flex-shrink-0" />
               <span>Naturally Creates Elements within the Body</span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Shield className="w-5 h-5 text-[var(--gold)] flex-shrink-0" />
+              <Shield className="w-5 h-5 text-amber-300 flex-shrink-0" />
               <span>Protects the Aura from Negative Planetary Effects</span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Heart className="w-5 h-5 text-[var(--gold)] flex-shrink-0" />
+              <Heart className="w-5 h-5 text-amber-300 flex-shrink-0" />
               <span>Attracts Positive Energy & Improves Mental Health</span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Sparkles className="w-5 h-5 text-[var(--gold)] flex-shrink-0" />
+              <Sparkles className="w-5 h-5 text-amber-300 flex-shrink-0" />
               <span>Anyone can wear without Restrictions</span>
             </li>
           </ul>
