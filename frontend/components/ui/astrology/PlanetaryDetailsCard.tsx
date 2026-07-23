@@ -72,7 +72,7 @@ export function PlanetaryDetailsCard({ data }: Props) {
                   <td className="px-2 py-2 sm:p-2.5 font-bold text-center">{p.house}</td>
                   <td className="px-2 py-2 sm:p-2.5">
                     <span className="font-medium text-amber-900 dark:text-amber-300">{p.nakshatra}</span>
-                    <span className="text-gray-500 text-xs sm:text-sm block sm:inline"> ({NAKSHATRA_LORDS[p.nakshatraNumber - 1] || 'Ketu'})</span>
+                    <span className="text-black dark:text-neutral-200 text-xs sm:text-sm block sm:inline"> ({NAKSHATRA_LORDS[p.nakshatraNumber - 1] || 'Ketu'})</span>
                   </td>
                   <td className="px-2 py-2 sm:p-2.5">
                     <span className={`px-1.5 py-0.5 rounded text-[10px] sm:text-xs ${badgeColor}`}>
