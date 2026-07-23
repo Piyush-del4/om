@@ -178,7 +178,7 @@ function PremiumPaywall({ onPaymentSuccess }: { onPaymentSuccess: () => void }) 
         {/* Price & CTA */}
         <div className="bg-gradient-to-br from-[var(--gold-50)] to-black border-2 border-[var(--gold)]/40 rounded-2xl p-6 space-y-4">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-gray-500 line-through text-lg">₹199</span>
+            <span className="text-gray-500 line-through text-lg">₹1000</span>
             <span className="text-4xl font-serif font-bold text-[var(--gold)]">₹50</span>
             <span className="text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/30 px-2 py-1 rounded-full font-bold">75% OFF</span>
           </div>

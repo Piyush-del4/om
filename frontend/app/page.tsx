@@ -559,7 +559,7 @@ export default function Home() {
 
             {/* Price row */}
             <div className="flex items-center gap-3 justify-center md:justify-start">
-              <span className="text-gray-500 line-through text-lg">₹199</span>
+              <span className="text-gray-500 line-through text-lg">₹1000</span>
               <span className="text-3xl font-serif font-bold text-[var(--gold)]">₹50</span>
               <span className="text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/30 px-2 py-1 rounded-full font-bold">75% OFF</span>
             </div>
