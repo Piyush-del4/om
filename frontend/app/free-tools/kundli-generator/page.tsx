@@ -314,7 +314,7 @@ export default function KundliGeneratorPage() {
 
                 {/* 4. Astro Charts (✦ Lagna Chart ✦ and ✦ Chalit Chart ✦ side-by-side) */}
                 <div className="pdf-page-break-avoid w-full">
-                  <div className="bg-white dark:bg-neutral-900 rounded-2xl px-2 py-6 w-full max-w-full mx-auto my-6 space-y-6">
+                  <div className="bg-white dark:bg-neutral-900 rounded-2xl px-0 py-6 w-full max-w-full mx-auto my-6 space-y-6">
                     <div className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center">
                       <h3 className="font-sans font-bold text-lg md:text-2xl">
                         Astro Charts
@@ -322,9 +322,9 @@ export default function KundliGeneratorPage() {
                     </div>
                     
                     {/* Charts Grid 50-50 */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
                       {/* Lagna Chart */}
-                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-2 space-y-2 flex flex-col items-center justify-center w-full h-full">
+                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-0 space-y-2 flex flex-col items-center justify-center w-full h-full">
                         <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
                           ✦ Lagna Chart ✦
                         </h4>
@@ -334,7 +334,7 @@ export default function KundliGeneratorPage() {
                       </div>
 
                       {/* Chalit Chart */}
-                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-2 space-y-2 flex flex-col items-center justify-center w-full h-full">
+                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-0 space-y-2 flex flex-col items-center justify-center w-full h-full">
                         <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
                           ✦ Chalit Chart ✦
                         </h4>
