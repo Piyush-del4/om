@@ -253,7 +253,7 @@ export function VimshottariDashaTable({ data, dashaApiData, birthDateStr }: Vims
       </h3>
 
       {/* 1. Mahadasha Table */}
-      <div className="pdf-page-break-avoid border-2 border-amber-600 rounded-xl overflow-hidden shadow-md bg-[#fef9c3] dark:bg-neutral-900 mb-8">
+      <div className="pdf-page-break-avoid rounded-xl overflow-hidden bg-[#fef9c3] dark:bg-neutral-900 mb-8">
         <h4 className="bg-[#f59e0b] text-black font-bold text-center py-2 text-sm md:text-base border-b border-amber-600 font-sans">
           Mahadasha (Major Period)
         </h4>
@@ -292,7 +292,7 @@ export function VimshottariDashaTable({ data, dashaApiData, birthDateStr }: Vims
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {displayTimeline.map((maha, mIdx) => (
-            <div key={`antar-${mIdx}`} className="pdf-page-break-avoid border-2 border-amber-600 rounded-xl overflow-hidden shadow-md bg-[#fef9c3] dark:bg-neutral-900">
+            <div key={`antar-${mIdx}`} className="pdf-page-break-avoid rounded-xl overflow-hidden bg-[#fef9c3] dark:bg-neutral-900">
               <h4 className="bg-[#f59e0b] text-black font-bold text-center py-2 text-sm md:text-base border-b border-amber-600 font-sans">
                 Mahadasha: {maha.lord.vedic}
               </h4>

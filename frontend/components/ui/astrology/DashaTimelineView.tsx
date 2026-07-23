@@ -17,7 +17,7 @@ export function DashaTimelineView({ data, dashaApiData, birthDateStr }: Props) {
   const [activeTab, setActiveTab] = useState<'current' | 'full'>('current');
 
   return (
-    <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+    <div className="bg-amber-50/60 dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 space-y-6">
       {/* Title Header */}
       <div 
         /* onClick={() => setIsOpen(!isOpen)} */
@@ -60,7 +60,7 @@ export function DashaTimelineView({ data, dashaApiData, birthDateStr }: Props) {
       */}
 
       {activeTab === 'current' ? (
-        <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-5 space-y-4 shadow-sm">
+        <div className="bg-white dark:bg-neutral-800 rounded-xl p-5 space-y-4">
           <div className="p-4 bg-amber-100/70 dark:bg-neutral-900 border-l-4 border-amber-600 rounded-r-lg space-y-2">
             <h4 className="font-sans font-bold text-base md:text-lg text-amber-950 dark:text-amber-300">
               Current Planetary Period Overview
@@ -73,7 +73,7 @@ export function DashaTimelineView({ data, dashaApiData, birthDateStr }: Props) {
           <VimshottariDashaTable data={data} dashaApiData={dashaApiData} birthDateStr={birthDateStr} />
         </div>
       ) : (
-        <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-5 space-y-4 shadow-sm">
+        <div className="bg-white dark:bg-neutral-800 rounded-xl p-5 space-y-4">
           <h4 className="font-sans font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 border-b pb-2">
             Complete Vimshottari Mahadasha Timeline (120 Years Cycle)
           </h4>
