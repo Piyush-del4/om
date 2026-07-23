@@ -198,7 +198,7 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
   };
 
   return (
-    <div className="w-full max-w-[545px] mx-auto bg-transparent relative p-1">
+    <div className="w-full max-w-full mx-auto bg-transparent relative p-1">
       {(title || subtitle) && (
         <div className="text-center pb-2 mb-2 border-b border-[var(--gold-200)] space-y-0.5">
           {subtitle && (
