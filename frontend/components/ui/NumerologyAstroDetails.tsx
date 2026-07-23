@@ -98,21 +98,21 @@ export function NumerologyAstroDetails({
         {/* Left Card: Mulank, Bhagyank, Namayank Pills */}
         <div className="md:col-span-2 bg-gradient-to-br from-amber-100 via-orange-100 to-amber-200 dark:from-neutral-900 dark:to-neutral-800 border-2 border-amber-800/30 rounded-xl p-4 shadow-sm space-y-3">
           <div className="flex items-center justify-between bg-amber-200/60 dark:bg-neutral-800/80 px-4 py-2.5 rounded-xl border border-amber-800/20">
-            <span className="font-serif font-bold text-amber-950 dark:text-amber-100 text-sm md:text-base">Mulank</span>
+            <span className="font-sans font-bold text-amber-950 dark:text-amber-100 text-sm md:text-base">Mulank</span>
             <div className="w-8 h-8 rounded-full border border-amber-900 flex items-center justify-center font-bold text-amber-950 dark:text-amber-100 text-sm bg-amber-50 dark:bg-neutral-900">
               {m}
             </div>
           </div>
 
           <div className="flex items-center justify-between bg-orange-200/60 dark:bg-neutral-800/80 px-4 py-2.5 rounded-xl border border-amber-800/20">
-            <span className="font-serif font-bold text-amber-950 dark:text-amber-100 text-sm md:text-base">Bhagyank</span>
+            <span className="font-sans font-bold text-amber-950 dark:text-amber-100 text-sm md:text-base">Bhagyank</span>
             <div className="w-8 h-8 rounded-full border border-amber-900 flex items-center justify-center font-bold text-amber-950 dark:text-amber-100 text-sm bg-amber-50 dark:bg-neutral-900">
               {b}
             </div>
           </div>
 
           <div className="flex items-center justify-between bg-amber-200/60 dark:bg-neutral-800/80 px-4 py-2.5 rounded-xl border border-amber-800/20">
-            <span className="font-serif font-bold text-amber-950 dark:text-amber-100 text-sm md:text-base">Namayank</span>
+            <span className="font-sans font-bold text-amber-950 dark:text-amber-100 text-sm md:text-base">Namayank</span>
             <div className="w-8 h-8 rounded-full border border-amber-900 flex items-center justify-center font-bold text-amber-950 dark:text-amber-100 text-sm bg-amber-50 dark:bg-neutral-900">
               {n}*
             </div>
