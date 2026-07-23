@@ -198,7 +198,7 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
   };
 
   return (
-    <div className="w-full max-w-full mx-auto bg-transparent relative p-1">
+    <div className="w-full max-w-full mx-auto bg-transparent relative p-0">
       {(title || subtitle) && (
         <div className="text-center pb-2 mb-2 border-b border-[var(--gold-200)] space-y-0.5">
           {subtitle && (
@@ -213,7 +213,7 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
           )}
         </div>
       )}
-      <div className="w-full relative aspect-square flex items-center justify-center p-1">
+      <div className="w-full relative aspect-square flex items-center justify-center p-0">
         <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-auto aspect-square drop-shadow-sm">
         {/* Outer Box */}
         <rect x="0" y="0" width={size} height={size} fill="transparent" stroke="#cc8f33" strokeWidth="2.5" />
