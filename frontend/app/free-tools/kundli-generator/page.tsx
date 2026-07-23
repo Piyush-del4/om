@@ -329,7 +329,7 @@ export default function KundliGeneratorPage() {
                         <h4 className="font-serif font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
                           ✦ Lagna Chart ✦
                         </h4>
-                        <NorthIndianChart data={resultData} title="Lagna Chart" showLegend={false} />
+                        <NorthIndianChart data={resultData} showLegend={false} />
                       </div>
 
                       {/* Chalit Chart */}
@@ -339,7 +339,7 @@ export default function KundliGeneratorPage() {
                         </h4>
                         {(() => {
                           const chalitData = calculateVargaChart(resultData, 'chalit');
-                          return <NorthIndianChart data={chalitData} title="Chalit Chart" showLegend={false} />;
+                          return <NorthIndianChart data={chalitData} showLegend={false} />;
                         })()}
                       </div>
                     </div>
