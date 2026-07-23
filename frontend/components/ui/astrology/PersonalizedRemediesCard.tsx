@@ -208,6 +208,40 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
           </p>
         </div>
       )}
+
+      {/* Planetary Mantra Remedies Section */}
+      <div className="pt-8 border-t border-amber-200/50 dark:border-neutral-800 space-y-6">
+        <div className="space-y-2">
+          <h4 className="font-sans font-bold text-lg md:text-xl text-amber-900 dark:text-[var(--gold)]">
+            ✦ वैदिक ग्रह मंत्र (Planetary Mantra Remedies) ✦
+          </h4>
+          <p className="text-xs md:text-sm text-neutral-600 dark:text-gray-400">
+            वैदिक ज्योतिष में ग्रहों की अनुकूलता और उनके शुभ प्रभाव प्राप्त करने के लिए नियमित रूप से ग्रह मंत्रों का जाप करना सर्वश्रेष्ठ माना जाता है। (In Vedic astrology, chanting planet mantras regularly is considered the best way to harmonize planetary energies and receive positive outcomes.)
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {[
+            { planet: 'सूर्य (रविवार)', sanskrit: 'ॐ घृणिः सूर्याय नमः', english: 'Om Ghrini Suryaya Namah', color: 'border-orange-500/20 bg-orange-50/30 text-orange-950 dark:text-orange-300' },
+            { planet: 'चन्द्र (सोमवार)', sanskrit: 'ॐ सो सोमाय नमः', english: 'Om Som Somaya Namah', color: 'border-blue-400/20 bg-blue-50/30 text-blue-950 dark:text-blue-300' },
+            { planet: 'मंगल (मंगलवार)', sanskrit: 'ॐ अंग अंगारकाय नमः', english: 'Om Ang Angarkaya Namah', color: 'border-red-500/20 bg-red-50/30 text-red-950 dark:text-red-300' },
+            { planet: 'बुध (बुधवार)', sanskrit: 'ॐ बुं बुधाय नमः', english: 'Om Bum Budhaya Namah', color: 'border-emerald-500/20 bg-emerald-50/30 text-emerald-950 dark:text-emerald-300' },
+            { planet: 'गुरु/बृहस्पति (गुरुवार)', sanskrit: 'ॐ ब्रहम् वृहस्पतेय नमः', english: 'Om Braham Brihaspataye Namah', color: 'border-yellow-500/20 bg-yellow-50/30 text-yellow-950 dark:text-yellow-300' },
+            { planet: 'शुक्र (शुक्रवार)', sanskrit: 'ॐ गुं शुक्राय नमः', english: 'Om Shum Shukraya Namah', color: 'border-teal-500/20 bg-teal-50/30 text-teal-950 dark:text-teal-300' },
+            { planet: 'शनि (शनिवार)', sanskrit: 'ॐ शं शनैश्चराय नमः', english: 'Om Shan Shanaishcharaya Namah', color: 'border-slate-500/20 bg-slate-50/30 text-slate-950 dark:text-slate-300' },
+            { planet: 'राहु', sanskrit: 'ॐ रां राहवे नमः', english: 'Om Ram Rahave Namah', color: 'border-purple-500/20 bg-purple-50/30 text-purple-950 dark:text-purple-300' },
+            { planet: 'केतु', sanskrit: 'ॐ के केतवे नमः', english: 'Om Kem Ketave Namah', color: 'border-pink-500/20 bg-pink-50/30 text-pink-950 dark:text-pink-300' }
+          ].map((m, idx) => (
+            <div key={idx} className={`p-4 border rounded-2xl flex flex-col justify-between space-y-2 shadow-xs transition-transform hover:scale-[1.02] duration-300 bg-white dark:bg-neutral-800 ${m.color}`}>
+              <div>
+                <span className="text-xs font-extrabold uppercase tracking-wide opacity-80">{m.planet}</span>
+                <p className="text-base font-bold font-sans mt-1.5 leading-snug">{m.sanskrit}</p>
+              </div>
+              <p className="text-xs font-semibold italic opacity-85 font-sans leading-tight pt-1 border-t border-black/5 dark:border-white/5">{m.english}</p>
+            </div>
+          ))}
+        </div>
+      </div>
       
     </div>
   );
