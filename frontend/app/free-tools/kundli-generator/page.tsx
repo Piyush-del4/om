@@ -314,7 +314,7 @@ export default function KundliGeneratorPage() {
 
                 {/* 4. Astro Charts (✦ Lagna Chart ✦ and ✦ Chalit Chart ✦ side-by-side) */}
                 <div className="pdf-page-break-avoid w-full">
-                  <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+                  <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-[1060px] mx-auto my-6 shadow-lg space-y-6">
                     <div className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center">
                       <h3 className="font-sans font-bold text-lg md:text-2xl">
                         Astro Charts
