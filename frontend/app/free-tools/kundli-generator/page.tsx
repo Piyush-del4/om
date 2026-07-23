@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Layers, Search, ArrowRight, HelpCircle } from 'lucide-react';
+import { Layers, Search, ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
