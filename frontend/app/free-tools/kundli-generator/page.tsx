@@ -291,6 +291,12 @@ export default function KundliGeneratorPage() {
                   <ReportSectionFooter />
                 </div>
 
+                {/* Rudraksha Remedies */}
+                <div id="sec-remedies" className="pdf-page-break-avoid w-full">
+                  <PersonalizedRemediesCard data={resultData} birthDateStr={formData.date} />
+                  <ReportSectionFooter />
+                </div>
+
                 {/* 3. Charts & Grids (Lagna, Chalit, Chandra charts grid, with Lo Shu Grid below them) */}
                 <div className="pdf-page-break-avoid w-full">
                   <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
@@ -350,13 +356,7 @@ export default function KundliGeneratorPage() {
                   <ReportSectionFooter />
                 </div>
 
-                {/* 5. Rudraksha & Traditional Remedies */}
-                <div id="sec-remedies" className="pdf-page-break-avoid w-full">
-                  <PersonalizedRemediesCard data={resultData} birthDateStr={formData.date} />
-                  <ReportSectionFooter />
-                </div>
-
-                {/* 6. Dashas */}
+                {/* 5. Dashas */}
                 <div id="sec-dasha" className="pdf-page-break-avoid w-full">
                   <DashaTimelineView data={resultData} dashaApiData={dashaApiData} birthDateStr={formData.date} />
                   <ReportSectionFooter />
