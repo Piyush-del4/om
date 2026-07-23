@@ -64,7 +64,7 @@ export function PlanetsPositionTable({ data }: PlanetsTableProps) {
   });
 
   return (
-    <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl overflow-hidden w-full max-w-4xl mx-auto my-6 shadow-md">
+    <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl overflow-hidden w-full max-w-full mx-auto my-6 shadow-md">
       <div className="bg-amber-600 dark:bg-amber-700 text-white p-3 text-center">
         <h4 className="font-sans font-bold text-base md:text-xl">
           ✦ Planetary Positions, Yogakaraka & Atmakaraka (AK) ✦

@@ -296,12 +296,12 @@ export default function KundliGeneratorPage() {
 
                 {/* 3. Lo Shu Grid Analysis (Standard grid, Birth grid, and Numerology details) */}
                 <div className="pdf-page-break-avoid w-full">
-                  <div className="bg-amber-50/60 dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 space-y-6">
+                  <div className="bg-amber-50/60 dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-[1060px] mx-auto my-6 space-y-6">
                     <div className="bg-amber-700 dark:bg-amber-800 text-white py-2 px-6 rounded-lg text-center font-bold text-sm md:text-base max-w-xs mx-auto">
                       Lo Shu Grid Analysis
                     </div>
                     
-                    <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 md:p-6 w-full max-w-4xl mx-auto">
+                    <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 md:p-6 w-full max-w-full mx-auto">
                       <LoShuGrid dateOfBirthStr={formData.date} />
                     </div>
                     

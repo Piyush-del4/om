@@ -17,7 +17,7 @@ export function DashaTimelineView({ data, dashaApiData, birthDateStr }: Props) {
   const [activeTab, setActiveTab] = useState<'current' | 'full'>('current');
 
   return (
-    <div className="bg-amber-50/60 dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 space-y-6">
+    <div className="bg-amber-50/60 dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-full mx-auto my-6 space-y-6">
       {/* Title Header */}
       <div 
         /* onClick={() => setIsOpen(!isOpen)} */

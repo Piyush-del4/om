@@ -25,7 +25,7 @@ export function LagnaRashiCards({ data }: Props) {
   const rashiName = ZODIAC_HINDI_NAMES[moonSignNum - 1] || 'Mesh';
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mx-auto my-6 px-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-full mx-auto my-6 px-4">
       {/* 1. Lagna Card */}
       <div className="bg-white dark:bg-neutral-800 rounded-3xl p-3 flex flex-col items-center justify-center text-center space-y-3 transition-all duration-300">
         <div className="w-full max-w-[280px] aspect-square overflow-hidden flex items-center justify-center">

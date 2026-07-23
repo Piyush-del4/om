@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export function ReportThankYouCard() {
   return (
-    <div className="pdf-page-break-avoid w-full max-w-4xl mx-auto my-8 p-6 sm:p-8 bg-gradient-to-b from-amber-500/15 via-amber-100/30 to-amber-500/15 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 border-2 border-amber-600 rounded-3xl text-center space-y-6 shadow-xl relative overflow-hidden">
+    <div className="pdf-page-break-avoid w-full max-w-full mx-auto my-8 p-6 sm:p-8 bg-gradient-to-b from-amber-500/15 via-amber-100/30 to-amber-500/15 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 border-2 border-amber-600 rounded-3xl text-center space-y-6 shadow-xl relative overflow-hidden">
       
       {/* Top Decorative Gold Accent Bar */}
       <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-400 via-amber-600 to-amber-400" />

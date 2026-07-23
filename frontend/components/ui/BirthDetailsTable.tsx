@@ -49,7 +49,7 @@ export function BirthDetailsTable({
   ];
 
   return (
-    <div className="w-full max-w-xl mx-auto my-4 border-2 border-amber-800/40 rounded-xl overflow-hidden shadow-md bg-amber-50 dark:bg-neutral-900 text-sm sm:text-base">
+    <div className="w-full max-w-full mx-auto my-4 border-2 border-amber-800/40 rounded-xl overflow-hidden shadow-md bg-amber-50 dark:bg-neutral-900 text-sm sm:text-base">
       {/* Header with Name */}
       <div className="bg-gradient-to-r from-amber-300 via-orange-200 to-amber-300 dark:from-amber-900 dark:via-amber-800 dark:to-amber-900 py-3 px-5 text-center border-b-2 border-amber-800/40">
         <h3 className="text-amber-950 dark:text-amber-100 font-serif font-black text-xl sm:text-2xl tracking-wider uppercase">

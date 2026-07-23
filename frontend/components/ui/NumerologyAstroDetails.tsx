@@ -91,7 +91,7 @@ export function NumerologyAstroDetails({
     : friendlyList.slice(0, 3).join(', ');
 
   return (
-    <div className="w-full max-w-3xl mx-auto my-8 space-y-3">
+    <div className="w-full max-w-full mx-auto my-8 space-y-3">
       {/* Container Side-by-Side */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
         
