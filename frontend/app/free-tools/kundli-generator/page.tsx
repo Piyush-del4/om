@@ -180,7 +180,7 @@ function PremiumPaywall({ onPaymentSuccess }: { onPaymentSuccess: () => void }) 
           <div className="flex items-center justify-center gap-3">
             <span className="text-gray-500 line-through text-lg">₹1000</span>
             <span className="text-4xl font-serif font-bold text-[var(--gold)]">₹50</span>
-            <span className="text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/30 px-2 py-1 rounded-full font-bold">75% OFF</span>
+
           </div>
           <p className="text-xs text-gray-500">One-time payment · Instant report · No subscription</p>
           <button
