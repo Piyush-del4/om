@@ -25,10 +25,9 @@ export const submitReview = async (req: Request, res: Response): Promise<void> =
 
 export const getSuccessStories = async (req: Request, res: Response): Promise<void> => {
   try {
-    // Fetch top recent reviews with a rating > 4
+    // Fetch all approved reviews with a rating > 4 (no limit)
     const reviews = await Review.find({ rating: { $gt: 4 }, isApproved: true })
       .sort({ createdAt: -1 })
-      .limit(10)
       .select('name rating comment createdAt');
 
     res.status(200).json({ success: true, data: reviews });

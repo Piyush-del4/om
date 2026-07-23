@@ -87,18 +87,6 @@ const testimonials = [
     initials: "DS",
     role: "Fashion Designer, Jaipur",
     quote: "Their tarot readings are magical! I got clear insight on which collections to launch. It saved me from a major financial mistake."
-  },
-  {
-    name: "Elena Rostova",
-    initials: "ER",
-    role: "Yoga Instructor, St. Petersburg",
-    quote: "A beautiful, deep consultation. They explained the planetary influences in a way that made complete sense without jargon. I felt very supported."
-  },
-  {
-    name: "Sanjay Dutt",
-    initials: "SD",
-    role: "Exporter, Surat",
-    quote: "We consult OM Astrology before all major business expansions. Their birth chart alignment advice has kept our shipping logistics smooth and profitable for years."
   }
 ];
 
@@ -976,7 +964,8 @@ export default function Home() {
           <div className="animate-marquee hover:[animation-play-state:paused] flex gap-8">
             {/* First Set of Cards */}
             {(() => {
-              const displayReviews = dynamicReviews.length >= 4 
+              // Always show DB reviews if any exist (rating > 4); fall back to premade only if DB is empty
+              const displayReviews = dynamicReviews.length > 0
                 ? dynamicReviews.map((r: any) => ({
                     name: r.name,
                     initials: r.name.substring(0, 2).toUpperCase(),
@@ -1012,9 +1001,11 @@ export default function Home() {
                 </div>
               ));
             })()}
-            {/* Duplicate for infinite effect */}
+
+            {/* Duplicate for infinite scroll effect */}
             {(() => {
-              const displayReviews = dynamicReviews.length >= 4 
+              // Always show DB reviews if any exist (rating > 4); fall back to premade only if DB is empty
+              const displayReviews = dynamicReviews.length > 0
                 ? dynamicReviews.map((r: any) => ({
                     name: r.name,
                     initials: r.name.substring(0, 2).toUpperCase(),
@@ -1050,6 +1041,7 @@ export default function Home() {
                 </div>
               ));
             })()}
+
           </div>
         </div>
       </motion.section>

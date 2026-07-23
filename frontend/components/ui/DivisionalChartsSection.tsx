@@ -61,7 +61,8 @@ export function DivisionalChartsSection({ data }: DivisionalChartsProps) {
             <NorthIndianChart 
               title={item.chartData.chartTitle} 
               subtitle={item.subtitle}
-              data={item.chartData} 
+              data={item.chartData}
+              showLegend={false}
             />
           </div>
         ))}
