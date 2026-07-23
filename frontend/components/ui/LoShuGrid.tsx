@@ -73,7 +73,7 @@ export function LoShuGrid({ dateOfBirthStr }: LoShuGridProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch w-full max-w-4xl mx-auto">
         
         {/* 1. Standard Lo Shu Grid */}
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 shadow-sm text-center space-y-3">
+        <div className="bg-transparent text-center space-y-3 p-2">
           <h4 className="font-bold text-base text-neutral-800 dark:text-neutral-200">
             Standard LoShu Grid
           </h4>
@@ -94,7 +94,7 @@ export function LoShuGrid({ dateOfBirthStr }: LoShuGridProps) {
         </div>
 
         {/* 2. Birth Lo Shu Grid (Personalized) */}
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 shadow-sm text-center space-y-3">
+        <div className="bg-transparent text-center space-y-3 p-2">
           <h4 className="font-bold text-base text-amber-800 dark:text-[var(--gold)] flex items-center justify-center gap-1.5">
             <Sparkles className="w-4 h-4 text-[var(--gold)]" /> Birth LoShu Grid
           </h4>
