@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { client } from '../../lib/api/client';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { GoldButton } from '../../components/ui/GoldButton';
-import { Calendar, Package, BookOpen, User as UserIcon, Clock, AlertCircle } from 'lucide-react';
+import { Calendar, Package, BookOpen, User as UserIcon, Clock, AlertCircle, Star } from 'lucide-react';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 export default function UserDashboard() {
@@ -66,6 +66,7 @@ export default function UserDashboard() {
   if (!user) return null;
 
   const quickTiles = [
+    { name: 'Premium Kundli', icon: <Star className="w-6 h-6 text-[var(--gold)]" />, desc: 'Generate your personalized Janam Kundli report', path: '/free-tools/kundli-generator', highlight: true },
     { name: 'My Appointments', icon: <Calendar className="w-6 h-6 text-[var(--gold)]" />, desc: 'Consultation dates & calendar coordinates', path: '/appointments' },
     { name: 'My Orders', icon: <Package className="w-6 h-6 text-[var(--gold)]" />, desc: 'Shop item shipping updates & receipt tags', path: '/orders' },
     { name: 'My Batches', icon: <BookOpen className="w-6 h-6 text-[var(--gold)]" />, desc: 'Course lectures & notes', path: '/my-batches' },
@@ -95,10 +96,10 @@ export default function UserDashboard() {
         </div>
 
         {/* Quick Access Tiles */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {quickTiles.map((tile) => (
             <Link key={tile.name} href={tile.path} className="group block h-full">
-              <GoldCard className="h-full transition-spring">
+              <GoldCard className={`h-full transition-spring ${'highlight' in tile && tile.highlight ? 'border-[var(--gold)] bg-gradient-to-br from-[var(--gold-50)] to-black' : ''}`}>
                 <div className="space-y-4">
                   <div className="inline-flex p-3 bg-[var(--gold-50)] rounded-xl border border-[var(--gold-200)] text-[var(--gold)] transition-spring group-hover:scale-110">
                     {tile.icon}

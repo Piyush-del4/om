@@ -19,13 +19,6 @@ import {
 
 const ALL_TOOLS = [
   {
-    name: 'Kundli Generator',
-    description: 'Generate your free North Indian Janam Kundli chart with planetary degrees.',
-    href: '/free-tools/kundli-generator',
-    icon: Compass,
-    badge: 'Popular'
-  },
-  {
     name: 'Lo Shu & Numerology',
     description: 'Calculate your Mulank, Bhagyank, Namank & 3x3 Lo Shu Grid.',
     href: '/free-tools/numerology-calculator',

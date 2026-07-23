@@ -499,6 +499,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* === PREMIUM PERSONALIZED KUNDLI SECTION === */}
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        className="relative z-10 w-full bg-gradient-to-br from-amber-950/20 via-black to-amber-950/10 border-y border-[var(--gold)]/20 py-20 px-4 overflow-hidden"
+      >
+        {/* Glow decorations */}
+        <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-80 h-80 bg-[var(--gold)]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 bg-amber-700/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+          {/* Left — Book Image */}
+          <div className="flex justify-center md:justify-end">
+            <div className="relative w-64 h-80 md:w-72 md:h-96 rounded-2xl overflow-hidden shadow-2xl shadow-amber-900/40 border-2 border-[var(--gold)]/50 hover:scale-105 transition-transform duration-500">
+              <img
+                src="/images/premium-kundli-book.jpg"
+                alt="Premium Personalized Kundli Book"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+              {/* Badge */}
+              <div className="absolute top-4 right-4 bg-[var(--gold)] text-black text-xs font-extrabold px-3 py-1 rounded-full shadow-lg">
+                10K+ Done
+              </div>
+            </div>
+          </div>
+
+          {/* Right — Content */}
+          <div className="space-y-6 text-center md:text-left">
+            <div className="space-y-1">
+              <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-bold flex items-center gap-2 justify-center md:justify-start">
+                <span>✦</span> Exclusive Premium Service
+              </span>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                PREMIUM PERSONALIZED
+                <span className="gold-gradient-text block">KUNDLI</span>
+              </h2>
+            </div>
+            <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-lg">
+              Get a comprehensive 20+ section personalized Janam Kundli — crafted from your exact birth coordinates. Includes Lagna Chart, Chalit Chart, Dasha timeline, Yoga & Dosha analysis, Vedic Remedies, Numerology, and detailed life predictions.
+            </p>
+
+            {/* Feature list */}
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                '✦ Lagna & Chalit Charts', '✦ Vimshottari Dasha',
+                '✦ Yoga & Dosha Analysis', '✦ Vedic Remedies & Mantras',
+                '✦ Numerology Report', '✦ Life Predictions'
+              ].map((f, i) => (
+                <div key={i} className="text-xs text-amber-200/70 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-[var(--gold)] rounded-full flex-shrink-0" />
+                  {f.replace('✦ ', '')}
+                </div>
+              ))}
+            </div>
+
+            {/* Price row */}
+            <div className="flex items-center gap-3 justify-center md:justify-start">
+              <span className="text-gray-500 line-through text-lg">₹199</span>
+              <span className="text-3xl font-serif font-bold text-[var(--gold)]">₹50</span>
+              <span className="text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/30 px-2 py-1 rounded-full font-bold">75% OFF</span>
+            </div>
+
+            {/* CTA */}
+            <Link href="/free-tools/kundli-generator">
+              <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-900/30 cursor-pointer">
+                <span>✦</span>
+                Get PREMIUM PERSONALIZED KUNDLI
+                <span>✦</span>
+              </button>
+            </Link>
+            <p className="text-xs text-gray-600">One-time payment · Instant report · No subscription</p>
+          </div>
+        </div>
+      </motion.section>
+
       {/* Major Sections — Service Cards */}
       <motion.section
         initial={{ opacity: 0, y: 40 }}

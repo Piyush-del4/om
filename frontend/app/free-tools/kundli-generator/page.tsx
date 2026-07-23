@@ -1,12 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Layers, Search, ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
+import { Layers, Search, ArrowRight, HelpCircle, Sparkles, Lock, Star, ShieldCheck } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { useAuth } from '@/auth/AuthProvider';
+import { client } from '@/lib/api/client';
+import toast from 'react-hot-toast';
 import { NorthIndianChart } from '@/components/ui/NorthIndianChart';
 import { VimshottariDashaTable } from '@/components/ui/VimshottariDashaTable';
 import { LoShuGrid } from '@/components/ui/LoShuGrid';
@@ -51,13 +55,166 @@ import { InteractiveChartViewer } from '@/components/ui/astrology/InteractiveCha
 
 const FAQS = [
   { q: 'What is a Kundli?', a: 'A Kundli is an essential tool in astrology to map your cosmic energies and decode your potential.' },
-  { q: 'How accurate is this Free Kundli Generator?', a: 'Our calculator uses precise astronomical ephemeris data to generate highly accurate results.' },
-  { q: 'Is this service completely free?', a: 'Yes, this tool is 100% free to use for unlimited calculations.' },
+  { q: 'How accurate is this Premium Kundli Generator?', a: 'Our calculator uses precise astronomical ephemeris data to generate highly accurate results.' },
+  { q: 'Why does it cost ₹50?', a: 'This is a premium personalized report with 20+ detailed sections including Dasha, Remedies, Yogas, and more. The ₹50 charge helps us maintain our servers and expert-curated content.' },
   { q: 'Do I need my exact birth time?', a: 'For the most accurate results, your exact time of birth is highly recommended.' },
   { q: 'Can I consult an astrologer after generating my report?', a: 'Absolutely! We offer premium 1-on-1 consultations to help you decode the deeper meanings of your results.' }
 ];
 
+// Razorpay types
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
+function PremiumPaywall({ onPaymentSuccess }: { onPaymentSuccess: () => void }) {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  useEffect(() => {
+    // Load Razorpay script
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => { document.body.removeChild(script); };
+  }, []);
+
+  const handlePayment = async () => {
+    if (!user) { router.push('/login'); return; }
+    setIsProcessing(true);
+    try {
+      // Create Razorpay order via backend
+      const orderRes = await client.post('/payments/kundli-order', { amount: 5000 }); // 5000 paise = ₹50
+      const order = orderRes.data?.data;
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_placeholder',
+        amount: order?.amount || 5000,
+        currency: 'INR',
+        name: 'OM Astrology AMC',
+        description: 'Premium Personalized Kundli Report',
+        order_id: order?.id,
+        handler: async (response: any) => {
+          try {
+            // Verify payment
+            await client.post('/payments/kundli-verify', {
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+            toast.success('Payment successful! Generating your Kundli...');
+            onPaymentSuccess();
+          } catch {
+            toast.error('Payment verification failed. Please contact support.');
+          }
+        },
+        prefill: {
+          name: user.name || '',
+          email: user.email || '',
+        },
+        theme: { color: '#b8860b' },
+        modal: { ondismiss: () => setIsProcessing(false) },
+      };
+
+      if (window.Razorpay) {
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } else {
+        toast.error('Payment gateway not loaded. Please refresh the page.');
+        setIsProcessing(false);
+      }
+    } catch {
+      toast.error('Could not initiate payment. Please try again.');
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-amber-950/10 via-black to-amber-950/5 flex items-center justify-center px-4 py-24">
+      <div className="max-w-lg w-full space-y-8 text-center">
+        {/* Book Cover Image */}
+        <div className="relative mx-auto w-56 h-72 rounded-2xl overflow-hidden shadow-2xl shadow-amber-900/30 border-2 border-[var(--gold)]/40">
+          <img
+            src="/images/premium-kundli-book.jpg"
+            alt="Premium Personalized Kundli"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
+
+        {/* Title */}
+        <div className="space-y-3">
+          <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2">
+            <Star className="w-4 h-4" /> Premium Service
+          </span>
+          <h1 className="font-serif text-3xl md:text-4xl font-bold text-white leading-tight">
+            Premium Personalized
+            <span className="gold-gradient-text block">Kundli Report</span>
+          </h1>
+          <p className="text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
+            Get a 20+ section fully detailed Janam Kundli with charts, Dasha, Yogas, Remedies, Numerology, and life predictions — all personalized to your exact birth details.
+          </p>
+        </div>
+
+        {/* Features */}
+        <div className="grid grid-cols-2 gap-3 text-left">
+          {[
+            '✦ Lagna & Chalit Charts',
+            '✦ Vimshottari Dasha',
+            '✦ Vedic Remedies',
+            '✦ Numerology Report',
+            '✦ Yoga & Dosha Analysis',
+            '✦ Life Predictions'
+          ].map((f, i) => (
+            <div key={i} className="flex items-center gap-2 text-xs text-amber-200/80 bg-amber-950/20 border border-amber-800/20 rounded-xl px-3 py-2">
+              {f}
+            </div>
+          ))}
+        </div>
+
+        {/* Price & CTA */}
+        <div className="bg-gradient-to-br from-[var(--gold-50)] to-black border-2 border-[var(--gold)]/40 rounded-2xl p-6 space-y-4">
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-gray-500 line-through text-lg">₹199</span>
+            <span className="text-4xl font-serif font-bold text-[var(--gold)]">₹50</span>
+            <span className="text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/30 px-2 py-1 rounded-full font-bold">75% OFF</span>
+          </div>
+          <p className="text-xs text-gray-500">One-time payment · Instant report · No subscription</p>
+          <button
+            onClick={handlePayment}
+            disabled={isProcessing}
+            className="w-full py-4 px-6 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-lg rounded-xl hover:opacity-90 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 cursor-pointer shadow-lg shadow-amber-900/30"
+          >
+            {isProcessing ? (
+              <><span className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></span> Processing...</>
+            ) : (
+              <><Lock className="w-5 h-5" /> Pay ₹50 & Generate Kundli</>
+            )}
+          </button>
+          <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+            <ShieldCheck className="w-4 h-4 text-emerald-500" />
+            Secure payment via Razorpay · SSL encrypted
+          </div>
+        </div>
+
+        <p className="text-xs text-gray-600">
+          Don&apos;t have an account?{' '}
+          <Link href="/register" className="text-[var(--gold)] hover:underline">Create free account</Link>
+          {' '}to purchase
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function KundliGeneratorPage() {
+  const { user, isAuthenticated, isAdmin, isLoading } = useAuth();
+  const router = useRouter();
+  const [hasPaid, setHasPaid] = useState(false);
+
   const [formData, setFormData] = useState({
     name: '',
     date: '',
@@ -74,6 +231,27 @@ export default function KundliGeneratorPage() {
 
   const [resultData, setResultData] = useState<any>(null);
   const [dashaApiData, setDashaApiData] = useState<any>(null);
+
+  // Auth guard — redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.push('/login?redirect=/free-tools/kundli-generator');
+    }
+  }, [isLoading, isAuthenticated, router]);
+
+  // Show loading while auth resolves
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[var(--gold)]"></div>
+      </div>
+    );
+  }
+
+  // Show paywall for non-admin users who haven't paid
+  if (isAuthenticated && !isAdmin && !hasPaid) {
+    return <PremiumPaywall onPaymentSuccess={() => setHasPaid(true)} />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
