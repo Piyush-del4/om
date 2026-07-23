@@ -461,44 +461,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Get Free Kundli Massive CTA */}
-      <section className="relative z-10 py-20 px-4">
-        <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden relative">
-          {/* Background gradient & pattern */}
-          <div className="absolute inset-0 bg-neutral-950 dark:bg-gradient-to-br dark:from-neutral-900 dark:to-black border border-[var(--gold)]/20"></div>
-          <div className="absolute inset-0 opacity-10 bg-[url('/images/sacred-geometry.svg')] bg-cover bg-center"></div>
-          
-          <div className="relative p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="text-left max-w-xl space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-[1px] bg-[var(--gold)]"></div>
-                <span className="text-[var(--gold)] font-mono text-sm tracking-widest uppercase">Instantly Available</span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-white leading-tight">
-                Get Your <span className="text-[var(--gold)]">Free Kundli</span>
-              </h2>
-              <p className="text-gray-300 text-lg font-light leading-relaxed">
-                Get clear insights into your life, career, relationships, and future with your personalized, highly-accurate Vedic Kundli.
-              </p>
-              <div className="pt-4">
-                <Link href="/free-tools/kundli-generator">
-                  <button className="bg-gradient-to-r from-[var(--gold-300)] via-[var(--gold)] to-[var(--gold-600)] text-black font-semibold px-8 py-4 rounded-full hover:scale-105 transition-transform flex items-center gap-3">
-                    Generate Report Now <ArrowRight className="w-5 h-5" />
-                  </button>
-                </Link>
-              </div>
-            </div>
-            
-            <div className="hidden md:flex w-1/3 justify-center">
-              <div className="w-48 h-48 rounded-full border border-[var(--gold)]/30 flex items-center justify-center bg-black/50 relative">
-                <div className="absolute inset-0 rounded-full border border-[var(--gold)]/10 animate-ping"></div>
-                <Layers className="w-20 h-20 text-[var(--gold)]" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* === PREMIUM PERSONALIZED KUNDLI SECTION === */}
       <motion.section
         initial={{ opacity: 0, y: 40 }}
