@@ -58,7 +58,7 @@ export function BasicAstroDetails({ data }: BasicAstroDetailsProps) {
     <div className="w-full max-w-4xl mx-auto my-8 space-y-4">
       {/* Title */}
       <div className="text-center">
-        <h4 className="text-xl md:text-2xl font-serif font-bold text-amber-950 dark:text-amber-200 flex items-center justify-center gap-2">
+        <h4 className="text-xl md:text-2xl font-sans font-bold text-amber-950 dark:text-amber-200 flex items-center justify-center gap-2">
           ✦ Basic Astro Details ✦
         </h4>
       </div>

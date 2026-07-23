@@ -35,7 +35,7 @@ export function LagnaRashiCards({ data }: Props) {
             className="w-full h-full object-contain"
           />
         </div>
-        <h4 className="font-serif font-black text-xl md:text-2xl text-amber-950 dark:text-amber-300 pb-2">
+        <h4 className="font-sans font-black text-xl md:text-2xl text-amber-950 dark:text-amber-300 pb-2">
           {lagnaName} Lagna
         </h4>
       </div>
@@ -49,7 +49,7 @@ export function LagnaRashiCards({ data }: Props) {
             className="w-full h-full object-contain"
           />
         </div>
-        <h4 className="font-serif font-black text-xl md:text-2xl text-amber-950 dark:text-amber-300 pb-2">
+        <h4 className="font-sans font-black text-xl md:text-2xl text-amber-950 dark:text-amber-300 pb-2">
           {rashiName} Rashi
         </h4>
       </div>

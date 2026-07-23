@@ -156,7 +156,7 @@ export default function KundliGeneratorPage() {
             <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
               <Layers className="w-4 h-4" /> Free Vedic Utility
             </span>
-            <h1 className="font-serif text-4xl md:text-5xl font-bold">
+            <h1 className="font-sans text-4xl md:text-5xl font-bold">
               Free Generator <span className="gold-gradient-text">Janam Kundli</span>
             </h1>
             <p className="text-gray-400 text-sm md:text-base font-light max-w-2xl mx-auto">
@@ -316,7 +316,7 @@ export default function KundliGeneratorPage() {
                 <div className="pdf-page-break-avoid w-full">
                   <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
                     <div className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center">
-                      <h3 className="font-serif font-bold text-lg md:text-2xl">
+                      <h3 className="font-sans font-bold text-lg md:text-2xl">
                         Astro Charts
                       </h3>
                     </div>
@@ -325,7 +325,7 @@ export default function KundliGeneratorPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Lagna Chart */}
                       <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
-                        <h4 className="font-serif font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
+                        <h4 className="font-sans font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
                           ✦ Lagna Chart ✦
                         </h4>
                         <NorthIndianChart data={resultData} showLegend={false} />
@@ -333,7 +333,7 @@ export default function KundliGeneratorPage() {
 
                       {/* Chalit Chart */}
                       <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
-                        <h4 className="font-serif font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
+                        <h4 className="font-sans font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
                           ✦ Chalit Chart ✦
                         </h4>
                         {(() => {
@@ -377,7 +377,7 @@ export default function KundliGeneratorPage() {
                       <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-600/40 flex items-center justify-center mx-auto text-amber-800 dark:text-amber-300">
                         <Sparkles className="w-6 h-6" />
                       </div>
-                      <h3 className="text-2xl md:text-3xl font-serif font-bold text-amber-950 dark:text-amber-200">
+                      <h3 className="text-2xl md:text-3xl font-sans font-bold text-amber-950 dark:text-amber-200">
                         Our Premium Occult Consultations
                       </h3>
                       <p className="text-xs md:text-sm text-neutral-650 dark:text-gray-400 max-w-xl mx-auto">
@@ -452,7 +452,7 @@ export default function KundliGeneratorPage() {
 
         {/* SEO Content Section */}
         <div className="space-y-6 pt-12 border-t border-neutral-800/60 print:hidden">
-          <h2 className="font-serif text-3xl font-bold">Why use our <span className="text-[var(--gold)]">Comprehensive Free Kundli Generator</span>?</h2>
+          <h2 className="font-sans text-3xl font-bold">Why use our <span className="text-[var(--gold)]">Comprehensive Free Kundli Generator</span>?</h2>
           <div className="prose prose-invert max-w-none text-gray-300 font-light text-sm leading-relaxed space-y-4">
             <p>
               In Vedic Astrology and numerology, precision is everything. Our free online Kundli provides you with highly accurate insights based on ancient Parashari mathematical algorithms combined with modern astronomical ephemeris data.
