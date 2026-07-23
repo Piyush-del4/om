@@ -296,7 +296,7 @@ export default function KundliGeneratorPage() {
 
                 {/* 3. Lo Shu Grid Analysis (Standard grid, Birth grid, and Numerology details) */}
                 <div className="pdf-page-break-avoid w-full">
-                  <div className="bg-amber-50/60 dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-[1060px] mx-auto my-6 space-y-6">
+                  <div className="bg-white dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-[1060px] mx-auto my-6 space-y-6">
                     <div className="bg-amber-700 dark:bg-amber-800 text-white py-2 px-6 rounded-lg text-center font-bold text-sm md:text-base max-w-xs mx-auto">
                       Lo Shu Grid Analysis
                     </div>
@@ -314,7 +314,7 @@ export default function KundliGeneratorPage() {
 
                 {/* 4. Astro Charts (✦ Lagna Chart ✦ and ✦ Chalit Chart ✦ side-by-side) */}
                 <div className="pdf-page-break-avoid w-full">
-                  <div className="bg-amber-50/60 dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-[1060px] mx-auto my-6 space-y-6">
+                  <div className="bg-white dark:bg-neutral-900 rounded-2xl p-6 w-full max-w-[1060px] mx-auto my-6 space-y-6">
                     <div className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center">
                       <h3 className="font-sans font-bold text-lg md:text-2xl">
                         Astro Charts

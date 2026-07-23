@@ -7,7 +7,7 @@ interface ReportHeaderProps {
 
 export function ReportHeader({ className = '' }: ReportHeaderProps) {
   return (
-    <div className={`w-full max-w-4xl mx-auto my-4 p-4 rounded-[20px] border-2 border-amber-400 bg-[#FEF9F3] dark:bg-neutral-900 shadow-md grid grid-cols-1 sm:grid-cols-[1fr_2.5fr_1fr] items-center gap-4 ${className}`}>
+    <div className={`w-full max-w-4xl mx-auto my-4 p-4 rounded-[20px] border-2 border-amber-400 bg-white dark:bg-neutral-900 shadow-md grid grid-cols-1 sm:grid-cols-[1fr_2.5fr_1fr] items-center gap-4 ${className}`}>
       {/* Left: Logo */}
       <div className="flex justify-center sm:justify-start">
         <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-amber-500 bg-neutral-950 flex items-center justify-center p-0.5 overflow-hidden shadow-md">

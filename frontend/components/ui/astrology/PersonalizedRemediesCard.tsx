@@ -117,7 +117,7 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
   const activeRemedies = missingNumbers.map(num => allRemediesMap[num]).filter(Boolean);
 
   return (
-    <div className="bg-[#fffdf2] dark:bg-neutral-900 border-2 border-amber-800/30 rounded-3xl p-6 md:p-8 w-full max-w-full mx-auto my-6 shadow-xl space-y-8 text-black dark:text-white">
+    <div className="bg-white dark:bg-neutral-900 border-2 border-amber-800/30 rounded-3xl p-6 md:p-8 w-full max-w-full mx-auto my-6 shadow-xl space-y-8 text-black dark:text-white">
       
       {/* Premium Header Banner */}
       <div className="relative overflow-hidden bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 text-white rounded-2xl p-6 md:p-8 shadow-md">

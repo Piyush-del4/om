@@ -67,7 +67,7 @@ export function BasicAstroDetails({ data }: BasicAstroDetailsProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         
         {/* Left Column Table */}
-        <div className="border-2 border-amber-800/30 dark:border-neutral-800 rounded-xl overflow-hidden shadow-md bg-amber-50/60 dark:bg-neutral-900">
+        <div className="border-2 border-amber-800/30 dark:border-neutral-800 rounded-xl overflow-hidden shadow-md bg-white dark:bg-neutral-900">
           <div className="divide-y divide-amber-800/20 dark:divide-neutral-800">
             {leftRows.map((row, idx) => (
               <div key={idx} className="grid grid-cols-2 text-sm">
@@ -83,7 +83,7 @@ export function BasicAstroDetails({ data }: BasicAstroDetailsProps) {
         </div>
 
         {/* Right Column Table */}
-        <div className="border-2 border-amber-800/30 dark:border-neutral-800 rounded-xl overflow-hidden shadow-md bg-amber-50/60 dark:bg-neutral-900">
+        <div className="border-2 border-amber-800/30 dark:border-neutral-800 rounded-xl overflow-hidden shadow-md bg-white dark:bg-neutral-900">
           <div className="divide-y divide-amber-800/20 dark:divide-neutral-800">
             {rightRows.map((row, idx) => (
               <div key={idx} className="grid grid-cols-2 text-sm">

@@ -120,7 +120,7 @@ export function NumerologyAstroDetails({
         </div>
 
         {/* Right Table: Enemy, Neutral, Friendly, Lucky Numbers */}
-        <div className="md:col-span-3 border-2 border-amber-800/30 rounded-2xl overflow-hidden shadow-md bg-amber-50 dark:bg-neutral-900">
+        <div className="md:col-span-3 border-2 border-amber-800/30 rounded-2xl overflow-hidden shadow-md bg-white dark:bg-neutral-900">
           <div className="divide-y divide-amber-800/20 dark:divide-neutral-800">
             
             {/* Enemy Numbers */}
