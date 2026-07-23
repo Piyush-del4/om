@@ -291,15 +291,17 @@ export default function KundliGeneratorPage() {
                   <ReportSectionFooter />
                 </div>
 
-                {/* 3. Charts & Grids Side-by-Side (Lagna, Chandra Rashi, Lo Shu Grid, Chalit Chart) */}
+                {/* 3. Charts & Grids (Lagna, Chalit, Chandra charts grid, with Lo Shu Grid below them) */}
                 <div className="pdf-page-break-avoid w-full">
                   <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
                     <div className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center">
                       <h3 className="font-serif font-bold text-lg md:text-2xl">
-                        Astro Charts & Lo Shu Grid
+                        Astro Charts
                       </h3>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    {/* Charts Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       {/* Lagna Chart */}
                       <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
                         <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Lagna Chart (D-1)</h4>
@@ -323,15 +325,18 @@ export default function KundliGeneratorPage() {
                           return <NorthIndianChart data={chandraData} title="Chandra Chart" showLegend={false} />;
                         })()}
                       </div>
+                    </div>
 
-                      {/* Lo Shu Grid */}
-                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
-                        <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Lo Shu Grid</h4>
-                        <div className="flex-grow flex items-center justify-center p-2">
-                          <LoShuGrid dateOfBirthStr={formData.date} />
-                        </div>
+                    {/* Lo Shu Grid Below Charts */}
+                    <div className="pt-6 border-t border-amber-200 dark:border-neutral-800 flex flex-col items-center space-y-4">
+                      <div className="bg-amber-700 dark:bg-amber-800 text-white py-2 px-6 rounded-lg text-center font-bold text-sm md:text-base">
+                        Lo Shu Grid
+                      </div>
+                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-6 w-full max-w-md mx-auto flex items-center justify-center shadow-sm">
+                        <LoShuGrid dateOfBirthStr={formData.date} />
                       </div>
                     </div>
+
                   </div>
                   <ReportSectionFooter />
                 </div>
