@@ -207,7 +207,7 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
             </p>
           )}
           {title && (
-            <h4 className="font-serif font-bold text-base md:text-lg text-amber-950">
+            <h4 className="font-sans font-bold text-base md:text-lg text-amber-950">
               ✦ {title} ✦
             </h4>
           )}
@@ -261,9 +261,9 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
                   y="180" 
                   textAnchor="middle" 
                   alignmentBaseline="middle"
-                  className="fill-sky-600 font-bold text-base"
+                  className="fill-sky-600 font-bold text-base font-sans"
                 >
-                  <tspan fontSize="11" className="fill-sky-600 font-semibold">
+                  <tspan fontSize="11" className="fill-sky-600 font-semibold font-sans">
                     {Math.floor(planetsObj["Ascendant"]?.normDegree ?? 0)}°{" "}
                   </tspan>
                   Asc (Lagna)
@@ -276,7 +276,7 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
                 y={startY} 
                 textAnchor="middle" 
                 alignmentBaseline="middle"
-                className="font-bold tracking-wide"
+                className="font-bold tracking-wide font-sans"
               >
                 {house.occupants.map((p, i) => (
                   <tspan 
