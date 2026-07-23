@@ -415,7 +415,7 @@ export default function KundliGeneratorPage() {
                           </div>
 
                           <div className="mt-4 pt-3 border-t border-neutral-100 dark:border-neutral-700/50 flex items-center justify-between">
-                            <span className="font-serif font-extrabold text-base md:text-lg text-amber-800 dark:text-amber-400">
+                            <span className="font-sans font-bold text-base md:text-lg text-amber-800 dark:text-amber-400">
                               ₹{service.price.toLocaleString()}
                             </span>
                             <Link 
