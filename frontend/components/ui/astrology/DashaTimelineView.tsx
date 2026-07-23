@@ -25,7 +25,7 @@ export function DashaTimelineView({ data, dashaApiData, birthDateStr }: Props) {
       >
         <span className="text-xl">⏳</span>
         <h3 className="font-serif font-bold text-lg md:text-2xl">
-          Mahadasha, Antardasha & Timeline
+          Dasha
         </h3>
         {/* <ChevronDown className={`w-6 h-6 transition-transform duration-300 print:hidden ${isOpen ? 'rotate-180' : ''}`} /> */}
       </div>
