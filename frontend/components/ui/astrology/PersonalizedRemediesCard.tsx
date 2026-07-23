@@ -165,7 +165,7 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
 
       {/* Side-by-Side Rudrakshas Grid (Filtered Dynamically) */}
       {activeRemedies.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div className="grid grid-cols-1 gap-6 pt-2">
           {activeRemedies.map((item, idx) => (
             <div 
               key={idx} 
