@@ -306,10 +306,6 @@ export default function KundliGeneratorPage() {
                     <div className="w-full">
                       <NumerologyAstroDetails dateOfBirthStr={formData.date} />
                     </div>
-
-                    <div className="w-full">
-                      <LuckyElementsBanner dateOfBirthStr={formData.date} />
-                    </div>
                   </div>
                   <ReportSectionFooter />
                 </div>
@@ -351,6 +347,12 @@ export default function KundliGeneratorPage() {
                 {/* 4. Planetary Detail */}
                 <div id="sec-planets" className="pdf-page-break-avoid w-full space-y-4">
                   <PlanetaryDetailsCard data={resultData} />
+                  <ReportSectionFooter />
+                </div>
+
+                {/* 4.5 Auspicious Lucky Elements */}
+                <div className="pdf-page-break-avoid w-full">
+                  <LuckyElementsBanner dateOfBirthStr={formData.date} />
                   <ReportSectionFooter />
                 </div>
 
