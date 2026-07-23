@@ -60,7 +60,6 @@ export function Navbar() {
   ];
 
   const freeTools = [
-    { name: 'Birth Chart', description: 'Generate your Vedic birth chart.', href: '/free-tools/birth-chart-generator', icon: Sparkles },
     { name: 'Kundli Generator', description: 'Check full planetary positions.', href: '/free-tools/kundli-generator', icon: Layers },
     { name: 'Numerology', description: 'Calculate life path and destiny.', href: '/free-tools/numerology-calculator', icon: Hash },
     { name: 'Lucky Number', description: 'Find your daily lucky digits.', href: '/free-tools/lucky-number-calculator', icon: Star },

@@ -26,13 +26,6 @@ const ALL_TOOLS = [
     badge: 'Popular'
   },
   {
-    name: 'Birth Chart Generator',
-    description: 'Detailed Vedic birth chart mapping planetary positions & house lords.',
-    href: '/free-tools/birth-chart-generator',
-    icon: Layers,
-    badge: 'Essential'
-  },
-  {
     name: 'Lo Shu & Numerology',
     description: 'Calculate your Mulank, Bhagyank, Namank & 3x3 Lo Shu Grid.',
     href: '/free-tools/numerology-calculator',

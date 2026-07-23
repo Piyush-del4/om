@@ -17,7 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const freeToolsRoutes: MetadataRoute.Sitemap = [
     '/free-tools',
     '/free-tools/kundli-generator',
-    '/free-tools/birth-chart-generator',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
