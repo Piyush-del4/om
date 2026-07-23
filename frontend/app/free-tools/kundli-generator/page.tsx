@@ -133,28 +133,27 @@ function PremiumPaywall({ onPaymentSuccess }: { onPaymentSuccess: () => void }) 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-950/10 via-black to-amber-950/5 flex items-center justify-center px-4 py-24">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-amber-50/80 flex items-center justify-center px-4 py-24">
       <div className="max-w-lg w-full space-y-8 text-center">
         {/* Book Cover Image */}
-        <div className="relative mx-auto w-56 h-72 rounded-2xl overflow-hidden shadow-2xl shadow-amber-900/30 border-2 border-[var(--gold)]/40">
+        <div className="relative mx-auto w-56 h-72 rounded-2xl overflow-hidden shadow-2xl shadow-amber-300/40 border-2 border-[var(--gold)]/40">
           <img
             src="/images/premium-kundli-book.jpg"
             alt="Premium Personalized Kundli"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         </div>
 
         {/* Title */}
         <div className="space-y-3">
-          <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2">
+          <span className="text-[var(--gold-dark)] text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2">
             <Star className="w-4 h-4" /> Premium Service
           </span>
-          <h1 className="font-serif text-3xl md:text-4xl font-bold text-white leading-tight">
+          <h1 className="font-serif text-3xl md:text-4xl font-bold text-neutral-900 leading-tight">
             Premium Personalized
             <span className="gold-gradient-text block">Kundli Report</span>
           </h1>
-          <p className="text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
+          <p className="text-neutral-600 text-sm max-w-md mx-auto leading-relaxed">
             Get a 20+ section fully detailed Janam Kundli with charts, Dasha, Yogas, Remedies, Numerology, and life predictions — all personalized to your exact birth details.
           </p>
         </div>
@@ -167,42 +166,37 @@ function PremiumPaywall({ onPaymentSuccess }: { onPaymentSuccess: () => void }) 
             '✦ Vedic Remedies',
             '✦ Numerology Report',
             '✦ Yoga & Dosha Analysis',
-            '✦ Life Predictions'
           ].map((f, i) => (
-            <div key={i} className="flex items-center gap-2 text-xs text-amber-200/80 bg-amber-950/20 border border-amber-800/20 rounded-xl px-3 py-2">
+            <div key={i} className="flex items-center gap-2 text-xs text-amber-900/80 bg-amber-100/80 border border-amber-300/50 rounded-xl px-3 py-2">
               {f}
             </div>
           ))}
         </div>
 
         {/* Price & CTA */}
-        <div className="bg-gradient-to-br from-[var(--gold-50)] to-black border-2 border-[var(--gold)]/40 rounded-2xl p-6 space-y-4">
+        <div className="bg-white border-2 border-amber-200 rounded-2xl p-6 space-y-4 shadow-lg shadow-amber-100/60">
           <div className="flex items-center justify-center gap-3">
-            <span className="text-gray-500 line-through text-lg">₹1000</span>
-            <span className="text-4xl font-serif font-bold text-[var(--gold)]">₹50</span>
-
+            <span className="text-neutral-400 line-through text-lg">₹1000</span>
+            <span className="text-4xl font-serif font-bold text-[var(--gold-dark)]">₹50</span>
           </div>
-          <p className="text-xs text-gray-500">One-time payment · Instant report · No subscription</p>
+          <p className="text-xs text-neutral-500">One-time payment · Instant report · No subscription</p>
           <button
             onClick={handlePayment}
             disabled={isProcessing}
-            className="w-full py-4 px-6 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-lg rounded-xl hover:opacity-90 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 cursor-pointer shadow-lg shadow-amber-900/30"
+            className="w-full py-4 px-6 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-lg rounded-xl hover:opacity-90 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 cursor-pointer shadow-lg shadow-amber-300/40"
           >
             {isProcessing ? (
               <><span className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></span> Processing...</>
             ) : (
-              <><Lock className="w-5 h-5" /> Pay ₹50 & Generate Kundli</>
+              <><Lock className="w-5 h-5" /> Pay ₹50 &amp; Generate Kundli</>
             )}
           </button>
-          <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
-            <ShieldCheck className="w-4 h-4 text-emerald-500" />
-            Secure payment via Razorpay · SSL encrypted
-          </div>
+
         </div>
 
-        <p className="text-xs text-gray-600">
+        <p className="text-xs text-neutral-400">
           Don&apos;t have an account?{' '}
-          <Link href="/register" className="text-[var(--gold)] hover:underline">Create free account</Link>
+          <Link href="/register" className="text-[var(--gold-dark)] hover:underline">Create free account</Link>
           {' '}to purchase
         </p>
       </div>
