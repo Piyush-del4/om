@@ -24,7 +24,7 @@ export function DashaTimelineView({ data, dashaApiData, birthDateStr }: Props) {
         className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center flex items-center justify-center gap-2 select-none"
       >
         <span className="text-xl">⏳</span>
-        <h3 className="font-serif font-bold text-lg md:text-2xl">
+        <h3 className="font-sans font-bold text-lg md:text-2xl">
           Dasha
         </h3>
         {/* <ChevronDown className={`w-6 h-6 transition-transform duration-300 print:hidden ${isOpen ? 'rotate-180' : ''}`} /> */}
@@ -62,7 +62,7 @@ export function DashaTimelineView({ data, dashaApiData, birthDateStr }: Props) {
       {activeTab === 'current' ? (
         <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-5 space-y-4 shadow-sm">
           <div className="p-4 bg-amber-100/70 dark:bg-neutral-900 border-l-4 border-amber-600 rounded-r-lg space-y-2">
-            <h4 className="font-serif font-bold text-base md:text-lg text-amber-950 dark:text-amber-300">
+            <h4 className="font-sans font-bold text-base md:text-lg text-amber-950 dark:text-amber-300">
               Current Planetary Period Overview
             </h4>
             <p className="text-xs md:text-sm text-gray-700 dark:text-gray-300">
@@ -74,7 +74,7 @@ export function DashaTimelineView({ data, dashaApiData, birthDateStr }: Props) {
         </div>
       ) : (
         <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-5 space-y-4 shadow-sm">
-          <h4 className="font-serif font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 border-b pb-2">
+          <h4 className="font-sans font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 border-b pb-2">
             Complete Vimshottari Mahadasha Timeline (120 Years Cycle)
           </h4>
           

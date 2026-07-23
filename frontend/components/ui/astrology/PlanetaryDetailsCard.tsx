@@ -25,7 +25,7 @@ export function PlanetaryDetailsCard({ data }: Props) {
       >
         <div className="flex items-center gap-2 mx-auto">
           <span className="text-xl">🪐</span>
-          <h3 className="font-serif font-bold text-lg md:text-2xl">
+          <h3 className="font-sans font-bold text-lg md:text-2xl">
             Detailed Planetary Positions & Dignities
           </h3>
         </div>

@@ -129,7 +129,7 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
         </div>
 
         <div className="relative z-10 space-y-4 max-w-3xl">
-          <h3 className="font-serif font-bold text-2xl md:text-3xl text-[var(--gold)]">
+          <h3 className="font-sans font-bold text-2xl md:text-3xl text-[var(--gold)]">
             Why Rudraksha is Mandatory?
           </h3>
           
@@ -155,7 +155,7 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
       </div>
 
       <div className="space-y-4">
-        <h4 className="font-serif font-bold text-lg md:text-xl text-amber-900 dark:text-[var(--gold)]">
+        <h4 className="font-sans font-bold text-lg md:text-xl text-amber-900 dark:text-[var(--gold)]">
           Recommended Rudraksha Remedies for Missing Numbers
         </h4>
         <p className="text-xs md:text-sm text-neutral-600 dark:text-gray-400">
@@ -187,7 +187,7 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
                     {item.mukhi}
                   </span>
                 </div>
-                <h4 className="font-serif font-bold text-neutral-900 dark:text-amber-200 text-sm sm:text-base leading-tight">
+                <h4 className="font-sans font-bold text-neutral-900 dark:text-amber-200 text-sm sm:text-base leading-tight">
                   {item.element}
                 </h4>
                 <p className="text-xs sm:text-sm text-neutral-600 dark:text-gray-300 font-medium">
@@ -200,7 +200,7 @@ export function PersonalizedRemediesCard({ data, birthDateStr }: Props) {
       ) : (
         <div className="bg-amber-50 dark:bg-neutral-800 border border-amber-300 dark:border-neutral-750 p-6 rounded-2xl text-center space-y-2">
           <Sparkles className="w-8 h-8 text-[var(--gold)] mx-auto animate-pulse" />
-          <h5 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300">
+          <h5 className="font-sans font-bold text-base text-amber-950 dark:text-amber-300">
             Perfect Lo Shu Grid!
           </h5>
           <p className="text-xs sm:text-sm text-neutral-650 dark:text-gray-300 max-w-lg mx-auto">
