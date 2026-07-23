@@ -249,7 +249,7 @@ export function VimshottariDashaTable({ data, dashaApiData, birthDateStr }: Vims
     <div className="w-full max-w-4xl mx-auto my-6 space-y-6">
       {/* Title Header */}
       <h3 className="text-xl md:text-2xl font-serif font-bold text-amber-950 dark:text-amber-200 text-center flex items-center justify-center gap-2">
-        ✦ Mahadasha, Antardasha & Pratyantar Dasha ✦
+        ✦ Mahadasha & Antardasha ✦
       </h3>
 
       {/* 1. Mahadasha Table */}
@@ -286,7 +286,7 @@ export function VimshottariDashaTable({ data, dashaApiData, birthDateStr }: Vims
       </div>
 
       {/* 2. Antardasha Tables */}
-      <div className="space-y-6 mb-8">
+      <div className="space-y-6">
         <h3 className="text-xl md:text-2xl font-serif font-bold text-amber-950 dark:text-amber-200 text-center flex items-center justify-center gap-2">
           ✦ Antardasha (Sub Period) ✦
         </h3>
@@ -324,50 +324,6 @@ export function VimshottariDashaTable({ data, dashaApiData, birthDateStr }: Vims
             </div>
           </div>
         ))}
-        </div>
-      </div>
-
-      {/* 3. Pratyantar Dasha Tables */}
-      <div className="space-y-6">
-        <h3 className="text-xl md:text-2xl font-serif font-bold text-amber-950 dark:text-amber-200 text-center flex items-center justify-center gap-2">
-          ✦ Pratyantar Dasha (Sub-Sub Period) ✦
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {displayTimeline.map((maha) => 
-            maha.antardashas.map((antar: any, aIdx: number) => (
-              <div key={`prat-${maha.lord.vedic}-${aIdx}`} className="pdf-page-break-avoid border-2 border-amber-600 rounded-xl overflow-hidden shadow-md bg-[#fef9c3] dark:bg-neutral-900">
-                <h4 className="bg-[#f59e0b] text-black font-bold text-center py-2 text-sm md:text-base border-b border-amber-600 font-serif">
-                  Mahadasha: {maha.lord.vedic} ➔ Antardasha: {antar.lord.vedic}
-                </h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-center border-collapse min-w-[300px]">
-                  <thead>
-                    <tr className="bg-[#fef08a] dark:bg-amber-950/80 text-amber-950 dark:text-amber-200 font-bold text-xs border-b border-amber-600">
-                      <th className="p-2 border-r border-amber-600 font-serif w-1/3">Pratyantar</th>
-                      <th className="p-2 border-r border-amber-600 font-serif w-1/3">Start Date</th>
-                      <th className="p-2 font-serif w-1/3">End Date</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-amber-600/30 text-xs font-medium text-neutral-900 dark:text-amber-100">
-                    {antar.pratyantardashas?.map((prat: any, pIdx: number) => (
-                      <tr key={`${maha.lord.vedic}-${antar.lord.vedic}-${pIdx}`} className="hover:bg-amber-200/40 transition-colors bg-amber-50/50 dark:bg-neutral-800/50">
-                        <td className="p-1.5 border-r border-amber-600/30 font-serif font-bold text-amber-700 dark:text-amber-400">
-                          {prat.lord.vedic}
-                        </td>
-                        <td className="p-1.5 border-r border-amber-600/30 font-mono text-[11px] sm:text-xs">
-                          {prat.startDateStr}
-                        </td>
-                        <td className="p-1.5 font-mono text-[11px] sm:text-xs">
-                          {prat.endDateStr}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))
-        )}
         </div>
       </div>
     </div>
