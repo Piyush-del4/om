@@ -322,24 +322,28 @@ export default function KundliGeneratorPage() {
                     </div>
                     
                     {/* Charts Grid 50-50 */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                       {/* Lagna Chart */}
-                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-2 space-y-2 flex flex-col justify-between">
+                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-2 space-y-2 flex flex-col items-center justify-center w-full h-full">
                         <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
                           ✦ Lagna Chart ✦
                         </h4>
-                        <NorthIndianChart data={resultData} showLegend={false} />
+                        <div className="w-full flex-1 flex items-center justify-center">
+                          <NorthIndianChart data={resultData} showLegend={false} />
+                        </div>
                       </div>
 
                       {/* Chalit Chart */}
-                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-2 space-y-2 flex flex-col justify-between">
+                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-2 space-y-2 flex flex-col items-center justify-center w-full h-full">
                         <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
                           ✦ Chalit Chart ✦
                         </h4>
-                        {(() => {
-                          const chalitData = calculateVargaChart(resultData, 'chalit');
-                          return <NorthIndianChart data={chalitData} showLegend={false} />;
-                        })()}
+                        <div className="w-full flex-1 flex items-center justify-center">
+                          {(() => {
+                            const chalitData = calculateVargaChart(resultData, 'chalit');
+                            return <NorthIndianChart data={chalitData} showLegend={false} />;
+                          })()}
+                        </div>
                       </div>
                     </div>
                   </div>
