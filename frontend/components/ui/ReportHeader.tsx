@@ -24,7 +24,7 @@ export function ReportHeader({ className = '' }: ReportHeaderProps) {
 
       {/* Center: Title & Subtitle */}
       <div className="text-center py-2 sm:py-0">
-        <h1 className="font-sans text-2xl md:text-3.5xl font-bold text-amber-950 dark:text-amber-100 tracking-wider">
+        <h1 className="font-sans text-3xl md:text-4xl font-extrabold text-amber-950 dark:text-amber-100 tracking-wider whitespace-nowrap">
           OM ASTROLOGY AMC
         </h1>
         <p className="text-[10px] md:text-xs font-semibold text-amber-800 dark:text-amber-300 tracking-[0.4em] uppercase mt-1.5 pl-[0.4em]">
