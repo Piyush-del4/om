@@ -27,7 +27,7 @@ export function ReportHeader({ className = '' }: ReportHeaderProps) {
         <h1 className="font-sans text-3xl md:text-4xl font-extrabold text-amber-950 dark:text-amber-100 tracking-wider">
           OM ASTROLOGY AMC
         </h1>
-        <p className="text-[10px] md:text-xs font-semibold text-amber-800 dark:text-amber-300 tracking-[0.4em] uppercase mt-1.5 pl-[0.4em]">
+        <p className="text-xs md:text-sm font-bold text-amber-800 dark:text-amber-300 tracking-[0.2em] uppercase mt-1.5 pl-[0.2em]">
           FEAN THEORY AMB
         </p>
       </div>
