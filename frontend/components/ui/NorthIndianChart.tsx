@@ -169,15 +169,15 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
 
   const getVedicName = (name: string) => {
     const mapping: Record<string, string> = {
-      Sun: 'Surya',
-      Moon: 'Chandra',
-      Mars: 'Mangal',
-      Mercury: 'Budh',
-      Jupiter: 'Guru',
-      Venus: 'Shukra',
-      Saturn: 'Shani',
-      Rahu: 'Rahu',
-      Ketu: 'Ketu'
+      Sun: 'Sur',
+      Moon: 'Cha',
+      Mars: 'Man',
+      Mercury: 'Bud',
+      Jupiter: 'Gur',
+      Venus: 'Shu',
+      Saturn: 'Sha',
+      Rahu: 'Rah',
+      Ketu: 'Ket'
     };
     return mapping[name] || name;
   };
