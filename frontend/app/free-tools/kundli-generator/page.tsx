@@ -328,12 +328,20 @@ export default function KundliGeneratorPage() {
                     </div>
 
                     {/* Lo Shu Grid Below Charts */}
-                    <div className="pt-6 border-t border-amber-200 dark:border-neutral-800 flex flex-col items-center space-y-4">
+                    <div className="pt-6 border-t border-amber-200 dark:border-neutral-800 flex flex-col items-center space-y-6">
                       <div className="bg-amber-700 dark:bg-amber-800 text-white py-2 px-6 rounded-lg text-center font-bold text-sm md:text-base">
                         Lo Shu Grid
                       </div>
                       <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-6 w-full max-w-md mx-auto flex items-center justify-center shadow-sm">
                         <LoShuGrid dateOfBirthStr={formData.date} />
+                      </div>
+                      
+                      <div className="w-full">
+                        <NumerologyAstroDetails dateOfBirthStr={formData.date} />
+                      </div>
+
+                      <div className="w-full">
+                        <LuckyElementsBanner dateOfBirthStr={formData.date} />
                       </div>
                     </div>
 
