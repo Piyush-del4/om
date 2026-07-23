@@ -68,7 +68,7 @@ export default function KundliGeneratorPage() {
     lng: 77.2090,
     timezone: 5.5
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState(false);
 
@@ -78,7 +78,7 @@ export default function KundliGeneratorPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       const payloadData = {
         year: parseInt(formData.date.split('-')[0]),
@@ -145,7 +145,7 @@ export default function KundliGeneratorPage() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[var(--gold)]/20 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-5xl mx-auto space-y-12 relative z-10">
-        
+
         {/* Hero Header */}
         {!result && (
           <motion.div
@@ -172,30 +172,30 @@ export default function KundliGeneratorPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm text-gray-300 font-medium">Full Name</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     required
                     className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--gold)] transition-colors"
                     placeholder="Enter your name"
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <label className="text-sm text-gray-300 font-medium">Date of Birth</label>
-                  <input 
-                    type="date" 
+                  <input
+                    type="date"
                     required
                     className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--gold)] transition-colors [color-scheme:dark]"
                     value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm text-gray-300 font-medium">Place of Birth</label>
-                  <CitySearchInput 
+                  <CitySearchInput
                     value={formData.location}
                     onChange={(city, lat, lng, tz) => {
                       setFormData(prev => ({
@@ -211,7 +211,7 @@ export default function KundliGeneratorPage() {
 
                 <div className="space-y-2">
                   <label className="text-sm text-gray-300 font-medium">Time of Birth</label>
-                  <TimePicker12Hour 
+                  <TimePicker12Hour
                     value={formData.time || '12:00'}
                     onChange={(time24) => setFormData(prev => ({ ...prev, time: time24 }))}
                   />
@@ -219,21 +219,21 @@ export default function KundliGeneratorPage() {
 
                 <div className="space-y-2">
                   <label className="text-sm text-gray-300 font-medium">Country of Birth</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     required
                     className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--gold)] transition-colors"
                     placeholder="e.g. India, USA, UK"
                     value={formData.country}
-                    onChange={(e) => setFormData({...formData, country: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                   />
                 </div>
               </div>
 
               <div className="pt-4 flex justify-center">
-                <GoldButton 
-                  type="submit" 
-                  variant="filled" 
+                <GoldButton
+                  type="submit"
+                  variant="filled"
                   className="w-full md:w-auto min-w-[240px] px-8 py-3.5 flex justify-center text-base font-bold"
                   disabled={isSubmitting}
                 >
@@ -243,7 +243,7 @@ export default function KundliGeneratorPage() {
             </form>
           ) : (
             <div className="text-center py-2 space-y-6">
-              
+
               {/* Sticky Navigation Index Bar */}
               {/* <div className="sticky top-4 z-40 bg-neutral-950/90 backdrop-blur-md border border-[var(--gold)]/40 p-2.5 rounded-xl shadow-xl overflow-x-auto print:hidden">
                 <div className="flex items-center gap-2 min-w-max text-xs font-bold">
@@ -270,12 +270,12 @@ export default function KundliGeneratorPage() {
 
               {/* 📖 Complete 24-Section Kundli Report Output */}
               <div id="report-pdf-content" className="pt-0 px-2 pb-2 sm:px-4 sm:pb-4 rounded-2xl bg-white text-black text-left space-y-8">
-                
+
                 <ReportHeader />
-                
+
                 {/* 1. Name Info (Personal Details) */}
                 <div id="sec-basic" className="pdf-page-break-avoid w-full">
-                  <BirthDetailsTable 
+                  <BirthDetailsTable
                     name={formData.name}
                     date={formData.date}
                     time={formData.time}
@@ -300,11 +300,11 @@ export default function KundliGeneratorPage() {
                     <div className="bg-amber-700 dark:bg-amber-800 text-white py-2 px-6 rounded-lg text-center font-bold text-sm md:text-base max-w-xs mx-auto">
                       Lo Shu Grid Analysis
                     </div>
-                    
+
                     <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 md:p-6 w-full max-w-full mx-auto">
                       <LoShuGrid dateOfBirthStr={formData.date} />
                     </div>
-                    
+
                     <div className="w-full">
                       <NumerologyAstroDetails dateOfBirthStr={formData.date} />
                     </div>
@@ -320,9 +320,9 @@ export default function KundliGeneratorPage() {
                         Astro Charts
                       </h3>
                     </div>
-                    
+
                     {/* Charts Grid 50-50 */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-[5px] w-full">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full">
                       {/* Lagna Chart */}
                       <div className="bg-white dark:bg-neutral-800 rounded-xl p-0 space-y-2 flex flex-col items-center justify-center w-full h-full">
                         <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
@@ -405,7 +405,7 @@ export default function KundliGeneratorPage() {
                         { name: "Complete Life Analysis", duration: "60 mins", price: 11000 },
                         { name: "Corporate Numerology Consultation", duration: "30 mins", price: 25000 }
                       ].map((service, index) => (
-                        <div 
+                        <div
                           key={index}
                           className="bg-white dark:bg-neutral-800 border border-amber-200 dark:border-neutral-700/60 rounded-2xl p-4 flex flex-col justify-between hover:border-amber-400 dark:hover:border-amber-500 transition-all duration-300 shadow-xs hover:shadow-sm"
                         >
@@ -422,7 +422,7 @@ export default function KundliGeneratorPage() {
                             <span className="font-sans font-bold text-xl md:text-2xl text-amber-800 dark:text-amber-400">
                               ₹{service.price.toLocaleString()}
                             </span>
-                            <Link 
+                            <Link
                               href="/appointments"
                               className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-lg text-xs transition shadow-xs flex items-center gap-1 border border-amber-400/40"
                             >
