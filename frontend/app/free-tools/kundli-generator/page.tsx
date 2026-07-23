@@ -25,6 +25,7 @@ import { ReportThankYouCard } from '@/components/ui/ReportThankYouCard';
 import { PlanetsPositionTable } from '@/components/ui/PlanetsPositionTable';
 import { PlanetaryAspects } from '@/components/ui/PlanetaryAspects';
 import { DivisionalChartsSection } from '@/components/ui/DivisionalChartsSection';
+import { calculateVargaChart } from '@/lib/vargaCalculator';
 import { env } from '@/lib/env';
 
 // Import New Kundli Report Sections (Sections 3 to 24)
@@ -270,7 +271,7 @@ export default function KundliGeneratorPage() {
                 
                 <ReportHeader />
                 
-                 {/* 📖 Personal Details */}
+                {/* 1. Name Info (Personal Details) */}
                 <div id="sec-basic" className="pdf-page-break-avoid w-full">
                   <BirthDetailsTable 
                     name={formData.name}
@@ -284,122 +285,82 @@ export default function KundliGeneratorPage() {
                   <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Basic Astro Details & Panchang (Section 18) */}
+                {/* 2. Astro Info */}
                 <div className="pdf-page-break-avoid w-full space-y-4">
                   <BasicAstroDetails data={resultData} />
-                  {/* <BirthPanchangCard data={resultData} */ }
                   <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Interactive Lagna Chart (Section 24) */}
-                <div id="sec-interactive" className="pdf-page-break-avoid w-full">
-                  <InteractiveChartViewer data={resultData} chartTitle="Lagna Chart (D-1)" />
+                {/* 3. Charts & Grids Side-by-Side (Lagna, Chandra Rashi, Lo Shu Grid, Chalit Chart) */}
+                <div className="pdf-page-break-avoid w-full">
+                  <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+                    <div className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center">
+                      <h3 className="font-serif font-bold text-lg md:text-2xl">
+                        Astro Charts & Lo Shu Grid
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Lagna Chart */}
+                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                        <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Lagna Chart (D-1)</h4>
+                        <NorthIndianChart data={resultData} title="Lagna Chart" showLegend={false} />
+                      </div>
+
+                      {/* Chalit Chart */}
+                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                        <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Chalit Chart</h4>
+                        {(() => {
+                          const chalitData = calculateVargaChart(resultData, 'chalit');
+                          return <NorthIndianChart data={chalitData} title="Chalit Chart" showLegend={false} />;
+                        })()}
+                      </div>
+
+                      {/* Chandra Kundali */}
+                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                        <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Chandra Chart (Moon Kundali)</h4>
+                        {(() => {
+                          const chandraData = calculateVargaChart(resultData, 'chandra');
+                          return <NorthIndianChart data={chandraData} title="Chandra Chart" showLegend={false} />;
+                        })()}
+                      </div>
+
+                      {/* Lo Shu Grid */}
+                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                        <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Lo Shu Grid</h4>
+                        <div className="flex-grow flex items-center justify-center p-2">
+                          <LoShuGrid dateOfBirthStr={formData.date} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <ReportSectionFooter />
                 </div>
 
-                {/* Commented Out Report Sections (Preserved in code for future activation): */}
-                {/* 📖 Planetary Positions & Dignities (Section 3 & 17) */}
+                {/* 4. Planetary Detail */}
                 <div id="sec-planets" className="pdf-page-break-avoid w-full space-y-4">
                   <PlanetaryDetailsCard data={resultData} />
                   <ReportSectionFooter />
                 </div>
 
-                {/* 📖 12 Houses Analysis (Section 4) */}
-                {/* <div id="sec-houses" className="pdf-page-break-avoid w-full">
-                  <HousesAnalysisGrid data={resultData} />
-                </div> */}
-
-                {/* 📖 Lagna, Moon & Sun Details (Sections 5, 6, 7) */}
-                {/* <div id="sec-lagnamoonsun" className="pdf-page-break-avoid w-full">
-                  <LagnaMoonSunDetails data={resultData} />
-                </div> */}
-
-                {/* 📖 Nakshatra Analysis (Section 8) */}
-                {/* <div id="sec-nakshatra" className="pdf-page-break-avoid w-full">
-                  <NakshatraAnalysisCard data={resultData} />
-                </div> */}
-
-                {/* 📖 Yogas Analysis (Section 9) */}
-                {/* <div id="sec-yogas" className="pdf-page-break-avoid w-full">
-                  <YogaAnalysisSection data={resultData} />
-                </div> */}
-
-                {/* 📖 Doshas Detection & Remedies (Section 10) */}
-                {/* <div id="sec-doshas" className="pdf-page-break-avoid w-full">
-                  <DoshaAnalysisSection data={resultData} />
-                </div> */}
-
-                {/* 📖 Divisional Charts (Chandra, Navamsa D9, Chalit) (Section 12) */}
-                <div id="sec-vargas" className="pdf-page-break-avoid w-full">
-                  <DivisionalChartsSection data={resultData} />
-                  <ReportSectionFooter />
-                </div>
-
-                {/* 📖 Ashtakavarga (BAV & SAV) (Section 13) */}
-                {/* <div id="sec-ashtakavarga" className="pdf-page-break-avoid w-full">
-                  <AshtakavargaTable data={resultData} />
-                </div> */}
-
-                {/* 📖 Shadbala Strength Breakdown (Section 14) */}
-                {/* <div id="sec-shadbala" className="pdf-page-break-avoid w-full">
-                  <ShadbalaBreakdownChart data={resultData} />
-                </div> */}
-
-                {/* 📖 Planetary Aspects & Conjunctions (Sections 15 & 16) */}
-                {/* <div id="sec-aspects" className="pdf-page-break-avoid w-full space-y-4">
-                  <AspectsAndConjunctionsCard data={resultData} />
-                </div> */}
-
-                {/* 📖 17 Life Predictions (Section 19) */}
-                {/* <div id="sec-predictions" className="pdf-page-break-avoid w-full">
-                  <LifePredictionsTabs data={resultData} />
-                </div> */}
-
-                {/* 📖 Traditional Remedies (Section 20) */}
-                {/* <div id="sec-remedies" className="pdf-page-break-avoid w-full">
+                {/* 5. Rudraksha & Traditional Remedies */}
+                <div id="sec-remedies" className="pdf-page-break-avoid w-full">
                   <PersonalizedRemediesCard data={resultData} />
-                </div> */}
-
-                {/* 📖 Kundli Matching & Guna Milan (Section 21) */}
-                {/* <div id="sec-matching" className="pdf-page-break-avoid w-full">
-                  <KundliMatchingWidget data={resultData} />
-                </div> */}
-
-                {/* 📖 Muhurat Recommendations (Section 22) */}
-                {/* <div id="sec-muhurat" className="pdf-page-break-avoid w-full">
-                  <MuhuratFinderWidget />
-                </div> */}
-
-                {/* 📖 Transits & Sade Sati (Section 23) */}
-                {/* <div id="sec-transits" className="pdf-page-break-avoid w-full">
-                  <TransitGocharWidget data={resultData} />
-                </div> */}
-
-                {/* 📖 Numerology & Lo Shu Grid */}
-                <div className="pdf-page-break-avoid w-full">
-                  <LoShuGrid dateOfBirthStr={formData.date} />
-                </div>
-                <div className="pdf-page-break-avoid w-full">
-                  <NumerologyAstroDetails dateOfBirthStr={formData.date} />
                   <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Auspicious Lucky Elements & Advanced Audits */}
-                <div className="pdf-page-break-avoid w-full">
-                  <LuckyElementsBanner dateOfBirthStr={formData.date} />
-                </div>
-                <div className="pdf-page-break-avoid w-full">
-                  <AdvancedAuditsBanner />
-                  <ReportSectionFooter />
-                </div>
-
-                {/* 📖 Dasha (Mahadasha, Antardasha & Timeline) - Placed at bottom */}
+                {/* 6. Dashas */}
                 <div id="sec-dasha" className="pdf-page-break-avoid w-full">
                   <DashaTimelineView data={resultData} dashaApiData={dashaApiData} birthDateStr={formData.date} />
                   <ReportSectionFooter />
                 </div>
 
-                {/* 📖 Closing Thank You Card (PDF E-Book End) */}
+                {/* 7. Our Services (Appointments) */}
+                <div className="pdf-page-break-avoid w-full">
+                  <BookAppointmentCTA />
+                  <ReportSectionFooter />
+                </div>
+
+                {/* 8. Thank You */}
                 <div className="pdf-page-break-avoid w-full">
                   <ReportThankYouCard />
                 </div>
