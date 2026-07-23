@@ -321,10 +321,10 @@ export default function KundliGeneratorPage() {
                       </h3>
                     </div>
                     
-                    {/* Charts Grid 50-50 */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Stacked Charts */}
+                    <div className="flex flex-col gap-8 items-center justify-center">
                       {/* Lagna Chart */}
-                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 space-y-2 flex flex-col items-center justify-center w-full max-w-2xl">
                         <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
                           ✦ Lagna Chart ✦
                         </h4>
@@ -332,7 +332,7 @@ export default function KundliGeneratorPage() {
                       </div>
 
                       {/* Chalit Chart */}
-                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 space-y-2 flex flex-col justify-between">
+                      <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 space-y-2 flex flex-col items-center justify-center w-full max-w-2xl">
                         <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
                           ✦ Chalit Chart ✦
                         </h4>
