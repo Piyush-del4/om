@@ -352,7 +352,7 @@ export default function KundliGeneratorPage() {
 
                 {/* 5. Rudraksha & Traditional Remedies */}
                 <div id="sec-remedies" className="pdf-page-break-avoid w-full">
-                  <PersonalizedRemediesCard data={resultData} />
+                  <PersonalizedRemediesCard data={resultData} birthDateStr={formData.date} />
                   <ReportSectionFooter />
                 </div>
 
