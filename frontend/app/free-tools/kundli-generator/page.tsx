@@ -300,29 +300,24 @@ export default function KundliGeneratorPage() {
                       </h3>
                     </div>
                     
-                    {/* Charts Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Charts Grid 50-50 */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Lagna Chart */}
                       <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
-                        <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Lagna Chart (D-1)</h4>
+                        <h4 className="font-serif font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
+                          ✦ Lagna Chart ✦
+                        </h4>
                         <NorthIndianChart data={resultData} title="Lagna Chart" showLegend={false} />
                       </div>
 
                       {/* Chalit Chart */}
                       <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
-                        <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Chalit Chart</h4>
+                        <h4 className="font-serif font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
+                          ✦ Chalit Chart ✦
+                        </h4>
                         {(() => {
                           const chalitData = calculateVargaChart(resultData, 'chalit');
                           return <NorthIndianChart data={chalitData} title="Chalit Chart" showLegend={false} />;
-                        })()}
-                      </div>
-
-                      {/* Chandra Kundali */}
-                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 space-y-2 flex flex-col justify-between">
-                        <h4 className="font-serif font-bold text-base text-amber-950 dark:text-amber-300 text-center">Chandra Chart (Moon Kundali)</h4>
-                        {(() => {
-                          const chandraData = calculateVargaChart(resultData, 'chandra');
-                          return <NorthIndianChart data={chandraData} title="Chandra Chart" showLegend={false} />;
                         })()}
                       </div>
                     </div>
