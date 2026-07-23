@@ -285,13 +285,13 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
                     dy={i === 0 ? 0 : 25}
                     fill={getColor(p.name)}
                   >
-                    <tspan fontSize="15" fontWeight="semibold" opacity="0.9">
+                    <tspan fontSize="16" fontWeight="semibold" opacity="0.9">
                       {p.degree}°{" "}
                     </tspan>
-                    <tspan fontSize="17" fontWeight="bold">
+                    <tspan fontSize="18" fontWeight="bold">
                       {getVedicName(p.name)}
                     </tspan>
-                    <tspan fill="#d97706" fontWeight="extrabold" fontSize="16">
+                    <tspan fill="#d97706" fontWeight="extrabold" fontSize="17">
                       {p.symbols}
                     </tspan>
                   </tspan>
