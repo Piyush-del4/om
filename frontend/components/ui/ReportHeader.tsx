@@ -7,9 +7,9 @@ interface ReportHeaderProps {
 
 export function ReportHeader({ className = '' }: ReportHeaderProps) {
   return (
-    <div className={`w-full max-w-4xl mx-auto my-4 p-4 rounded-[20px] border-2 border-amber-400 bg-[#FEF9F3] dark:bg-neutral-900 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 ${className}`}>
+    <div className={`w-full max-w-4xl mx-auto my-4 p-4 rounded-[20px] border-2 border-amber-400 bg-[#FEF9F3] dark:bg-neutral-900 shadow-md grid grid-cols-1 sm:grid-cols-3 items-center gap-4 ${className}`}>
       {/* Left: Logo */}
-      <div className="flex-shrink-0">
+      <div className="flex justify-center sm:justify-start">
         <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-amber-500 bg-neutral-950 flex items-center justify-center p-0.5 overflow-hidden shadow-md">
           <img 
             src="/images/logo.png" 
@@ -23,8 +23,8 @@ export function ReportHeader({ className = '' }: ReportHeaderProps) {
       </div>
 
       {/* Center: Title & Subtitle */}
-      <div className="flex-1 text-center">
-        <h1 className="font-serif text-2xl md:text-3.5xl font-bold text-amber-950 dark:text-amber-100 tracking-wider">
+      <div className="text-center py-2 sm:py-0">
+        <h1 className="font-sans text-2xl md:text-3.5xl font-bold text-amber-950 dark:text-amber-100 tracking-wider">
           OM ASTROLOGY AMC
         </h1>
         <p className="text-[10px] md:text-xs font-semibold text-amber-800 dark:text-amber-300 tracking-[0.4em] uppercase mt-1.5 pl-[0.4em]">
@@ -33,7 +33,7 @@ export function ReportHeader({ className = '' }: ReportHeaderProps) {
       </div>
 
       {/* Right: Contact */}
-      <div className="flex-shrink-0">
+      <div className="flex justify-center sm:justify-end">
         <div className="flex items-center gap-2 bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-full px-5 py-2.5 shadow-sm">
           <span className="text-amber-600">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
