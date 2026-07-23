@@ -291,13 +291,29 @@ export default function KundliGeneratorPage() {
                   <ReportSectionFooter />
                 </div>
 
-                {/* Rudraksha Remedies */}
-                <div id="sec-remedies" className="pdf-page-break-avoid w-full">
-                  <PersonalizedRemediesCard data={resultData} birthDateStr={formData.date} />
+                {/* 3. Lo Shu Grid Analysis (Standard grid, Birth grid, and Numerology details) */}
+                <div className="pdf-page-break-avoid w-full">
+                  <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+                    <div className="bg-amber-700 dark:bg-amber-800 text-white py-2 px-6 rounded-lg text-center font-bold text-sm md:text-base max-w-xs mx-auto">
+                      Lo Shu Grid Analysis
+                    </div>
+                    
+                    <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 md:p-6 w-full max-w-4xl mx-auto shadow-sm">
+                      <LoShuGrid dateOfBirthStr={formData.date} />
+                    </div>
+                    
+                    <div className="w-full">
+                      <NumerologyAstroDetails dateOfBirthStr={formData.date} />
+                    </div>
+
+                    <div className="w-full">
+                      <LuckyElementsBanner dateOfBirthStr={formData.date} />
+                    </div>
+                  </div>
                   <ReportSectionFooter />
                 </div>
 
-                {/* 3. Charts & Grids (Lagna, Chalit, Chandra charts grid, with Lo Shu Grid below them) */}
+                {/* 4. Astro Charts (✦ Lagna Chart ✦ and ✦ Chalit Chart ✦ side-by-side) */}
                 <div className="pdf-page-break-avoid w-full">
                   <div className="bg-amber-50/60 dark:bg-neutral-900 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
                     <div className="bg-amber-700 dark:bg-amber-800 text-white p-4 rounded-xl text-center">
@@ -327,25 +343,6 @@ export default function KundliGeneratorPage() {
                         })()}
                       </div>
                     </div>
-
-                    {/* Lo Shu Grid Below Charts */}
-                    <div className="pt-6 border-t border-amber-200 dark:border-neutral-800 flex flex-col items-center space-y-6">
-                      <div className="bg-amber-700 dark:bg-amber-800 text-white py-2 px-6 rounded-lg text-center font-bold text-sm md:text-base">
-                        Lo Shu Grid
-                      </div>
-                      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700 rounded-xl p-4 md:p-6 w-full max-w-4xl mx-auto shadow-sm">
-                        <LoShuGrid dateOfBirthStr={formData.date} />
-                      </div>
-                      
-                      <div className="w-full">
-                        <NumerologyAstroDetails dateOfBirthStr={formData.date} />
-                      </div>
-
-                      <div className="w-full">
-                        <LuckyElementsBanner dateOfBirthStr={formData.date} />
-                      </div>
-                    </div>
-
                   </div>
                   <ReportSectionFooter />
                 </div>
@@ -356,7 +353,13 @@ export default function KundliGeneratorPage() {
                   <ReportSectionFooter />
                 </div>
 
-                {/* 5. Dashas */}
+                {/* 5. Rudraksha & Traditional Remedies */}
+                <div id="sec-remedies" className="pdf-page-break-avoid w-full">
+                  <PersonalizedRemediesCard data={resultData} birthDateStr={formData.date} />
+                  <ReportSectionFooter />
+                </div>
+
+                {/* 6. Dashas */}
                 <div id="sec-dasha" className="pdf-page-break-avoid w-full">
                   <DashaTimelineView data={resultData} dashaApiData={dashaApiData} birthDateStr={formData.date} />
                   <ReportSectionFooter />
