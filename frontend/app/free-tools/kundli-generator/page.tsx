@@ -367,7 +367,63 @@ export default function KundliGeneratorPage() {
 
                 {/* 7. Our Services (Appointments) */}
                 <div className="pdf-page-break-avoid w-full">
-                  <BookAppointmentCTA />
+                  <div className="bg-[#fffef7] dark:bg-neutral-900 border-2 border-amber-300 dark:border-amber-600/50 rounded-3xl p-6 md:p-8 space-y-6 shadow-md text-black dark:text-white">
+                    <div className="text-center space-y-2">
+                      <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-600/40 flex items-center justify-center mx-auto text-amber-800 dark:text-amber-300">
+                        <Sparkles className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-serif font-bold text-amber-950 dark:text-amber-200">
+                        Our Premium Occult Consultations
+                      </h3>
+                      <p className="text-xs md:text-sm text-neutral-650 dark:text-gray-400 max-w-xl mx-auto">
+                        Speak directly with certified Vedic Astrologers, master Numerologists, and professional Tarot Readers to decode your planetary remedies and future timeline.
+                      </p>
+                    </div>
+
+                    {/* Services Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {[
+                        { name: "Tarot Reading", duration: "30 mins", price: 99 },
+                        { name: "Mobile Number Numerology Analysis", duration: "30 mins", price: 500 },
+                        { name: "Kundali Reading", duration: "30 mins", price: 1100 },
+                        { name: "Personal Tarot Reading", duration: "30 mins", price: 1100 },
+                        { name: "Numerology Analysis", duration: "30 mins", price: 2000 },
+                        { name: "Signature Analysis", duration: "30 mins", price: 2100 },
+                        { name: "Name Correction Consultation", duration: "30 mins", price: 2000 },
+                        { name: "नाम करण", duration: "30 mins", price: 3200 },
+                        { name: "Career Guidance Consultation", duration: "30 mins", price: 5000 },
+                        { name: "Marriage Matching (Kundali Matching)", duration: "30 mins", price: 5100 },
+                        { name: "Complete Life Analysis", duration: "60 mins", price: 11000 },
+                        { name: "Corporate Numerology Consultation", duration: "30 mins", price: 25000 }
+                      ].map((service, index) => (
+                        <div 
+                          key={index}
+                          className="bg-white dark:bg-neutral-800 border border-amber-200 dark:border-neutral-700/60 rounded-2xl p-4 flex flex-col justify-between hover:border-amber-400 dark:hover:border-amber-500 transition-all duration-300 shadow-xs hover:shadow-sm"
+                        >
+                          <div className="space-y-1">
+                            <h4 className="font-bold text-neutral-800 dark:text-neutral-100 text-sm md:text-base leading-snug">
+                              {service.name}
+                            </h4>
+                            <span className="inline-block text-[11px] font-medium text-neutral-500 dark:text-gray-400 bg-neutral-100 dark:bg-neutral-900 px-2 py-0.5 rounded">
+                              🕒 {service.duration}
+                            </span>
+                          </div>
+
+                          <div className="mt-4 pt-3 border-t border-neutral-100 dark:border-neutral-700/50 flex items-center justify-between">
+                            <span className="font-serif font-extrabold text-base md:text-lg text-amber-800 dark:text-amber-400">
+                              ₹{service.price.toLocaleString()}
+                            </span>
+                            <Link 
+                              href="/appointments"
+                              className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-lg text-xs transition shadow-xs flex items-center gap-1 border border-amber-400/40"
+                            >
+                              Book Now
+                            </Link>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   <ReportSectionFooter />
                 </div>
 
