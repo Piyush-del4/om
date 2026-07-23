@@ -325,7 +325,7 @@ export default function KundliGeneratorPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Lagna Chart */}
                       <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 space-y-2 flex flex-col justify-between">
-                        <h4 className="font-sans font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
+                        <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
                           ✦ Lagna Chart ✦
                         </h4>
                         <NorthIndianChart data={resultData} showLegend={false} />
@@ -333,7 +333,7 @@ export default function KundliGeneratorPage() {
 
                       {/* Chalit Chart */}
                       <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 space-y-2 flex flex-col justify-between">
-                        <h4 className="font-sans font-bold text-base md:text-lg text-amber-950 dark:text-amber-300 text-center">
+                        <h4 className="font-sans font-bold text-xs md:text-sm text-amber-950 dark:text-amber-300 text-center">
                           ✦ Chalit Chart ✦
                         </h4>
                         {(() => {
