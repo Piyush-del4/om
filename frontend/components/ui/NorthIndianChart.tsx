@@ -191,8 +191,8 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
       Jupiter: '#c53030', // Crimson/Purple
       Venus: '#059669', // Emerald
       Saturn: '#475569', // Slate
-      Rahu: '#ea580c', // Orange-red
-      Ketu: '#9ca3af', // Gray
+      Rahu: '#000000', // Black
+      Ketu: '#000000', // Black
     };
     return mapping[name] || '#1a202c';
   };
