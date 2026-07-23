@@ -27,7 +27,7 @@ export function LagnaRashiCards({ data }: Props) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl mx-auto my-6 px-4">
       {/* 1. Lagna Card */}
-      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700/60 rounded-3xl p-3 flex flex-col items-center justify-center text-center shadow-md space-y-3 hover:border-amber-400 dark:hover:border-neutral-600 transition-all duration-300">
+      <div className="bg-white dark:bg-neutral-800 rounded-3xl p-3 flex flex-col items-center justify-center text-center shadow-md space-y-3 transition-all duration-300">
         <div className="w-full max-w-[280px] aspect-square overflow-hidden flex items-center justify-center">
           <img 
             src={`/images/zodiac_${house1SignNum}.png`} 
@@ -41,7 +41,7 @@ export function LagnaRashiCards({ data }: Props) {
       </div>
 
       {/* 2. Rashi Card */}
-      <div className="bg-white dark:bg-neutral-800 border border-amber-300 dark:border-neutral-700/60 rounded-3xl p-3 flex flex-col items-center justify-center text-center shadow-md space-y-3 hover:border-amber-400 dark:hover:border-neutral-600 transition-all duration-300">
+      <div className="bg-white dark:bg-neutral-800 rounded-3xl p-3 flex flex-col items-center justify-center text-center shadow-md space-y-3 transition-all duration-300">
         <div className="w-full max-w-[280px] aspect-square overflow-hidden flex items-center justify-center">
           <img 
             src={`/images/zodiac_${moonSignNum}.png`} 
