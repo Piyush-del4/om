@@ -233,7 +233,7 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
           // Vertically center stacked planets around pos.planets[1]
           const totalOccupants = house.occupants.length;
           const startY = totalOccupants > 1 
-            ? pos.planets[1] - ((totalOccupants - 1) * 22) / 2 
+            ? pos.planets[1] - ((totalOccupants - 1) * 25) / 2 
             : pos.planets[1];
 
           return (
@@ -282,16 +282,16 @@ export function NorthIndianChart({ data, title, subtitle, showLegend = true }: N
                   <tspan 
                     key={p.name} 
                     x={pos.planets[0]} 
-                    dy={i === 0 ? 0 : 22}
+                    dy={i === 0 ? 0 : 25}
                     fill={getColor(p.name)}
                   >
-                    <tspan fontSize="11" fontWeight="semibold" opacity="0.9">
+                    <tspan fontSize="12" fontWeight="semibold" opacity="0.9">
                       {p.degree}°{" "}
                     </tspan>
-                    <tspan fontSize="14" fontWeight="bold">
+                    <tspan fontSize="17" fontWeight="bold">
                       {getVedicName(p.name)}
                     </tspan>
-                    <tspan fill="#d97706" fontWeight="extrabold" fontSize="12">
+                    <tspan fill="#d97706" fontWeight="extrabold" fontSize="13">
                       {p.symbols}
                     </tspan>
                   </tspan>
