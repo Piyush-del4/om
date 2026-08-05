@@ -961,7 +961,7 @@ export default function Home() {
  <h2 className="font-serif text-3xl md:text-4xl font-semibold">Client Success Stories</h2>
  <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
  <p className="text-gray-600 text-xs pt-2">
- See how real people solved their real problems with our guidance.
+See how real people solved their real problems with our guidance.
  </p>
  </div>
 
@@ -970,16 +970,15 @@ export default function Home() {
  <div className="animate-marquee hover:[animation-play-state:paused] flex gap-8">
  {/* First Set of Cards */}
  {(() => {
- // Always show DB reviews if any exist (rating > 4); fall back to premade only if DB is empty
- const displayReviews = dynamicReviews.length > 0
- ? dynamicReviews.map((r: any) => ({
+ const mappedDynamicReviews = dynamicReviews.map((r: any) => ({
  name: r.name,
  initials: r.name.substring(0, 2).toUpperCase(),
  role: 'Verified Client',
  quote: r.comment,
  rating: r.rating
- }))
- : testimonials.map(t => ({ ...t, rating: 5 }));
+ }));
+ const mappedTestimonials = testimonials.map(t => ({ ...t, rating: 5 }));
+ const displayReviews = [...mappedDynamicReviews, ...mappedTestimonials];
 
  return displayReviews.map((test: any, index: number) => (
  <div key={`set1-${index}`} className="w-[350px] shrink-0 text-left">
@@ -1010,16 +1009,15 @@ export default function Home() {
 
  {/* Duplicate for infinite scroll effect */}
  {(() => {
- // Always show DB reviews if any exist (rating > 4); fall back to premade only if DB is empty
- const displayReviews = dynamicReviews.length > 0
- ? dynamicReviews.map((r: any) => ({
+ const mappedDynamicReviews = dynamicReviews.map((r: any) => ({
  name: r.name,
  initials: r.name.substring(0, 2).toUpperCase(),
  role: 'Verified Client',
  quote: r.comment,
  rating: r.rating
- }))
- : testimonials.map(t => ({ ...t, rating: 5 }));
+ }));
+ const mappedTestimonials = testimonials.map(t => ({ ...t, rating: 5 }));
+ const displayReviews = [...mappedDynamicReviews, ...mappedTestimonials];
 
  return displayReviews.map((test: any, index: number) => (
  <div key={`set2-${index}`} className="w-[350px] shrink-0 text-left">
