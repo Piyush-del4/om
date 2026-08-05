@@ -16,7 +16,7 @@ export async function connectDB(): Promise<void> {
       logger.warn('🔌 MongoDB disconnected.');
     });
 
-    await mongoose.connect(env.MONGODB_URI);
+    await mongoose.connect(env.MONGODB_URI, { serverSelectionTimeoutMS: 10000 });
     await seedDefaultAppointmentTypes();
   } catch (error) {
     logger.error('❌ Failed to connect to MongoDB on startup:', error);

@@ -10,6 +10,7 @@ import { uploadRouter } from '../modules/uploads/upload.routes';
 import { teamRouter } from '../modules/team/team.routes';
 import { astrologyContentRouter } from '../modules/content/astrologyContent.routes';
 import { reviewRouter } from '../modules/reviews/review.routes';
+import { paymentRouter } from '../modules/payments/payment.routes';
 import astrologyRoutes from './astrologyRoutes';
 
 export const router = Router();
@@ -25,6 +26,7 @@ router.use('/uploads', uploadRouter);
 router.use('/team', teamRouter);
 router.use('/content/astrology', astrologyContentRouter);
 router.use('/reviews', reviewRouter);
+router.use('/payments', paymentRouter);
 router.use('/astrology', astrologyRoutes);
 
 // Base router welcome message

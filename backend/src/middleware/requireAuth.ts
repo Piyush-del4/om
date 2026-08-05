@@ -19,7 +19,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction): vo
 
   try {
     const payload = verifyAccessToken(token);
-    req.user = {
+    (req as any).user = {
       _id: payload.sub,
       role: payload.role as 'user' | 'admin',
       email: payload.email,

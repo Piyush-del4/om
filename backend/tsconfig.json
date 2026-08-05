@@ -1,17 +1,32 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "resolveJsonModule": true,
-    "lib": ["ES2022"]
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
+    "compilerOptions":  {
+                            "target":  "ES2022",
+                            "module":  "commonjs",
+                            "moduleResolution":  "node10",
+                            "strict":  true,
+                            "esModuleInterop":  true,
+                            "skipLibCheck":  true,
+                            "forceConsistentCasingInFileNames":  true,
+                            "outDir":  "./dist",
+                            "rootDir":  "./src",
+                            "resolveJsonModule":  true,
+                            "lib":  [
+                                        "ES2022"
+                                    ],
+                            "typeRoots":  [
+                                              "./node_modules/@types",
+                                              "./src/types"
+                                          ]
+                        },
+    "include":  [
+                    "src/**/*"
+                ],
+    "exclude":  [
+                    "node_modules",
+                    "dist",
+                    "**/*.spec.ts"
+                ],
+    "ts-node":  {
+
+                }
 }

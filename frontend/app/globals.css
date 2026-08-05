@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --gold: #cc8f33;
@@ -11,12 +10,11 @@
   --gold-200: rgba(204, 143, 51, 0.2);
   --gold-300: rgba(204, 143, 51, 0.3);
   --background: #ffffff;
-  --foreground: #000000;
+  --foreground: #111827;
   --muted: #6b7280;
   --border: #e5e7eb;
-  --surface: #f9fafb;
-  --dark-bg: #0a0a0f;
-  --dark-surface: #111118;
+  --surface: #f8fafc;
+  --card: #ffffff;
 }
 
 @theme inline {
@@ -28,8 +26,7 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-surface: var(--surface);
-  --color-dark-bg: var(--dark-bg);
-  --color-dark-surface: var(--dark-surface);
+  --color-card: var(--card);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-playfair);
@@ -203,11 +200,7 @@ body {
   border: 1px solid rgba(204, 143, 51, 0.15);
 }
 
-.glass-card-dark {
-  background: rgba(17, 17, 24, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(204, 143, 51, 0.2);
-}
+
 
 /* ── Gold Hover Glow ─────────────────────────────────────── */
 
@@ -235,184 +228,6 @@ body {
     );
 }
 
-/* ── Theme Overrides (Light Theme by Default) ────────────────── */
-
-/* By default (when .dark class is NOT present on html), we apply light theme values */
-html:not(.dark) {
-  --background: #fafafa;
-  --foreground: #111111;
-  --surface: #ffffff;
-  --border: #e2e8f0;
-  --gold-50: rgba(204, 143, 51, 0.04);
-  --gold-100: rgba(204, 143, 51, 0.08);
-  --gold-200: rgba(204, 143, 51, 0.18);
-  --gold-300: rgba(204, 143, 51, 0.28);
-}
-
-/* Overwrite background and text colors in light mode */
-html:not(.dark) body,
-html:not(.dark) .bg-black,
-html:not(.dark) div.bg-black {
-  background-color: var(--background) !important;
-  color: var(--foreground) !important;
-}
-
-html:not(.dark) .text-white {
-  color: var(--foreground) !important;
-}
-
-html:not(.dark) .bg-neutral-900,
-html:not(.dark) .bg-neutral-950,
-html:not(.dark) .bg-neutral-800,
-html:not(.dark) .bg-neutral-900\/40,
-html:not(.dark) .bg-neutral-900\/50,
-html:not(.dark) .bg-neutral-900\/60,
-html:not(.dark) .bg-neutral-900\/80,
-html:not(.dark) .bg-neutral-950\/40,
-html:not(.dark) .bg-neutral-950\/60,
-html:not(.dark) [class*="bg-neutral-900/"],
-html:not(.dark) [class*="bg-neutral-950/"],
-html:not(.dark) [class*="bg-neutral-800/"] {
-  background-color: var(--surface) !important;
-  border-color: var(--border) !important;
-}
-
-html:not(.dark) .border-neutral-800,
-html:not(.dark) .border-neutral-800\/60 {
-  border-color: var(--border) !important;
-}
-
-html:not(.dark) .border-gray-800 {
-  border-color: var(--border) !important;
-}
-
-html:not(.dark) .text-gray-400 {
-  color: #4b5563 !important;
-}
-
-html:not(.dark) .text-gray-300 {
-  color: #1f2937 !important;
-}
-
-html:not(.dark) .text-gray-500 {
-  color: #6b7280 !important;
-}
-
-html:not(.dark) .bg-black\/95 {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-}
-
-html:not(.dark) .bg-black\/85 {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-}
-
-html:not(.dark) .bg-black\/75 {
-  background-color: rgba(255, 255, 255, 0.96) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-}
-
-html:not(.dark) .bg-black\/60,
-html:not(.dark) .bg-black\/50,
-html:not(.dark) .bg-black\/40 {
-  background-color: rgba(255, 255, 255, 0.6) !important;
-  color: #111111 !important;
-}
-
-html:not(.dark) input,
-html:not(.dark) select,
-html:not(.dark) textarea {
-  color: #111111 !important;
-  background-color: rgba(255, 255, 255, 0.8) !important;
-  border-color: var(--gold-200) !important;
-}
-
-html:not(.dark) input::placeholder {
-  color: #9ca3af !important;
-}
-
-html:not(.dark) .glass-card-dark {
-  background: rgba(255, 255, 255, 0.8) !important;
-  border-color: rgba(204, 143, 51, 0.15) !important;
-}
-
-html:not(.dark) .bg-white\/5,
-html:not(.dark) .bg-white\/10,
-html:not(.dark) [class*="bg-white/"] {
-  background-color: var(--surface) !important;
-}
-
-/* Status Badge Overrides for Light Mode readability */
-html:not(.dark) [class*="bg-green-950/"],
-html:not(.dark) .bg-green-950\/40,
-html:not(.dark) .bg-green-950\/30,
-html:not(.dark) .bg-green-950\/20 {
-  background-color: #e6f4ea !important;
-  color: #137333 !important;
-  border-color: #c2e7c9 !important;
-}
-
-html:not(.dark) [class*="bg-red-950/"],
-html:not(.dark) .bg-red-950\/40,
-html:not(.dark) .bg-red-950\/30,
-html:not(.dark) .bg-red-950\/20 {
-  background-color: #fce8e6 !important;
-  color: #c5221f !important;
-  border-color: #fad2cf !important;
-}
-
-html:not(.dark) [class*="bg-yellow-950/"],
-html:not(.dark) .bg-yellow-950\/40,
-html:not(.dark) .bg-yellow-950\/30,
-html:not(.dark) .bg-yellow-950\/20 {
-  background-color: #fef7e0 !important;
-  color: #b06000 !important;
-  border-color: #feebc8 !important;
-}
-
-html:not(.dark) [class*="bg-blue-950/"],
-html:not(.dark) [class*="bg-sky-950/"],
-html:not(.dark) .bg-blue-950\/40,
-html:not(.dark) .bg-sky-950\/40 {
-  background-color: #e8f0fe !important;
-  color: #1a73e8 !important;
-  border-color: #d2e3fc !important;
-}
-
-html:not(.dark) [class*="bg-emerald-950/"] {
-  background-color: #e6f4ea !important;
-  color: #137333 !important;
-  border-color: #c2e7c9 !important;
-}
-
-html:not(.dark) [class*="bg-pink-950/"] {
-  background-color: #fce4ec !important;
-  color: #c2185b !important;
-  border-color: #f8bbd0 !important;
-}
-
-html:not(.dark) .text-green-400 {
-  color: #137333 !important;
-}
-html:not(.dark) .text-red-400 {
-  color: #c5221f !important;
-}
-html:not(.dark) .text-yellow-400 {
-  color: #b06000 !important;
-}
-html:not(.dark) .text-yellow-500 {
-  color: #b06000 !important;
-}
-html:not(.dark) .text-blue-400,
-html:not(.dark) .text-sky-400 {
-  color: #1a73e8 !important;
-}
-html:not(.dark) .text-emerald-400 {
-  color: #137333 !important;
-}
-html:not(.dark) .text-pink-400 {
-  color: #c2185b !important;
-}
-
 /* ── Open Design Premium Theme Additions ─────────────────── */
 
 .transition-spring {
@@ -422,24 +237,24 @@ html:not(.dark) .text-pink-400 {
 .double-bezel-outer {
   border-radius: 24px;
   padding: 6px; /* 1.5 */
-  border: 1px solid rgba(204, 143, 51, 0.15);
-  background: rgba(10, 10, 15, 0.4);
+  border: 1px solid rgba(204, 143, 51, 0.2);
+  background: rgba(248, 250, 252, 0.95);
   transition: all 0.7s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .double-bezel-inner {
   border-radius: 18px; /* concentric calculation: 24px - 6px */
-  background: rgba(17, 17, 24, 0.65);
+  background: #ffffff;
   padding: 24px; /* p-6 */
-  border: 1px solid rgba(204, 143, 51, 0.08);
+  border: 1px solid rgba(204, 143, 51, 0.12);
   height: 100%;
   width: 100%;
 }
 
 .double-bezel-inner-flush {
   border-radius: 18px;
-  background: rgba(17, 17, 24, 0.65);
-  border: 1px solid rgba(204, 143, 51, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(204, 143, 51, 0.12);
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -467,29 +282,7 @@ html:not(.dark) .text-pink-400 {
   z-index: 0;
 }
 
-/* Light Mode Overrides for Bezel and Mesh */
-html:not(.dark) .double-bezel-outer {
-  background: rgba(244, 240, 230, 0.4) !important;
-  border-color: rgba(204, 143, 51, 0.22) !important;
-}
 
-html:not(.dark) .double-bezel-inner {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border-color: rgba(204, 143, 51, 0.12) !important;
-  color: #111111 !important;
-}
-
-html:not(.dark) .double-bezel-inner-flush {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border-color: rgba(204, 143, 51, 0.12) !important;
-  color: #111111 !important;
-}
-
-
-html:not(.dark) .double-bezel-outer:hover {
-  box-shadow: 0 12px 35px rgba(204, 143, 51, 0.15), 0 0 15px rgba(204, 143, 51, 0.05) !important;
-  border-color: rgba(204, 143, 51, 0.45) !important;
-}
 
 /* Sleek underline inputs */
 .input-underline {
@@ -510,9 +303,7 @@ html:not(.dark) .double-bezel-outer:hover {
   border-color: var(--gold) !important;
 }
 
-html:not(.dark) .input-underline {
-  border-bottom-color: rgba(204, 143, 51, 0.3) !important;
-}
+
 
 /* ── Testimonial Marquee Fade Masks ── */
 .testimonial-marquee-fade::before {
@@ -523,7 +314,7 @@ html:not(.dark) .input-underline {
   z-index: 10;
   height: 100%;
   width: 6rem; /* w-24 (96px) */
-  background: linear-gradient(to right, #000000, transparent);
+  background: linear-gradient(to right, #ffffff, transparent);
   pointer-events: none;
 }
 
@@ -535,17 +326,8 @@ html:not(.dark) .input-underline {
   z-index: 10;
   height: 100%;
   width: 6rem; /* w-24 (96px) */
-  background: linear-gradient(to left, #000000, transparent);
+  background: linear-gradient(to left, #ffffff, transparent);
   pointer-events: none;
-}
-
-/* Light mode overrides to match the section background */
-html:not(.dark) .testimonial-marquee-fade::before {
-  background: linear-gradient(to right, var(--background, #fafafa), transparent) !important;
-}
-
-html:not(.dark) .testimonial-marquee-fade::after {
-  background: linear-gradient(to left, var(--background, #fafafa), transparent) !important;
 }
 
 /* ── Print Media Optimization & Clean Page Formatting ── */

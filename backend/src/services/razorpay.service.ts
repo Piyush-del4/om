@@ -5,10 +5,16 @@ import { logger } from '../utils/logger';
 import { safeCompare } from '../utils/tokenCompare';
 
 let razorpay: any = null;
+const isMockEnvironment = !!(
+  env.RAZORPAY_KEY_ID?.startsWith('rzp_test_placeholder') ||
+  env.RAZORPAY_KEY_ID?.startsWith('rzp_test_dev') ||
+  env.RAZORPAY_KEY_SECRET?.startsWith('placeholder')
+);
+
 const isConfigured = !!(
   env.RAZORPAY_KEY_ID &&
   env.RAZORPAY_KEY_SECRET &&
-  !env.RAZORPAY_KEY_ID.startsWith('rzp_test_dev')
+  !isMockEnvironment
 );
 
 if (isConfigured) {

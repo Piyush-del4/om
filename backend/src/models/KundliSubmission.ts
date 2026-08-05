@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IKundliSubmission extends Document {
+  userId: mongoose.Types.ObjectId;
   name: string;
   date: string;
   time: string;
@@ -13,6 +14,7 @@ export interface IKundliSubmission extends Document {
 }
 
 const KundliSubmissionSchema: Schema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   name: { type: String, required: true },
   date: { type: String, required: true },
   time: { type: String, required: true },
