@@ -18,7 +18,7 @@ const cookieOptions = {
   httpOnly: true,
   secure: env.NODE_ENV === 'production',
   sameSite: 'strict' as const,
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days (1 month)
 };
 
 export async function sendRegisterOtp(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -158,7 +158,7 @@ export async function register(req: Request, res: Response, next: NextFunction):
 
     // Create session in DB
     const tokenHash = hashToken(refreshToken);
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days (1 month)
     
     await Session.create({
       userId: user._id,
@@ -269,7 +269,7 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
 
     // Save session in DB
     const tokenHash = hashToken(refreshToken);
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days (1 month)
 
     await Session.create({
       userId: user._id,
@@ -357,7 +357,7 @@ export async function refresh(req: Request, res: Response, next: NextFunction): 
     await session.deleteOne();
 
     const newTokenHash = hashToken(newRefreshToken);
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days (1 month)
 
     await Session.create({
       userId: payload.sub,
