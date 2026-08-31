@@ -114,7 +114,7 @@ export default function NewBatchPage() {
  </h1>
 
  <GoldCard className="border border-[var(--gold-100)] p-6 space-y-4">
- {errorMsg && <div className="text-xs text-red-400 bg-red-950/20 p-3 border border-red-900/30 rounded-lg">{errorMsg}</div>}
+ {errorMsg && <div className="text-xs text-red-600 bg-red-50 p-3 border border-red-200 rounded-lg">{errorMsg}</div>}
 
  <form onSubmit={handleSubmit} className="space-y-4">
  <div className="space-y-1">
@@ -214,7 +214,7 @@ export default function NewBatchPage() {
  setCoverUrl('');
  setCoverPublicId('');
  }}
- className="text-[10px] text-red-400 hover:text-red-300 font-semibold mt-1"
+ className="text-[10px] text-red-600 hover:text-red-600 font-semibold mt-1"
  >
  Remove and select another
  </button>

@@ -102,14 +102,14 @@ export default function ForgotPasswordPage() {
  </div>
 
  {errorMsg && (
- <div className="flex items-center gap-2 text-red-400 bg-red-950/20 border border-red-900/30 p-3 rounded-lg text-xs">
+ <div className="flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg text-xs">
  <AlertCircle className="w-4 h-4 flex-shrink-0" />
  <span>{errorMsg}</span>
  </div>
  )}
 
  {successMsg && (
- <div className="flex items-center gap-2 text-green-400 bg-green-950/20 border border-green-900/30 p-3 rounded-lg text-xs">
+ <div className="flex items-center gap-2 text-green-600 bg-green-50 border border-green-200 p-3 rounded-lg text-xs">
  <CheckCircle className="w-4 h-4 flex-shrink-0" />
  <span>{successMsg}</span>
  </div>
@@ -133,7 +133,7 @@ export default function ForgotPasswordPage() {
  />
  </div>
  {forgotForm.formState.errors.email && (
- <p className="text-red-400 text-xs">{forgotForm.formState.errors.email.message}</p>
+ <p className="text-red-600 text-xs">{forgotForm.formState.errors.email.message}</p>
  )}
  </div>
 
@@ -166,7 +166,7 @@ export default function ForgotPasswordPage() {
  />
  </div>
  {resetForm.formState.errors.otp && (
- <p className="text-red-400 text-xs">{resetForm.formState.errors.otp.message}</p>
+ <p className="text-red-600 text-xs">{resetForm.formState.errors.otp.message}</p>
  )}
  </div>
 
@@ -187,7 +187,7 @@ export default function ForgotPasswordPage() {
  />
  </div>
  {resetForm.formState.errors.newPassword && (
- <p className="text-red-400 text-xs">{resetForm.formState.errors.newPassword.message}</p>
+ <p className="text-red-600 text-xs">{resetForm.formState.errors.newPassword.message}</p>
  )}
  </div>
 
@@ -208,7 +208,7 @@ export default function ForgotPasswordPage() {
  />
  </div>
  {resetForm.formState.errors.confirmNewPassword && (
- <p className="text-red-400 text-xs">{resetForm.formState.errors.confirmNewPassword.message}</p>
+ <p className="text-red-600 text-xs">{resetForm.formState.errors.confirmNewPassword.message}</p>
  )}
  </div>
 

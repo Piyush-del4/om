@@ -6,6 +6,7 @@ import { Calendar, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '@/components/ui/astrology/DailyPanchangMuhuratWidget';
 import { env } from '@/lib/env';
 
 const FAQS = [
@@ -179,7 +180,7 @@ export default function PanchangPage() {
  Here is the detailed astrological data for {formData.name}.
  </p>
  <div className="bg-gray-100 border border-gray-200 rounded-xl p-4 text-left max-h-64 overflow-y-auto custom-scrollbar">
- <pre className="text-xs text-green-400 font-mono whitespace-pre-wrap">
+ <pre className="text-xs text-green-600 font-mono whitespace-pre-wrap">
  {JSON.stringify(resultData, null, 2)}
  </pre>
  </div>

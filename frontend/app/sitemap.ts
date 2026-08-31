@@ -1,98 +1,134 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
- const baseUrl = 'https://omastrologyamc.com';
+  const baseUrl = 'https://omastrologyamc.com';
 
- // Homepage — highest priority
- const homepage: MetadataRoute.Sitemap = [
- {
- url: baseUrl,
- lastModified: new Date(),
- changeFrequency: 'weekly',
- priority: 1.0,
- },
- ];
+  // 1. Homepage — highest priority
+  const homepage: MetadataRoute.Sitemap = [
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1.0,
+    },
+  ];
 
- // Free Interactive Tools — high priority
- const freeToolsRoutes: MetadataRoute.Sitemap = [
- '/free-tools',
- '/premium-personalized-kundli',
- ].map((route) => ({
- url: `${baseUrl}${route}`,
- lastModified: new Date(),
- changeFrequency: 'daily' as const,
- priority: 0.95,
- }));
+  // 2. Free Interactive Tools & Calculators — highest SEO priority
+  const freeToolsRoutes: MetadataRoute.Sitemap = [
+    '/free-tools',
+    '/premium-personalized-kundli',
+    '/free-tools/ascendant-calculator',
+    '/free-tools/birth-chart-generator',
+    '/free-tools/daily-horoscope',
+    '/free-tools/dasha-calculator',
+    '/free-tools/lucky-color-calculator',
+    '/free-tools/lucky-number-calculator',
+    '/free-tools/marriage-compatibility-checker',
+    '/free-tools/moon-sign-calculator',
+    '/free-tools/muhurat-calculator',
+    '/free-tools/nakshatra-finder',
+    '/free-tools/name-numerology-calculator',
+    '/free-tools/numerology-calculator',
+    '/free-tools/panchang',
+    '/free-tools/zodiac-sign-finder',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: 0.95,
+  }));
 
- // Core service pages — high priority, change weekly
- const serviceRoutes: MetadataRoute.Sitemap = [
- '/astrology',
- '/numerology',
- '/tarot-card',
- '/graphology',
- '/name-correction',
- '/marriage-matching',
- '/profession-career',
- '/lucky-mobile',
- '/corporate-numerology',
- '/numerology-2026',
- ].map((route) => ({
- url: `${baseUrl}${route}`,
- lastModified: new Date(),
- changeFrequency: 'weekly' as const,
- priority: 0.9,
- }));
+  // 3. Core Service & Feature Pages — high priority
+  const serviceRoutes: MetadataRoute.Sitemap = [
+    '/astrology',
+    '/numerology',
+    '/tarot-card',
+    '/graphology',
+    '/name-correction',
+    '/marriage-matching',
+    '/profession-career',
+    '/lucky-mobile',
+    '/corporate-numerology',
+    '/numerology-2026',
+    '/fean-ebook',
+    '/horoscope',
+    '/blog',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }));
 
- // Appointment & team pages — high priority
- const appointmentRoutes: MetadataRoute.Sitemap = [
- '/appointments',
- '/appointments/team-raajesh',
- '/appointments/team-kusum',
- ].map((route) => ({
- url: `${baseUrl}${route}`,
- lastModified: new Date(),
- changeFrequency: 'weekly' as const,
- priority: 0.9,
- }));
+  // 4. Numerology 2026 Sub-pages (Numbers 1-9)
+  const numerology2026Routes: MetadataRoute.Sitemap = Array.from({ length: 9 }, (_, i) => i + 1).map((num) => ({
+    url: `${baseUrl}/numerology-2026/${num}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }));
 
- // Shop — updates frequently with new products
- const shopRoutes: MetadataRoute.Sitemap = [
- {
- url: `${baseUrl}/shop`,
- lastModified: new Date(),
- changeFrequency: 'daily' as const,
- priority: 0.8,
- },
- ];
+  // 5. Planetary Transit Pages
+  const transitPlanets = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn', 'rahu', 'ketu'];
+  const transitRoutes: MetadataRoute.Sitemap = transitPlanets.map((planet) => ({
+    url: `${baseUrl}/transit/${planet}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }));
 
- // Secondary pages — moderate priority
- const secondaryRoutes: MetadataRoute.Sitemap = [
- '/about-us',
- '/batches',
- ].map((route) => ({
- url: `${baseUrl}${route}`,
- lastModified: new Date(),
- changeFrequency: 'monthly' as const,
- priority: 0.7,
- }));
+  // 6. Appointment & Team Pages
+  const appointmentRoutes: MetadataRoute.Sitemap = [
+    '/appointments',
+    '/appointments/team-raajesh',
+    '/appointments/team-kusum',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }));
 
- // Legal/utility pages — lower priority
- const utilityRoutes: MetadataRoute.Sitemap = [
- '/privacy-policy',
- ].map((route) => ({
- url: `${baseUrl}${route}`,
- lastModified: new Date(),
- changeFrequency: 'yearly' as const,
- priority: 0.3,
- }));
+  // 7. E-commerce Shop
+  const shopRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/shop`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    },
+  ];
 
- return [
- ...homepage,
- ...freeToolsRoutes,
- ...serviceRoutes,
- ...appointmentRoutes,
- ...shopRoutes,
- ...secondaryRoutes,
- ...utilityRoutes,
- ];
+  // 8. Secondary Information & Course Batches
+  const secondaryRoutes: MetadataRoute.Sitemap = [
+    '/about-us',
+    '/batches',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  // 9. Legal / Utility
+  const utilityRoutes: MetadataRoute.Sitemap = [
+    '/privacy-policy',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'yearly' as const,
+    priority: 0.3,
+  }));
+
+  return [
+    ...homepage,
+    ...freeToolsRoutes,
+    ...serviceRoutes,
+    ...numerology2026Routes,
+    ...transitRoutes,
+    ...appointmentRoutes,
+    ...shopRoutes,
+    ...secondaryRoutes,
+    ...utilityRoutes,
+  ];
 }

@@ -11,7 +11,11 @@ import { teamRouter } from '../modules/team/team.routes';
 import { astrologyContentRouter } from '../modules/content/astrologyContent.routes';
 import { reviewRouter } from '../modules/reviews/review.routes';
 import { paymentRouter } from '../modules/payments/payment.routes';
+import { notificationRouter } from '../modules/notifications/notification.routes';
+import { analyticsRouter } from '../modules/admin/analytics.routes';
+import { newsletterRouter } from '../modules/content/newsletter.routes';
 import astrologyRoutes from './astrologyRoutes';
+import { blogRouter } from './blogRoutes';
 
 export const router = Router();
 
@@ -27,7 +31,11 @@ router.use('/team', teamRouter);
 router.use('/content/astrology', astrologyContentRouter);
 router.use('/reviews', reviewRouter);
 router.use('/payments', paymentRouter);
+router.use('/notifications', notificationRouter);
+router.use('/admin/analytics', analyticsRouter);
+router.use('/newsletter', newsletterRouter);
 router.use('/astrology', astrologyRoutes);
+router.use('/blogs', blogRouter);
 
 // Base router welcome message
 router.get('/', (_, res) => {

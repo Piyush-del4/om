@@ -49,9 +49,9 @@ export function BirthDetailsTable({
  ];
 
  return (
- <div className="w-full max-w-full mx-auto my-4 border-2 border-amber-800/40 rounded-xl overflow-hidden shadow-md bg-white text-sm sm:text-base">
+ <div className="w-full max-w-full mx-auto my-4 border-2 border-amber-200 rounded-xl overflow-hidden shadow-md bg-white text-sm sm:text-base">
  {/* Header with Name */}
- <div className="bg-gradient-to-r from-amber-300 via-orange-200 to-amber-300 py-3 px-5 text-center border-b-2 border-amber-800/40">
+ <div className="bg-gradient-to-r from-amber-300 via-orange-200 to-amber-300 py-3 px-5 text-center border-b-2 border-amber-200">
  <h3 className="text-amber-950 font-serif font-black text-xl sm:text-2xl tracking-wider uppercase">
  {name || 'Astrological Details'}
  </h3>
@@ -61,7 +61,7 @@ export function BirthDetailsTable({
  <div className="divide-y divide-amber-800/20 font-medium">
  {rows.map((r, i) => (
  <div key={i} className="grid grid-cols-5 text-neutral-900 hover:bg-amber-100/50 :bg-gray-200/50 transition-colors">
- <div className="col-span-2 p-3 font-bold text-amber-950 border-r border-amber-800/20 ">
+ <div className="col-span-2 p-3 font-bold text-amber-950 border-r border-amber-200 ">
  {r.label}
  </div>
  <div className="col-span-3 p-3 font-semibold text-neutral-800 ">

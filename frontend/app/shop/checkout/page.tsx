@@ -195,11 +195,6 @@ function CheckoutContent() {
  <CreditCard className="w-5 h-5" /> Delivery & Billing Coordinates
  </h2>
  <AddressForm
- initialValues={{
- fullName: user?.name || '',
- phone: user?.phone || '',
- ...user?.defaultAddress
- }}
  onSubmit={handleCheckoutSubmit}
  isLoading={checkingOut}
  buttonText={checkingOut ? 'Initializing Secure Payment...' : 'Proceed to Pay'}
@@ -269,7 +264,7 @@ function CheckoutContent() {
  <div className="h-px bg-gray-100/60 my-2"></div>
  <div className="flex justify-between text-gray-900 font-bold text-sm">
  <span>Grand Total</span>
- <span className="text-[var(--gold)]">₹{(total / 100).toLocaleString()}</span>
+ <span className="text-[#e77600]">₹{(total / 100).toLocaleString()}</span>
  </div>
  </div>
 

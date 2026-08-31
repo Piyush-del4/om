@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ShopItem } from './shopItem.model';
 import { Cart } from './cart.model';
 import { Order } from './order.model';
+import { Wishlist } from './wishlist.model';
 import { User } from '../users/user.model';
 import * as razorpayService from '../../services/razorpay.service';
 import { sendOrderReceiptEmail, sendPurchaseAdminNotification } from '../../services/email.service';
@@ -241,7 +242,11 @@ export async function removeFromCart(req: Request, res: Response, next: NextFunc
       return;
     }
 
-    cart.items = cart.items.filter(item => item.itemId.toString() !== itemId);
+    cart.items = cart.items.filter(item => {
+      const pId = item.itemId ? item.itemId.toString() : null;
+      const cId = (item as any)._id ? (item as any)._id.toString() : null;
+      return pId !== itemId && cId !== itemId;
+    });
     await cart.save();
 
     const populatedCart = await Cart.findOne({ userId }).populate('items.itemId');
@@ -689,6 +694,43 @@ export async function updateOrderStatus(req: Request, res: Response, next: NextF
       success: true,
       data: order,
     });
+  } catch (error) {
+    next(error);
+  }
+}
+
+// ── Wishlist APIs ────────────────────────────────────────────────────────────
+
+export async function toggleWishlist(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const userId = req.user?._id;
+    const { shopItemId } = req.body;
+
+    const shopItem = await ShopItem.findById(shopItemId);
+    if (!shopItem) {
+      res.status(404).json({ success: false, message: 'Shop item not found.' });
+      return;
+    }
+
+    const existing = await Wishlist.findOne({ userId, shopItemId });
+    if (existing) {
+      await Wishlist.deleteOne({ _id: existing._id });
+      res.status(200).json({ success: true, isWishlisted: false, message: 'Removed from wishlist.' });
+    } else {
+      const activePrice = shopItem.offerPrice || shopItem.price;
+      await Wishlist.create({ userId, shopItemId, baselinePrice: activePrice });
+      res.status(201).json({ success: true, isWishlisted: true, message: 'Added to wishlist.' });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getWishlist(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const userId = req.user?._id;
+    const wishlist = await Wishlist.find({ userId }).populate('shopItemId').sort({ createdAt: -1 });
+    res.status(200).json({ success: true, data: wishlist });
   } catch (error) {
     next(error);
   }

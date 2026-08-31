@@ -40,7 +40,7 @@ export function generateLifePredictions(data: any): LifePredictionCategory[] {
  guidance: 'Channel your natural enthusiasm into disciplined routines to maximize long-term accomplishments.'
  },
  {
- title: 'Career & Ambition',
+ title: 'Career & AMCition',
  key: 'career',
  iconName: 'Briefcase',
  summary: 'Your 10th house alignment indicates strong leadership potential, strategic foresight, and organizational influence.',
@@ -219,7 +219,7 @@ export function generateLifePredictions(data: any): LifePredictionCategory[] {
  'Turns setbacks into stepping stones for major victories.'
  ],
  favorablePeriods: 'Jupiter and 11th lord dashas unlock key milestones.',
- guidance: 'Set ambitious 5-year goals and celebrate incremental victories along the way.'
+ guidance: 'Set AMCitious 5-year goals and celebrate incremental victories along the way.'
  },
  {
  title: 'Obstacles & Overcoming Challenges',

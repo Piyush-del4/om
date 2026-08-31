@@ -78,12 +78,12 @@ export function LoShuGrid({ dateOfBirthStr }: LoShuGridProps) {
  Standard LoShu Grid
  </h4>
 
- <div className="grid grid-cols-3 gap-0 w-full max-w-[240px] md:max-w-[270px] aspect-square mx-auto border-2 border-amber-900/40 overflow-hidden rounded-lg">
+ <div className="grid grid-cols-3 gap-0 w-full max-w-[240px] md:max-w-[270px] aspect-square mx-auto border-2 border-amber-200 overflow-hidden rounded-lg">
  {STANDARD_GRID.map((row, rIdx) => (
  row.map((cell, cIdx) => (
  <div 
  key={`${rIdx}-${cIdx}`}
- className={`border border-amber-900/30 flex flex-col items-center justify-center p-1 ${cell.bgClass}`}
+ className={`border border-amber-200 flex flex-col items-center justify-center p-1 ${cell.bgClass}`}
  >
  <span className="text-lg md:text-xl font-black">{cell.num}</span>
  <span className="text-[10px] md:text-xs font-semibold opacity-85">({cell.element})</span>
@@ -99,7 +99,7 @@ export function LoShuGrid({ dateOfBirthStr }: LoShuGridProps) {
  <Sparkles className="w-4 h-4 text-[var(--gold)]" /> Birth LoShu Grid
  </h4>
 
- <div className="grid grid-cols-3 gap-0 w-full max-w-[240px] md:max-w-[270px] aspect-square mx-auto border-2 border-amber-900/40 overflow-hidden rounded-lg">
+ <div className="grid grid-cols-3 gap-0 w-full max-w-[240px] md:max-w-[270px] aspect-square mx-auto border-2 border-amber-200 overflow-hidden rounded-lg">
  {GRID_NUM_LAYOUT.map((row, rIdx) => (
  row.map((num, cIdx) => {
  const count = counts[num] || 0;
@@ -109,7 +109,7 @@ export function LoShuGrid({ dateOfBirthStr }: LoShuGridProps) {
  return (
  <div 
  key={`birth-${rIdx}-${cIdx}`}
- className={`border border-amber-900/30 flex items-center justify-center p-2 font-black text-lg md:text-xl transition-all ${
+ className={`border border-amber-200 flex items-center justify-center p-2 font-black text-lg md:text-xl transition-all ${
  hasValue 
  ? 'bg-amber-200 text-amber-950' 
  : 'bg-white text-transparent'

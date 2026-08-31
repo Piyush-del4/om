@@ -9,6 +9,8 @@ export interface IShopItem extends Document {
   specialOfferTitle?: string;
   offerPrice?: number;
   offerExpiresAt?: Date;
+  bundledItems?: Schema.Types.ObjectId[];
+  bundleDiscountPercentage?: number;
   isDeleted: boolean;
   inStock: boolean;
   stockCount?: number;
@@ -26,6 +28,8 @@ const ShopItemSchema = new Schema<IShopItem>(
     specialOfferTitle: { type: String, default: '' },
     offerPrice: { type: Number, min: 0 },
     offerExpiresAt: { type: Date },
+    bundledItems: { type: [{ type: Schema.Types.ObjectId, ref: 'ShopItem' }], default: [] },
+    bundleDiscountPercentage: { type: Number, default: 15 },
     isDeleted: { type: Boolean, default: false },
     inStock: { type: Boolean, default: true },
     stockCount: { type: Number, min: 0 },

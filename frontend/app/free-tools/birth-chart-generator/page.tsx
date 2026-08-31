@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/auth/AuthProvider';
 import { Sparkles, Search, ArrowRight, HelpCircle, Layers } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
@@ -52,6 +53,20 @@ export default function BirthChartGeneratorPage() {
  lng: 77.2090,
  timezone: 5.5
  });
+
+ const { user } = useAuth();
+
+ useEffect(() => {
+   if (user) {
+     setFormData(prev => ({
+       ...prev,
+       name: prev.name || user.name || '',
+       date: prev.date || user.dateOfBirth || '',
+       time: prev.time || user.birthTime || '',
+       location: prev.location || user.birthPlace || '',
+     }));
+   }
+ }, [user]);
  
  const [isSubmitting, setIsSubmitting] = useState(false);
  const [result, setResult] = useState(false);

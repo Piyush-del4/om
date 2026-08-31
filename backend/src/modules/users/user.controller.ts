@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { User } from './user.model';
 import { Session } from '../auth/session.model';
 import mongoose from 'mongoose';
+import { env } from '../../config/env';
 
 // Note: These models will be implemented in subsequent steps.
 // We import them here so the GDPR export logic works seamlessly when they are defined.
@@ -39,7 +40,7 @@ export async function getProfile(req: Request, res: Response, next: NextFunction
 export async function updateProfile(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const userId = req.user?._id;
-    const { name, phone, defaultAddress } = req.body;
+    const { name, phone, defaultAddress, dateOfBirth, birthTime, birthPlace, gender, zodiacSign } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
@@ -56,6 +57,11 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
     if (name) user.name = name;
     if (phone !== undefined) user.phone = phone;
     if (defaultAddress !== undefined) user.defaultAddress = defaultAddress;
+    if (dateOfBirth !== undefined) user.dateOfBirth = dateOfBirth;
+    if (birthTime !== undefined) user.birthTime = birthTime;
+    if (birthPlace !== undefined) user.birthPlace = birthPlace;
+    if (gender !== undefined) user.gender = gender;
+    if (zodiacSign !== undefined) user.zodiacSign = zodiacSign;
 
     await user.save();
 
@@ -197,6 +203,75 @@ export async function exportUserData(req: Request, res: Response, next: NextFunc
     res.status(200).json({
       success: true,
       data: exportPackage,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+export async function saveOnboarding(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const userId = req.user?._id;
+    const { dateOfBirth, birthTime, birthPlace, gender, zodiacSign, interests } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404).json({ success: false, error: { code: 'NOT_FOUND', message: 'User not found' } });
+      return;
+    }
+
+    if (dateOfBirth !== undefined) user.dateOfBirth = dateOfBirth;
+    if (birthTime !== undefined) user.birthTime = birthTime;
+    if (birthPlace !== undefined) user.birthPlace = birthPlace;
+    if (gender !== undefined) user.gender = gender;
+    if (zodiacSign !== undefined) user.zodiacSign = zodiacSign;
+    if (interests !== undefined) user.interests = interests;
+    user.onboardingCompleted = true;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        onboardingCompleted: user.onboardingCompleted,
+        zodiacSign: user.zodiacSign,
+        interests: user.interests,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteProfile(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const userId = req.user?._id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        error: { code: 'NOT_FOUND', message: 'User not found' },
+      });
+      return;
+    }
+
+    // Hard-delete user and sessions
+    await User.findByIdAndDelete(userId);
+    await Session.deleteMany({ userId });
+
+    // Clear auth cookie
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+
+    res.status(200).json({
+      success: true,
+      data: { message: 'Profile deleted successfully' },
     });
   } catch (error) {
     next(error);

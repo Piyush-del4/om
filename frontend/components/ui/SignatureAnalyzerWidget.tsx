@@ -210,7 +210,7 @@ export function SignatureAnalyzerWidget() {
  computedMetrics.push({
  type: 'baseline',
  label: 'Ascending Baseline (Uphill)',
- desc: 'Indicates high ambition, optimism, fighting spirit, and future-oriented goals.'
+ desc: 'Indicates high AMCition, optimism, fighting spirit, and future-oriented goals.'
  });
  } else if (dy > 12) {
  computedMetrics.push({
@@ -305,7 +305,7 @@ export function SignatureAnalyzerWidget() {
  </span>
  <button
  onClick={handleClear}
- className="text-gray-600 hover:text-red-400 p-1 rounded transition-colors duration-300 flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold border border-gray-200 px-2.5 py-1"
+ className="text-gray-600 hover:text-red-600 p-1 rounded transition-colors duration-300 flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold border border-gray-200 px-2.5 py-1"
  >
  <Trash2 className="w-3.5 h-3.5" /> Reset Pad
  </button>

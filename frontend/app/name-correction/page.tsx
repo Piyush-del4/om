@@ -105,19 +105,19 @@ export default function NameCorrectionPage() {
  <h4 className="font-serif text-lg font-bold text-gray-900">Signs You Need a Name Spelling Check</h4>
  <ul className="space-y-3 text-xs text-gray-600 font-light">
  <li className="flex gap-2 items-start">
- <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+ <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
  <span>Unexplainable delays in business growth or promotion despite hard work.</span>
  </li>
  <li className="flex gap-2 items-start">
- <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+ <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
  <span>Frequent misunderstandings in professional or personal relationships.</span>
  </li>
  <li className="flex gap-2 items-start">
- <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+ <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
  <span>Feeling that your efforts are never fully recognized or rewarded.</span>
  </li>
  <li className="flex gap-2 items-start">
- <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+ <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
  <span>Consistent obstacles popping up at the very last moment of deal closure.</span>
  </li>
  </ul>

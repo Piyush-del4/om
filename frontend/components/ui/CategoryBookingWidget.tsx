@@ -252,7 +252,7 @@ export function CategoryBookingWidget({ category, serviceName }: CategoryBooking
  })}
  </div>
  ) : (
- <div className="flex items-center gap-2 text-yellow-500 bg-yellow-950/20 border border-yellow-900/30 p-3 rounded-lg text-xs">
+ <div className="flex items-center gap-2 text-yellow-600 bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-xs">
  <AlertCircle className="w-4.5 h-4.5 flex-shrink-0" />
  <span>No slots available for this date. Please select another date.</span>
  </div>

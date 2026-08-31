@@ -37,7 +37,7 @@ export default function RaajeshProfilePage() {
  { label: 'Career Guidance Coaching' },
  { label: 'Five Elements Balance' }
  ];
- const description = member?.description || "With decades of deep study and practice in ancient Indian sciences, Raajesh S Panday has guided thousands of individuals toward clarity, confidence, and lasting success. His holistic methodology uniquely blends Vedic Astrology, Numerology, Graphology, Signature Analysis, and Five Elements principles to offer a complete, personalized roadmap for each client. Whether you are navigating career transitions, relationship challenges, financial decisions, health concerns, or seeking deeper personal growth — Raajesh Ji's grounded wisdom helps you understand your true strengths, remove hidden blockages, and align with the universe's natural timing. He is known for his practical, compassionate, and results-driven approach that empowers clients with real, actionable guidance rather than vague predictions.";
+ const description = member?.description || "With decades of deep study and practice in ancient Indian sciences, Rajessh Paanday has guided thousands of individuals toward clarity, confidence, and lasting success. His holistic methodology uniquely blends Vedic Astrology, Numerology, Graphology, Signature Analysis, and Five Elements principles to offer a complete, personalized roadmap for each client. Whether you are navigating career transitions, relationship challenges, financial decisions, health concerns, or seeking deeper personal growth — Raajesh Ji's grounded wisdom helps you understand your true strengths, remove hidden blockages, and align with the universe's natural timing. He is known for his practical, compassionate, and results-driven approach that empowers clients with real, actionable guidance rather than vague predictions.";
  const experienceYears = member?.experienceYears || 25;
  return (
  <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900">
@@ -59,7 +59,7 @@ export default function RaajeshProfilePage() {
  <div className="w-full aspect-square relative overflow-hidden bg-white flex items-end justify-center">
  <img 
  src={member?.image || '/images/team_raajesh.png'} 
- alt={member?.name || 'Raajesh S Panday'} 
+ alt={member?.name || 'Rajessh Paanday'} 
  className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-102"
  />
  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
@@ -74,7 +74,7 @@ export default function RaajeshProfilePage() {
  Founder & Chief Consultant
  </span>
  <h1 className="font-serif text-3xl md:text-4xl font-bold tracking-tight text-gray-900 leading-tight">
- Raajesh S Panday
+ Rajessh Paanday
  </h1>
  {/* Experience badge */}
  {experienceYears > 0 ? (

@@ -1,0 +1,91 @@
+{
+  "zodiacs": [
+    { "id": "aries", "name": "Aries", "image": "zodiac_1.png" },
+    { "id": "taurus", "name": "Taurus", "image": "zodiac_2.png" },
+    { "id": "gemini", "name": "Gemini", "image": "zodiac_3.png" },
+    { "id": "cancer", "name": "Cancer", "image": "zodiac_4.png" },
+    { "id": "leo", "name": "Leo", "image": "zodiac_5.png" },
+    { "id": "virgo", "name": "Virgo", "image": "zodiac_6.png" },
+    { "id": "libra", "name": "Libra", "image": "zodiac_7.png" },
+    { "id": "scorpio", "name": "Scorpio", "image": "zodiac_8.png" },
+    { "id": "sagittarius", "name": "Sagittarius", "image": "zodiac_9.png" },
+    { "id": "capricorn", "name": "Capricorn", "image": "zodiac_10.png" },
+    { "id": "aquarius", "name": "Aquarius", "image": "zodiac_11.png" },
+    { "id": "pisces", "name": "Pisces", "image": "zodiac_12.png" }
+  ],
+  "periods": [
+    { "id": "daily", "name": "Daily Horoscope" },
+    { "id": "weekly", "name": "Weekly Horoscope" },
+    { "id": "monthly", "name": "Monthly Horoscope" },
+    { "id": "yearly", "name": "Yearly Horoscope" }
+  ],
+  "dummyPrediction": {
+    "daily": {
+      "married_life": "Married couples will receive the right support from their partners in matters related to their children today.",
+      "career": "Professionals may expect to receive some good news from their bosses today.",
+      "family": "Today, abundance, happiness, and contentment will flow into your life with your family.",
+      "love_life": "There won't be any major change in conversation and relationships with your partner today.",
+      "finances": "Today, you may come across a good opportunity in your financial life with the help of someone close to you.",
+      "health": "As per the movement of the planets today, your health will bring stability and strength in your life."
+    },
+    "weekly": {
+      "education": "This week will be good for students in terms of studies. During this week, whatever you study can be understood easily, and you may be able to use your knowledge in the right way. Students preparing for competitive exams, interviews, or presentations may get special benefits. Your thinking may remain creative, and your interest in learning new things may increase.",
+      "career": "This week will bring gradual progress and new opportunities in your career. The position of Mars may increase your confidence, communication skills, and courage. During this time, you may get good opportunities in areas like sales, marketing, and starting new projects. The position of Rahu in the eleventh house may bring benefits through networking.",
+      "family": "This period may bring opportunities to move ahead slowly in your family life and receive new chances. During this time, your hard work and confidence at home may open new paths for progress. The influence of Mars may improve your communication skills, which can be helpful in expressing your ideas to loved ones.",
+      "finance": "This week indicates the importance of maintaining understanding and patience in your financial life. During this time, it will be important to understand and express feelings about investments in the right way. Due to the influence of Ketu, sometimes there may be confusion regarding market expectations.",
+      "health": "This week indicates the need for balance and proper rest. During this time, energy levels may remain normal, but maintaining calmness and balance will be important. Due to the influence of Saturn, there may be difficulty in getting proper sleep or a feeling of uneasiness at times. Light yoga, pranayama, and balanced food may be beneficial.",
+      "lucky_colours": "Golden Yellow and Light Green",
+      "remedies": "On Tuesday, recite the Hanuman Chalisa. Offer water to the rising Sun every morning. On Wednesday, donate green gram (whole moong) or green vegetables.",
+      "conclusion": "Perform {Rashi} lagna puja for courage, confidence, and success."
+    },
+    "monthly": [
+      "This month may bring combined experiences. The month starts on a somewhat uneven note, but conditions may gradually become more balanced as time progresses. In the first part of the month, you may feel some pressure or confusion in a few areas of life. Studies, career, business, finances, relationships, and health may demand extra attention. At times, it may feel difficult to stay fully focused on one task, and you may get distracted easily. This is why patience will be very important during this period.",
+      "In the first half of the month, you may spend more time thinking about different matters than usual. Paying too much attention to small issues may make things feel heavier than they actually are. There can also be chances of misunderstandings or delays at work. Students may find it harder to stay focused on their studies and may need to revise the same topics more than once.",
+      "As the middle of the month approaches, situations start to improve. After the 18th, greater clarity helps you understand things. Tasks that were moving slowly witness progress. Students may regain their focus, and learning feels easier. Related to jobs and business, your communication and decision-making may become stronger. Confidence may grow gradually; this helps bring a greater sense of stability in work.",
+      "The final part of the month helps to gain better control over situations. After the 26th, the period may become more favourable. Especially related to communication, agreements, and planning. This time also helps to explore new opportunities. Those who are considering starting something new may find this time supportive.",
+      "On the financial matter, the beginning of the month may feel somewhat demanding. Unplanned expenses increase, and this may affect your budget. At the same time, the second half of the month may prove to be a gradual improvement, as this time you can manage expenses more effectively.",
+      "In matters of love and relationships, emotional ups and downs may be experienced. In the beginning of the month, misunderstandings and a lack of proper communication may create distance between people. However, with time, mutual understanding may improve.",
+      "Regarding health, the beginning of the month may bring feelings of tiredness and low energy levels. You should understand that, especially at this time, an irregular routine or a heavy workload may impact your physical comfort. Hence, it is necessary to maintain a proper daily schedule.",
+      "Overall, the initial days bring few challenges; nevertheless, as the month progresses, conditions are likely to improve. By the end of the month, you may experience greater stability and comfort. Small issues or misunderstandings may arise in studies, work, business, finances, and relationships. During such times, it will be important to remain patient."
+    ],
+    "yearly": {
+      "intro": "2026 is not just another year; it's your year. Imagine a year where every decision you make propels you closer to your goals. The universe has lined up perfectly for you to step into the spotlight, with all the cosmic forces aligning for your personal growth. The moves you make now are like a game of chess, where your strategy and foresight lead you toward victory. Get ready for a year that promises new beginnings and endless potential.",
+      "career": "Your career is set for a major transformation as Mars, Saturn, Jupiter, and Rahu align. From January to March, expect golden opportunities, whether it's a long-awaited promotion, a career shift, or discovering your true passion. April to June may bring turbulence as Rahu and Mars test your patience, with workplace challenges demanding resilience and clear communication. Stay calm under pressure, as these trials shape your strength.",
+      "finance": "When it comes to finances, 2026 will feel like a rollercoaster. Jupiter's influence ensures a steady flow of income, but the Rahu-Mars energy may lead to unexpected expenses or financial stress. It's crucial to adopt a strategic approach to money management this year. Think of budgeting not as a restriction but as a shield to protect your future. The year might test your financial discipline, but the final months promise a profitable outcome.",
+      "health": "Your health will need extra attention this year. Mars and Saturn are giving you a wake-up call to take better care of your body. It's time to treat your physical well-being with the respect it deserves. Meditation, yoga, and mindfulness practices aren't just trendy; they're your secret weapons for maintaining balance. The more you invest in your health now, the stronger and more energetic you'll feel throughout the year.",
+      "family_life": "Home life may not always be peaceful in 2026. Rahu and Ketu might stir the pot a bit, creating occasional tension or drama within family dynamics. However, Jupiter and Saturn will provide the balance and stability you need to navigate these challenges. Although things may become intense, patience will be your greatest asset. Remember that family relationships will settle down by year's end.",
+      "love_and_relationship": "Whether you're single, dating, or in a committed relationship, love will require your full attention. Communication is your superpower this year, and how you use it will determine the outcome of your relationships. Open, honest, and compassionate conversations will strengthen bonds and help you navigate any emotional turbulence. Keep the lines of communication open, and love will bloom in ways you never expected.",
+      "conclusion": "2026 is the year to embrace your power, face challenges head-on, and emerge victorious. With the right mindset and strategies in place, you can turn every difficulty into an opportunity. Are you ready to put in the work and make this year your best yet? The universe is on your side; now it's your turn to step forward."
+    }
+  },
+  "faqs": [
+    {
+      "q": "In what ways reading my daily horoscope helps?",
+      "a": "Reading your daily horoscope prepares you for the day ahead, highlighting opportunities and potential challenges based on planetary alignments."
+    },
+    {
+      "q": "Why is it crucial to know about the source of horoscopes?",
+      "a": "The source determines accuracy. Authentic Vedic astrology relies on precise astronomical data (Panchang) and planetary transits rather than generalized Sun signs."
+    },
+    {
+      "q": "Can planning the day as per the horoscope actually make a difference to my life?",
+      "a": "Yes! Aligning your actions with favorable planetary hours (Muhurat) can maximize your chances of success and minimize obstacles."
+    },
+    {
+      "q": "What other information should I check while reading the Daily horoscope?",
+      "a": "You should check your Moon sign (Rashi), the current Nakshatra, and important planetary transits affecting your specific chart."
+    },
+    {
+      "q": "What if there is a negative impact on my life?",
+      "a": "Astrology provides remedies. If a negative transit is indicated, you can perform specific remedies, wear gemstones, or chant mantras to mitigate the effects."
+    },
+    {
+      "q": "Is there a fee to check my daily horoscope?",
+      "a": "No, our daily, weekly, and monthly horoscopes are provided completely free of charge to help guide you."
+    },
+    {
+      "q": "How accurate is daily horoscope?",
+      "a": "While generalized by Rashi, our horoscopes use accurate Vedic algorithms. For pinpoint accuracy, a personalized Kundli reading is recommended."
+    }
+  ]
+}

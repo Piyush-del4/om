@@ -332,7 +332,7 @@ export function AstrologyChartWidget() {
  className={`absolute rounded-full border border-dashed transition-all duration-300 z-10 ${
  isHovered
  ? 'border-[var(--gold-200)] shadow-[0_0_8px_rgba(204,143,51,0.2)] bg-white/5'
- : 'border-neutral-900/50 hover:border-gray-200'
+ : 'border-neutral-200 hover:border-gray-200'
  }`}
  style={{
  width: radius * 2,

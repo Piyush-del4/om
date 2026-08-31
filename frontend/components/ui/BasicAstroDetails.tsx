@@ -67,11 +67,11 @@ export function BasicAstroDetails({ data }: BasicAstroDetailsProps) {
  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
  
  {/* Left Column Table */}
- <div className="border-2 border-amber-800/30 rounded-xl overflow-hidden shadow-md bg-white ">
+ <div className="border-2 border-amber-200 rounded-xl overflow-hidden shadow-md bg-white ">
  <div className="divide-y divide-amber-800/20 ">
  {leftRows.map((row, idx) => (
  <div key={idx} className="grid grid-cols-2 text-sm">
- <div className="p-2.5 font-semibold text-neutral-800 bg-amber-200/40 border-r border-amber-800/20 ">
+ <div className="p-2.5 font-semibold text-neutral-800 bg-amber-200/40 border-r border-amber-200 ">
  {row.label}
  </div>
  <div className="p-2.5 font-medium text-neutral-900 ">
@@ -83,11 +83,11 @@ export function BasicAstroDetails({ data }: BasicAstroDetailsProps) {
  </div>
 
  {/* Right Column Table */}
- <div className="border-2 border-amber-800/30 rounded-xl overflow-hidden shadow-md bg-white ">
+ <div className="border-2 border-amber-200 rounded-xl overflow-hidden shadow-md bg-white ">
  <div className="divide-y divide-amber-800/20 ">
  {rightRows.map((row, idx) => (
  <div key={idx} className="grid grid-cols-2 text-sm">
- <div className="p-2.5 font-semibold text-neutral-800 bg-amber-200/40 border-r border-amber-800/20 ">
+ <div className="p-2.5 font-semibold text-neutral-800 bg-amber-200/40 border-r border-amber-200 ">
  {row.label}
  </div>
  <div className="p-2.5 font-medium text-neutral-900 ">

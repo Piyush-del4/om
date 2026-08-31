@@ -107,7 +107,7 @@ export default function AdminBatchesPage() {
  </button>
  <button
  onClick={() => { if(confirm('Delete batch? All students will lose access.')) deleteBatchMutation.mutate(batch._id); }}
- className="text-red-400 hover:text-red-300 p-1"
+ className="text-red-600 hover:text-red-600 p-1"
  >
  <Trash2 className="w-4 h-4" />
  </button>

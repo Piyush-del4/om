@@ -193,13 +193,13 @@ export function CitySearchInput({ value, onChange }: CitySearchInputProps) {
  {searchTerm.trim().length > 0 && (
  <div
  onClick={handleCustomSelect}
- className="p-3 bg-amber-950/40 hover:bg-amber-900/50 text-amber-300 cursor-pointer transition-colors flex items-center justify-between text-left border-b border-amber-800/40"
+ className="p-3 bg-amber-50 hover:bg-amber-900/50 text-amber-600 cursor-pointer transition-colors flex items-center justify-between text-left border-b border-amber-200"
  >
  <div className="flex items-center gap-2.5">
  <MapPin className="w-4 h-4 text-[var(--gold)] shrink-0" />
  <div>
  <span className="text-sm font-semibold text-amber-200 block">Use location: "{searchTerm}"</span>
- <span className="text-[11px] text-amber-400/80">Select to use your exact entered location</span>
+ <span className="text-[11px] text-amber-600/80">Select to use your exact entered location</span>
  </div>
  </div>
  </div>

@@ -6,7 +6,7 @@ import { useAuth } from '@/auth/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/api/client';
 import { GoldCard } from '@/components/ui/GoldCard';
-import { LayoutDashboard, Users, Calendar, ShoppingBag, GraduationCap, ArrowRight, TrendingUp, FileText } from 'lucide-react';
+import { LayoutDashboard, Users, Calendar, ShoppingBag, GraduationCap, ArrowRight, TrendingUp, FileText, Bell } from 'lucide-react';
 
 export default function AdminDashboardPage() {
  const { user, isAuthenticated, isLoading } = useAuth();
@@ -71,9 +71,11 @@ export default function AdminDashboardPage() {
  const kundlisCount = kundlis?.filter((k: any) => k.userId?._id === user?._id).length || 0;
 
  const quickNav = [
- { title: 'User Saved Kundlis', description: 'Access and review all Janam Kundlis generated across the platform', path: '/admin/saved-kundlis', icon: FileText, color: 'text-amber-400' },
- { title: 'Shop Inventory', description: 'Add, update or delete shop items', path: '/admin/shop', icon: ShoppingBag, color: 'text-emerald-400' },
- { title: 'Appointment Types', description: 'Configure booking consultation slots', path: '/admin/appointments', icon: Calendar, color: 'text-sky-400' },
+ { title: 'Broadcast Notifications', description: 'Send custom promotional offers, news & announcements to all users', path: '/admin/notifications', icon: Bell, color: 'text-purple-600' },
+ { title: 'Revenue Analytics & Accounting', description: 'Financial income breakdowns, charts, and 1-click CSV accounting export', path: '/admin/analytics', icon: TrendingUp, color: 'text-amber-600' },
+ { title: 'User Saved Kundlis', description: 'Access and review all Janam Kundlis generated across the platform', path: '/admin/saved-kundlis', icon: FileText, color: 'text-amber-600' },
+ { title: 'Shop Inventory', description: 'Add, update or delete shop items', path: '/admin/shop', icon: ShoppingBag, color: 'text-emerald-600' },
+ { title: 'Appointment Types', description: 'Configure booking consultation slots', path: '/admin/appointments', icon: Calendar, color: 'text-sky-600' },
  { title: 'Batches & Course Management', description: 'Organize study files and lectures', path: '/admin/batches', icon: GraduationCap, color: 'text-[var(--gold)]' },
  { title: 'Team Members', description: 'Edit consultant profiles, bios, photo & experience', path: '/admin/team', icon: Users, color: 'text-rose-400' },
  ];
@@ -94,7 +96,7 @@ export default function AdminDashboardPage() {
  className="border border-gray-200 p-5 flex items-center gap-4 cursor-pointer hover:border-amber-500/50 transition-colors"
  onClick={() => router.push('/admin/admin-kundails')}
  >
- <div className="p-3 bg-amber-950/40 border border-amber-900/30 text-amber-400 rounded-xl">
+ <div className="p-3 bg-amber-50 border border-amber-200 text-amber-600 rounded-xl">
  <FileText className="w-6 h-6" />
  </div>
  <div>
@@ -114,7 +116,7 @@ export default function AdminDashboardPage() {
  </GoldCard>
 
  <GoldCard className="border border-gray-200 p-5 flex items-center gap-4">
- <div className="p-3 bg-sky-950/40 border border-sky-900/30 text-sky-400 rounded-xl">
+ <div className="p-3 bg-sky-50 border border-sky-200 text-sky-600 rounded-xl">
  <Calendar className="w-6 h-6" />
  </div>
  <div>
@@ -124,7 +126,7 @@ export default function AdminDashboardPage() {
  </GoldCard>
 
  <GoldCard className="border border-gray-200 p-5 flex items-center gap-4">
- <div className="p-3 bg-emerald-950/40 border border-emerald-900/30 text-emerald-400 rounded-xl">
+ <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-600 rounded-xl">
  <ShoppingBag className="w-6 h-6" />
  </div>
  <div>
@@ -134,7 +136,7 @@ export default function AdminDashboardPage() {
  </GoldCard>
 
  <GoldCard className="border border-gray-200 p-5 flex items-center gap-4">
- <div className="p-3 bg-pink-950/40 border border-pink-900/30 text-pink-400 rounded-xl">
+ <div className="p-3 bg-pink-50 border border-pink-200 text-pink-600 rounded-xl">
  <TrendingUp className="w-6 h-6" />
  </div>
  <div>

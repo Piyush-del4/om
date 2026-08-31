@@ -22,7 +22,7 @@ export function detectDoshas(data: any): DoshaResult[] {
  // 1. Mangal Dosha (Mars in 1, 4, 7, 8, 12)
  const marsH = getHouse('Mars');
  const mangalHouses = [1, 4, 7, 8, 12];
- let isMangal = mangalHouses.includes(marsH);
+ const isMangal = mangalHouses.includes(marsH);
  let mangalCancellation = '';
  let mangalSeverity: 'Mild' | 'Moderate' | 'Severe' | 'None' = 'None';
 
@@ -138,8 +138,6 @@ export function detectDoshas(data: any): DoshaResult[] {
  });
 
  // 6. Nadi Dosha (Moon Nakshatra Nadi matching considerations)
- const moonSign = getSign('Moon');
- const isNadi = moonSign === 3 || moonSign === 6 || moonSign === 9; // Placeholder rule for general compatibility check
  doshas.push({
  id: 'nadi-dosha',
  name: 'Nadi Dosha',

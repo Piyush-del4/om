@@ -187,7 +187,7 @@ export default function JoinBatchPage() {
  <div className="p-6 pt-4 border-t border-gray-200/60 flex items-center">
  {enrolled ? (
  <div className="w-full flex flex-col gap-2">
- <div className="w-full flex items-center justify-center gap-1.5 text-green-400 text-xs bg-green-950/20 border border-green-900/30 p-2 rounded-lg font-semibold">
+ <div className="w-full flex items-center justify-center gap-1.5 text-green-600 text-xs bg-green-50 border border-green-200 p-2 rounded-lg font-semibold">
  <CheckCircle className="w-4 h-4" />
  <span>Enrolled & Active</span>
  </div>

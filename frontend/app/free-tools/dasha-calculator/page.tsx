@@ -6,6 +6,7 @@ import { Activity, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '@/components/ui/astrology/DailyPanchangMuhuratWidget';
 import { VimshottariDashaTable } from '@/components/ui/VimshottariDashaTable';
 import { CitySearchInput } from '@/components/ui/CitySearchInput';
 import { TimePicker12Hour } from '@/components/ui/TimePicker12Hour';

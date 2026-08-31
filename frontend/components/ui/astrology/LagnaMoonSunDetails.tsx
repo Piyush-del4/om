@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React from 'react';
 import { ZODIAC_SIGNS, ZODIAC_LORDS, getNakshatraAndPada } from '@/lib/astrologyEngine';
 
 interface Props {
@@ -54,8 +53,8 @@ export function LagnaMoonSunDetails({ data }: Props) {
  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
  
  {/* 🌅 Section 5: Lagna Details */}
- <div className="bg-amber-50/70 border-2 border-amber-800/30 rounded-2xl p-5 shadow-md flex flex-col justify-between space-y-4">
- <div className="border-b border-amber-800/20 pb-3 flex items-center gap-2">
+ <div className="bg-amber-50/70 border-2 border-amber-200 rounded-2xl p-5 shadow-md flex flex-col justify-between space-y-4">
+ <div className="border-b border-amber-200 pb-3 flex items-center gap-2">
  <span className="text-2xl">🌅</span>
  <div>
  <h4 className="font-serif font-bold text-amber-950 text-lg">
@@ -91,8 +90,8 @@ export function LagnaMoonSunDetails({ data }: Props) {
  </div>
 
  {/* 🌙 Section 6: Moon Details */}
- <div className="bg-blue-50/70 border-2 border-blue-800/30 rounded-2xl p-5 shadow-md flex flex-col justify-between space-y-4">
- <div className="border-b border-blue-800/20 pb-3 flex items-center gap-2">
+ <div className="bg-blue-50/70 border-2 border-blue-200 rounded-2xl p-5 shadow-md flex flex-col justify-between space-y-4">
+ <div className="border-b border-blue-200 pb-3 flex items-center gap-2">
  <span className="text-2xl">🌙</span>
  <div>
  <h4 className="font-serif font-bold text-blue-950 text-lg">
@@ -128,8 +127,8 @@ export function LagnaMoonSunDetails({ data }: Props) {
  </div>
 
  {/* ☀️ Section 7: Sun Details */}
- <div className="bg-orange-50/70 border-2 border-orange-800/30 rounded-2xl p-5 shadow-md flex flex-col justify-between space-y-4">
- <div className="border-b border-orange-800/20 pb-3 flex items-center gap-2">
+ <div className="bg-orange-50/70 border-2 border-orange-200 rounded-2xl p-5 shadow-md flex flex-col justify-between space-y-4">
+ <div className="border-b border-orange-200 pb-3 flex items-center gap-2">
  <span className="text-2xl">☀️</span>
  <div>
  <h4 className="font-serif font-bold text-orange-950 text-lg">

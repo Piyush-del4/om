@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React from 'react';
 import { getDetailedPlanets, PlanetaryDetails, NAKSHATRA_LORDS } from '@/lib/astrologyEngine';
 
 interface Props {
@@ -18,7 +17,7 @@ export function PlanetaryDetailsCard({ data }: Props) {
  const planets: PlanetaryDetails[] = getDetailedPlanets(data.output[1]);
 
  return (
- <div className="bg-amber-50/60 border-2 border-amber-800/30 rounded-2xl overflow-hidden w-full max-w-5xl mx-auto my-6 shadow-lg">
+ <div className="bg-amber-50/60 border-2 border-amber-200 rounded-2xl overflow-hidden w-full max-w-5xl mx-auto my-6 shadow-lg">
  <div 
  /* onClick={() => setIsOpen(!isOpen)} */
  className="bg-amber-700 text-gray-900 p-4 text-center flex items-center justify-center gap-2 select-none"
@@ -36,7 +35,7 @@ export function PlanetaryDetailsCard({ data }: Props) {
  <div className="p-2 sm:p-4 overflow-x-auto">
  <table className="w-full text-left border-collapse text-[11px] sm:text-xs md:text-sm">
  <thead>
- <tr className="bg-amber-200/80 text-amber-950 font-bold border-b border-amber-800/30">
+ <tr className="bg-amber-200/80 text-amber-950 font-bold border-b border-amber-200">
  <th className="px-2 py-2 sm:p-2.5">Planet</th>
  <th className="px-2 py-2 sm:p-2.5">Zodiac Sign</th>
  <th className="px-2 py-2 sm:p-2.5 text-center">House</th>

@@ -131,10 +131,10 @@ export function TarotSpreadWidget({ onSuitChange, activeSuit }: TarotSpreadWidge
  <div className="flex flex-wrap justify-center gap-2 bg-gray-100/60 p-1.5 rounded-full border border-[var(--gold-200)]">
  {[
  { id: 'none', label: 'Neutral ✨', style: 'hover:text-[var(--gold)] text-gray-600' },
- { id: 'wands', label: 'Fire 🔥 (Wands)', style: 'hover:text-red-400 text-gray-600' },
- { id: 'cups', label: 'Water 💧 (Cups)', style: 'hover:text-blue-400 text-gray-600' },
+ { id: 'wands', label: 'Fire 🔥 (Wands)', style: 'hover:text-red-600 text-gray-600' },
+ { id: 'cups', label: 'Water 💧 (Cups)', style: 'hover:text-blue-600 text-gray-600' },
  { id: 'swords', label: 'Air 💨 (Swords)', style: 'hover:text-purple-300 text-gray-600' },
- { id: 'pentacles', label: 'Earth 🪨 (Pentacles)', style: 'hover:text-green-400 text-gray-600' }
+ { id: 'pentacles', label: 'Earth 🪨 (Pentacles)', style: 'hover:text-green-600 text-gray-600' }
  ].map((s) => {
  const isActive = activeSuit === s.id;
  return (
@@ -268,7 +268,7 @@ export function TarotSpreadWidget({ onSuitChange, activeSuit }: TarotSpreadWidge
  Active Slot: {currentSlots.find((s) => s.id === activeSlotId)?.name}
  </span>
  <h3 className="font-serif text-2xl font-bold text-gray-900 mt-1">
- {activeCardDetails.name} {activeDrawnCard.isReversed && <span className="text-red-400 text-xs italic font-sans block">(Reversed)</span>}
+ {activeCardDetails.name} {activeDrawnCard.isReversed && <span className="text-red-600 text-xs italic font-sans block">(Reversed)</span>}
  </h3>
  </div>
 

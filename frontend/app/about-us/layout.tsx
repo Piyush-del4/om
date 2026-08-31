@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
  title: 'About Us — Meet the Expert Team at OM Astrology AMC',
  description:
- 'Meet our master consultants Raajesh S Panday and Kusum Panday, specializing in Vedic Astrology, Numerology, Tarot Card Reading, and Graphology with decades of combined experience.',
+ 'Meet our master consultants Rajessh Paanday and Kusum Panday, specializing in Vedic Astrology, Numerology, Tarot Card Reading, and Graphology with decades of combined experience.',
  openGraph: {
  title: 'About Us — OM Astrology AMC',
  description:

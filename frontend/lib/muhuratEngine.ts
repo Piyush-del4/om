@@ -40,7 +40,7 @@ export function getMuhuratRecommendations(): MuhuratCategory[] {
  generalRecommendation: 'Perform Ganesha Puja and place a small Swastika on the dashboard before driving.'
  },
  {
- event: 'Business Start (Vyapar Arambh)',
+ event: 'Business Start (Vyapar ArAMCh)',
  key: 'business-start',
  iconName: 'TrendingUp',
  auspiciousTithis: ['Dwitiya', 'Tritiya', 'Panchami', 'Saptami', 'Dashami', 'Ekadashi', 'Labha Panchami'],

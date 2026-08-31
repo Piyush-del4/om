@@ -2,6 +2,8 @@ import app from './app';
 import { env } from './config/env';
 import { connectDB, disconnectDB } from './config/db';
 import { logger } from './utils/logger';
+import { initHoroscopeCron } from './cron/horoscopeCron';
+import { initBlogCron } from './cron/blogCron';
 
 let server: any;
 
@@ -12,6 +14,8 @@ async function bootstrap() {
   const port = env.PORT;
   server = app.listen(port, () => {
     logger.info(`🚀 Server running in ${env.NODE_ENV} mode on port ${port}`);
+    initHoroscopeCron();
+    initBlogCron();
   });
 
   // Handle unhandled promise rejections

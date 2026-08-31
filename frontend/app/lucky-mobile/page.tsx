@@ -117,8 +117,8 @@ export default function LuckyMobilePage() {
  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
  {combinationWarnings.map((warning) => (
  <GoldCard key={warning.combination} className="border border-gray-200/60 p-5 space-y-2">
- <h4 className="text-red-400 font-serif font-bold text-sm">{warning.combination}</h4>
- <span className="text-[10px] bg-red-950/40 text-red-300 px-2 py-0.5 rounded border border-red-900/30 font-mono uppercase inline-block">{warning.title}</span>
+ <h4 className="text-red-600 font-serif font-bold text-sm">{warning.combination}</h4>
+ <span className="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded border border-red-200 font-mono uppercase inline-block">{warning.title}</span>
  <p className="text-xs text-gray-600 leading-relaxed font-light pt-1">{warning.desc}</p>
  </GoldCard>
  ))}

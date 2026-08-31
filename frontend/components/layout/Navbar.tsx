@@ -8,15 +8,19 @@ import { Menu, X, ShoppingCart, User, LogOut, Shield, Sun, Moon, ChevronDown, Sp
 import { GoldButton } from '../ui/GoldButton';
 import { useQuery } from '@tanstack/react-query';
 import { client } from '../../lib/api/client';
+import { NotificationBellContainer } from './NotificationBellContainer';
+import { NotificationToastBanner } from './NotificationToastBanner';
 
 export function Navbar() {
  const pathname = usePathname();
  const { user, isAuthenticated, isAdmin, logout } = useAuth();
  const [isOpen, setIsOpen] = useState(false);
   const [isServicesHovered, setIsServicesHovered] = useState(false);
- const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
- const [isFreeToolsHovered, setIsFreeToolsHovered] = useState(false);
- const [isMobileFreeToolsOpen, setIsMobileFreeToolsOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const [isHoroscopeHovered, setIsHoroscopeHovered] = useState(false);
+  const [isMobileHoroscopeOpen, setIsMobileHoroscopeOpen] = useState(false);
+  const [isFreeToolsHovered, setIsFreeToolsHovered] = useState(false);
+  const [isMobileFreeToolsOpen, setIsMobileFreeToolsOpen] = useState(false);
  const [isProfileOpen, setIsProfileOpen] = useState(false);
  const profileRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +62,15 @@ export function Navbar() {
  },
  ];
 
+  const horoscopes = [
+    { name: 'Daily Horoscope', href: '/horoscope/daily/aries', icon: Sun },
+    { name: 'Weekly Horoscope', href: '/horoscope/weekly/aries', icon: Calendar },
+    { name: 'Monthly Horoscope', href: '/horoscope/monthly/aries', icon: Moon },
+    { name: 'Half Yearly Horoscope 2026', href: '/horoscope/yearly/aries', icon: Eye }
+  ];
+
  const freeTools = [
+ { name: 'Premium Ebook', description: 'Read our exclusive Kundli guide.', href: '/fean-ebook', icon: BookOpen },
  { name: 'Numerology', description: 'Calculate life path and destiny.', href: '/free-tools/numerology-calculator', icon: Hash },
  { name: 'Lucky Number', description: 'Find your daily lucky digits.', href: '/free-tools/lucky-number-calculator', icon: Star },
  { name: 'Name Numerology', description: 'Check spelling vibrations.', href: '/free-tools/name-numerology-calculator', icon: PenTool },
@@ -88,27 +100,31 @@ export function Navbar() {
 
  const cartCount = cartData?.items?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
 
- const navLinks = isAuthenticated
- ? [
- { name: 'Dashboard', path: '/dashboard' },
- { name: 'Services', path: '#', isMega: true, megaType: 'services' },
- { name: 'Free Tools', path: '#', isMega: true, megaType: 'freeTools' },
- { name: 'Appointment', path: '/appointments' },
- { name: 'Shop', path: '/shop' },
- { name: 'Batch', path: '/my-batches' },
- ]
- : [
- { name: 'Home', path: '/' },
- { name: 'Services', path: '#', isMega: true, megaType: 'services' },
- { name: 'Free Tools', path: '#', isMega: true, megaType: 'freeTools' },
- { name: 'Appointment', path: '/appointments' },
- { name: 'Shop', path: '/shop' },
+  const navLinks = isAuthenticated
+  ? [
+  { name: 'Dashboard', path: '/dashboard' },
+  { name: 'Services', path: '#', isMega: true, megaType: 'services' },
+  { name: 'Horoscope', path: '#', isMega: true, megaType: 'horoscope' },
+  { name: 'Free Tools', path: '#', isMega: true, megaType: 'freeTools' },
+  { name: 'Appointment', path: '/appointments' },
+  { name: 'Shop', path: '/shop' },
+  { name: 'Batch', path: '/my-batches' },
+  ]
+  : [
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '#', isMega: true, megaType: 'services' },
+  { name: 'Horoscope', path: '#', isMega: true, megaType: 'horoscope' },
+  { name: 'Free Tools', path: '#', isMega: true, megaType: 'freeTools' },
+  { name: 'Appointment', path: '/appointments' },
+  { name: 'Shop', path: '/shop' },
  ];
 
  const toggleMenu = () => setIsOpen(!isOpen);
 
- return (
- <nav className="sticky top-0 z-50 bg-white/75 backdrop-blur-md border-b border-[var(--gold-200)] text-gray-900 overflow-visible print:hidden">
+  return (
+  <>
+  <NotificationToastBanner />
+  <nav className="sticky top-0 z-50 bg-white/75 backdrop-blur-md border-b border-[var(--gold-200)] text-gray-900 overflow-visible print:hidden">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="flex items-center justify-between h-16">
  {/* Logo */}
@@ -124,10 +140,11 @@ export function Navbar() {
  {/* Desktop Nav Links */}
  <div className="hidden md:flex items-center space-x-4 lg:space-x-8 h-full">
  {navLinks.map((link) => {
- if (link.isMega) {
- const isServices = link.megaType === 'services';
- const isHovered = isServices ? isServicesHovered : isFreeToolsHovered;
- const setHovered = isServices ? setIsServicesHovered : setIsFreeToolsHovered;
+  if (link.isMega) {
+  const isServices = link.megaType === 'services';
+  const isHoroscope = link.megaType === 'horoscope';
+  const isHovered = isServices ? isServicesHovered : (isHoroscope ? isHoroscopeHovered : isFreeToolsHovered);
+  const setHovered = isServices ? setIsServicesHovered : (isHoroscope ? setIsHoroscopeHovered : setIsFreeToolsHovered);
  
  return (
  <div
@@ -172,6 +189,9 @@ export function Navbar() {
 
  {isAuthenticated ? (
  <div className="flex items-center gap-2">
+ {/* Notification Bell Center */}
+ <NotificationBellContainer />
+
  {/* Cart icon for non-admin */}
  {!isAdmin && (
  <Link href="/shop/cart" className="relative p-2 inline-flex text-gray-600 hover:text-[var(--gold)] transition-colors">
@@ -280,7 +300,7 @@ export function Navbar() {
  <div className="px-3 pb-3 pt-1 border-t border-[var(--gold-100)]">
  <button
  onClick={() => { setIsProfileOpen(false); logout(); }}
- className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-sm font-medium text-red-400 bg-red-950/20 hover:bg-red-950/40 transition-colors cursor-pointer"
+ className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-50 transition-colors cursor-pointer"
  >
  <LogOut className="w-4 h-4" />
  <span>Sign Out</span>
@@ -326,14 +346,16 @@ export function Navbar() {
  <div className="md:hidden bg-white/85 backdrop-blur-md border-t border-[var(--gold-100)]">
  <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
  {navLinks.map((link) => {
- if (link.isMega) {
- const isServices = link.megaType === 'services';
- const isMobileOpen = isServices ? isMobileServicesOpen : isMobileFreeToolsOpen;
- const toggleMobileOpen = () => {
- if (isServices) setIsMobileServicesOpen(!isMobileServicesOpen);
- else setIsMobileFreeToolsOpen(!isMobileFreeToolsOpen);
- };
- const itemsList = isServices ? services : freeTools;
+  if (link.isMega) {
+  const isServices = link.megaType === 'services';
+  const isHoroscope = link.megaType === 'horoscope';
+  const isMobileOpen = isServices ? isMobileServicesOpen : (isHoroscope ? isMobileHoroscopeOpen : isMobileFreeToolsOpen);
+  const toggleMobileOpen = () => {
+  if (isServices) setIsMobileServicesOpen(!isMobileServicesOpen);
+  else if (isHoroscope) setIsMobileHoroscopeOpen(!isMobileHoroscopeOpen);
+  else setIsMobileFreeToolsOpen(!isMobileFreeToolsOpen);
+  };
+  const itemsList = isServices ? services : (isHoroscope ? horoscopes : freeTools);
 
  return (
  <div key={link.name} className="block">
@@ -357,6 +379,7 @@ export function Navbar() {
  onClick={() => {
  setIsOpen(false);
  if (isServices) setIsMobileServicesOpen(false);
+ else if (isHoroscope) setIsMobileHoroscopeOpen(false);
  else setIsMobileFreeToolsOpen(false);
  }}
  className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -410,7 +433,7 @@ export function Navbar() {
  setIsOpen(false);
  logout();
  }}
- className="w-full flex items-center justify-center gap-1.5 py-2.5 px-4 border border-transparent text-sm font-medium rounded-full text-red-400 bg-red-950/20 hover:bg-red-950/40"
+ className="w-full flex items-center justify-center gap-1.5 py-2.5 px-4 border border-transparent text-sm font-medium rounded-full text-red-600 bg-red-50 hover:bg-red-50"
  >
  <LogOut className="w-4 h-4" />
  <span>Logout</span>
@@ -467,7 +490,7 @@ export function Navbar() {
  })}
  </div>
 
- {/* Right Column: Featured CTA Card (spans 1 column) */}
+ {/* Right Column: Feanured CTA Card (spans 1 column) */}
  <div className="md:col-span-1">
  <div className="h-full flex flex-col justify-between p-6 rounded-2xl border border-[var(--gold-200)] bg-[var(--gold-50)]/30 relative overflow-hidden group/cta">
  {/* Subtle glow background */}
@@ -498,6 +521,60 @@ export function Navbar() {
  </div>
  </div>
  </div>
+
+  {/* Horoscope Mega Menu Dropdown */}
+  <div
+  onMouseEnter={() => setIsHoroscopeHovered(true)}
+  onMouseLeave={() => setIsHoroscopeHovered(false)}
+  className={`hidden md:block absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md border-b border-[var(--gold-200)] shadow-2xl transition-all duration-300 z-40 ${
+  isHoroscopeHovered
+  ? 'opacity-100 translate-y-0 pointer-events-auto visible'
+  : 'opacity-0 -translate-y-2 pointer-events-none invisible'
+  }`}
+  >
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+  <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  {horoscopes.map((item) => {
+  const IconComponent = item.icon;
+  return (
+  <Link
+  key={item.name}
+  href={item.href}
+  onClick={() => setIsHoroscopeHovered(false)}
+  className="group/item flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 border border-[var(--gold-100)] hover:border-[var(--gold)] transition-all duration-300 bg-white"
+  >
+  <div className="p-2 rounded-lg bg-[var(--gold-50)] text-[var(--gold)] border border-[var(--gold-200)] group-hover/item:bg-[var(--gold)] group-hover/item:text-black transition-all duration-300">
+  <IconComponent className="w-5 h-5" />
+  </div>
+  <h4 className="font-serif text-sm font-semibold text-gray-900 group-hover/item:text-[var(--gold)] transition-colors" >
+  {item.name}
+  </h4>
+  </Link>
+  );
+  })}
+  </div>
+  <div className="md:col-span-1">
+  <div className="h-full flex flex-col justify-between p-6 rounded-2xl border border-[var(--gold-200)] bg-[var(--gold-50)]/30 relative overflow-hidden group/cta">
+  <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
+  <div className="relative z-10">
+  <span className="text-[10px] font-bold tracking-widest text-[var(--gold)] uppercase bg-[var(--gold-100)] px-2 py-1 rounded">Daily Updates</span>
+  <h4 className="font-serif text-lg font-bold mt-3 leading-snug">Personalized Insights</h4>
+  <p className="text-xs text-gray-600 mt-2 leading-relaxed">Check your personalized daily horoscope based on accurate Vedic transit calculations.</p>
+  </div>
+  <div className="mt-6 relative z-10">
+  <Link href="/horoscope/daily/aries" onClick={() => setIsHoroscopeHovered(false)}>
+  <GoldButton variant="filled" className="w-full py-2 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
+  <Moon className="w-4 h-4 text-black" />
+  <span className="text-black">Check Now</span>
+  </GoldButton>
+  </Link>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
 
  {/* Free Tools Mega Menu Dropdown */}
  <div
@@ -538,7 +615,7 @@ export function Navbar() {
  })}
  </div>
 
- {/* Right Column: Featured CTA Card (spans 1 column) */}
+ {/* Right Column: Feanured CTA Card (spans 1 column) */}
  <div className="md:col-span-1">
  <div className="h-full flex flex-col justify-between p-6 rounded-2xl border border-[var(--gold-200)] bg-[var(--gold-50)]/30 relative overflow-hidden group/cta">
  <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
@@ -569,5 +646,6 @@ export function Navbar() {
  </div>
  </div>
  </nav>
+ </>
  );
 }

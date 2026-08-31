@@ -148,7 +148,7 @@ export function CosmicHeroBackground() {
  const rotateY = mouse.x * maxTilt;
  canvas.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
- // 2. Draw drifting background particles (ambient stars)
+ // 2. Draw drifting background particles (AMCient stars)
  particles.forEach((p) => {
  p.x += p.vx;
  p.y += p.vy;
@@ -168,7 +168,7 @@ export function CosmicHeroBackground() {
  ctx.shadowBlur = 0; // reset
  });
 
- // 3. Connect ambient stars to mouse or each other if close
+ // 3. Connect AMCient stars to mouse or each other if close
  if (mouse.rawX !== -9999) {
  // Find distance and draw dynamic web links
  for (let i = 0; i < particles.length; i++) {
@@ -226,7 +226,7 @@ export function CosmicHeroBackground() {
  }
 
  if (!isClose) {
- c.targetOpacity = 0.06; // faint ambient opacity
+ c.targetOpacity = 0.06; // faint AMCient opacity
  }
 
  // Interpolate opacity

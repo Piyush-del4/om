@@ -9,12 +9,14 @@ import { useAuth } from '../auth/AuthProvider';
 import { client } from '../lib/api/client';
 import { env } from '../lib/env';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Compass, Hash, Layers, PenTool, Calendar, Check, AlertCircle, ShoppingCart, Star, Quote, HelpCircle, Brain, Briefcase, PhoneCall, Building2, Heart, ArrowRight } from 'lucide-react';
+import { Compass, Hash, Layers, PenTool, Calendar, Check, AlertCircle, ShoppingCart, Star, Quote, HelpCircle, Brain, Briefcase, PhoneCall, Building2, Heart, ArrowRight, BookOpen, Download, Moon } from 'lucide-react';
 import { GoldButton } from '../components/ui/GoldButton';
 import { GoldCard } from '../components/ui/GoldCard';
 import { CosmicHeroBackground } from '../components/ui/CosmicHeroBackground';
 import { BatchCardSkeleton, ShopItemSkeleton } from '../components/ui/Skeleton';
 import { FormattedText } from '../components/ui/FormattedText';
+import { FAQSection } from '../components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '../components/ui/astrology/DailyPanchangMuhuratWidget';
 
 const testimonials = [
  {
@@ -369,7 +371,7 @@ export default function Home() {
  title: 'Marriage Matching',
  id: 'marriage-matching',
  desc: ' deep analysis of 36 Gunas, Manglik Dosha, and 7th house compatibility for a lifelong happy union.',
- icon: <Heart className="w-12 h-12 text-red-500 fill-red-500" />,
+ icon: <Heart className="w-12 h-12 text-red-600 fill-red-500" />,
  link: '/marriage-matching',
  image: '/images/marriage_matching_realistic.png',
  },
@@ -381,6 +383,16 @@ export default function Home() {
  link: '/name-correction',
  image: '/images/step_realign_realistic.png',
  tagline: 'नाम सही तो काम सही',
+ taglineSize: '22px',
+ },
+ {
+ title: 'Daily Horoscope',
+ id: 'horoscope',
+ desc: 'Read accurate daily, weekly, and monthly horoscopes tailored for all 12 Rashis.',
+ icon: <Moon className="w-12 h-12 text-[var(--gold)] animate-pulse" />,
+ link: '/horoscope/daily/aries',
+ image: '/images/cosmic_synthesis_realistic.png',
+ tagline: 'NAVIGATE YOUR DAY',
  taglineSize: '22px',
  },
  ];
@@ -422,9 +434,6 @@ export default function Home() {
  </motion.div>
  </section>
 
-
-
-
  {/* === PREMIUM PERSONALIZED KUNDLI SECTION === */}
  <motion.section
  initial={{ opacity: 0, y: 40 }}
@@ -437,9 +446,9 @@ export default function Home() {
  <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-80 h-80 bg-amber-300/10 rounded-full blur-3xl pointer-events-none" />
  <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
 
- <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+ <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 md:pr-24">
  {/* Left — Book Image */}
- <div className="flex justify-center md:justify-end">
+ <div className="flex justify-center md:justify-end md:pr-8">
  <motion.div
  initial={{ opacity: 0, scale: 0.98 }}
  animate={{ opacity: 1, scale: 1 }}
@@ -473,7 +482,7 @@ export default function Home() {
  Get a comprehensive 20+ section personalized Janam Kundli — crafted from your exact birth coordinates. Includes Lagna Chart, Chalit Chart, Dasha timeline, Yoga &amp; Dosha analysis, Vedic Remedies, and Numerology.
  </p>
 
- {/* Feature list */}
+ {/* Feanure list */}
  <div className="grid grid-cols-2 gap-2">
  {[
  'Lagna & Chalit Charts', 'Vimshottari Dasha',
@@ -490,7 +499,7 @@ export default function Home() {
  {/* Price row */}
  <div className="flex items-center gap-3 justify-center md:justify-start">
  <span className="text-gray-600 line-through text-lg">₹1000</span>
- <span className="text-3xl font-sans font-bold text-[var(--gold-dark)] ">₹50</span>
+ <span className="text-3xl font-sans font-bold text-[#e77600] ">₹50</span>
  </div>
 
  {/* CTA */}
@@ -505,6 +514,73 @@ export default function Home() {
  </div>
  </div>
  </motion.section>
+
+  {/* === FEAN EBOOK SECTION === */}
+  <motion.section
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.2 }}
+    transition={{ duration: 0.7, ease: 'easeOut' }}
+    className="relative z-10 w-full bg-gradient-to-br from-white via-amber-50/30 to-white border-b border-amber-200/60 py-20 px-4 overflow-hidden"
+  >
+    <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 md:pl-16">
+      {/* Left — Content */}
+      <div className="space-y-6 text-center md:text-left order-2 md:order-1 pl-0 md:pl-12">
+        <div className="space-y-1">
+          <span className="text-[var(--gold-dark)] text-xs uppercase tracking-widest font-bold flex items-center gap-2 justify-center md:justify-start">
+            <span>✦</span> Essential Knowledge
+          </span>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-extrabold text-neutral-900 leading-tight">
+            FEAN METHOD
+            <span className="gold-gradient-text block">ASTROLOGY EBOOK</span>
+          </h2>
+        </div>
+        <p className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-lg mx-auto md:mx-0">
+          Discover the foundational principles of our patented FEAN Method Astrology AMB™. This comprehensive digital guide walks you through numbers, grids, remedies, and the exact science we use to set your life on the right path.
+        </p>
+
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-4">
+          <Link href="/fean-ebook">
+            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 w-full sm:w-auto">
+              <BookOpen className="w-5 h-5" />
+              Read Ebook
+            </button>
+          </Link>
+          <a href="/FEAN Method Astrology Ebook.pdf" download="FEAN_Method_Astrology_Ebook.pdf">
+            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white border-2 border-[var(--gold)] text-[var(--gold-dark)] font-bold text-base rounded-xl hover:bg-amber-50 transition-all duration-200 shadow-sm w-full sm:w-auto">
+              <Download className="w-5 h-5" />
+              Download PDF
+            </button>
+          </a>
+        </div>
+      </div>
+      
+      {/* Right — Book Image */}
+      <div className="flex justify-center md:justify-center order-1 md:order-2">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="relative w-64 h-80 md:w-72 md:h-96 flex items-center justify-center hover:scale-105 transition-transform duration-500"
+        >
+          <Image
+            src="/Fean-ebook-cover.png"
+            alt="FEAN Method Astrology Ebook"
+            fill
+            quality={100}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-contain"
+          />
+        </motion.div>
+      </div>
+    </div>
+  </motion.section>
+
+  {/* === DAILY PANCHANG & MUHURAT WIDGET === */}
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 relative w-full my-12">
+    <DailyPanchangMuhuratWidget variant="card" />
+  </div>
 
  {/* Major Sections — Service Cards */}
  <motion.section
@@ -625,7 +701,7 @@ export default function Home() {
  <div className="p-6 pt-0 mt-6 border-t border-gray-200 space-y-3">
  <div className="flex justify-between items-center pt-3">
  <span className="text-gray-500 text-xs">Course Fee:</span>
- <span className="text-[var(--gold)] font-bold text-[26px] font-sans">₹{(batch.price / 100).toLocaleString()}</span>
+ <span className="text-[#e77600] font-bold text-[26px] font-sans">₹{(batch.price / 100).toLocaleString()}</span>
  </div>
  {isAuthenticated ? (
  <Link href="/my-batches" className="block w-full">
@@ -714,7 +790,7 @@ export default function Home() {
  </div>
 
  <div className="p-6 pt-0 mt-6 border-t border-gray-200 flex items-center justify-between pt-4" onClick={(e) => e.stopPropagation()}>
- <span className="text-[var(--gold)] font-bold text-[26px] font-sans">₹{(item.price / 100).toLocaleString()}</span>
+ <span className="text-[#e77600] font-bold text-[26px] font-sans">₹{(item.price / 100).toLocaleString()}</span>
  <GoldButton
  variant="filled"
  className="py-1.5 px-4 text-xs flex items-center gap-1.5"
@@ -1067,35 +1143,24 @@ See how real people solved their real problems with our guidance.
  <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
  </div>
 
- <div className="space-y-6">
- <div className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
- <h4 className="text-gray-900 text-base font-bold">How do these four disciplines connect?</h4>
- <p className="text-gray-600 text-sm leading-relaxed">
- We combine all four sciences to give you a complete picture. Astrology tells your timing, Numerology checks your name, Tarot shows your current situation, and Graphology reads your habits. Together they give very clear and practical advice.
- </p>
- </div>
-
- <div className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
- <h4 className="text-gray-900 text-base font-bold">Are consultations held online?</h4>
- <p className="text-gray-600 text-sm leading-relaxed">
- Yes! All sessions happen online via video call (Zoom or Google Meet). After you book, you will get a meeting link on your email. You can join from home.
- </p>
- </div>
-
- <div className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
- <h4 className="text-gray-900 text-base font-bold">What information must I provide beforehand?</h4>
- <p className="text-gray-600 text-sm leading-relaxed">
- For Astrology — your exact birth date, birth time (as accurate as possible), and birth place. For Numerology — your current full name. For Graphology — a photo or scan of your handwriting on plain white paper (no lines), sent before the call.
- </p>
- </div>
-
- <div className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1">
- <h4 className="text-gray-900 text-base font-bold">How long does a graphotherapy course take?</h4>
- <p className="text-gray-600 text-sm leading-relaxed">
- Graphotherapy (handwriting exercises) takes just 10–15 minutes every day for 21 days. It is simple to do at home. Many people notice a positive change in their thinking and confidence within 3 weeks.
- </p>
- </div>
- </div>
+ <FAQSection faqs={[
+    {
+      q: 'How do these four disciplines connect?',
+      a: 'We combine all four sciences to give you a complete picture. Astrology tells your timing, Numerology checks your name, Tarot shows your current situation, and Graphology reads your habits. Together they give very clear and practical advice.'
+    },
+    {
+      q: 'Are consultations held online?',
+      a: 'Yes! All sessions happen online via video call (Zoom or Google Meet). After you book, you will get a meeting link on your email. You can join from home.'
+    },
+    {
+      q: 'What information must I provide beforehand?',
+      a: 'For Astrology — your exact birth date, birth time (as accurate as possible), and birth place. For Numerology — your current full name. For Graphology — a photo or scan of your handwriting on plain white paper (no lines), sent before the call.'
+    },
+    {
+      q: 'How long does a graphotherapy course take?',
+      a: 'Graphotherapy (handwriting exercises) takes just 10–15 minutes every day for 21 days. It is simple to do at home. Many people notice a positive change in their thinking and confidence within 3 weeks.'
+    }
+  ]} />
  </motion.section>
 
  {/* Booking Consultation Widget */}
@@ -1202,7 +1267,7 @@ See how real people solved their real problems with our guidance.
  })}
  </div>
  ) : (
- <div className="flex items-center gap-2 text-yellow-500 bg-yellow-950/20 border border-yellow-900/30 p-3 rounded-lg text-xs">
+ <div className="flex items-center gap-2 text-yellow-600 bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-xs">
  <AlertCircle className="w-4 h-4 flex-shrink-0" />
  <span>No slots available for this date. Please select another date.</span>
  </div>
@@ -1350,7 +1415,7 @@ See how real people solved their real problems with our guidance.
  {(teamMembers && teamMembers.length > 0
  ? teamMembers.slice(0, 3).map((m: any) => ({ name: m.name, role: m.role, img: m.image }))
  : [
- { name: 'Raajesh S Panday', role: 'Founder & Chief Consultant', img: '/images/team_raajesh.png' },
+ { name: 'Rajessh Paanday', role: 'Founder & Chief Consultant', img: '/images/team_raajesh.png' },
  { name: 'Kusum Panday', role: 'Tarot Reader & Wellness Coach', img: '/images/team_kusum.png' },
  { name: 'Aayush Kumar', role: 'Social Media Manager', img: '/images/team_aayush.png' },
  ]
@@ -1387,6 +1452,87 @@ See how real people solved their real problems with our guidance.
  </GoldButton>
  </Link>
  </div>
+ </motion.section>
+
+ {/* ── Section: Blog Preview Section ── */}
+ <motion.section
+   initial={{ opacity: 0, y: 40 }}
+   whileInView={{ opacity: 1, y: 0 }}
+   viewport={{ once: true, amount: 0.1 }}
+   transition={{ duration: 0.7, ease: 'easeOut' }}
+   className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full border-t border-[var(--gold-100)]/40 text-center space-y-12"
+ >
+   <div className="space-y-3">
+     <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
+       Knowledge Hub
+     </span>
+     <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900">Explore Our Blog &amp; Insights</h2>
+     <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto" />
+     <p className="text-gray-600 text-sm max-w-2xl mx-auto pt-1 leading-relaxed">
+       Stay updated with expert articles written by our specialized consultants. Learn about upcoming planetary transits, lucky numbers, name spelling corrections, and Vedic remedies to transform your path.
+     </p>
+   </div>
+
+   {/* Featured Blog Cards Preview */}
+   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+     {[
+       {
+         title: "Chaldean vs Pythagorean Numerology — Which System Is More Accurate?",
+         desc: "Compare the ancient babyloin sound-vibration method with the Greek alphabetical system for name correction.",
+         category: "Numerology",
+         link: "/blog/chaldean-vs-pythagorean-numerology-accuracy",
+         image: "/images/numerology_vibration_realistic.png"
+       },
+       {
+         title: "Saturn Transit 2026 Effects on All 12 Zodiac Signs",
+         desc: "Understand how the movement of Saturn into Pisces will alter your career, health, and finances in 2026.",
+         category: "Astrology",
+         link: "/blog/saturn-transit-2026-effects-on-all-12-zodiac-signs",
+         image: "/images/planets/saturn.png"
+       },
+       {
+         title: "What Is FEAN Method Astrology? — Complete Explanation",
+         desc: "Discover how we blend Five Elements, Astrology, and Numerology to create your ultimate lifetime blueprint.",
+         category: "FEAN Method",
+         link: "/blog/what-is-fean-method-astrology-complete-explanation",
+         image: "/images/numerology_brain.jpg"
+       }
+     ].map((item) => (
+       <Link href={item.link} key={item.title} className="group">
+         <GoldCard flush className="border border-gray-200/80 hover:border-[var(--gold-200)] transition-all duration-300 h-full flex flex-col overflow-hidden bg-white hover:shadow-[0_8px_25px_rgba(204,143,51,0.1)]">
+           <div className="w-full h-44 overflow-hidden relative bg-neutral-900">
+             <img
+               src={item.image}
+               alt={item.title}
+               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+             />
+             <span className="absolute top-3 left-3 bg-amber-500 text-black text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-amber-600/30">
+               {item.category}
+             </span>
+           </div>
+           <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+             <h3 className="font-sans font-bold text-gray-900 text-sm leading-snug group-hover:text-[var(--gold)] transition-colors line-clamp-2">
+               {item.title}
+             </h3>
+             <p className="text-gray-600 text-xs leading-relaxed line-clamp-2">
+               {item.desc}
+             </p>
+             <span className="text-[var(--gold)] text-xs font-semibold inline-flex items-center gap-1 group-hover:underline">
+               Read Article &rarr;
+             </span>
+           </div>
+         </GoldCard>
+       </Link>
+     ))}
+   </div>
+
+   <div className="pt-4">
+     <Link href="/blog">
+       <GoldButton variant="filled" className="px-10 py-4 text-xs font-bold tracking-widest uppercase">
+         Explore All Blog Articles &rarr;
+       </GoldButton>
+     </Link>
+   </div>
  </motion.section>
  </div>
  );

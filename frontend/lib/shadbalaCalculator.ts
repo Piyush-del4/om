@@ -60,16 +60,16 @@ export function calculateShadbala(data: any): PlanetShadbala[] {
  if (planet === 'Saturn' && house === 7) dig = 60;
 
  // 3. Kala Bala (Day/Night, Paksha)
- let kala = 100;
+ const kala = 100;
 
  // 4. Cheshta Bala (Motional strength for retro planets)
- let cheshta = isRetro ? 55 : 30;
+ const cheshta = isRetro ? 55 : 30;
 
  // 5. Naisargika Bala (Natural strength)
- let naisargika = NAISARGIKA_BALA_MAP[planet] || 30;
+ const naisargika = NAISARGIKA_BALA_MAP[planet] || 30;
 
  // 6. Drik Bala (Aspectual strength)
- let drik = 15;
+ const drik = 15;
 
  const totalVirupas = sthana + dig + kala + cheshta + naisargika + drik;
  const totalRupas = Number((totalVirupas / 60).toFixed(2));

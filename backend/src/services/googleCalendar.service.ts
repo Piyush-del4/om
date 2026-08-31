@@ -72,7 +72,7 @@ export async function listBusySlots(start: Date, end: Date): Promise<BusySlot[]>
  */
 export async function createCalendarEvent(
   userEmail: string,
-  details: { typeName: string; scheduledAt: Date; duration: number; userName?: string; userPhone?: string }
+  details: { typeName: string; scheduledAt: Date; duration: number; userName?: string; userPhone?: string; attendeeName?: string; attendeeDateOfBirth?: string; attendeeBirthTime?: string; }
 ): Promise<string> {
   const start = new Date(details.scheduledAt);
   const end = new Date(start.getTime() + details.duration * 60000);
@@ -90,12 +90,18 @@ export async function createCalendarEvent(
   }
 
   try {
+    const attendeeDetails = [];
+    if (details.attendeeName) attendeeDetails.push(`Attendee Name: ${details.attendeeName}`);
+    if (details.attendeeDateOfBirth) attendeeDetails.push(`Attendee DOB: ${details.attendeeDateOfBirth}`);
+    if (details.attendeeBirthTime) attendeeDetails.push(`Attendee Time of Birth: ${details.attendeeBirthTime}`);
+    const description = `Consultation session for ${userEmail}.\n\n` + attendeeDetails.join('\n');
+
     try {
       const event = await calendar.events.insert({
         calendarId: env.GOOGLE_CALENDAR_ID,
         requestBody: {
           summary,
-          description: `Consultation session for ${userEmail}.`,
+          description,
           start: {
             dateTime: start.toISOString(),
             timeZone: 'Asia/Kolkata',
@@ -128,7 +134,7 @@ export async function createCalendarEvent(
           calendarId: env.GOOGLE_CALENDAR_ID,
           requestBody: {
             summary,
-            description: `Consultation session for ${userEmail}.`,
+            description,
             start: {
               dateTime: start.toISOString(),
               timeZone: 'Asia/Kolkata',

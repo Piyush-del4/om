@@ -10,6 +10,7 @@ import { CategoryBatchesList } from '../../components/ui/CategoryBatchesList';
 import { TarotHeroBackground } from '../../components/ui/TarotHeroBackground';
 import { TarotSpreadWidget } from '../../components/ui/TarotSpreadWidget';
 import { FAQSection } from '../../components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '../../components/ui/astrology/DailyPanchangMuhuratWidget';
 
 const TAROT_FAQS = [
  { q: 'What is tarot and how does it work?', a: 'Tarot is a powerful tool for self-reflection and insight. It consists of 78 cards that mirror the human experience. It works by accessing your subconscious and highlighting energetic themes, helping you gain new perspectives on your life.' },
@@ -199,22 +200,22 @@ export default function TarotCardPage() {
  {/* Dynamic Tarot Reading Widget */}
  <TarotSpreadWidget activeSuit={suit} onSuitChange={setSuit} />
 
- {/* Section: The Suits of the Minor Arcana */}
- <div className="space-y-6">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
- The Suits & Elements
- </h2>
- <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
- {suits.map((s) => (
- <GoldCard key={s.name} className="transition-spring">
- <div className="space-y-2">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm mb-2">{s.name}</h4>
- <p className="text-xs text-gray-405 leading-relaxed font-light">{s.governs}</p>
- </div>
- </GoldCard>
- ))}
- </div>
- </div>
+  {/* Section: The Suits of the Minor Arcana */}
+  <div className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
+    <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-amber-600 pb-3 text-white">
+      The Suits & Elements
+    </h2>
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      {suits.map((s) => (
+        <div key={s.name} className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+          <div className="space-y-2">
+            <h4 className="text-amber-300 font-serif font-bold text-sm mb-2">{s.name}</h4>
+            <p className="text-xs text-amber-100/70 leading-relaxed font-light">{s.governs}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
 
  {/* Spreads Grid */}
  <div className="space-y-6">

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 import { ZODIAC_SIGNS, ZODIAC_LORDS } from '@/lib/astrologyEngine';
 
 interface Props {
@@ -24,6 +23,8 @@ const HOUSE_TITLES: Record<number, { title: string; signification: string }> = {
 };
 
 export function HousesAnalysisGrid({ data }: Props) {
+ const [selectedHouse, setSelectedHouse] = useState<number | 'all'>('all');
+
  if (!data || !data.output || !data.output[1]) return null;
 
  const rawPlanets = data.output[1];
@@ -32,7 +33,6 @@ export function HousesAnalysisGrid({ data }: Props) {
  /* Collapsible State (Preserved in comments for future activation):
  const [isOpen, setIsOpen] = useState(false);
  */
- const [selectedHouse, setSelectedHouse] = useState<number | 'all'>('all');
 
  // Group planets by house
  const houseOccupants: Record<number, string[]> = {};
@@ -69,7 +69,7 @@ export function HousesAnalysisGrid({ data }: Props) {
  };
 
  return (
- <div className="bg-amber-50/60 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+ <div className="bg-amber-50/60 border-2 border-amber-200 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
  {/* Title Header */}
  <div 
  /* onClick={() => setIsOpen(!isOpen)} */

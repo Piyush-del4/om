@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 import { generateLifePredictions, LifePredictionCategory } from '@/lib/predictionsEngine';
 
 interface Props {
@@ -9,6 +8,8 @@ interface Props {
 }
 
 export function LifePredictionsTabs({ data }: Props) {
+ const [selectedKey, setSelectedKey] = useState<string>('all');
+
  /* Collapsible State (Preserved in comments for future activation):
  const [isOpen, setIsOpen] = useState(false);
  */
@@ -16,10 +17,9 @@ export function LifePredictionsTabs({ data }: Props) {
  if (!data || !data.output || !data.output[1]) return null;
 
  const categories: LifePredictionCategory[] = generateLifePredictions(data);
- const [selectedKey, setSelectedKey] = useState<string>('all');
 
  return (
- <div className="bg-amber-50/60 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+ <div className="bg-amber-50/60 border-2 border-amber-200 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
  {/* Title Header */}
  <div 
  /* onClick={() => setIsOpen(!isOpen)} */
@@ -106,7 +106,7 @@ function PredictionCard({ cat }: { cat: LifePredictionCategory }) {
  <ul className="space-y-1.5 text-xs md:text-sm text-gray-700 ">
  {cat.keyInsights.map((insight, idx) => (
  <li key={idx} className="flex items-start gap-2">
- <span className="text-amber-500 font-bold">✦</span>
+ <span className="text-amber-600 font-bold">✦</span>
  <span>{insight}</span>
  </li>
  ))}

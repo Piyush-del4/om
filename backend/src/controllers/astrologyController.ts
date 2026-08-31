@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 import KundliSubmission from '../models/KundliSubmission';
+import Horoscope from '../models/Horoscope';
 
 const GENERAL_API_BASE_URL = 'https://json.freeastrologyapi.com';
 const DASHA_API_BASE_URL = 'https://api.freeastroapi.com/api/v2';
@@ -211,3 +212,17 @@ export const getAllKundliSubmissionsForAdmin = async (req: Request, res: Respons
     return res.status(500).json({ success: false, message: 'Failed to fetch all saved Kundlis.', error: error.message });
   }
 };
+
+export const getLatestHoroscope = async (req: Request, res: Response) => {
+  try {
+    const latest = (await Horoscope.findOne().sort({ createdAt: -1 }).lean()) as any;
+    if (!latest) {
+      return res.status(404).json({ success: false, message: 'No horoscope found' });
+    }
+    return res.status(200).json({ success: true, data: latest.data });
+  } catch (error: any) {
+    console.error('Get Latest Horoscope Error:', error.message);
+    return res.status(500).json({ success: false, message: 'Failed to fetch latest horoscope.', error: error.message });
+  }
+};
+

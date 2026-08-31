@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@plugin "@tailwindcss/typography";
 
 :root {
   --gold: #cc8f33;
@@ -412,3 +412,22 @@ body {
 }
 
 
+
+@media print {
+  p, ul, ol, li, h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2 !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.25rem !important;
+  }
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.5rem !important;
+  }
+  .mb-4, .mb-6, .mb-8 {
+    margin-bottom: 0.5rem !important;
+  }
+  .mt-4, .mt-6, .mt-8 {
+    margin-top: 0.5rem !important;
+  }
+}

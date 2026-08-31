@@ -140,6 +140,7 @@ export default function AdminSavedKundlisPage() {
  {sub.userId?.name || 'Guest / Unknown'}
  </p>
  <p className="text-[11px] text-gray-500">{sub.userId?.email || 'N/A'}</p>
+ <p className="text-[11px] text-gray-500">{sub.userId?.phone || 'No phone'}</p>
  </div>
  </td>
  <td className="py-4 px-4">
@@ -168,7 +169,7 @@ export default function AdminSavedKundlisPage() {
  </Link>
  <button
  onClick={() => handleDelete(sub._id, sub.name)}
- className="p-1.5 rounded-lg text-gray-500 hover:text-red-400 hover:bg-red-950/30 transition-colors"
+ className="p-1.5 rounded-lg text-gray-500 hover:text-red-600 hover:bg-red-50 transition-colors"
  title="Delete Submission"
  >
  <Trash2 className="w-4 h-4" />

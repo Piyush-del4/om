@@ -37,6 +37,7 @@ import { env } from '@/lib/env';
 // Import New Kundli Report Sections (Sections 3 to 24)
 import { LagnaRashiCards } from '@/components/ui/astrology/LagnaRashiCards';
 import { PlanetaryDetailsCard } from '@/components/ui/astrology/PlanetaryDetailsCard';
+import { KpAstrologySystemCard } from '@/components/ui/astrology/KpAstrologySystemCard';
 import { HousesAnalysisGrid } from '@/components/ui/astrology/HousesAnalysisGrid';
 import { LagnaMoonSunDetails } from '@/components/ui/astrology/LagnaMoonSunDetails';
 import { NakshatraAnalysisCard } from '@/components/ui/astrology/NakshatraAnalysisCard';
@@ -191,7 +192,7 @@ function PremiumPaywall({
  </p>
  </div>
 
- {/* Features */}
+ {/* Feanures */}
  <div className="grid grid-cols-2 gap-3 text-left">
  {[
  '✦ Lagna & Chalit Charts',
@@ -245,16 +246,28 @@ export default function PremiumKundliGeneratorPage() {
  const savedId = searchParams.get('id');
   const [hasPaid, setHasPaid] = useState(false);
 
- const [formData, setFormData] = useState({
- name: '',
- date: '',
- time: '',
- location: '',
- country: 'India',
- lat: 28.6139,
- lng: 77.2090,
- timezone: 5.5
- });
+  const [formData, setFormData] = useState({
+  name: '',
+  date: '',
+  time: '',
+  location: '',
+  country: 'India',
+  lat: 28.6139,
+  lng: 77.2090,
+  timezone: 5.5
+  });
+
+  useEffect(() => {
+    if (user && !savedId) {
+      setFormData(prev => ({
+        ...prev,
+        name: prev.name || user.name || '',
+        date: prev.date || user.dateOfBirth || '',
+        time: prev.time || user.birthTime || '',
+        location: prev.location || user.birthPlace || '',
+      }));
+    }
+  }, [user, savedId]);
 
  const [isSubmitting, setIsSubmitting] = useState(false);
  const [result, setResult] = useState(false);

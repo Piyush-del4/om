@@ -6,6 +6,7 @@ import { Session } from './session.model';
 import { Otp } from './otp.model';
 import * as jwtUtils from '../../utils/jwt';
 import { sendOtpEmail, sendRegisterOtpEmail } from '../../services/email.service';
+import { createUserNotification } from '../notifications/notification.controller';
 import { env } from '../../config/env';
 
 // Utility helper to hash refresh tokens for database storage and indexing
@@ -140,6 +141,15 @@ export async function register(req: Request, res: Response, next: NextFunction):
       passwordHash,
       phone: phone || '',
     });
+
+    // Create pre-welcome notification for new user
+    await createUserNotification(
+      user._id.toString(),
+      'offer',
+      '✦ Welcome to OM Astrology AMC!',
+      'Namaste! Explore your Janam Kundli, sacred rudrakshas, study batches, and expert consultations.',
+      '/astrology'
+    );
 
     // Generate tokens
     const payload = { sub: user._id.toString(), role: user.role, email: user.email };

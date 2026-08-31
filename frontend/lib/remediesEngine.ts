@@ -14,10 +14,6 @@ export const REMEDY_DISCLAIMER =
 export function generateRemedies(data: any): RemedyCategory[] {
  if (!data || !data.output || !data.output[1]) return [];
 
- const rawPlanets = data.output[1];
- const house1Sign = rawPlanets[1]?.current_sign || rawPlanets['Ascendant']?.current_sign || 1;
- const moonSign = rawPlanets['Moon']?.current_sign || 1;
-
  return [
  {
  type: 'Mantra',

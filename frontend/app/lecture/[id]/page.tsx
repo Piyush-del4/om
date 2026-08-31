@@ -80,7 +80,7 @@ export default function LecturePage() {
  if (lectureError) {
  return (
  <div className="min-h-screen bg-white flex flex-col items-center justify-center text-gray-600 p-4">
- <p className="text-red-400 mb-4 font-bold">Access Denied or Lecture Not Found</p>
+ <p className="text-red-600 mb-4 font-bold">Access Denied or Lecture Not Found</p>
  <p className="text-xs text-gray-500 max-w-md text-center mb-6">You must be enrolled in the batch corresponding to this lecture to access this content.</p>
  <button onClick={() => router.push('/my-batches')} className="text-[var(--gold)] hover:underline flex items-center gap-1"><ArrowLeft className="w-4 h-4" /> Go back</button>
  </div>

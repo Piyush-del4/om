@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@google/genai": "^2.19.0",
     "@sentry/node": "^10.65.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.10.0",
@@ -28,6 +29,7 @@
     "mongoose": "^8.12.0",
     "morgan": "^1.10.0",
     "multer": "^2.1.1",
+    "node-cron": "^4.6.0",
     "nodemailer": "^9.0.3",
     "razorpay": "^2.9.6",
     "winston": "^3.12.0",
@@ -42,6 +44,7 @@
     "@types/morgan": "^1.9.9",
     "@types/multer": "^2.1.0",
     "@types/node": "^20.12.7",
+    "@types/node-cron": "^3.0.11",
     "@types/nodemailer": "^6.4.14",
     "rimraf": "^5.0.5",
     "ts-node-dev": "^2.0.0",

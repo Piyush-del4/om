@@ -346,8 +346,8 @@ export default function EditBatchPage() {
  <GoldCard className="border border-[var(--gold-100)] p-6 space-y-4">
  <h3 className="font-serif text-lg font-bold text-gray-900">Edit Batch Settings</h3>
 
- {editSuccessMsg && <div className="text-xs text-green-400 bg-green-950/20 p-3 border border-green-900/30 rounded-lg">{editSuccessMsg}</div>}
- {editErrorMsg && <div className="text-xs text-red-400 bg-red-950/20 p-3 border border-red-900/30 rounded-lg">{editErrorMsg}</div>}
+ {editSuccessMsg && <div className="text-xs text-green-600 bg-green-50 p-3 border border-green-200 rounded-lg">{editSuccessMsg}</div>}
+ {editErrorMsg && <div className="text-xs text-red-600 bg-red-50 p-3 border border-red-200 rounded-lg">{editErrorMsg}</div>}
 
  <form onSubmit={handleUpdateBatch} className="space-y-4">
  <div className="space-y-1">
@@ -396,7 +396,7 @@ export default function EditBatchPage() {
  setCoverUrl('');
  setCoverPublicId('');
  }}
- className="text-[10px] text-red-400 hover:text-red-300 font-semibold mt-1"
+ className="text-[10px] text-red-600 hover:text-red-600 font-semibold mt-1"
  >
  Remove and select another
  </button>
@@ -438,7 +438,7 @@ export default function EditBatchPage() {
  <div className="lg:col-span-1">
  <GoldCard className="border border-[var(--gold-100)] p-5 space-y-4">
  <h3 className="font-serif text-sm font-bold text-gray-900 flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add Lecture</h3>
- {lectureError && <div className="text-xs text-red-400 bg-red-950/20 p-2.5 border border-red-900/30 rounded-lg">{lectureError}</div>}
+ {lectureError && <div className="text-xs text-red-600 bg-red-50 p-2.5 border border-red-200 rounded-lg">{lectureError}</div>}
  <form onSubmit={handleAddLecture} className="space-y-3">
  <div className="space-y-1">
  <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-600">Lecture Title</label>
@@ -473,7 +473,7 @@ export default function EditBatchPage() {
  <p className="text-[10px] text-gray-600">Order: {lec.order} · YouTube ID: <span className="font-mono">{lec.youtubeVideoId}</span></p>
  </div>
  </div>
- <button onClick={() => { if(confirm('Delete lecture?')) deleteLectureMutation.mutate(lec._id); }} className="text-red-400 hover:text-red-300 p-1 flex-shrink-0">
+ <button onClick={() => { if(confirm('Delete lecture?')) deleteLectureMutation.mutate(lec._id); }} className="text-red-600 hover:text-red-600 p-1 flex-shrink-0">
  <Trash2 className="w-4 h-4" />
  </button>
  </div>
@@ -493,7 +493,7 @@ export default function EditBatchPage() {
  <div className="lg:col-span-1">
  <GoldCard className="border border-[var(--gold-100)] p-5 space-y-4">
  <h3 className="font-serif text-sm font-bold text-gray-900 flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add Note</h3>
- {pdfError && <div className="text-xs text-red-400 bg-red-950/20 p-2.5 border border-red-900/30 rounded-lg">{pdfError}</div>}
+ {pdfError && <div className="text-xs text-red-600 bg-red-50 p-2.5 border border-red-200 rounded-lg">{pdfError}</div>}
  <form onSubmit={handleAddPdf} className="space-y-3">
  <div className="space-y-1">
  <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-600">Document Title</label>
@@ -531,13 +531,13 @@ export default function EditBatchPage() {
  {pdfs.map((pdf: any) => (
  <div key={pdf._id} className="p-4 bg-gray-100 border border-gray-200 rounded-xl flex items-center justify-between gap-3 text-xs">
  <div className="flex items-center gap-3">
- <div className="w-8 h-8 rounded-lg bg-red-950/20 border border-red-900/30 flex items-center justify-center text-red-400 flex-shrink-0"><FileText className="w-4 h-4" /></div>
+ <div className="w-8 h-8 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center text-red-600 flex-shrink-0"><FileText className="w-4 h-4" /></div>
  <div>
  <h5 className="font-bold text-gray-900">{pdf.title}</h5>
  <p className="text-[10px] text-gray-600">File: <a href={pdf.url} target="_blank" rel="noopener noreferrer" className="text-[var(--gold)] hover:underline truncate inline-block max-w-[200px]">{pdf.url}</a></p>
  </div>
  </div>
- <button onClick={() => { if(confirm('Delete study material?')) deletePdfMutation.mutate(pdf._id); }} className="text-red-400 hover:text-red-300 p-1 flex-shrink-0">
+ <button onClick={() => { if(confirm('Delete study material?')) deletePdfMutation.mutate(pdf._id); }} className="text-red-600 hover:text-red-600 p-1 flex-shrink-0">
  <Trash2 className="w-4 h-4" />
  </button>
  </div>
@@ -606,7 +606,7 @@ export default function EditBatchPage() {
  </p>
  
  {announcementError && (
- <div className="text-xs text-red-400 bg-red-950/20 p-2.5 border border-red-900/30 rounded-lg">
+ <div className="text-xs text-red-600 bg-red-50 p-2.5 border border-red-200 rounded-lg">
  {announcementError}
  </div>
  )}

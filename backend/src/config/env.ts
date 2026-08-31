@@ -33,6 +33,9 @@ const envSchema = z.object({
   CLOUDINARY_API_KEY:                 z.string().min(1),
   CLOUDINARY_API_SECRET:              z.string().min(1),
   SENTRY_DSN:                         z.string().optional().default(''),
+  FREE_ASTROLOGY_API_KEY:             z.string().optional().default(''),
+  FREE_ASTRO_DASHA_API_KEY:         z.string().optional().default(''),
+  GEMINI_API_KEY:                     z.string().optional().default(''),
 });
 
 const parsed = envSchema.safeParse(process.env);

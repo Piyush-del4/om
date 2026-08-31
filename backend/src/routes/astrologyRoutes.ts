@@ -5,12 +5,16 @@ import {
   getKundliSubmissions,
   getKundliSubmissionById,
   deleteKundliSubmission,
-  getAllKundliSubmissionsForAdmin
+  getAllKundliSubmissionsForAdmin,
+  getLatestHoroscope
 } from '../controllers/astrologyController';
 import { requireAuth } from '../middleware/requireAuth';
 import { requireAdmin } from '../middleware/requireAdmin';
 
 const router = express.Router();
+
+// Horoscope
+router.get('/horoscope/latest', getLatestHoroscope);
 
 // Proxy for calculations
 router.post('/proxy', fetchAstrologyData);

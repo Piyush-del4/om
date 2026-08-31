@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/auth/AuthProvider';
@@ -22,6 +22,19 @@ export default function AppointmentsPage() {
  const [selectedDate, setSelectedDate] = useState('');
  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
  const [bookingSuccess, setBookingSuccess] = useState(false);
+
+ // Attendee details
+ const [attendeeName, setAttendeeName] = useState('');
+ const [attendeeDateOfBirth, setAttendeeDateOfBirth] = useState('');
+ const [attendeeTimeOfBirth, setAttendeeTimeOfBirth] = useState('');
+
+ useEffect(() => {
+   if (user) {
+     setAttendeeName(user.name || '');
+     setAttendeeDateOfBirth(user.dateOfBirth || '');
+     setAttendeeTimeOfBirth(user.birthTime || '');
+   }
+ }, [user]);
 
  // No redirect — page is public. Login is only prompted on booking attempt.
 
@@ -86,6 +99,9 @@ export default function AppointmentsPage() {
  const res = await client.post('/appointments', {
  appointmentTypeId: selectedTypeId,
  scheduledAt: selectedTimeSlot,
+ attendeeName,
+ attendeeDateOfBirth,
+ attendeeBirthTime: attendeeTimeOfBirth
  });
  return res.data?.data;
  },
@@ -253,7 +269,7 @@ export default function AppointmentsPage() {
  {loadingTypes ? (
  <p className="text-gray-600 text-sm animate-pulse font-light">Loading available consultation packages...</p>
  ) : appointmentTypes && appointmentTypes.length > 0 ? (
- <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+ <div className="grid grid-cols-1 gap-8 w-full">
  {appointmentTypes.map((type: any) => {
  const now = new Date();
  const hasActiveOffer = type.offerPrice !== undefined && type.offerPrice !== null &&
@@ -263,23 +279,27 @@ export default function AppointmentsPage() {
 
  return (
  <div key={type._id} className="cursor-pointer" onClick={() => router.push(`/appointments/${type._id}`)}>
- <GoldCard className="border border-gray-200 hover:border-[var(--gold-200)] transition-all duration-300 flex flex-col justify-between h-full group">
+ <GoldCard flush className="border border-gray-200 hover:border-[var(--gold-200)] transition-all duration-300 h-full group overflow-hidden">
+ <div className="flex flex-col sm:flex-row h-full">
+ {type.imageUrl && (
+ <div className="w-full sm:w-1/2 shrink-0 bg-white border-b sm:border-b-0 sm:border-r border-gray-200/50 flex items-center justify-center p-6">
+ <img src={type.imageUrl} alt={type.name} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 max-h-[350px]" />
+ </div>
+ )}
+ <div className="flex-1 p-8 flex flex-col justify-between w-full bg-white/50">
  <div className="space-y-4">
  <div className="flex justify-between items-start">
- <span className="bg-gray-100 border border-gray-200 text-gray-600 text-[9px] uppercase font-mono tracking-widest px-2.5 py-0.5 rounded-full">
- {type.category}
- </span>
- <span className="text-gray-600 text-xs font-sans flex items-center gap-1.5">
- <Clock className="w-3.5 h-3.5 text-[var(--gold)]" /> {type.duration} mins
+ <span className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-800 text-lg font-bold font-sans px-3 py-1.5 rounded-lg shadow-sm">
+ <Clock className="w-5 h-5 text-amber-500" /> {type.duration} mins
  </span>
  </div>
- <h3 className="font-sans text-[26px] font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors line-clamp-1">{type.name}</h3>
- <FormattedText text={type.description || 'Consultation details and custom alchemical remedy selections.'} className="text-gray-600 text-xs line-clamp-3 leading-relaxed font-light" />
+ <h3 className="font-sans text-[26px] font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors line-clamp-2 leading-tight">{type.name}</h3>
+ <FormattedText text={type.description || 'Consultation details and custom alchemical remedy selections.'} className="text-gray-600 text-sm line-clamp-3 leading-relaxed font-light" />
  </div>
- <div className="space-y-3 border-t border-neutral-900 pt-4 mt-6">
+ <div className="space-y-3 border-t border-gray-200 pt-4 mt-6">
  <div className="flex items-center justify-between">
  <div className="flex items-baseline gap-1.5 flex-wrap font-sans">
- <span className="text-[var(--gold)] font-bold text-[24px]">₹{(priceVal / 100).toLocaleString()}</span>
+ <span className="text-[#e77600] font-bold text-[38px]">₹{(priceVal / 100).toLocaleString()}</span>
  {hasActiveOffer && (
  <span className="text-gray-500 line-through text-[20px]">₹{(originalPriceVal / 100).toLocaleString()}</span>
  )}
@@ -295,10 +315,12 @@ export default function AppointmentsPage() {
  setSelectedTypeId(type._id);
  scrollToBooking();
  }}
- className="w-full py-2.5 text-[11px] font-bold bg-[var(--gold)] hover:bg-[var(--gold-300)] text-black rounded-lg transition-all duration-300 shadow-[0_0_12px_rgba(204,143,51,0.25)] flex items-center justify-center gap-1.5 hover:scale-[1.01]"
+ className="w-full py-3.5 text-base font-bold bg-[var(--gold)] hover:bg-[var(--gold-300)] text-black rounded-lg transition-all duration-300 shadow-[0_0_12px_rgba(204,143,51,0.25)] flex items-center justify-center gap-2 hover:scale-[1.01]"
  >
- <Calendar className="w-3.5 h-3.5" /> Book Now
+ <Calendar className="w-5 h-5" /> Book Now
  </button>
+ </div>
+ </div>
  </div>
  </GoldCard>
  </div>
@@ -350,7 +372,7 @@ export default function AppointmentsPage() {
  <GoldCard className="border border-[var(--gold-300)] p-6 space-y-5">
  {bookingSuccess ? (
  <div className="flex flex-col items-center justify-center text-center py-8 gap-4">
- <CheckCircle2 className="w-14 h-14 text-green-400" />
+ <CheckCircle2 className="w-14 h-14 text-green-600" />
  <h3 className="font-serif text-xl font-bold text-gray-900">Slot Confirmed!</h3>
  <p className="text-gray-600 text-xs font-light">Your consultation has been booked. A confirmation email & Google Calendar event have been sent.</p>
  </div>
@@ -435,12 +457,51 @@ export default function AppointmentsPage() {
  })}
  </div>
  ) : (
- <div className="flex items-center gap-2 text-yellow-500 bg-yellow-950/20 border border-yellow-900/30 p-3 rounded-lg text-[10px]">
+ <div className="flex items-center gap-2 text-yellow-600 bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-[10px]">
  <AlertCircle className="w-4 h-4 flex-shrink-0" />
  <span>No slots available for this date. Please try another date.</span>
  </div>
  )}
  </div>
+ )}
+
+ {/* Step 4: Attendee Details (Intake Form) */}
+ {selectedTimeSlot && isAuthenticated && (
+   <div className="space-y-4 pt-4 border-t border-[var(--gold-200)] mt-4">
+     <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-600">
+       4. Attendee Details (For Kundli Generation)
+     </label>
+     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+       <div className="space-y-1.5">
+         <label className="block text-[10px] text-gray-500">Full Name</label>
+         <input
+           type="text"
+           value={attendeeName}
+           onChange={(e) => setAttendeeName(e.target.value)}
+           className="w-full bg-white border border-[var(--gold-200)] rounded-lg py-2.5 px-3 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-xs"
+           placeholder="e.g. John Doe"
+         />
+       </div>
+       <div className="space-y-1.5">
+         <label className="block text-[10px] text-gray-500">Date of Birth</label>
+         <input
+           type="date"
+           value={attendeeDateOfBirth}
+           onChange={(e) => setAttendeeDateOfBirth(e.target.value)}
+           className="w-full bg-white border border-[var(--gold-200)] rounded-lg py-2.5 px-3 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-xs"
+         />
+       </div>
+       <div className="space-y-1.5 md:col-span-2">
+         <label className="block text-[10px] text-gray-500">Time of Birth</label>
+         <input
+           type="time"
+           value={attendeeTimeOfBirth}
+           onChange={(e) => setAttendeeTimeOfBirth(e.target.value)}
+           className="w-full bg-white border border-[var(--gold-200)] rounded-lg py-2.5 px-3 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-xs"
+         />
+       </div>
+     </div>
+   </div>
  )}
 
  {/* Submit — show login prompt if not authenticated */}
@@ -513,9 +574,9 @@ export default function AppointmentsPage() {
  {app.duration && <p className="text-gray-500 text-[10px] font-mono">Duration: {app.duration} mins</p>}
  </div>
  <span className={`text-[10px] font-bold uppercase tracking-wider py-1 px-3.5 rounded-full border ${
- app.status === 'confirmed' ? 'bg-green-950/20 text-green-400 border-green-500/20' :
- app.status === 'cancelled' ? 'bg-red-950/20 text-red-400 border-red-500/20' :
- 'bg-yellow-950/20 text-yellow-400 border-yellow-500/20'
+ app.status === 'confirmed' ? 'bg-green-50 text-green-600 border-green-500/20' :
+ app.status === 'cancelled' ? 'bg-red-50 text-red-600 border-red-500/20' :
+ 'bg-yellow-50 text-yellow-600 border-yellow-500/20'
  }`}>
  {app.status}
  </span>

@@ -6,6 +6,7 @@ import { Heart, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '@/components/ui/astrology/DailyPanchangMuhuratWidget';
 import { env } from '@/lib/env';
 
 const FAQS = [
@@ -99,9 +100,6 @@ export default function MarriageCompatibilityCheckerPage() {
  <h1 className="font-serif text-4xl md:text-5xl font-bold">
  Marriage Compatibility Checker <span className="gold-gradient-text">Marriage Match</span>
  </h1>
- <p className="text-gray-600 text-sm md:text-base font-light max-w-2xl mx-auto">
- Check Ashtakoot Guna Milan and marriage compatibility. Enter your details below to calculate your personalized report instantly.
- </p>
  </motion.div>
 
  {/* Main Form Section */}
@@ -205,13 +203,13 @@ export default function MarriageCompatibilityCheckerPage() {
  
  // Score interpretation
  let interpretation = 'Excellent Match';
- let colorClass = 'text-green-400';
+ let colorClass = 'text-green-600';
  if (score < 18) {
  interpretation = 'Not Recommended';
- colorClass = 'text-red-400';
+ colorClass = 'text-red-600';
  } else if (score < 25) {
  interpretation = 'Average Match';
- colorClass = 'text-yellow-400';
+ colorClass = 'text-yellow-600';
  }
 
  const kootas = [
@@ -249,7 +247,7 @@ export default function MarriageCompatibilityCheckerPage() {
  <div key={koota.name} className="bg-gray-100/50 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center">
  <div className="text-gray-600 text-xs uppercase tracking-wider mb-2 text-center">{koota.name}</div>
  <div className="text-2xl font-serif text-gray-900">
- <span className={kData.score === kData.out_of ? 'text-[var(--gold)]' : (kData.score === 0 ? 'text-red-400' : 'text-gray-900')}>
+ <span className={kData.score === kData.out_of ? 'text-[var(--gold)]' : (kData.score === 0 ? 'text-red-600' : 'text-gray-900')}>
  {kData.score}
  </span>
  <span className="text-gray-600 text-lg"> / {kData.out_of}</span>

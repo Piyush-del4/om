@@ -11,6 +11,7 @@ import { GoldButton } from '@/components/ui/GoldButton';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { Lock, Mail, AlertCircle, Eye, EyeOff, User, Phone } from 'lucide-react';
 import { client } from '@/lib/api/client';
+import OnboardingWizard from '@/components/onboarding/OnboardingWizard';
 
 // Form Validation Schemas
 const loginSchema = z.object({
@@ -94,7 +95,7 @@ function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
  </div>
 
  {errorMsg && (
- <div className="flex items-center gap-2 text-red-400 bg-red-950/20 border border-red-900/30 p-3 rounded-lg text-xs font-light">
+ <div className="flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg text-xs font-light">
  <AlertCircle className="w-4 h-4 flex-shrink-0" />
  <span>{errorMsg}</span>
  </div>
@@ -118,7 +119,7 @@ function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
  className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input placeholder-neutral-700"
  />
  </div>
- {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+ {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email.message}</p>}
  </div>
 
  {/* Password */}
@@ -145,7 +146,7 @@ function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
  </button>
  </div>
- {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password.message}</p>}
+ {errors.password && <p className="text-red-600 text-xs mt-1">{errors.password.message}</p>}
  <div className="flex justify-end pt-1">
  <Link href="/forgot-password" className="text-xs text-[var(--gold)] hover:text-[var(--gold-light)] font-semibold transition-colors">
  Forgot password?
@@ -179,7 +180,7 @@ interface RegisterFormProps {
 }
 
 function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
- const { register: authRegister } = useAuth();
+ const { register: authRegister, refreshUser } = useAuth();
  const router = useRouter();
  const [errorMsg, setErrorMsg] = useState('');
  const [infoMsg, setInfoMsg] = useState('');
@@ -188,6 +189,8 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
  const [otpSent, setOtpSent] = useState(false);
  const [otpCode, setOtpCode] = useState('');
+ const [showOnboarding, setShowOnboarding] = useState(false);
+ const [registeredName, setRegisteredName] = useState('');
 
  const {
  register,
@@ -232,8 +235,8 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  const data = watch();
  try {
  await authRegister(data.name, data.email, data.password, data.phone, otpCode);
- router.push('/dashboard');
  onSuccess();
+ router.push('/onboarding');
  } catch (err: any) {
  const msg = err.response?.data?.error?.message || 'Registration failed. Please check your OTP code.';
  setErrorMsg(msg);
@@ -277,15 +280,15 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  </div>
 
  {errorMsg && (
- <div className="flex items-center gap-2 text-red-400 bg-red-950/20 border border-red-900/30 p-3 rounded-lg text-xs font-light">
+ <div className="flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg text-xs font-light">
  <AlertCircle className="w-4 h-4 flex-shrink-0" />
  <span>{errorMsg}</span>
  </div>
  )}
 
  {infoMsg && (
- <div className="flex items-center gap-2 text-green-400 bg-green-950/20 border border-green-900/30 p-3 rounded-lg text-xs font-light">
- <AlertCircle className="w-4 h-4 flex-shrink-0 text-green-400" />
+ <div className="flex items-center gap-2 text-green-600 bg-green-50 border border-green-200 p-3 rounded-lg text-xs font-light">
+ <AlertCircle className="w-4 h-4 flex-shrink-0 text-green-600" />
  <span>{infoMsg}</span>
  </div>
  )}
@@ -309,7 +312,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-neutral-700"
  />
  </div>
- {errors.name && <p className="text-red-400 text-xs mt-0.5">{errors.name.message}</p>}
+ {errors.name && <p className="text-red-600 text-xs mt-0.5">{errors.name.message}</p>}
  </div>
 
  {/* Email */}
@@ -329,7 +332,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-neutral-700"
  />
  </div>
- {errors.email && <p className="text-red-400 text-xs mt-0.5">{errors.email.message}</p>}
+ {errors.email && <p className="text-red-600 text-xs mt-0.5">{errors.email.message}</p>}
  </div>
 
  {/* Phone */}
@@ -349,7 +352,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-neutral-700"
  />
  </div>
- {errors.phone && <p className="text-red-400 text-xs mt-0.5">{errors.phone.message}</p>}
+ {errors.phone && <p className="text-red-600 text-xs mt-0.5">{errors.phone.message}</p>}
  </div>
 
  {/* Password */}
@@ -376,7 +379,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
  </button>
  </div>
- {errors.password && <p className="text-red-400 text-xs mt-0.5">{errors.password.message}</p>}
+ {errors.password && <p className="text-red-600 text-xs mt-0.5">{errors.password.message}</p>}
  </div>
 
  {/* Confirm Password */}
@@ -403,7 +406,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
  </button>
  </div>
- {errors.confirmPassword && <p className="text-red-400 text-xs mt-0.5">{errors.confirmPassword.message}</p>}
+ {errors.confirmPassword && <p className="text-red-600 text-xs mt-0.5">{errors.confirmPassword.message}</p>}
  </div>
 
  <div className="pt-4">

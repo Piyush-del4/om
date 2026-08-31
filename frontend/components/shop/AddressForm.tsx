@@ -53,12 +53,12 @@ export function AddressForm({
  setForm({
  fullName: initialValues.fullName || '',
  phone: initialValues.phone || '',
- flatHouse: initialValues.flatHouse || 'Building 7A, Block C-3, Vasant Kunj',
- areaStreet: initialValues.areaStreet || 'Nelson Mandela Marg, Pocket 9',
- landmark: initialValues.landmark || 'Near Heritage Park',
- pincode: initialValues.pincode || '123456',
- townCity: initialValues.townCity || 'NEW DELHI',
- state: initialValues.state || 'DELHI',
+ flatHouse: initialValues.flatHouse || '',
+ areaStreet: initialValues.areaStreet || '',
+ landmark: initialValues.landmark || '',
+ pincode: initialValues.pincode || '',
+ townCity: initialValues.townCity || '',
+ state: initialValues.state || '',
  });
  }
  }, [initialValues]);
@@ -94,8 +94,8 @@ export function AddressForm({
  value={form.fullName}
  onChange={handleChange}
  required
- placeholder=""
- className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-700"
+ placeholder="e.g. John Doe"
+ className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-400 placeholder:opacity-60"
  />
  </div>
  </div>
@@ -115,8 +115,8 @@ export function AddressForm({
  value={form.phone}
  onChange={handleChange}
  required
- placeholder=""
- className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-700"
+ placeholder="e.g. 9876543210"
+ className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-400 placeholder:opacity-60"
  />
  </div>
  <p className="text-[10px] text-gray-500 font-light">May be used to assist delivery</p>
@@ -139,8 +139,8 @@ export function AddressForm({
  value={form.flatHouse}
  onChange={handleChange}
  required
- placeholder=""
- className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-700"
+ placeholder="e.g. Building 7A, Block C-3, Vasant Kunj"
+ className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-400 placeholder:opacity-60"
  />
  </div>
  </div>
@@ -160,8 +160,8 @@ export function AddressForm({
  value={form.areaStreet}
  onChange={handleChange}
  required
- placeholder=""
- className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-700"
+ placeholder="e.g. Nelson Mandela Marg, Pocket 9"
+ className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-400 placeholder:opacity-60"
  />
  </div>
  </div>
@@ -180,8 +180,8 @@ export function AddressForm({
  name="landmark"
  value={form.landmark}
  onChange={handleChange}
- placeholder=""
- className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-700"
+ placeholder="e.g. Near Heritage Park"
+ className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-400 placeholder:opacity-60"
  />
  </div>
  </div>
@@ -204,8 +204,8 @@ export function AddressForm({
  onChange={handleChange}
  required
  maxLength={6}
- placeholder=""
- className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-700"
+ placeholder="e.g. 110070"
+ className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-400 placeholder:opacity-60"
  />
  </div>
  </div>
@@ -225,8 +225,8 @@ export function AddressForm({
  value={form.townCity}
  onChange={handleChange}
  required
- placeholder=""
- className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-700"
+ placeholder="e.g. New Delhi"
+ className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 pl-10 pr-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-sm placeholder-neutral-400 placeholder:opacity-60"
  />
  </div>
  </div>

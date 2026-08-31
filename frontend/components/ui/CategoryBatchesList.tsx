@@ -101,7 +101,7 @@ export function CategoryBatchesList({ category }: CategoryBatchesListProps) {
 
  {isEnrolled ? (
  <div className="space-y-2">
- <div className="flex items-center gap-1.5 text-green-400 text-xs bg-green-950/20 border border-green-900/30 p-2 rounded-lg justify-center font-semibold">
+ <div className="flex items-center gap-1.5 text-green-600 text-xs bg-green-50 border border-green-200 p-2 rounded-lg justify-center font-semibold">
  <Check className="w-4 h-4" />
  <span>Unlocked & Enrolled</span>
  </div>

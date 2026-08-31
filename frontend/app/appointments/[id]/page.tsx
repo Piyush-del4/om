@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useState, useRef } from 'react';
+import React, { use, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -28,6 +28,19 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
  const [selectedDate, setSelectedDate] = useState('');
  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
  const [bookingMessage, setBookingMessage] = useState('');
+
+ // Attendee details
+ const [attendeeName, setAttendeeName] = useState('');
+ const [attendeeDateOfBirth, setAttendeeDateOfBirth] = useState('');
+ const [attendeeTimeOfBirth, setAttendeeTimeOfBirth] = useState('');
+
+ useEffect(() => {
+   if (user) {
+     setAttendeeName(user.name || '');
+     setAttendeeDateOfBirth(user.dateOfBirth || '');
+     setAttendeeTimeOfBirth(user.birthTime || '');
+   }
+ }, [user]);
 
  // Fetch all types and find the one that matches our ID
  const { data: appointmentTypes, isLoading: typesLoading } = useQuery({
@@ -76,6 +89,9 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
  const res = await client.post('/appointments', {
  appointmentTypeId: id,
  scheduledAt: selectedTimeSlot,
+ attendeeName,
+ attendeeDateOfBirth,
+ attendeeBirthTime: attendeeTimeOfBirth
  });
  return res.data?.data;
  },
@@ -214,59 +230,60 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
  </div>
  </div>
 
- <div className="space-y-4 text-gray-600 text-sm leading-relaxed font-light">
- {appType.description ? (
- <FormattedText text={appType.description} />
- ) : (
- <p>Get deep, authentic clarity and direction with this personalized consultation session. Includes comprehensive planetary matching and alchemical remedies.</p>
- )}
- </div>
+  {/* Price Card & Quick Contacts */}
+  <div className="p-6 rounded-2xl bg-gray-100/30 border border-gray-200/60 space-y-6">
+    <div className="flex justify-between items-center flex-wrap gap-4">
+      <div className="space-y-1">
+        <span className="text-gray-500 text-xs font-mono">Vibrational Exchange</span>
+        <div className="flex items-baseline gap-3">
+          <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
+            ₹{(priceVal / 100).toLocaleString()}
+          </span>
+          {hasActiveOffer && (
+            <span className="text-neutral-500 line-through text-[28px] font-sans">
+              ₹{(appType.price / 100).toLocaleString()}
+            </span>
+          )}
+        </div>
+      </div>
+      {appType.specialOfferTitle && (
+        <span className="bg-red-600/90 text-gray-900 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-red-500/30">
+          {appType.specialOfferTitle}
+        </span>
+      )}
+    </div>
 
- {/* Book Now CTA */}
- <button
- onClick={scrollToBooking}
- className="w-full py-3.5 text-sm font-bold bg-[var(--gold)] hover:bg-[var(--gold-300)] text-black rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(204,143,51,0.35)] flex items-center justify-center gap-2 hover:scale-[1.02]"
- >
- <CheckSquare className="w-5 h-5" /> Book Now — Select Your Slot
- </button>
+    {/* Communication Channel Buttons */}
+    <div className="grid grid-cols-2 gap-4">
+      <a href="tel:+919922352666" className="w-full">
+        <button className="w-full py-2.5 text-xs flex items-center justify-center gap-2 font-bold bg-blue-600 hover:bg-blue-700 text-gray-900 rounded-lg transition-colors duration-300 shadow-[0_0_15px_rgba(37,99,235,0.2)]">
+          <Phone className="w-4 h-4" /> Call Now (+91 9922352666)
+        </button>
+      </a>
+      <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer" className="w-full">
+        <button className="w-full py-2.5 text-xs flex items-center justify-center gap-2 font-bold bg-[#25d366] hover:bg-[#20ba5a] text-gray-900 rounded-lg transition-colors duration-300 shadow-[0_0_15px_rgba(37,211,102,0.2)]">
+          <MessageSquare className="w-4 h-4" /> Chat on WhatsApp
+        </button>
+      </a>
+    </div>
+  </div>
 
- {/* Price Card & Quick Contacts */}
- <div className="p-6 rounded-2xl bg-gray-100/30 border border-gray-200/60 space-y-6">
- <div className="flex justify-between items-center flex-wrap gap-4">
- <div className="space-y-1">
- <span className="text-gray-500 text-xs font-mono">Vibrational Exchange</span>
- <div className="flex items-baseline gap-3">
- <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
- ₹{(priceVal / 100).toLocaleString()}
- </span>
- {hasActiveOffer && (
- <span className="text-neutral-500 line-through text-[28px] font-sans">
- ₹{(appType.price / 100).toLocaleString()}
- </span>
- )}
- </div>
- </div>
- {appType.specialOfferTitle && (
- <span className="bg-red-600/90 text-gray-900 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-red-500/30">
- {appType.specialOfferTitle}
- </span>
- )}
- </div>
+  {/* Book Now CTA */}
+  <button
+    onClick={scrollToBooking}
+    className="w-full py-3.5 text-sm font-bold bg-[var(--gold)] hover:bg-[var(--gold-300)] text-black rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(204,143,51,0.35)] flex items-center justify-center gap-2 hover:scale-[1.02]"
+  >
+    <CheckSquare className="w-5 h-5" /> Book Now — Select Your Slot
+  </button>
 
- {/* Communication Channel Buttons */}
- <div className="grid grid-cols-2 gap-4">
- <a href="tel:+919922352666" className="w-full">
- <button className="w-full py-2.5 text-xs flex items-center justify-center gap-2 font-bold bg-blue-600 hover:bg-blue-700 text-gray-900 rounded-lg transition-colors duration-300 shadow-[0_0_15px_rgba(37,99,235,0.2)]">
- <Phone className="w-4 h-4" /> Call Now (+91 9922352666)
- </button>
- </a>
- <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer" className="w-full">
- <button className="w-full py-2.5 text-xs flex items-center justify-center gap-2 font-bold bg-[#25d366] hover:bg-[#20ba5a] text-gray-900 rounded-lg transition-colors duration-300 shadow-[0_0_15px_rgba(37,211,102,0.2)]">
- <MessageSquare className="w-4 h-4" /> Chat on WhatsApp
- </button>
- </a>
- </div>
- </div>
+  {/* Description */}
+  <div className="space-y-4 text-gray-600 text-sm leading-relaxed font-light pt-2">
+    {appType.description ? (
+      <FormattedText text={appType.description} />
+    ) : (
+      <p>Get deep, authentic clarity and direction with this personalized consultation session. Includes comprehensive planetary matching and alchemical remedies.</p>
+    )}
+  </div>
  </div>
 
  {/* Booking / Calendar Section */}
@@ -330,12 +347,51 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
  })}
  </div>
  ) : (
- <div className="flex items-center gap-2 text-yellow-500 bg-yellow-950/20 border border-yellow-900/30 p-3 rounded-lg text-[10px]">
+ <div className="flex items-center gap-2 text-yellow-600 bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-[10px]">
  <AlertCircle className="w-4 h-4 flex-shrink-0" />
  <span>No slots available for this date. Please select another date.</span>
  </div>
  )}
  </div>
+ )}
+
+ {/* 3. Attendee Details (Intake Form) */}
+ {selectedTimeSlot && isAuthenticated && (
+   <div className="space-y-4 pt-4 border-t border-[var(--gold-200)] mt-4">
+     <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-600">
+       3. Attendee Details (For Kundli Generation)
+     </label>
+     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+       <div className="space-y-1.5">
+         <label className="block text-[10px] text-gray-500">Full Name</label>
+         <input
+           type="text"
+           value={attendeeName}
+           onChange={(e) => setAttendeeName(e.target.value)}
+           className="w-full bg-white border border-[var(--gold-200)] rounded-lg py-2.5 px-3 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-xs"
+           placeholder="e.g. John Doe"
+         />
+       </div>
+       <div className="space-y-1.5">
+         <label className="block text-[10px] text-gray-500">Date of Birth</label>
+         <input
+           type="date"
+           value={attendeeDateOfBirth}
+           onChange={(e) => setAttendeeDateOfBirth(e.target.value)}
+           className="w-full bg-white border border-[var(--gold-200)] rounded-lg py-2.5 px-3 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-xs"
+         />
+       </div>
+       <div className="space-y-1.5 md:col-span-2">
+         <label className="block text-[10px] text-gray-500">Time of Birth</label>
+         <input
+           type="time"
+           value={attendeeTimeOfBirth}
+           onChange={(e) => setAttendeeTimeOfBirth(e.target.value)}
+           className="w-full bg-white border border-[var(--gold-200)] rounded-lg py-2.5 px-3 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-xs"
+         />
+       </div>
+     </div>
+   </div>
  )}
 
  {/* Submit — show inline login prompt if not authenticated */}

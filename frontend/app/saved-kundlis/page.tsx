@@ -127,7 +127,7 @@ export default function SavedKundlisPage() {
  </div>
  <button 
  onClick={(e) => handleDelete(kundli._id, e)}
- className="absolute top-6 right-6 p-2 rounded-lg text-gray-500 hover:text-red-500 hover:bg-red-500/10 transition-colors"
+ className="absolute top-6 right-6 p-2 rounded-lg text-gray-500 hover:text-red-600 hover:bg-red-500/10 transition-colors"
  title="Delete Saved Kundli"
  >
  <Trash2 className="w-4 h-4" />

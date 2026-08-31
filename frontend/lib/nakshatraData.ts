@@ -252,7 +252,7 @@ export const NAKSHATRA_DATASET: Record<string, NakshatraDetail> = {
  nadi: 'Antya',
  yoni: 'Tiger',
  nature: 'Mixed & Sharp (Misra)',
- characteristics: 'Single-minded focus, goal-oriented, triumphant ambition, passionate determination.',
+ characteristics: 'Single-minded focus, goal-oriented, triumphant AMCition, passionate determination.',
  career: 'Politics, competitive sports, trial law, executive leadership, sales targets, research.',
  marriage: 'Passionate and goal-oriented; demands mutual growth and shared goals with spouse.',
  compatibility: ['Anuradha', 'Punarvasu', 'Chitra', 'Uttara Bhadrapada']

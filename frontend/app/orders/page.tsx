@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/api/client';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { ShoppingBag, Truck, Package, Clock, Eye } from 'lucide-react';
+import { DownloadInvoiceButton } from '@/components/ui/DownloadInvoiceButton';
 
 export default function OrdersPage() {
  const { isAuthenticated, isLoading } = useAuth();
@@ -62,15 +63,29 @@ export default function OrdersPage() {
  <p className="text-[11px] text-gray-500 font-mono mt-0.5">Placed on {orderDate}</p>
  </div>
  <div className="flex items-center gap-2.5">
+ <DownloadInvoiceButton
+    orderId={order._id}
+    orderDate={order.createdAt}
+    customerName="Customer"
+    customerEmail=""
+    address={typeof order.address === 'object' ? order.address : { street: order.address }}
+    items={order.items.map((i: any) => ({
+      title: i.itemId?.title || i.title || 'Product',
+      quantity: i.quantity,
+      price: i.price,
+    }))}
+    totalAmount={order.totalAmount}
+    paymentId={order.razorpayPaymentId}
+  />
  <span className={`text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-full border ${
- order.paymentStatus === 'paid' ? 'bg-green-950/20 text-green-400 border-green-500/20' : 'bg-yellow-950/20 text-yellow-400 border-yellow-500/20'
+ order.paymentStatus === 'paid' ? 'bg-green-50 text-green-600 border-green-500/20' : 'bg-yellow-50 text-yellow-600 border-yellow-500/20'
  }`}>
  Payment: {order.paymentStatus}
  </span>
  <span className={`text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-full border ${
- order.orderStatus === 'delivered' ? 'bg-green-950/20 text-green-400 border-green-500/20' :
- order.orderStatus === 'shipped' ? 'bg-blue-950/20 text-blue-400 border-blue-500/20' :
- 'bg-yellow-950/20 text-yellow-400 border-yellow-500/20'
+ order.orderStatus === 'delivered' ? 'bg-green-50 text-green-600 border-green-500/20' :
+ order.orderStatus === 'shipped' ? 'bg-blue-50 text-blue-600 border-blue-500/20' :
+ 'bg-yellow-50 text-yellow-600 border-yellow-500/20'
  }`}>
  Status: {order.orderStatus}
  </span>
@@ -106,7 +121,7 @@ export default function OrdersPage() {
  </div>
  <div className="text-right space-y-1 sm:self-end">
  <p className="text-gray-500 font-mono">Tax Details: ₹{(order.gstAmount / 100).toLocaleString()}</p>
- <p className="text-base font-bold text-gray-900">Total Value: <span className="text-[var(--gold)] font-mono">₹{(order.totalAmount / 100).toLocaleString()}</span></p>
+ <p className="text-base font-bold text-gray-900">Total Value: <span className="text-[#e77600] font-mono">₹{(order.totalAmount / 100).toLocaleString()}</span></p>
  </div>
  </div>
  </div>

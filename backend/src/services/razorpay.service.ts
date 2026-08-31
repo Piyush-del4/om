@@ -28,7 +28,11 @@ if (isConfigured) {
     logger.error('❌ Failed to initialize Razorpay client:', error);
   }
 } else {
-  logger.warn('💳 Razorpay keys missing or using development placeholders. Using MOCK payments service.');
+  if (env.NODE_ENV === 'production') {
+    logger.error('❌ CRITICAL SECURITY ERROR: Razorpay keys are missing or invalid in PRODUCTION mode!');
+  } else {
+    logger.warn('💳 Razorpay keys missing or using development placeholders. Using MOCK payments service.');
+  }
 }
 
 export interface RazorpayOrderResponse {
@@ -86,6 +90,10 @@ export function verifyPaymentSignature(
   clientSignature: string
 ): boolean {
   if (!isConfigured) {
+    if (env.NODE_ENV === 'production') {
+      logger.error('❌ Rejecting payment signature verification in PRODUCTION mode due to missing Razorpay config.');
+      return false;
+    }
     logger.debug(`[MOCK PAYMENTS] Verifying signature for mock order ${orderId}`);
     return orderId.startsWith('order_mock_');
   }
@@ -109,6 +117,10 @@ export function verifyPaymentSignature(
  */
 export function verifyWebhookSignature(payloadBody: string, requestSignature: string): boolean {
   if (!isConfigured || !env.RAZORPAY_WEBHOOK_SECRET) {
+    if (env.NODE_ENV === 'production') {
+      logger.error('❌ Rejecting webhook signature verification in PRODUCTION mode due to missing webhook secret config.');
+      return false;
+    }
     logger.debug('[MOCK PAYMENTS] Verifying mock webhook signature');
     return true;
   }

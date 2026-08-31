@@ -48,7 +48,7 @@ export default function MarriageMatchingPage() {
  className="text-center space-y-4 max-w-3xl mx-auto pt-8"
  >
  <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
- <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 animate-pulse" /> Sacred Union
+ <Heart className="w-3.5 h-3.5 text-red-600 fill-red-500 animate-pulse" /> Sacred Union
  </span>
  <h1 className="font-serif text-4xl md:text-6xl font-bold tracking-tight leading-tight">
  Marriage <span className="gold-gradient-text">Matching (Melapak)</span>

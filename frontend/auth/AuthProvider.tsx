@@ -10,6 +10,11 @@ interface User {
  email: string;
  role: 'user' | 'admin';
  phone?: string;
+ zodiacSign?: string;
+ dateOfBirth?: string;
+ birthTime?: string;
+ birthPlace?: string;
+ gender?: string;
  defaultAddress?: {
  fullName: string;
  phone: string;

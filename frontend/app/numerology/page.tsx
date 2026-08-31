@@ -10,6 +10,7 @@ import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget
 import { CategoryBatchesList } from '../../components/ui/CategoryBatchesList';
 import { NumerologyHeroBackground } from '../../components/ui/NumerologyHeroBackground';
 import { FAQSection } from '../../components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '../../components/ui/astrology/DailyPanchangMuhuratWidget';
 
 const NUMEROLOGY_FAQS = [
  { q: 'What exactly is a numerology reading?', a: 'A numerology reading is a personalized analysis that uses your birth date and full birth name to calculate core numbers (such as your Life Path and Soul Urge). It acts as a framework to help you understand your natural talents, motivations, and current life cycles.' },
@@ -326,24 +327,24 @@ export default function NumerologyPage() {
  </div>
 
  {/* Section: 1-9 Digits Vibration */}
- <div className="space-y-6">
+ <div className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
  <div className="space-y-2">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+ <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-amber-600 pb-3 text-white">
  The Vibration of Single Digits (1-9)
  </h2>
- <p className="text-gray-600 text-xs">
+ <p className="text-amber-100/80 text-xs">
  Each number has a unique meaning. Find what your number says about your personality and behaviour.
  </p>
  </div>
  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
  {numberMeanings.map((n) => (
- <GoldCard key={n.num} className="border border-gray-200/60 p-5 flex flex-row gap-4 items-start">
- <span className="text-3xl font-bold font-serif text-[var(--gold)] opacity-80">{n.num}</span>
+ <div key={n.num} className="bg-white/10 rounded-xl border border-white/10 p-5 flex flex-row gap-4 items-start hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+ <span className="text-3xl font-bold font-serif text-amber-300 opacity-90">{n.num}</span>
  <div className="space-y-1">
- <h4 className="text-gray-900 text-xs font-bold font-serif">{n.title}</h4>
- <p className="text-[10px] text-gray-600 leading-normal">{n.vibration}</p>
+ <h4 className="text-white text-xs font-bold font-serif">{n.title}</h4>
+ <p className="text-[10px] text-amber-100/70 leading-normal">{n.vibration}</p>
  </div>
- </GoldCard>
+ </div>
  ))}
  </div>
  </div>
@@ -442,14 +443,19 @@ export default function NumerologyPage() {
  <h2 className="font-serif text-3xl font-bold text-gray-900 mb-2">Numerology 2026 Predictions</h2>
  <p className="text-gray-600 text-sm">Discover what 2026 holds for your root number.</p>
  </div>
- <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 justify-center">
+ <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-center">
  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
  <Link key={num} href={`/numerology-2026/${num}`}>
- <div className="bg-white border border-[var(--gold)]/20 hover:border-[var(--gold)] rounded-xl p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(204,143,51,0.2)] shadow-sm">
- <div className="w-16 h-16 rounded-full flex items-center justify-center">
- <img src={`/images/numerology/number-${num}.png`} alt={`Number ${num}`} className="w-full h-full object-cover rounded-full" />
+ <div className="bg-white border border-gray-100 hover:border-[var(--gold)]/50 rounded-2xl p-8 flex flex-col items-center justify-center gap-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(204,143,51,0.15)] shadow-sm">
+ <div className="w-20 h-20 rounded-full flex items-center justify-center bg-gradient-to-br from-[#1a1c29] to-[#0a0a0f] border-2 border-[#D4AF37]/30 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] overflow-hidden relative group-hover:border-[#D4AF37]/60 transition-colors">
+ {/* Inner glowing effect simulating the fire */}
+ <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(218,165,32,0.25)_0%,transparent_70%)] group-hover:bg-[radial-gradient(circle_at_center,rgba(218,165,32,0.4)_0%,transparent_70%)] transition-all duration-500"></div>
+ {/* The golden number */}
+ <span className="relative z-10 text-4xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#FFF5C3] via-[#FFD700] to-[#D4AF37] drop-shadow-[0_0_12px_rgba(255,215,0,0.8)]">
+ {num}
+ </span>
  </div>
- <span className="text-sm font-medium text-gray-900 text-center">Number {num}</span>
+ <span className="text-[15px] font-semibold text-gray-800 text-center">Number {num}</span>
  </div>
  </Link>
  ))}

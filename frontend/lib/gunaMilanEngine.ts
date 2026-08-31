@@ -18,7 +18,7 @@ export interface CompatibilityResult {
  kootas: GunaFactor[];
 }
 
-export function calculateGunaMilan(boyMoonSign = 1, boyNakshatra = 1, girlMoonSign = 1, girlNakshatra = 1): CompatibilityResult {
+export function calculateGunaMilan(_boyMoonSign = 1, _boyNakshatra = 1, _girlMoonSign = 1, _girlNakshatra = 1): CompatibilityResult {
  // 8 Kootas in Guna Milan
  const kootas: GunaFactor[] = [
  { name: 'Varna (Spiritual Compatibility)', maxPoints: 1, obtainedPoints: 1, description: 'Measures ego and spiritual harmony.', status: 'Excellent' },

@@ -96,22 +96,22 @@ export function NumerologyAstroDetails({
  <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
  
  {/* Left Card: Mulank, Bhagyank, Namayank Pills */}
- <div className="md:col-span-2 bg-gradient-to-br from-amber-100 via-orange-100 to-amber-200 border-2 border-amber-800/30 rounded-xl p-4 shadow-sm space-y-3">
- <div className="flex items-center justify-between bg-amber-200/60 px-4 py-2.5 rounded-xl border border-amber-800/20">
+ <div className="md:col-span-2 bg-gradient-to-br from-amber-100 via-orange-100 to-amber-200 border-2 border-amber-200 rounded-xl p-4 shadow-sm space-y-3">
+ <div className="flex items-center justify-between bg-amber-200/60 px-4 py-2.5 rounded-xl border border-amber-200">
  <span className="font-sans font-bold text-amber-950 text-sm md:text-base">Mulank</span>
  <div className="w-8 h-8 rounded-full border border-amber-900 flex items-center justify-center font-bold text-amber-950 text-sm bg-amber-50 ">
  {m}
  </div>
  </div>
 
- <div className="flex items-center justify-between bg-orange-200/60 px-4 py-2.5 rounded-xl border border-amber-800/20">
+ <div className="flex items-center justify-between bg-orange-200/60 px-4 py-2.5 rounded-xl border border-amber-200">
  <span className="font-sans font-bold text-amber-950 text-sm md:text-base">Bhagyank</span>
  <div className="w-8 h-8 rounded-full border border-amber-900 flex items-center justify-center font-bold text-amber-950 text-sm bg-amber-50 ">
  {b}
  </div>
  </div>
 
- <div className="flex items-center justify-between bg-amber-200/60 px-4 py-2.5 rounded-xl border border-amber-800/20">
+ <div className="flex items-center justify-between bg-amber-200/60 px-4 py-2.5 rounded-xl border border-amber-200">
  <span className="font-sans font-bold text-amber-950 text-sm md:text-base">Namayank</span>
  <div className="w-8 h-8 rounded-full border border-amber-900 flex items-center justify-center font-bold text-amber-950 text-sm bg-amber-50 ">
  {n}*
@@ -120,12 +120,12 @@ export function NumerologyAstroDetails({
  </div>
 
  {/* Right Table: Enemy, Neutral, Friendly, Lucky Numbers */}
- <div className="md:col-span-3 border-2 border-amber-800/30 rounded-2xl overflow-hidden shadow-md bg-white ">
+ <div className="md:col-span-3 border-2 border-amber-200 rounded-2xl overflow-hidden shadow-md bg-white ">
  <div className="divide-y divide-amber-800/20 ">
  
  {/* Enemy Numbers */}
  <div className="grid grid-cols-5 text-sm bg-red-100/70 ">
- <div className="col-span-2 p-3 font-bold text-red-900 border-r border-amber-800/20 flex items-center">
+ <div className="col-span-2 p-3 font-bold text-red-900 border-r border-amber-200 flex items-center">
  Enemy Numbers
  </div>
  <div className="col-span-3 p-3 font-bold text-neutral-900 flex items-center">
@@ -135,7 +135,7 @@ export function NumerologyAstroDetails({
 
  {/* Neutral Numbers */}
  <div className="grid grid-cols-5 text-sm bg-neutral-200/60 ">
- <div className="col-span-2 p-3 font-bold text-neutral-900 border-r border-amber-800/20 flex items-center">
+ <div className="col-span-2 p-3 font-bold text-neutral-900 border-r border-amber-200 flex items-center">
  Neutral Numbers
  </div>
  <div className="col-span-3 p-3 font-bold text-neutral-900 flex items-center">
@@ -145,7 +145,7 @@ export function NumerologyAstroDetails({
 
  {/* Friendly Numbers */}
  <div className="grid grid-cols-5 text-sm bg-emerald-100/70 ">
- <div className="col-span-2 p-3 font-bold text-emerald-900 border-r border-amber-800/20 flex items-center">
+ <div className="col-span-2 p-3 font-bold text-emerald-900 border-r border-amber-200 flex items-center">
  Friendly Numbers
  </div>
  <div className="col-span-3 p-3 font-bold text-neutral-900 flex items-center">
@@ -155,7 +155,7 @@ export function NumerologyAstroDetails({
 
  {/* Lucky Numbers (Friendly numbers NOT in Lo Shu Grid) */}
  <div className="grid grid-cols-5 text-sm bg-lime-200/80 ">
- <div className="col-span-2 p-3 font-bold text-emerald-950 border-r border-amber-800/20 flex items-center gap-1">
+ <div className="col-span-2 p-3 font-bold text-emerald-950 border-r border-amber-200 flex items-center gap-1">
  ★ Lucky Numbers
  </div>
  <div className="col-span-3 p-3 font-bold text-neutral-900 flex items-center">

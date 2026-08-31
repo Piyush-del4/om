@@ -5,6 +5,7 @@ import { BlockedSlot } from './blockedSlot.model';
 import { User } from '../users/user.model';
 import * as googleCal from '../../services/googleCalendar.service';
 import { sendAppointmentEmail, sendAppointmentStatusEmail, sendAppointmentAdminNotification } from '../../services/email.service';
+import { sendAppointmentSmsReminder } from '../../services/sms.service';
 import * as razorpayService from '../../services/razorpay.service';
 import { env } from '../../config/env';
 
@@ -86,7 +87,7 @@ export async function getAvailableSlots(req: Request, res: Response, next: NextF
 export async function createAppointment(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const userId = req.user?._id;
-    const { appointmentTypeId, scheduledAt } = req.body;
+    const { appointmentTypeId, scheduledAt, attendeeName, attendeeDateOfBirth, attendeeBirthTime } = req.body;
 
     // Fetch appointment type
     const appType = await AppointmentType.findById(appointmentTypeId);
@@ -169,6 +170,9 @@ export async function createAppointment(req: Request, res: Response, next: NextF
         duration: appType.duration,
         userName: user.name,
         userPhone: user.phone,
+        attendeeName,
+        attendeeDateOfBirth,
+        attendeeBirthTime,
       });
 
       const appointment = await Appointment.create({
@@ -180,6 +184,9 @@ export async function createAppointment(req: Request, res: Response, next: NextF
         scheduledAt: scheduledDate,
         status: 'confirmed',
         googleCalendarEventId,
+        attendeeName,
+        attendeeDateOfBirth,
+        attendeeBirthTime,
       });
 
       await sendAppointmentEmail(user.email, {
@@ -215,6 +222,9 @@ export async function createAppointment(req: Request, res: Response, next: NextF
       duration: appType.duration,
       scheduledAt: scheduledDate,
       status: 'pending',
+      attendeeName,
+      attendeeDateOfBirth,
+      attendeeBirthTime,
     });
 
     const razorpayOrder = await razorpayService.createRazorpayOrder(activePrice, appointment._id.toString());
@@ -577,6 +587,10 @@ export async function verifyAppointmentPayment(req: Request, res: Response, next
       typeName: appointment.typeName,
       scheduledAt: appointment.scheduledAt,
     });
+
+    if (user.phone) {
+      await sendAppointmentSmsReminder(user.phone, user.name, new Date(appointment.scheduledAt).toLocaleString());
+    }
 
     res.status(200).json({
       success: true,

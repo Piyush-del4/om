@@ -231,7 +231,7 @@ export default function AdminTeamPage() {
 
  {/* Seed message */}
  {seedMsg && (
- <div className={`text-xs px-4 py-3 rounded-lg border font-mono ${seedMsg.startsWith('✅') ? 'bg-green-950/20 border-green-800/40 text-green-400' : 'bg-red-950/20 border-red-800/40 text-red-400'}`}>
+ <div className={`text-xs px-4 py-3 rounded-lg border font-mono ${seedMsg.startsWith('✅') ? 'bg-green-50 border-green-200 text-green-600' : 'bg-red-50 border-red-200 text-red-600'}`}>
  {seedMsg}
  </div>
  )}
@@ -255,7 +255,7 @@ export default function AdminTeamPage() {
  <input
  value={form.name}
  onChange={e => setForm({ ...form, name: e.target.value })}
- placeholder="e.g. Raajesh S Panday"
+ placeholder="e.g. Rajessh Paanday"
  className="w-full bg-white/60 border border-neutral-700 focus:border-[var(--gold)] rounded-lg py-2.5 px-3 text-gray-900 text-xs outline-none"
  />
  </div>
@@ -306,7 +306,7 @@ export default function AdminTeamPage() {
  <button
  type="button"
  onClick={() => setForm(prev => ({ ...prev, image: '' }))}
- className="text-[9px] text-red-400 hover:text-red-300 font-semibold block mt-0.5"
+ className="text-[9px] text-red-600 hover:text-red-600 font-semibold block mt-0.5"
  >
  Remove Photo
  </button>
@@ -371,7 +371,7 @@ export default function AdminTeamPage() {
  placeholder="e.g. Astrologist"
  className="flex-1 bg-white/60 border border-neutral-700 focus:border-[var(--gold)] rounded-lg py-2 px-3 text-gray-900 text-xs outline-none"
  />
- <button onClick={() => removeSpec(idx)} className="text-red-500 hover:text-red-400 p-1">
+ <button onClick={() => removeSpec(idx)} className="text-red-600 hover:text-red-600 p-1">
  <X className="w-3.5 h-3.5" />
  </button>
  </div>
@@ -492,14 +492,14 @@ export default function AdminTeamPage() {
  if (confirm(`Remove ${member.name} from the team?`)) deleteMutation.mutate(member._id);
  }}
  disabled={deleteMutation.isPending}
- className="flex items-center gap-1.5 text-xs px-4 py-2 rounded-lg bg-red-950/20 border border-red-900/30 text-red-400 hover:bg-red-950/40 transition-colors"
+ className="flex items-center gap-1.5 text-xs px-4 py-2 rounded-lg bg-red-50 border border-red-200 text-red-600 hover:bg-red-50 transition-colors"
  >
  <Trash2 className="w-3.5 h-3.5" /> Remove
  </button>
  <span className={`ml-auto self-center text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-full border ${
  member.isActive
- ? 'text-green-400 border-green-900/40 bg-green-950/20'
- : 'text-red-400 border-red-900/40 bg-red-950/20'
+ ? 'text-green-600 border-green-200 bg-green-50'
+ : 'text-red-600 border-red-200 bg-red-50'
  }`}>
  {member.isActive ? 'Active' : 'Hidden'}
  </span>

@@ -8,6 +8,7 @@ export interface ICartItem {
 export interface ICart extends Document {
   userId: Types.ObjectId;
   items: ICartItem[];
+  abandonedEmailSent?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +22,7 @@ const CartSchema = new Schema<ICart>(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true, index: true },
     items: [CartItemSchema],
+    abandonedEmailSent: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

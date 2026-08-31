@@ -26,7 +26,7 @@ export function BirthPanchangCard({ data }: Props) {
  ];
 
  return (
- <div className="bg-amber-50/60 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+ <div className="bg-amber-50/60 border-2 border-amber-200 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
  {/* Title Header */}
  <div 
  /* onClick={() => setIsOpen(!isOpen)} */

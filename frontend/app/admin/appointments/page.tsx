@@ -350,8 +350,8 @@ export default function AdminAppointmentsPage() {
  {editingTypeId ? 'Edit consultation type' : 'Create consultation type'}
  </h3>
 
- {successMsg && <div className="text-xs text-green-400 bg-green-950/20 p-3 border border-green-900/30 rounded-lg">{successMsg}</div>}
- {errorMsg && <div className="text-xs text-red-400 bg-red-950/20 p-3 border border-red-900/30 rounded-lg">{errorMsg}</div>}
+ {successMsg && <div className="text-xs text-green-600 bg-green-50 p-3 border border-green-200 rounded-lg">{successMsg}</div>}
+ {errorMsg && <div className="text-xs text-red-600 bg-red-50 p-3 border border-red-200 rounded-lg">{errorMsg}</div>}
 
  <form onSubmit={handleSubmitType} className="space-y-4">
  <div className="space-y-1">
@@ -405,7 +405,7 @@ export default function AdminAppointmentsPage() {
  <button
  type="button"
  onClick={() => setImageUrl('')}
- className="text-[9px] text-red-400 hover:text-red-300 font-semibold block mt-0.5"
+ className="text-[9px] text-red-600 hover:text-red-600 font-semibold block mt-0.5"
  >
  Remove Image
  </button>
@@ -472,14 +472,14 @@ export default function AdminAppointmentsPage() {
  </div>
  <p className="text-[10px] text-gray-600 mt-0.5">{type.duration} mins · ₹{(type.price / 100).toLocaleString()}{type.imageUrl ? ' · 🖼️ Image Added' : ''}</p>
  {type.specialOfferTitle && (
- <p className="text-[9px] text-amber-400 mt-0.5">🏷 {type.specialOfferTitle}{type.offerPrice ? ` · ₹${(type.offerPrice / 100).toLocaleString()}` : ''}</p>
+ <p className="text-[9px] text-amber-600 mt-0.5">🏷 {type.specialOfferTitle}{type.offerPrice ? ` · ₹${(type.offerPrice / 100).toLocaleString()}` : ''}</p>
  )}
  </div>
  <div className="flex items-center gap-1 ml-2">
- <button onClick={() => handleStartEdit(type)} className="p-1.5 text-blue-400 hover:text-blue-300 hover:bg-blue-950/20 rounded-lg transition-colors" title="Edit">
+ <button onClick={() => handleStartEdit(type)} className="p-1.5 text-blue-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Edit">
  <Pencil className="w-3.5 h-3.5" />
  </button>
- <button onClick={() => { if (confirm('Delete this offering?')) deleteTypeMutation.mutate(type._id); }} className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-950/20 rounded-lg transition-colors" title="Delete">
+ <button onClick={() => { if (confirm('Delete this offering?')) deleteTypeMutation.mutate(type._id); }} className="p-1.5 text-red-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
  <Trash2 className="w-3.5 h-3.5" />
  </button>
  </div>
@@ -509,9 +509,9 @@ export default function AdminAppointmentsPage() {
  <div className="flex items-center gap-2">
  <span className="font-bold text-sm text-gray-900">{booking.typeName}</span>
  <span className={`text-[9px] font-bold uppercase py-0.5 px-2 rounded-full ${
- booking.status === 'confirmed' ? 'bg-green-950/40 text-green-400 border border-green-900/30' :
- booking.status === 'cancelled' ? 'bg-red-950/40 text-red-400 border border-red-900/30' :
- 'bg-yellow-950/40 text-yellow-400 border border-yellow-900/30'
+ booking.status === 'confirmed' ? 'bg-green-50 text-green-600 border border-green-200' :
+ booking.status === 'cancelled' ? 'bg-red-50 text-red-600 border border-red-200' :
+ 'bg-yellow-50 text-yellow-600 border border-yellow-200'
  }`}>
  {booking.status}
  </span>
@@ -523,10 +523,10 @@ export default function AdminAppointmentsPage() {
  </p>
  </div>
  <div className="flex items-center gap-2">
- <button onClick={() => updateStatusMutation.mutate({ apptId: booking._id, status: 'confirmed' })} className="p-1.5 bg-green-950/30 hover:bg-green-900/40 border border-green-900/20 text-green-400 rounded-lg transition-colors" title="Confirm Booking">
+ <button onClick={() => updateStatusMutation.mutate({ apptId: booking._id, status: 'confirmed' })} className="p-1.5 bg-green-50 hover:bg-green-900/40 border border-green-200 text-green-600 rounded-lg transition-colors" title="Confirm Booking">
  <CheckCircle className="w-4 h-4" />
  </button>
- <button onClick={() => updateStatusMutation.mutate({ apptId: booking._id, status: 'cancelled' })} className="p-1.5 bg-red-950/30 hover:bg-red-900/40 border border-red-900/20 text-red-400 rounded-lg transition-colors" title="Cancel Booking">
+ <button onClick={() => updateStatusMutation.mutate({ apptId: booking._id, status: 'cancelled' })} className="p-1.5 bg-red-50 hover:bg-red-900/40 border border-red-200 text-red-600 rounded-lg transition-colors" title="Cancel Booking">
  <XCircle className="w-4 h-4" />
  </button>
  </div>
@@ -544,8 +544,8 @@ export default function AdminAppointmentsPage() {
  {/* ── Row 2: Block Time Slots ───────────────────────────────────────── */}
  <div className="border-t border-[var(--gold-100)]/30 pt-10 space-y-6">
  <div className="flex items-center gap-3">
- <div className="w-9 h-9 rounded-xl bg-red-950/40 border border-red-900/30 flex items-center justify-center flex-shrink-0">
- <ShieldAlert className="w-5 h-5 text-red-400" />
+ <div className="w-9 h-9 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center flex-shrink-0">
+ <ShieldAlert className="w-5 h-5 text-red-600" />
  </div>
  <div>
  <h2 className="font-serif text-xl font-bold text-gray-900">Block Time Slots</h2>
@@ -556,13 +556,13 @@ export default function AdminAppointmentsPage() {
  <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
  {/* Block form */}
  <div className="lg:col-span-2">
- <GoldCard className="border border-red-900/30 p-6 space-y-5">
- <h3 className="font-serif text-sm font-bold text-red-400 flex items-center gap-2">
+ <GoldCard className="border border-red-200 p-6 space-y-5">
+ <h3 className="font-serif text-sm font-bold text-red-600 flex items-center gap-2">
  <BanIcon className="w-4 h-4" /> Add New Block
  </h3>
 
- {blockSuccess && <div className="text-xs text-green-400 bg-green-950/20 p-3 border border-green-900/30 rounded-lg">{blockSuccess}</div>}
- {blockError && <div className="text-xs text-red-400 bg-red-950/20 p-3 border border-red-900/30 rounded-lg">{blockError}</div>}
+ {blockSuccess && <div className="text-xs text-green-600 bg-green-50 p-3 border border-green-200 rounded-lg">{blockSuccess}</div>}
+ {blockError && <div className="text-xs text-red-600 bg-red-50 p-3 border border-red-200 rounded-lg">{blockError}</div>}
 
  <form onSubmit={handleBlockSlot} className="space-y-4">
  {/* Date row: Start + End */}
@@ -579,7 +579,7 @@ export default function AdminAppointmentsPage() {
  if (blockEndDate && blockEndDate < e.target.value) setBlockEndDate(e.target.value);
  }}
  required
- className="w-full bg-white/60 border border-red-900/40 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
+ className="w-full bg-white/60 border border-red-200 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
  />
  </div>
  <div className="space-y-1">
@@ -592,7 +592,7 @@ export default function AdminAppointmentsPage() {
  value={blockEndDate}
  onChange={(e) => setBlockEndDate(e.target.value)}
  placeholder={blockDate || todayStr}
- className="w-full bg-white/60 border border-red-900/40 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
+ className="w-full bg-white/60 border border-red-200 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
  />
  </div>
  </div>
@@ -608,7 +608,7 @@ export default function AdminAppointmentsPage() {
  setBlockStartIdx(idx);
  if (blockEndIdx <= idx) setBlockEndIdx(idx + 1);
  }}
- className="w-full bg-white/60 border border-red-900/40 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
+ className="w-full bg-white/60 border border-red-200 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
  >
  {TIME_LABELS.slice(0, -1).map((t, i) => (
  <option key={i} value={i} className="bg-gray-100">{t.label}</option>
@@ -620,7 +620,7 @@ export default function AdminAppointmentsPage() {
  <select
  value={blockEndIdx}
  onChange={(e) => setBlockEndIdx(Number(e.target.value))}
- className="w-full bg-white/60 border border-red-900/40 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
+ className="w-full bg-white/60 border border-red-200 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
  >
  {endTimeOptions.map((t, relIdx) => {
  const absIdx = blockStartIdx + 1 + relIdx;
@@ -643,13 +643,13 @@ export default function AdminAppointmentsPage() {
  onChange={(e) => setBlockLabel(e.target.value)}
  placeholder="e.g. Lunch break, Personal, Holiday"
  maxLength={80}
- className="w-full bg-white/60 border border-red-900/40 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
+ className="w-full bg-white/60 border border-red-200 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-red-700"
  />
  </div>
 
  {/* Preview */}
  {blockDate && (
- <div className="bg-red-950/20 border border-red-900/25 rounded-lg px-3 py-2 text-[10px] text-red-300 flex items-center gap-2">
+ <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-[10px] text-red-600 flex items-center gap-2">
  <BanIcon className="w-3 h-3 flex-shrink-0" />
  <span>
  Blocking&nbsp;<strong>{TIME_LABELS[blockStartIdx].label} – {TIME_LABELS[blockEndIdx]?.label ?? '—'}</strong>
@@ -680,7 +680,7 @@ export default function AdminAppointmentsPage() {
  <h3 className="font-serif text-sm font-bold text-gray-900">
  Active Slot Blocks
  {blockedSlots && blockedSlots.length > 0 && (
- <span className="ml-2 text-[10px] bg-red-950/40 text-red-400 border border-red-900/30 rounded-full px-2 py-0.5 font-mono">
+ <span className="ml-2 text-[10px] bg-red-50 text-red-600 border border-red-200 rounded-full px-2 py-0.5 font-mono">
  {blockedSlots.length}
  </span>
  )}
@@ -693,16 +693,16 @@ export default function AdminAppointmentsPage() {
  {blockedSlots.map((block: any) => (
  <div
  key={block._id}
- className="flex items-center justify-between gap-3 px-4 py-3 bg-gray-100 border border-red-900/20 rounded-xl group hover:border-red-900/40 transition-colors"
+ className="flex items-center justify-between gap-3 px-4 py-3 bg-gray-100 border border-red-200 rounded-xl group hover:border-red-200 transition-colors"
  >
  <div className="flex items-center gap-3 min-w-0">
- <div className="w-7 h-7 rounded-lg bg-red-950/50 border border-red-900/30 flex items-center justify-center flex-shrink-0">
- <BanIcon className="w-3.5 h-3.5 text-red-400" />
+ <div className="w-7 h-7 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center flex-shrink-0">
+ <BanIcon className="w-3.5 h-3.5 text-red-600" />
  </div>
  <div className="min-w-0">
  <p className="text-gray-900 text-xs font-medium truncate">{block.label || 'Blocked'}</p>
  <p className="text-[10px] text-gray-600 flex items-center gap-1 mt-0.5">
- <Clock className="w-3 h-3 text-red-500 flex-shrink-0" />
+ <Clock className="w-3 h-3 text-red-600 flex-shrink-0" />
  {formatBlockedSlot(block.startTime, block.endTime, block.startDate, block.endDate)}
  </p>
  </div>
@@ -714,7 +714,7 @@ export default function AdminAppointmentsPage() {
  }
  }}
  disabled={deleteBlockMutation.isPending}
- className="p-1.5 text-red-500 hover:text-red-400 hover:bg-red-950/30 rounded-lg transition-colors flex-shrink-0 opacity-60 group-hover:opacity-100"
+ className="p-1.5 text-red-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0 opacity-60 group-hover:opacity-100"
  title="Remove block"
  >
  <Trash2 className="w-3.5 h-3.5" />

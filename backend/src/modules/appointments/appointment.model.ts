@@ -9,6 +9,9 @@ export interface IAppointment extends Document {
   scheduledAt: Date;
   status: 'pending' | 'confirmed' | 'cancelled';
   googleCalendarEventId?: string;
+  attendeeName?: string;
+  attendeeDateOfBirth?: string;
+  attendeeBirthTime?: string;
   razorpayOrderId?: string;
   razorpayPaymentId?: string;
   razorpaySignature?: string;
@@ -27,6 +30,9 @@ const AppointmentSchema = new Schema<IAppointment>(
     scheduledAt: { type: Date, required: true, index: true },
     status: { type: String, enum: ['pending', 'confirmed', 'cancelled'], default: 'pending' },
     googleCalendarEventId: { type: String },
+    attendeeName: { type: String },
+    attendeeDateOfBirth: { type: String },
+    attendeeBirthTime: { type: String },
     razorpayOrderId: { type: String },
     razorpayPaymentId: { type: String },
     razorpaySignature: { type: String },
@@ -34,6 +40,8 @@ const AppointmentSchema = new Schema<IAppointment>(
   },
   { timestamps: true }
 );
+
+AppointmentSchema.index({ scheduledAt: 1, status: 1 });
 
 // Soft delete query helpers
 AppointmentSchema.pre(/^find/, function (this: any, next) {

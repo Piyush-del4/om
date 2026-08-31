@@ -13,6 +13,7 @@ import { CountdownTimer } from '@/components/shop/CountdownTimer';
 import { useRouter } from 'next/navigation';
 
 import { FormattedText } from '@/components/ui/FormattedText';
+import { ProductBundleCard } from '@/components/shop/ProductBundleCard';
 
 export default function ShopItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
  const resolvedParams = use(params);
@@ -105,7 +106,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
  <img 
  src={displayImage} 
  alt={item.title} 
- className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
+ className="w-full h-full object-contain p-2 transition-all duration-700 hover:scale-105"
  />
  ) : (
  <ShoppingBag className="w-24 h-24 text-neutral-800" />
@@ -124,7 +125,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
  displayImage === imgUrl ? 'border-[var(--gold)] shadow-[0_0_10px_rgba(204,143,51,0.25)]' : 'border-gray-200 hover:border-gray-600'
  }`}
  >
- <img src={imgUrl} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+ <img src={imgUrl} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-contain p-2" />
  </button>
  ))}
  </div>
@@ -145,7 +146,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
  const isOutOfStock = item.inStock === false || item.stockCount === 0;
  const hasCount = item.stockCount !== undefined && item.stockCount !== null && item.stockCount > 0;
  return (
- <span className={`text-xs font-mono font-bold ${isOutOfStock ? 'text-red-500' : 'text-green-400'}`}>
+ <span className={`text-xs font-mono font-bold ${isOutOfStock ? 'text-red-600' : 'text-green-600'}`}>
  • {isOutOfStock ? 'OUT OF STOCK' : hasCount ? `IN STOCK (${item.stockCount} pieces left)` : 'IN STOCK'}
  </span>
  );
@@ -168,7 +169,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
  <div className="flex items-baseline gap-3 flex-wrap">
  {hasActiveOffer ? (
  <>
- <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
+ <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[#e77600]">
  ₹{(item.offerPrice / 100).toLocaleString()}
  </span>
  <span className="text-neutral-500 line-through text-[28px] font-sans">
@@ -181,7 +182,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
  )}
  </>
  ) : (
- <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[var(--gold)]">
+ <span className="text-[40px] sm:text-[46px] font-bold font-sans text-[#e77600]">
  ₹{(item.price / 100).toLocaleString()}
  </span>
  )}
@@ -194,7 +195,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
  Handcrafted under astrological alignments. Contains natural elements configured to channel natural vibrations.
  </p>
  
- <div className="flex items-center gap-4 py-2 border-t border-neutral-900/60 pt-4">
+ <div className="flex items-center gap-4 py-2 border-t border-neutral-200 pt-4">
  <span className="text-xs font-mono text-gray-600 uppercase tracking-wider">Quantity:</span>
  <div className="flex items-center border border-gray-200 rounded-lg bg-white/40 overflow-hidden">
  <button
@@ -247,6 +248,9 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
  </div>
  </div>
 
+ {/* Frequently Bought Together Bundle Card */}
+ <ProductBundleCard currentProduct={item} />
+
  {/* Product Description */}
  <div className="space-y-3 pt-2">
  <h3 className="font-serif text-lg font-bold text-[var(--gold)] flex items-center gap-2">
@@ -261,7 +265,7 @@ export default function ShopItemDetailPage({ params }: { params: Promise<{ id: s
  </div>
  </div>
 
- {/* Features Info Box */}
+ {/* Feanures Info Box */}
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-neutral-900">
  <div className="flex items-start gap-3 p-3 rounded-xl bg-gray-50/20 border border-neutral-900">
  <ShieldCheck className="w-5 h-5 text-[var(--gold)] flex-shrink-0 mt-0.5" />

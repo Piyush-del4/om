@@ -271,8 +271,8 @@ export default function AdminShopPage() {
  {editingItemId ? 'Edit Shop Product' : 'Add New Shop Product'}
  </h3>
  
- {successMsg && <div className="text-xs text-green-400 bg-green-950/20 p-3 border border-green-900/30 rounded-lg">{successMsg}</div>}
- {errorMsg && <div className="text-xs text-red-400 bg-red-950/20 p-3 border border-red-900/30 rounded-lg">{errorMsg}</div>}
+ {successMsg && <div className="text-xs text-green-600 bg-green-50 p-3 border border-green-200 rounded-lg">{successMsg}</div>}
+ {errorMsg && <div className="text-xs text-red-600 bg-red-50 p-3 border border-red-200 rounded-lg">{errorMsg}</div>}
  
  <form onSubmit={handleCreateProduct} className="space-y-4">
  <div className="space-y-1">
@@ -311,7 +311,7 @@ export default function AdminShopPage() {
  <button
  type="button"
  onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
- className="absolute inset-0 flex items-center justify-center bg-white/60 opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-300 text-[9px] font-bold cursor-pointer"
+ className="absolute inset-0 flex items-center justify-center bg-white/60 opacity-0 group-hover:opacity-100 transition-opacity text-red-600 hover:text-red-600 text-[9px] font-bold cursor-pointer"
  >
  Remove
  </button>
@@ -406,7 +406,7 @@ export default function AdminShopPage() {
  <div className="flex items-center gap-2 mt-0.5">
  <span className="text-[var(--gold)]">₹{(item.price / 100).toLocaleString()}</span>
  <span className="text-neutral-500 font-mono text-[9px]">•</span>
- <span className={`font-semibold text-[9px] uppercase ${isOutOfStock ? 'text-red-500' : 'text-green-400'}`}>
+ <span className={`font-semibold text-[9px] uppercase ${isOutOfStock ? 'text-red-600' : 'text-green-600'}`}>
  {isOutOfStock
  ? 'Out of Stock'
  : item.stockCount !== undefined && item.stockCount !== null && item.stockCount > 0
@@ -420,7 +420,7 @@ export default function AdminShopPage() {
  e.stopPropagation();
  if (confirm('Delete product?')) deleteProductMutation.mutate(item._id);
  }}
- className="text-red-400 hover:text-red-300 p-1 flex-shrink-0"
+ className="text-red-600 hover:text-red-600 p-1 flex-shrink-0"
  >
  <Trash2 className="w-4 h-4" />
  </button>
@@ -514,7 +514,7 @@ export default function AdminShopPage() {
  </td>
  <td className="py-3.5 px-4">
  <span className={`text-[9px] font-bold uppercase py-0.5 px-2 rounded-full ${
- ['paid', 'shipped', 'delivered'].includes(order.status) ? 'bg-green-950/40 text-green-400 border border-green-900/30' : 'bg-yellow-950/40 text-yellow-400 border border-yellow-900/30'
+ ['paid', 'shipped', 'delivered'].includes(order.status) ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-yellow-50 text-yellow-600 border border-yellow-200'
  }`}>
  {['paid', 'shipped', 'delivered'].includes(order.status) ? 'PAID' : (order.status === 'failed' ? 'FAILED' : 'PENDING')}
  </span>
@@ -594,7 +594,7 @@ export default function AdminShopPage() {
  <td className="py-3 px-4 text-right text-[var(--gold)] font-bold">₹{row.totalRevenue.toLocaleString()}</td>
  <td className="py-3 px-4 text-center">
  {row.hasOffer ? (
- <span className="bg-red-950/40 text-red-400 border border-red-900/30 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">Offer Active</span>
+ <span className="bg-red-50 text-red-600 border border-red-200 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">Offer Active</span>
  ) : (
  <span className="text-gray-600 text-[10px]">Standard Store</span>
  )}

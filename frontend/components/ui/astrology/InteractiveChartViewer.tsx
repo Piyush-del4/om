@@ -54,7 +54,7 @@ export function InteractiveChartViewer({ data, chartTitle = 'Lagna Chart (D-1)' 
  const selectedOccupants = selectedHouseDrawer ? houseOccupants[selectedHouseDrawer] : [];
 
  return (
- <div className="bg-amber-50/60 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+ <div className="bg-amber-50/60 border-2 border-amber-200 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
  
  {/* Chart Canvas Viewport */}
  <div className="w-full bg-white border border-amber-300 rounded-xl shadow-inner p-2">

@@ -189,12 +189,12 @@ export default function BatchDetailPage({ params }: { params: Promise<{ id: stri
  key={idx}
  className="p-5 rounded-2xl bg-amber-500/5 border border-amber-500/20 relative overflow-hidden flex gap-4 items-start"
  >
- <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 mt-0.5">
+ <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600 mt-0.5">
  <Bell className="w-4 h-4" />
  </div>
  <div className="space-y-1.5 flex-1">
  <div className="flex justify-between items-center text-[10px] text-gray-500 font-mono">
- <span className="font-bold text-amber-500 uppercase tracking-widest text-[9px]">Broadcasted Notice</span>
+ <span className="font-bold text-amber-600 uppercase tracking-widest text-[9px]">Broadcasted Notice</span>
  <span>{new Date(ann.createdAt).toLocaleString()}</span>
  </div>
  <p className="text-gray-700 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-light">
@@ -281,7 +281,7 @@ export default function BatchDetailPage({ params }: { params: Promise<{ id: stri
  {pdfs.map((pdf: any) => (
  <div key={pdf._id} className="flex items-center justify-between p-4 rounded-xl bg-gray-100/40 border border-gray-200/60 text-xs transition-spring hover:border-[var(--gold-200)]">
  <div className="flex items-center gap-3">
- <div className="p-2 bg-red-950/20 border border-red-900/30 rounded-lg text-red-400">
+ <div className="p-2 bg-red-50 border border-red-200 rounded-lg text-red-600">
  <FileText className="w-4 h-4" />
  </div>
  <span className="font-medium text-gray-900 text-sm line-clamp-1">{pdf.title}</span>

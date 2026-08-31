@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { client } from '../../lib/api/client';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { GoldButton } from '../../components/ui/GoldButton';
-import { Calendar, Package, BookOpen, User as UserIcon, Clock, AlertCircle, Star, FileText } from 'lucide-react';
+import { Calendar, Package, BookOpen, User as UserIcon, Clock, AlertCircle, Star, FileText, Calculator } from 'lucide-react';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 export default function UserDashboard() {
@@ -66,12 +66,12 @@ export default function UserDashboard() {
  if (!user) return null;
 
  const quickTiles = [
- { name: 'Premium Kundli', icon: <Star className="w-6 h-6 text-[var(--gold)]" />, desc: 'Generate your personalized Janam Kundli report', path: '/premium-personalized-kundli', highlight: true },
+ { name: 'Premium Kundli', icon: <Star className="w-6 h-6 text-[var(--gold)]" />, desc: 'FEAN Method Astrology AMB Premium Kundli', path: '/premium-personalized-kundli', highlight: true },
  { name: 'Saved Kundlis', icon: <FileText className="w-6 h-6 text-[var(--gold)]" />, desc: 'View and access your saved Janam Kundli reports', path: '/saved-kundlis' },
+ { name: 'Numerology', icon: <Calculator className="w-6 h-6 text-[var(--gold)]" />, desc: 'FEAN method Numerology', path: '/free-tools/numerology-calculator' },
  { name: 'My Appointments', icon: <Calendar className="w-6 h-6 text-[var(--gold)]" />, desc: 'Consultation dates & calendar coordinates', path: '/appointments' },
  { name: 'My Orders', icon: <Package className="w-6 h-6 text-[var(--gold)]" />, desc: 'Shop item shipping updates & receipt tags', path: '/orders' },
  { name: 'My Batches', icon: <BookOpen className="w-6 h-6 text-[var(--gold)]" />, desc: 'Course lectures & notes', path: '/my-batches' },
- { name: 'Edit Profile', icon: <UserIcon className="w-6 h-6 text-[var(--gold)]" />, desc: 'Identity password modifications & accounts details', path: '/profile' },
  ];
 
  return (
@@ -97,7 +97,7 @@ export default function UserDashboard() {
  </div>
 
  {/* Quick Access Tiles */}
- <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+ <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
  {quickTiles.map((tile) => (
  <Link key={tile.name} href={tile.path} className="group block h-full">
  <GoldCard className={`h-full transition-spring ${'highlight' in tile && tile.highlight ? 'border-[var(--gold)] bg-gradient-to-br from-[var(--gold-50)] to-black' : ''}`}>
@@ -138,7 +138,9 @@ export default function UserDashboard() {
  </p>
  </div>
  <span className={`text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-full border ${
- app.status === 'confirmed' ? 'bg-green-950/20 text-green-400 border-green-500/20' : 'bg-yellow-950/20 text-yellow-400 border-yellow-500/20'
+ app.status === 'confirmed' ? 'bg-green-100 text-green-700 border-green-200' :
+ app.status === 'cancelled' ? 'bg-red-100 text-red-700 border-red-200' :
+ 'bg-yellow-100 text-yellow-700 border-yellow-200'
  }`}>
  {app.status}
  </span>

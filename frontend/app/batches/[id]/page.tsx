@@ -217,7 +217,7 @@ export default function PublicBatchDetailPage({ params }: { params: Promise<{ id
  <div className="pt-2">
  {isEnrolled ? (
  <div className="space-y-3">
- <div className="flex items-center gap-2 text-green-400 text-xs bg-green-950/20 border border-green-900/30 p-3 rounded-lg justify-center font-semibold">
+ <div className="flex items-center gap-2 text-green-600 text-xs bg-green-50 border border-green-200 p-3 rounded-lg justify-center font-semibold">
  <CheckCircle2 className="w-4.5 h-4.5" />
  <span>You are already enrolled in this batch!</span>
  </div>

@@ -13,7 +13,7 @@ export function ReportHeader({ className = '' }: ReportHeaderProps) {
  <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-amber-500 bg-gray-50 flex items-center justify-center p-0.5 overflow-hidden shadow-md">
  <img 
  src="/images/logo.png" 
- alt="Om Astrology AMC Logo" 
+ alt="OM Astrology AMC Logo" 
  className="w-full h-full object-contain rounded-full"
  onError={(e) => {
  e.currentTarget.src = "/favicon.ico";
@@ -25,10 +25,10 @@ export function ReportHeader({ className = '' }: ReportHeaderProps) {
  {/* Center: Title & Subtitle */}
  <div className="text-center py-2 sm:py-0">
  <h1 className="font-sans text-3xl md:text-4xl font-extrabold text-amber-950 tracking-wider">
- OM ASTROLOGY AMC
+ OM Astrology AMC
  </h1>
  <p className="text-sm md:text-base font-bold text-amber-800 tracking-[0.2em] uppercase mt-1.5 pl-[0.2em]">
- FEAN THEORY AMB
+ FEAN METHOD AMB
  </p>
  </div>
 

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { PlanetaryRelationshipsCard } from '@/components/ui/astrology/PlanetaryRelationshipsCard';
 
 interface VimshottariDashaProps {
  data?: any;
@@ -326,6 +327,9 @@ export function VimshottariDashaTable({ data, dashaApiData, birthDateStr }: Vims
  ))}
  </div>
  </div>
+
+ {/* Planetary Relationships Analysis below Dasha */}
+ <PlanetaryRelationshipsCard />
  </div>
  );
 }

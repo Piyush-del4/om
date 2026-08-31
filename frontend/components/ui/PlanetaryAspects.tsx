@@ -14,7 +14,7 @@ const PLANETARY_ASPECTS = [
 
 export function PlanetaryAspects() {
  return (
- <div className="w-full max-w-full mx-auto my-6 bg-white border border-amber-800/20 rounded-2xl p-4 sm:p-6 shadow-md">
+ <div className="w-full max-w-full mx-auto my-6 bg-white border border-amber-200 rounded-2xl p-4 sm:p-6 shadow-md">
  <h3 className="font-serif text-xl sm:text-2xl font-bold text-center text-amber-950 mb-5 flex items-center justify-center gap-2">
  ✦ Aspects(Drishti) of Planets✦
  </h3>

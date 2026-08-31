@@ -22,14 +22,13 @@ import { logger } from './utils/logger';
 
 const app = express();
 
-// 1. Initialize Sentry (if DSN provided)
-if (env.SENTRY_DSN) {
+// 1. Initialize Sentry (if valid DSN provided)
+const isSentryConfigured = !!(env.SENTRY_DSN && !env.SENTRY_DSN.includes('your_sentry_dsn_here'));
+if (isSentryConfigured) {
   Sentry.init({
     dsn: env.SENTRY_DSN,
     environment: env.NODE_ENV,
-    // Add any required scrubbing in beforeSend if needed
     beforeSend(event) {
-      // Modify/scrub event if needed
       return event;
     },
   });
@@ -127,7 +126,7 @@ app.get('/ready', (_, res) => {
 // Apply rate limiting to all actual API endpoints
 app.use('/api', globalLimiter);
 
-// 9. Strict auth-route rate limit (10 requests per 1 minute on auth endpoints)
+// 9. Strict rate limiters for sensitive endpoints
 const authLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 10,
@@ -143,13 +142,55 @@ const authLimiter = rateLimit({
 });
 app.use('/api/v1/auth', authLimiter);
 
+const paymentLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 15,
+  skip: () => process.env.NODE_ENV === 'test',
+  message: {
+    success: false,
+    error: {
+      code: 'RATE_LIMIT_EXCEEDED',
+      message: 'Too many payment requests. Please try again in a minute.',
+    },
+  },
+});
+app.use('/api/v1/payments', paymentLimiter);
+
+const appointmentLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  skip: () => process.env.NODE_ENV === 'test',
+  message: {
+    success: false,
+    error: {
+      code: 'RATE_LIMIT_EXCEEDED',
+      message: 'Too many booking attempts. Please try again in a minute.',
+    },
+  },
+});
+app.use('/api/v1/appointments', appointmentLimiter);
+
+const newsletterLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 5,
+  skip: () => process.env.NODE_ENV === 'test',
+  message: {
+    success: false,
+    error: {
+      code: 'RATE_LIMIT_EXCEEDED',
+      message: 'Too many newsletter subscription attempts. Please try again in a minute.',
+    },
+  },
+});
+app.use('/api/v1/newsletter', newsletterLimiter);
+
 // 10. Mount Router Stub
 // We will replace this with the actual router import when we define it
 import { router } from './routes';
 app.use('/api/v1', router);
 
 // 11. Sentry error handler (must be placed before our custom error handler)
-if (env.SENTRY_DSN) {
+if (isSentryConfigured) {
   Sentry.setupExpressErrorHandler(app);
 }
 

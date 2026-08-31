@@ -14,10 +14,8 @@ export function detectYogas(data: any): YogaResult[] {
  if (!data || !data.output || !data.output[1]) return [];
 
  const rawPlanets = data.output[1];
- const house1Sign = rawPlanets[1]?.current_sign || rawPlanets['Ascendant']?.current_sign || 1;
 
  // Helper getters
- const getP = (pName: string) => rawPlanets[pName] || null;
  const getHouse = (pName: string): number => rawPlanets[pName]?.house_number || 0;
  const getSign = (pName: string): number => rawPlanets[pName]?.current_sign || 0;
 

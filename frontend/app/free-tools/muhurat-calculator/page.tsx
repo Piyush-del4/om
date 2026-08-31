@@ -6,6 +6,7 @@ import { CheckCircle2, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '@/components/ui/astrology/DailyPanchangMuhuratWidget';
 import { env } from '@/lib/env';
 
 const FAQS = [
@@ -93,9 +94,6 @@ export default function MuhuratCalculatorPage() {
  <h1 className="font-serif text-4xl md:text-5xl font-bold">
  Calculator <span className="gold-gradient-text">Muhurat</span>
  </h1>
- <p className="text-gray-600 text-sm md:text-base font-light max-w-2xl mx-auto">
- Find the most auspicious time (Muhurat) for your activities. Enter your details below to calculate your personalized report instantly.
- </p>
  </motion.div>
 
  {/* Main Form Section */}

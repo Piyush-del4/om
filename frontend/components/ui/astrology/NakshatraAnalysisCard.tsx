@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React from 'react';
 import { getNakshatraAndPada } from '@/lib/astrologyEngine';
 import { getNakshatraDetail } from '@/lib/nakshatraData';
 
@@ -24,7 +23,7 @@ export function NakshatraAnalysisCard({ data }: Props) {
  const detail = getNakshatraDetail(nakInfo.name);
 
  return (
- <div className="bg-amber-50/60 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+ <div className="bg-amber-50/60 border-2 border-amber-200 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
  {/* Title Header */}
  <div 
  /* onClick={() => setIsOpen(!isOpen)} */

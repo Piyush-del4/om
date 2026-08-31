@@ -6,6 +6,7 @@ import { Star, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '@/components/ui/astrology/DailyPanchangMuhuratWidget';
 
 const FAQS = [
  { q: 'What is a Lucky Number?', a: 'Your lucky number is derived from the core vibrations of your birth date and name, guiding your path to success.' },

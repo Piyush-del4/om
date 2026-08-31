@@ -25,6 +25,14 @@ export interface IUser extends Document {
   isDeleted: boolean;
   createdAt: Date;
   updatedAt: Date;
+  // Personalization fields (set during onboarding)
+  dateOfBirth?: string;
+  birthTime?: string;
+  birthPlace?: string;
+  gender?: string;
+  zodiacSign?: string;
+  interests?: string[];
+  onboardingCompleted?: boolean;
 }
 
 const UserSchema = new Schema<IUser>(
@@ -49,6 +57,14 @@ const UserSchema = new Schema<IUser>(
       deliveryInstructions: { type: String, default: '' }
     },
     isDeleted: { type: Boolean, default: false },
+    // Personalization
+    dateOfBirth: { type: String, default: '' },
+    birthTime: { type: String, default: '' },
+    birthPlace: { type: String, default: '' },
+    gender: { type: String, default: '' },
+    zodiacSign: { type: String, default: '' },
+    interests: { type: [String], default: [] },
+    onboardingCompleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

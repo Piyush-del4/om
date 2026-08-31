@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 import { analyzeAspectsAndConjunctions } from '@/lib/aspectsAndConjunctions';
 
 interface Props {
@@ -9,6 +8,8 @@ interface Props {
 }
 
 export function AspectsAndConjunctionsCard({ data }: Props) {
+ const [filter, setFilter] = useState<'all' | 'aspects' | 'conjunctions'>('all');
+
  /* Collapsible State (Preserved in comments for future activation):
  const [isOpen, setIsOpen] = useState(false);
  */
@@ -16,10 +17,9 @@ export function AspectsAndConjunctionsCard({ data }: Props) {
  if (!data || !data.output || !data.output[1]) return null;
 
  const { aspects, conjunctions } = analyzeAspectsAndConjunctions(data);
- const [filter, setFilter] = useState<'all' | 'aspects' | 'conjunctions'>('all');
 
  return (
- <div className="bg-amber-50/60 border-2 border-amber-800/30 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
+ <div className="bg-amber-50/60 border-2 border-amber-200 rounded-2xl p-6 w-full max-w-5xl mx-auto my-6 shadow-lg space-y-6">
  {/* Title Header */}
  <div 
  /* onClick={() => setIsOpen(!isOpen)} */

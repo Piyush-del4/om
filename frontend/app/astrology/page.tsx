@@ -3,13 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Star, HelpCircle, Info, Loader2 } from 'lucide-react';
+import { Star, HelpCircle, Info, Loader2, BookOpen, Download } from 'lucide-react';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { CategoryBatchesList } from '../../components/ui/CategoryBatchesList';
 import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackground';
-import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/api/client';
+import { FAQSection } from '../../components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '../../components/ui/astrology/DailyPanchangMuhuratWidget';
 
 const ASTROLOGY_HOUSES = [
  { _id: '1', num: '1st', name: 'Lagna (Self)', desc: 'Physical appearance, health, personality, and life path.' },
@@ -75,7 +76,94 @@ export default function AstrologyPage() {
  <p className="text-gray-600 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
  Vedic Astrology (Jyotish) is an ancient Indian science. By studying where the planets were when you were born, we can understand your life path, personality, strengths, and the best timing for important decisions.
  </p>
- </motion.div>
+  </motion.div>
+
+  {/* === HOROSCOPE CTA SECTION === */}
+  <motion.section
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.2 }}
+    transition={{ duration: 0.7, ease: 'easeOut' }}
+    className="relative z-10 w-full bg-[#B37B47] text-white rounded-2xl py-12 px-4 md:px-12 overflow-hidden shadow-sm"
+  >
+    <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-8 items-center justify-between relative z-10">
+      <div className="space-y-4 text-center md:text-left flex-1">
+        <h2 className="font-serif text-3xl md:text-4xl font-extrabold leading-tight">
+          Read Your Daily Horoscope
+        </h2>
+        <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-lg">
+          Check accurate daily, weekly, monthly, and yearly predictions tailored for all 12 Rashis based on precise Vedic planetary transits.
+        </p>
+      </div>
+      <div className="flex-shrink-0">
+        <Link href="/horoscope/daily/aries">
+          <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-[#B37B47] font-bold text-base rounded-xl hover:bg-amber-50 transition-all duration-200 shadow-lg">
+            <Star className="w-5 h-5 fill-[#B37B47]" />
+            Check My Zodiac
+          </button>
+        </Link>
+      </div>
+    </div>
+  </motion.section>
+
+  {/* === FEAN EBOOK SECTION === */}
+  <motion.section
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.2 }}
+    transition={{ duration: 0.7, ease: 'easeOut' }}
+    className="relative z-10 w-full bg-gradient-to-br from-white via-amber-50/30 to-white border border-[var(--gold-200)] rounded-2xl py-12 px-4 md:px-12 overflow-hidden shadow-sm"
+  >
+    <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 md:pl-16">
+      {/* Left — Content */}
+      <div className="space-y-6 text-center md:text-left order-2 md:order-1 pl-0 md:pl-12">
+        <div className="space-y-1">
+          <span className="text-[var(--gold-dark)] text-xs uppercase tracking-widest font-bold flex items-center gap-2 justify-center md:justify-start">
+            <span>✦</span> Essential Knowledge
+          </span>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-extrabold text-neutral-900 leading-tight">
+            FEAN METHOD
+            <span className="gold-gradient-text block">ASTROLOGY EBOOK</span>
+          </h2>
+        </div>
+        <p className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-lg mx-auto md:mx-0">
+          Discover the foundational principles of our patented FEAN Method Astrology AMB™. This comprehensive digital guide walks you through numbers, grids, remedies, and the exact science we use to set your life on the right path.
+        </p>
+
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-4">
+          <Link href="/fean-ebook">
+            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 w-full sm:w-auto">
+              <BookOpen className="w-5 h-5" />
+              Read Ebook
+            </button>
+          </Link>
+          <a href="/FEAN Method Astrology Ebook.pdf" download="FEAN_Method_Astrology_Ebook.pdf">
+            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white border-2 border-[var(--gold)] text-[var(--gold-dark)] font-bold text-base rounded-xl hover:bg-amber-50 transition-all duration-200 shadow-sm w-full sm:w-auto">
+              <Download className="w-5 h-5" />
+              Download PDF
+            </button>
+          </a>
+        </div>
+      </div>
+      
+      {/* Right — Book Image */}
+      <div className="flex justify-center md:justify-center order-1 md:order-2">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="relative w-64 h-80 flex items-center justify-center hover:scale-105 transition-transform duration-500"
+        >
+          <img
+            src="/Fean-ebook-cover.png"
+            alt="FEAN Method Astrology Ebook"
+            className="w-full h-full object-contain"
+          />
+        </motion.div>
+      </div>
+    </div>
+  </motion.section>
 
  {/* Section: The Science of Vedic Astrology */}
  <motion.div
@@ -115,22 +203,22 @@ export default function AstrologyPage() {
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true, amount: 0.1 }}
  transition={{ duration: 0.6, ease: 'easeOut' }}
- className="space-y-6">
+ className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
  <div className="space-y-2">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+ <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-amber-600 pb-3 text-white">
  The 12 Houses (Bhavas) of Your Chart
  </h2>
- <p className="text-gray-600 text-xs">
+ <p className="text-amber-100/80 text-xs">
  Every birth chart is divided into 12 segments representing different aspects of your life journey.
  </p>
  </div>
  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
  {ASTROLOGY_HOUSES.map((house) => (
- <GoldCard key={house._id} className="border border-gray-200/60 p-4 hover:border-[var(--gold)] transition-colors duration-300">
- <span className="text-[var(--gold)] font-mono font-bold text-xs">{house.num} House</span>
- <h4 className="text-gray-900 text-xs font-bold font-serif mt-1">{house.name}</h4>
- <p className="text-[10px] text-gray-600 leading-normal mt-1">{house.desc}</p>
- </GoldCard>
+ <div key={house._id} className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+ <span className="text-amber-300 font-mono font-bold text-xs">{house.num} House</span>
+ <h4 className="text-white text-xs font-bold font-serif mt-1">{house.name}</h4>
+ <p className="text-[10px] text-amber-100/70 leading-normal mt-1">{house.desc}</p>
+ </div>
  ))}
  </div>
  </motion.div>
@@ -253,57 +341,45 @@ export default function AstrologyPage() {
  </div>
 
  {/* Section: Practical Vedic Remedies */}
- <div className="space-y-6">
+ <div className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
  <div className="space-y-2">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+ <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-amber-600 pb-3 text-white">
  Practical Vedic Remedies (Upayas)
  </h2>
- <p className="text-gray-600 text-xs">
+ <p className="text-amber-100/80 text-xs">
  Remedies do not change your fate, but they act as shock absorbers to balance planetary electromagnetic imbalances.
  </p>
  </div>
  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
- <GoldCard className="border border-gray-200/60 p-4">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">Mantras & Sound</h4>
- <p className="text-[10px] text-gray-600 leading-relaxed mt-2">
+ <div className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+ <h4 className="text-amber-300 font-serif font-bold text-sm">Mantras & Sound</h4>
+ <p className="text-[10px] text-amber-100/70 leading-relaxed mt-2">
  Repeating specific Sanskrit phoneme frequencies matches the vibrational wavelength of afflicted planets, calming the mental chatter and retraining endocrine responses.
  </p>
- </GoldCard>
- <GoldCard className="border border-gray-200/60 p-4">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">Gemstones</h4>
- <p className="text-[10px] text-gray-600 leading-relaxed mt-2">
+ </div>
+ <div className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+ <h4 className="text-amber-300 font-serif font-bold text-sm">Gemstones</h4>
+ <p className="text-[10px] text-amber-100/70 leading-relaxed mt-2">
  Natural untreated gems act as prisms. Worn against the skin, they filter natural light frequencies, feeding specific trace minerals and light waves back into the human aura.
  </p>
- </GoldCard>
- <GoldCard className="border border-gray-200/60 p-4">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">Seva (Charity)</h4>
- <p className="text-[10px] text-gray-600 leading-relaxed mt-2">
+ </div>
+ <div className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+ <h4 className="text-amber-300 font-serif font-bold text-sm">Seva (Charity)</h4>
+ <p className="text-[10px] text-amber-100/70 leading-relaxed mt-2">
  Saturn blocks are cleared by helping elderly and underprivileged people. Cleaning surroundings or donating grains acts directly to reduce natal karmic debt (Rina).
  </p>
- </GoldCard>
- <GoldCard className="border border-gray-200/60 p-4">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">Fasting & Lifestyle</h4>
- <p className="text-[10px] text-gray-600 leading-relaxed mt-2">
+ </div>
+ <div className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+ <h4 className="text-amber-300 font-serif font-bold text-sm">Fasting & Lifestyle</h4>
+ <p className="text-[10px] text-amber-100/70 leading-relaxed mt-2">
  Fasting on specific days of planetary lords (e.g. Saturday for Saturn, Tuesday for Mars) cleanses digestive toxins and builds discipline, neutralizing impulsive habits.
  </p>
- </GoldCard>
+ </div>
  </div>
  </div>
 
  {/* FAQ Accordion Section */}
- <div className="space-y-6">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3 flex items-center gap-2">
- <HelpCircle className="w-6 h-6 text-[var(--gold)]" /> Frequently Asked Questions
- </h2>
- <div className="space-y-4">
- {ASTROLOGY_FAQS.map((faq) => (
- <div key={faq._id} className="border-l-2 border-[var(--gold)] pl-4 py-2 space-y-1 bg-gray-100/20 p-4 rounded-r-lg">
- <h4 className="text-gray-900 text-base font-bold">{faq.q}</h4>
- <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
- </div>
- ))}
- </div>
- </div>
+ <FAQSection faqs={ASTROLOGY_FAQS} />
 
  {/* 2026 Planetary Transits */}
  <div className="pt-12 border-t border-gray-200/60 mt-12">
@@ -316,7 +392,7 @@ export default function AstrologyPage() {
  <Link key={planet} href={`/transit/${planet}`}>
  <div className="bg-white border border-[var(--gold)]/20 hover:border-[var(--gold)] rounded-xl p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(204,143,51,0.2)] shadow-sm">
  <div className="w-16 h-16 rounded-full flex items-center justify-center">
- <img src={`/images/planets/${planet}.png`} alt={`${planet} planet`} className="w-full h-full object-cover rounded-full" />
+ <img src={`/images/planets/${planet}.png?v=5`} alt={`${planet} planet`} className="w-full h-full object-cover rounded-full" />
  </div>
  <span className="text-sm font-medium text-gray-900 text-center capitalize">{planet} Transit</span>
  </div>

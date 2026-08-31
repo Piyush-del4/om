@@ -9,6 +9,7 @@ import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget
 import { CategoryBatchesList } from '../../components/ui/CategoryBatchesList';
 import { SignatureAnalyzerWidget } from '../../components/ui/SignatureAnalyzerWidget';
 import { FAQSection } from '../../components/ui/FAQSection';
+import { DailyPanchangMuhuratWidget } from '../../components/ui/astrology/DailyPanchangMuhuratWidget';
 
 const GRAPHOLOGY_FAQS = [
  { q: 'What is graphology?', a: 'Graphology is the scientific analysis of handwriting to determine psychological patterns, emotional state, and personality traits. Your brain writes, not your hand, making handwriting a form of "brainwriting."' },
@@ -94,23 +95,23 @@ export default function GraphologyPage() {
  </div>
 
 
- {/* Section: Handwriting Stroke Indicators */}
- <div className="space-y-6">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
- Handwriting Stroke Indicators
- </h2>
- <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
- {strokeIndicators.map((s) => (
- <GoldCard key={s.name} className="transition-spring">
- <div className="space-y-2">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">{s.name}</h4>
- <span className="text-[9px] text-gray-600 uppercase tracking-widest block font-mono">{s.type}</span>
- <p className="text-xs text-gray-600 leading-relaxed font-light">{s.desc}</p>
- </div>
- </GoldCard>
- ))}
- </div>
- </div>
+  {/* Section: Handwriting Stroke Indicators */}
+  <div className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
+    <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-amber-600 pb-3 text-white">
+      Handwriting Stroke Indicators
+    </h2>
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      {strokeIndicators.map((s) => (
+        <div key={s.name} className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+          <div className="space-y-2">
+            <h4 className="text-amber-300 font-serif font-bold text-sm">{s.name}</h4>
+            <span className="text-[9px] text-amber-200 uppercase tracking-widest block font-mono">{s.type}</span>
+            <p className="text-xs text-amber-100/70 leading-relaxed font-light">{s.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
 
  {/* Section: Micro-Analysis of Letter Formations */}
  <div className="space-y-6">
@@ -128,7 +129,7 @@ export default function GraphologyPage() {
  <h4 className="text-[var(--gold)] font-serif font-bold text-base border-b border-gray-200/60 pb-2">Intellect & Willpower Indicators ('t' and 'i')</h4>
  <div className="space-y-3 text-xs text-gray-600 font-light leading-relaxed">
  <p>
- <strong>• Letter 't' Crossbar Height:</strong> A crossbar placed high on the stem indicates high goals and strong ambition. A low crossbar indicates lower self-esteem or fear of failure.
+ <strong>• Letter 't' Crossbar Height:</strong> A crossbar placed high on the stem indicates high goals and strong AMCition. A low crossbar indicates lower self-esteem or fear of failure.
  </p>
  <p>
  <strong>• Letter 't' Crossbar Weight/Length:</strong> A long, firm crossbar represents lasting willpower and determination. A weak, thin bar indicates poor follow-through or physical fatigue.

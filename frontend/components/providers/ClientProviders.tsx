@@ -6,6 +6,7 @@ import { AuthProvider } from '../../auth/AuthProvider';
 import { Navbar } from '../layout/Navbar';
 import { Footer } from '../layout/Footer';
 import { GlobalPreloader } from '../ui/GlobalPreloader';
+import { HoroscopeNotifier } from '../ui/HoroscopeNotifier';
 
 import { Toaster } from 'react-hot-toast';
 
@@ -24,6 +25,7 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
  <QueryClientProvider client={queryClient}>
  <AuthProvider>
  <GlobalPreloader />
+ <HoroscopeNotifier />
  <Toaster
  position="top-center"
  containerStyle={{
