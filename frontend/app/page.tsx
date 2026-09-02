@@ -438,7 +438,7 @@ export default function Home() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.2 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 w-full bg-gradient-to-br from-amber-50 via-white to-amber-50/60 border-y border-amber-200/60 py-20 px-4 overflow-hidden"
  >
@@ -519,7 +519,7 @@ export default function Home() {
   <motion.section
     initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
+    viewport={{ once: true, amount: 'some' }}
     transition={{ duration: 0.7, ease: 'easeOut' }}
     className="relative z-10 w-full bg-gradient-to-br from-white via-amber-50/30 to-white border-b border-amber-200/60 py-20 px-4 overflow-hidden"
   >
@@ -586,7 +586,7 @@ export default function Home() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.15 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full space-y-16">
  <div className="text-center space-y-2">
@@ -604,8 +604,8 @@ export default function Home() {
  className="h-full"
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true }}
- transition={{ duration: 0.5, delay: idx * 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
+ transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
  >
  <Link href={svc.link} className="block h-full">
  <GoldCard flush className="h-full flex flex-col items-center text-center justify-between min-h-[400px] border border-[var(--gold-100)] relative group">
@@ -656,7 +656,7 @@ export default function Home() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
  <div className="text-center space-y-2">
@@ -747,7 +747,7 @@ export default function Home() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
  <div className="text-center space-y-2">
@@ -825,7 +825,7 @@ export default function Home() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40 mt-10">
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -886,7 +886,7 @@ export default function Home() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
  <div className="text-center space-y-2">
@@ -954,7 +954,7 @@ export default function Home() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
  <div className="text-center space-y-2">
@@ -1012,7 +1012,7 @@ export default function Home() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40 overflow-hidden">
 
@@ -1130,7 +1130,7 @@ See how real people solved their real problems with our guidance.
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
  <div className="text-center space-y-2">
@@ -1168,7 +1168,7 @@ See how real people solved their real problems with our guidance.
  id="book"
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 py-20 w-full">
  <GoldCard className="border border-[var(--gold-300)] p-8 md:p-12">
@@ -1310,7 +1310,7 @@ See how real people solved their real problems with our guidance.
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40"
  >
@@ -1390,7 +1390,7 @@ See how real people solved their real problems with our guidance.
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, ease: 'easeOut' }}
  className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full border-t border-[var(--gold-100)]/40"
  >
@@ -1458,7 +1458,7 @@ See how real people solved their real problems with our guidance.
  <motion.section
    initial={{ opacity: 0, y: 40 }}
    whileInView={{ opacity: 1, y: 0 }}
-   viewport={{ once: true, amount: 0.1 }}
+   viewport={{ once: true, amount: 'some' }}
    transition={{ duration: 0.7, ease: 'easeOut' }}
    className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full border-t border-[var(--gold-100)]/40 text-center space-y-12"
  >

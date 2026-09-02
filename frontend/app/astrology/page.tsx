@@ -82,7 +82,7 @@ export default function AstrologyPage() {
   <motion.section
     initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
+    viewport={{ once: true, amount: 'some' }}
     transition={{ duration: 0.7, ease: 'easeOut' }}
     className="relative z-10 w-full bg-[#B37B47] text-white rounded-2xl py-12 px-4 md:px-12 overflow-hidden shadow-sm"
   >
@@ -110,7 +110,7 @@ export default function AstrologyPage() {
   <motion.section
     initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
+    viewport={{ once: true, amount: 'some' }}
     transition={{ duration: 0.7, ease: 'easeOut' }}
     className="relative z-10 w-full bg-gradient-to-br from-white via-amber-50/30 to-white border border-[var(--gold-200)] rounded-2xl py-12 px-4 md:px-12 overflow-hidden shadow-sm"
   >
@@ -169,7 +169,7 @@ export default function AstrologyPage() {
  <motion.div
  initial={{ opacity: 0, y: 30 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.15 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.6, ease: 'easeOut' }}
  className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
  <div className="lg:col-span-7 flex">
@@ -201,7 +201,7 @@ export default function AstrologyPage() {
  <motion.div
  initial={{ opacity: 0, y: 30 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.6, ease: 'easeOut' }}
  className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
  <div className="space-y-2">

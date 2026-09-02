@@ -171,7 +171,7 @@ export default function AboutUsPage() {
  key={member._id}
  initial={{ opacity: 0, y: 50 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.15 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7, delay: 0.1 }}
  className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start ${idx % 2 === 1 ? 'lg:[direction:rtl]' : ''}`}
  >
@@ -274,7 +274,7 @@ export default function AboutUsPage() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.1 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7 }}
  className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-12"
  >
@@ -323,7 +323,7 @@ export default function AboutUsPage() {
  <motion.section
  initial={{ opacity: 0, y: 40 }}
  whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 0.2 }}
+ viewport={{ once: true, amount: 'some' }}
  transition={{ duration: 0.7 }}
  className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 py-20 text-center space-y-6"
  >
