@@ -318,45 +318,8 @@ export function Navbar() {
  )}
  </div>
 
-  {/* Mobile menu button & quick controls */}
-  <div className="md:hidden flex items-center gap-1 sm:gap-2">
-    {isAuthenticated ? (
-      <>
-        {/* Mobile Notification Bell */}
-        <NotificationBellContainer />
-
-        {/* Mobile Cart icon for non-admin */}
-        {!isAdmin && (
-          <Link href="/shop/cart" className="relative p-2 text-gray-600 hover:text-[var(--gold)]">
-            <ShoppingCart className="w-5 h-5" />
-            {cartCount > 0 && (
-              <span className="absolute top-0 right-0 bg-[var(--gold)] text-black text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
-          </Link>
-        )}
-
-        {/* Mobile Profile Avatar Button */}
-        <Link
-          href="/profile"
-          className="flex items-center gap-1 p-1.5 rounded-full border border-[var(--gold-200)] text-gray-600 hover:border-[var(--gold)] hover:text-[var(--gold)] bg-gray-50/80"
-          title="My Profile Settings"
-        >
-          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--gold-dark)] to-[var(--gold)] flex items-center justify-center">
-            <User className="w-3.5 h-3.5 text-black" />
-          </div>
-        </Link>
-      </>
-    ) : (
-      <Link href="/login" className="mr-1">
-        <GoldButton variant="filled" className="px-3 py-1 text-xs">
-          Get Started
-        </GoldButton>
-      </Link>
-    )}
-
-    {/* Mobile Drawer Toggle */}
+  {/* Mobile menu button */}
+  <div className="md:hidden flex items-center">
     <button
       onClick={toggleMenu}
       className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
@@ -510,6 +473,21 @@ export function Navbar() {
   >
   <Star className="w-4 h-4 text-[var(--gold)]" />
   <span>Saved Kundlis</span>
+  </Link>
+  <Link
+  href="/shop/cart"
+  onClick={() => setIsOpen(false)}
+  className="flex items-center justify-between p-2.5 rounded-lg text-xs font-semibold text-gray-700 bg-gray-50 border border-gray-100 hover:text-[var(--gold)]"
+  >
+  <div className="flex items-center gap-2">
+  <ShoppingCart className="w-4 h-4 text-[var(--gold)]" />
+  <span>My Cart</span>
+  </div>
+  {cartCount > 0 && (
+  <span className="bg-[var(--gold)] text-black text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+  {cartCount}
+  </span>
+  )}
   </Link>
   </>
   )}
