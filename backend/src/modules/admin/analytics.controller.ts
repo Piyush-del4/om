@@ -2,28 +2,32 @@ import { Request, Response } from 'express';
 import { Order } from '../shop/order.model';
 import { Appointment } from '../appointments/appointment.model';
 import { Enrolment } from '../batches/enrolment.model';
+import { User } from '../users/user.model';
 import KundliSubmission from '../../models/KundliSubmission';
 
 export const getRevenueAnalytics = async (req: Request, res: Response): Promise<void> => {
   try {
-    // 1. Shop Orders Revenue
-    const paidOrders = await Order.find({ status: 'paid' });
+    // Fetch IDs of all admin accounts so admin test actions/submissions are excluded from earnings
+    const adminUserIds = await User.find({ role: 'admin' }).distinct('_id');
+
+    // 1. Shop Orders Revenue (excluding admin test orders)
+    const paidOrders = await Order.find({ status: 'paid', userId: { $nin: adminUserIds } });
     const shopRevenuePaise = paidOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
 
-    // 2. Appointments Revenue
-    const paidAppointments = await Appointment.find({ status: { $in: ['confirmed', 'completed'] } });
+    // 2. Appointments Revenue (excluding admin appointments)
+    const paidAppointments = await Appointment.find({ status: { $in: ['confirmed', 'completed'] }, userId: { $nin: adminUserIds } });
     const appointmentRevenuePaise = paidAppointments.reduce((sum, a) => sum + ((a as any).pricePaid || (a as any).amount || 0), 0);
 
-    // 3. Batch Enrollments Revenue
-    const paidEnrolments = await Enrolment.find({ method: 'payment' }).populate('batchId', 'price offerPrice');
+    // 3. Batch Enrollments Revenue (excluding admin enrollments)
+    const paidEnrolments = await Enrolment.find({ method: 'payment', userId: { $nin: adminUserIds } }).populate('batchId', 'price offerPrice');
     const batchRevenuePaise = paidEnrolments.reduce((sum, e: any) => {
       const b = e.batchId;
       const activePrice = b ? (b.offerPrice || b.price || 0) : 0;
       return sum + activePrice;
     }, 0);
 
-    // 4. Premium Kundli Generation Purchases (Standard ₹50 / ₹99 per Kundli report)
-    const kundliSubmissions = await KundliSubmission.find({});
+    // 4. Premium Kundli Generation Purchases (Standard ₹50 / ₹99 per Kundli report, excluding Admin Kundlis)
+    const kundliSubmissions = await KundliSubmission.find({ userId: { $nin: adminUserIds } });
     const KUNDLI_REPORT_PRICE_PAISE = 5000; // ₹50 per report
     const kundliRevenuePaise = kundliSubmissions.length * KUNDLI_REPORT_PRICE_PAISE;
 
@@ -44,6 +48,7 @@ export const getRevenueAnalytics = async (req: Request, res: Response): Promise<
       // Monthly Shop
       const monthOrders = await Order.find({
         status: 'paid',
+        userId: { $nin: adminUserIds },
         createdAt: { $gte: startOfMonth, $lte: endOfMonth },
       });
       const shopSales = Math.round(monthOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0) / 100);
@@ -51,6 +56,7 @@ export const getRevenueAnalytics = async (req: Request, res: Response): Promise<
       // Monthly Consultations
       const monthAppointments = await Appointment.find({
         status: { $in: ['confirmed', 'completed'] },
+        userId: { $nin: adminUserIds },
         createdAt: { $gte: startOfMonth, $lte: endOfMonth },
       });
       const appointments = Math.round(monthAppointments.reduce((sum, a) => sum + ((a as any).pricePaid || 0), 0) / 100);
@@ -58,12 +64,14 @@ export const getRevenueAnalytics = async (req: Request, res: Response): Promise<
       // Monthly Batches
       const monthEnrolments = await Enrolment.find({
         method: 'payment',
+        userId: { $nin: adminUserIds },
         createdAt: { $gte: startOfMonth, $lte: endOfMonth },
       }).populate('batchId', 'price offerPrice');
       const batches = Math.round(monthEnrolments.reduce((sum, e: any) => sum + (e.batchId ? (e.batchId.offerPrice || e.batchId.price || 0) : 0), 0) / 100);
 
-      // Monthly Kundlis
+      // Monthly Kundlis (excluding admin submissions)
       const monthKundlis = await KundliSubmission.find({
+        userId: { $nin: adminUserIds },
         createdAt: { $gte: startOfMonth, $lte: endOfMonth },
       });
       const kundlis = Math.round((monthKundlis.length * KUNDLI_REPORT_PRICE_PAISE) / 100);
@@ -103,7 +111,8 @@ export const getRevenueAnalytics = async (req: Request, res: Response): Promise<
 
 export const exportAccountingCSV = async (req: Request, res: Response): Promise<void> => {
   try {
-    const paidOrders = await Order.find({ status: 'paid' }).populate('userId', 'name email');
+    const adminUserIds = await User.find({ role: 'admin' }).distinct('_id');
+    const paidOrders = await Order.find({ status: 'paid', userId: { $nin: adminUserIds } }).populate('userId', 'name email');
 
     let csvContent = 'Order ID,Customer Name,Customer Email,Total Amount (INR),Payment ID,Date,Status\n';
 

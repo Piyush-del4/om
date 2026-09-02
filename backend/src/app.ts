@@ -28,7 +28,7 @@ if (isSentryConfigured) {
   Sentry.init({
     dsn: env.SENTRY_DSN,
     environment: env.NODE_ENV,
-    beforeSend(event) {
+    beforeSend(event: any) {
       return event;
     },
   });
