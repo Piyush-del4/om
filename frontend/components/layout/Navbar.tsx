@@ -318,8 +318,9 @@ export function Navbar() {
  )}
  </div>
 
-  {/* Mobile menu button */}
-  <div className="md:hidden flex items-center">
+  {/* Mobile menu button & Notification bell */}
+  <div className="md:hidden flex items-center gap-1 sm:gap-2">
+    {isAuthenticated && <NotificationBellContainer />}
     <button
       onClick={toggleMenu}
       className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
