@@ -6,7 +6,8 @@ import {
   getKundliSubmissionById,
   deleteKundliSubmission,
   getAllKundliSubmissionsForAdmin,
-  getLatestHoroscope
+  getLatestHoroscope,
+  triggerHoroscopeGeneration
 } from '../controllers/astrologyController';
 import { requireAuth } from '../middleware/requireAuth';
 import { requireAdmin } from '../middleware/requireAdmin';
@@ -15,6 +16,7 @@ const router = express.Router();
 
 // Horoscope
 router.get('/horoscope/latest', getLatestHoroscope);
+router.post('/horoscope/generate', triggerHoroscopeGeneration);
 
 // Proxy for calculations
 router.post('/proxy', fetchAstrologyData);

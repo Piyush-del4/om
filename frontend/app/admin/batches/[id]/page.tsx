@@ -68,6 +68,36 @@ export default function EditBatchPage() {
  const [pdfPublicId, setPdfPublicId] = useState('note-pdf');
  const [pdfLectureId, setPdfLectureId] = useState('');
  const [pdfError, setPdfError] = useState('');
+ const [isPdfUploading, setIsPdfUploading] = useState(false);
+
+ const handlePdfFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+ const file = e.target.files?.[0];
+ if (!file) return;
+
+ setIsPdfUploading(true);
+ setPdfError('');
+ const formData = new FormData();
+ formData.append('file', file);
+ formData.append('folder', 'batch_notes');
+
+ try {
+ const res = await client.post('/uploads', formData);
+ if (res.data?.success) {
+ setPdfUrl(res.data.data.url);
+ setPdfPublicId(res.data.data.publicId || 'note-pdf');
+ if (!pdfTitle.trim()) {
+ const nameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
+ setPdfTitle(nameWithoutExt);
+ }
+ } else {
+ setPdfError('Upload failed');
+ }
+ } catch (err: any) {
+ setPdfError(err.response?.data?.error?.message || 'Failed to upload PDF file');
+ } finally {
+ setIsPdfUploading(false);
+ }
+ };
 
  // Add Announcements States
  const [announcementMessage, setAnnouncementMessage] = useState('');
@@ -500,13 +530,60 @@ export default function EditBatchPage() {
  <input type="text" value={pdfTitle} onChange={(e) => setPdfTitle(e.target.value)} required placeholder="e.g. Numerology Reference Chart" className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--gold)]" />
  </div>
  <div className="space-y-1">
- <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-600">PDF Document URL</label>
- <input type="url" value={pdfUrl} onChange={(e) => setPdfUrl(e.target.value)} required placeholder="https://example.com/sheet.pdf" className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--gold)]" />
+ <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-600">Upload PDF File *</label>
+ {pdfUrl ? (
+ <div className="space-y-2">
+ <div className="relative border border-[var(--gold-100)] rounded-lg p-3 bg-white/40 flex items-center gap-3">
+ <div className="w-9 h-9 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center text-red-600 flex-shrink-0">
+ <FileText className="w-5 h-5" />
  </div>
- <div className="space-y-1">
- <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-600">Cloudinary Public ID</label>
- <input type="text" value={pdfPublicId} onChange={(e) => setPdfPublicId(e.target.value)} placeholder="note-pdf" className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--gold)]" />
+ <div className="flex-1 min-w-0">
+ <p className="text-xs font-semibold text-gray-900 truncate">{pdfUrl.split('/').pop()}</p>
+ <p className="text-[9px] text-gray-500 font-mono truncate">{pdfUrl}</p>
+ <button
+ type="button"
+ onClick={() => {
+ setPdfUrl('');
+ setPdfPublicId('note-pdf');
+ }}
+ className="text-[10px] text-red-600 hover:text-red-700 font-semibold mt-1"
+ >
+ Remove and select another PDF
+ </button>
  </div>
+ </div>
+ </div>
+ ) : (
+ <div className="relative border border-dashed border-[var(--gold-100)] hover:border-[var(--gold)] rounded-lg p-5 flex flex-col items-center justify-center bg-white/40 transition-colors cursor-pointer group">
+ <input
+ type="file"
+ accept=".pdf,application/pdf"
+ onChange={handlePdfFileUpload}
+ className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+ disabled={isPdfUploading}
+ />
+ <Upload className="w-8 h-8 text-gray-600 group-hover:text-[var(--gold)] transition-colors mb-2" />
+ <span className="text-xs font-medium text-gray-600 group-hover:text-gray-900 transition-colors">
+ {isPdfUploading ? 'Uploading PDF file...' : 'Click or Drag to Upload PDF from Device'}
+ </span>
+ <span className="text-[10px] text-gray-400 mt-0.5">PDF documents up to 25MB</span>
+ </div>
+ )}
+ </div>
+
+ <details className="text-[10px] text-gray-500 pt-1">
+ <summary className="cursor-pointer hover:text-gray-700 select-none">Advanced / Manual URL Options</summary>
+ <div className="space-y-2 mt-2 pt-2 border-t border-gray-100">
+ <div>
+ <label className="block text-[9px] font-semibold uppercase text-gray-500">PDF Document URL</label>
+ <input type="url" value={pdfUrl} onChange={(e) => setPdfUrl(e.target.value)} placeholder="https://example.com/sheet.pdf" className="w-full bg-white/60 border border-gray-200 rounded py-1 px-2 text-gray-900 text-xs" />
+ </div>
+ <div>
+ <label className="block text-[9px] font-semibold uppercase text-gray-500">Cloudinary Public ID</label>
+ <input type="text" value={pdfPublicId} onChange={(e) => setPdfPublicId(e.target.value)} placeholder="note-pdf" className="w-full bg-white/60 border border-gray-200 rounded py-1 px-2 text-gray-900 text-xs" />
+ </div>
+ </div>
+ </details>
  <div className="space-y-1">
  <label className="block text-[10px] font-semibold uppercase tracking-wider text-gray-600">Associated Lecture (Optional)</label>
  <select value={pdfLectureId} onChange={(e) => setPdfLectureId(e.target.value)} className="w-full bg-gray-100 border border-gray-200 rounded-lg py-2 px-3 text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-[var(--gold)]">

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import axios from 'axios';
 import KundliSubmission from '../models/KundliSubmission';
 import Horoscope from '../models/Horoscope';
+import { generateDailyHoroscopes } from '../services/horoscopeService';
 
 const GENERAL_API_BASE_URL = 'https://json.freeastrologyapi.com';
 const DASHA_API_BASE_URL = 'https://api.freeastroapi.com/api/v2';
@@ -215,14 +216,52 @@ export const getAllKundliSubmissionsForAdmin = async (req: Request, res: Respons
 
 export const getLatestHoroscope = async (req: Request, res: Response) => {
   try {
-    const latest = (await Horoscope.findOne().sort({ createdAt: -1 }).lean()) as any;
-    if (!latest) {
-      return res.status(404).json({ success: false, message: 'No horoscope found' });
+    const today = new Date().toISOString().split('T')[0];
+    const todayHoroscope = (await Horoscope.findOne({ date: today }).lean()) as any;
+
+    if (todayHoroscope && todayHoroscope.data) {
+      return res.status(200).json({ success: true, data: todayHoroscope.data });
     }
-    return res.status(200).json({ success: true, data: latest.data });
+
+    // Today's horoscope is missing -> trigger background generation
+    console.log(`[Horoscope API] Horoscope missing for today (${today}). Triggering background generation...`);
+    generateDailyHoroscopes().catch(err => console.error(`[Horoscope API] Background gen error: ${err.message}`));
+
+    // Fallback: Return latest available horoscope from previous days so UI is never blank
+    const latest = (await Horoscope.findOne().sort({ createdAt: -1 }).lean()) as any;
+    if (latest && latest.data) {
+      return res.status(200).json({ success: true, data: latest.data });
+    }
+
+    // If NO horoscope exists in DB at all, wait for initial generation to complete
+    console.log('[Horoscope API] No existing horoscopes in DB. Generating synchronously...');
+    await generateDailyHoroscopes();
+    const newlyGenerated = (await Horoscope.findOne({ date: today }).lean()) as any;
+    if (newlyGenerated && newlyGenerated.data) {
+      return res.status(200).json({ success: true, data: newlyGenerated.data });
+    }
+
+    return res.status(404).json({ success: false, message: 'No horoscope found' });
   } catch (error: any) {
     console.error('Get Latest Horoscope Error:', error.message);
     return res.status(500).json({ success: false, message: 'Failed to fetch latest horoscope.', error: error.message });
   }
 };
+
+export const triggerHoroscopeGeneration = async (req: Request, res: Response) => {
+  try {
+    const adminSecret = req.headers['x-admin-secret'];
+    if (adminSecret !== process.env.ADMIN_SECRET && process.env.NODE_ENV === 'production') {
+      return res.status(403).json({ success: false, message: 'Forbidden' });
+    }
+
+    console.log('🔧 Manual horoscope generation triggered via API');
+    generateDailyHoroscopes().catch(err => console.error(`Background horoscope gen error: ${err.message}`));
+
+    return res.json({ success: true, message: 'Daily horoscope generation started in background.' });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, message: 'Failed to trigger horoscope generation', error: err.message });
+  }
+};
+
 

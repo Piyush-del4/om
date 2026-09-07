@@ -19,7 +19,7 @@ export async function listBatches(req: Request, res: Response, next: NextFunctio
   try {
     // Exclude batch enrollment codes from storefront public listings
     const { category } = req.query;
-    const filter: any = {};
+    const filter: any = { isDeleted: { $ne: true } };
     if (category) {
       filter.category = category;
     }
@@ -118,6 +118,17 @@ export async function createBatch(req: Request, res: Response, next: NextFunctio
       offerPrice: offerPrice !== undefined ? offerPrice : undefined,
       offerExpiresAt: offerExpiresAt ? new Date(offerExpiresAt) : undefined,
     });
+
+    // Auto-enroll creator / admin in the newly created batch so it immediately shows up in /my-batches
+    const userId = req.user?._id;
+    if (userId) {
+      await Enrolment.create({
+        userId,
+        batchId: newBatch._id,
+        method: 'admin',
+        watchedLectures: [],
+      });
+    }
 
     res.status(201).json({
       success: true,
@@ -614,10 +625,33 @@ export async function deletePdfNote(req: Request, res: Response, next: NextFunct
 export async function getMyEnrolments(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const userId = req.user?._id;
+    const isAdmin = req.user?.role === 'admin';
+
+    // If user is Admin, ensure admin is enrolled in all active non-deleted batches
+    if (isAdmin && userId) {
+      const allBatches = await Batch.find({ isDeleted: { $ne: true } });
+      const existingEnrolments = await Enrolment.find({ userId });
+      const enrolledBatchIds = new Set(existingEnrolments.map(e => e.batchId?.toString()));
+
+      for (const b of allBatches) {
+        if (!enrolledBatchIds.has(b._id.toString())) {
+          await Enrolment.create({
+            userId,
+            batchId: b._id,
+            method: 'admin',
+            watchedLectures: [],
+          });
+        }
+      }
+    }
+
     const enrolments = await Enrolment.find({ userId }).populate('batchId');
+    // Filter out enrolments for batches that have been deleted or missing
+    const validEnrolments = enrolments.filter(e => e.batchId && !(e.batchId as any).isDeleted);
+
     res.status(200).json({
       success: true,
-      data: enrolments,
+      data: validEnrolments,
     });
   } catch (error) {
     next(error);

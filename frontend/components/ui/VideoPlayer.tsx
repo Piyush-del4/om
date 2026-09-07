@@ -61,6 +61,10 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  const [volume, setVolume] = useState(100);
  const [isMuted, setIsMuted] = useState(false);
  const [playbackRate, setPlaybackRate] = useState(1);
+ const [quality, setQuality] = useState('auto');
+ const [captions, setCaptions] = useState<'off' | 'on'>('off');
+ const captionsRef = useRef(captions);
+ captionsRef.current = captions;
  const [isBuffering, setIsBuffering] = useState(false);
  const [isFullscreen, setIsFullscreen] = useState(false);
  const [showControls, setShowControls] = useState(true);
@@ -102,6 +106,8 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  fs: 0, // Hide native fullscreen button
  modestbranding: 1, // Hide YouTube logo where possible
  disablekb: 1, // Disable keyboard controls inside iframe
+ cc_load_policy: 1, // Enable caption module loading capability
+ cc_lang_pref: 'en',
  enablejsapi: 1,
  origin: typeof window !== 'undefined' ? window.location.origin : '',
  },
@@ -109,6 +115,21 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  onReady: (event: any) => {
  if (!isMounted) return;
  playerRef.current = event.target;
+
+ // Default is OFF: unload captions on startup if initial state is off
+ if (captionsRef.current === 'off') {
+   try {
+     if (typeof event.target.setOption === 'function') {
+       event.target.setOption('captions', 'track', {});
+       event.target.setOption('captions', 'fontSize', -1);
+       event.target.setOption('captions', 'displaySettings', { fontOpacity: 0, backgroundOpacity: 0, windowOpacity: 0 });
+     }
+     if (typeof event.target.unloadModule === 'function') {
+       event.target.unloadModule('captions');
+       event.target.unloadModule('cc');
+     }
+   } catch (e) {}
+ }
  setDuration(event.target.getDuration());
  setVolume(event.target.getVolume());
  setIsMuted(event.target.isMuted());
@@ -122,6 +143,21 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  setIsPlaying(true);
  setIsBuffering(false);
  setDuration(event.target.getDuration());
+
+ // Enforce Off captions if set to off
+ if (captionsRef.current === 'off') {
+ try {
+ if (typeof event.target.unloadModule === 'function') {
+ event.target.unloadModule('captions');
+ event.target.unloadModule('cc');
+ }
+ if (typeof event.target.setOption === 'function') {
+ event.target.setOption('captions', 'track', {});
+ event.target.setOption('captions', 'fontSize', -1);
+ event.target.setOption('captions', 'displaySettings', { fontOpacity: 0, backgroundOpacity: 0, windowOpacity: 0 });
+ }
+ } catch (e) {}
+ }
  } else if (state === window.YT.PlayerState.PAUSED) {
  setIsPlaying(false);
  setIsBuffering(false);
@@ -267,6 +303,72 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  triggerShowControls();
  };
 
+ // Quality Action
+ const handleQualityChange = (selectedQuality: string) => {
+ setQuality(selectedQuality);
+ if (playerRef.current && typeof playerRef.current.setPlaybackQuality === 'function') {
+ playerRef.current.setPlaybackQuality(selectedQuality);
+ }
+ triggerShowControls();
+ };
+
+  // Captions Action
+  const handleCaptionsChange = (value: string) => {
+    const mode = value as 'off' | 'on';
+    setCaptions(mode);
+    if (playerRef.current) {
+      try {
+        if (mode === 'on') {
+          if (typeof playerRef.current.loadModule === 'function') {
+            playerRef.current.loadModule('captions');
+            playerRef.current.loadModule('cc');
+          }
+          let targetTrack: any = { languageCode: 'en' };
+          if (typeof playerRef.current.getOption === 'function') {
+            const tracklist = playerRef.current.getOption('captions', 'tracklist');
+            if (tracklist && tracklist.length > 0) {
+              targetTrack = tracklist[0];
+            }
+          }
+          if (typeof playerRef.current.setOption === 'function') {
+            playerRef.current.setOption('captions', 'fontSize', 1);
+            playerRef.current.setOption('captions', 'displaySettings', { fontOpacity: 1, backgroundOpacity: 0.8, windowOpacity: 0.8 });
+            playerRef.current.setOption('captions', 'track', targetTrack);
+          }
+        } else {
+          if (typeof playerRef.current.setOption === 'function') {
+            playerRef.current.setOption('captions', 'track', {});
+            playerRef.current.setOption('cc', 'track', {});
+            playerRef.current.setOption('captions', 'fontSize', -1);
+            playerRef.current.setOption('captions', 'displaySettings', { fontOpacity: 0, backgroundOpacity: 0, windowOpacity: 0 });
+          }
+          if (typeof playerRef.current.unloadModule === 'function') {
+            playerRef.current.unloadModule('captions');
+            playerRef.current.unloadModule('cc');
+          }
+        }
+      } catch (e) {
+        console.warn('Captions toggle error:', e);
+      }
+    }
+    triggerShowControls();
+  };
+
+ const getQualityLabel = (q: string) => {
+ switch (q) {
+ case 'auto': return 'Auto';
+ case 'highres': return '4K';
+ case 'hd1440': return '1440p';
+ case 'hd1080': return '1080p';
+ case 'hd720': return '720p';
+ case 'large': return '480p';
+ case 'medium': return '360p';
+ case 'small': return '240p';
+ case 'tiny': return '144p';
+ default: return q;
+ }
+ };
+
  // Capture clicking outer container to play/pause (ignoring control bar interactions)
  const handleContainerClick = (e: React.MouseEvent) => {
  if ((e.target as HTMLElement).closest('.player-controls')) {
@@ -282,24 +384,24 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  onMouseLeave={handleMouseLeave}
  onClick={handleContainerClick}
  onContextMenu={(e) => e.preventDefault()}
- className="relative aspect-video w-full rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-[0_4px_30px_rgba(0,0,0,0.8)] group select-none cursor-pointer"
+ className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black border border-gray-200 group select-none cursor-pointer"
  >
  {/* 1. YouTube Iframe Wrapper - Pointer events disabled to prevent redirects & native clicks */}
  <div ref={iframeContainerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
- {/* 2. Semi-transparent click overlay to block interactions and handle central play clicks */}
- <div className="absolute inset-0 w-full h-full bg-white/10 hover:bg-white/20 transition-all duration-300" />
+ {/* 2. Transparent click overlay to block interactions and handle central play clicks */}
+ <div className="absolute inset-0 w-full h-full bg-transparent" />
 
  {/* 3. Center Buffering / Play Overlay */}
  {isBuffering && (
- <div className="absolute inset-0 flex items-center justify-center bg-white/40 pointer-events-none">
+ <div className="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none">
  <Loader2 className="w-12 h-12 text-[var(--gold)] animate-spin" />
  </div>
  )}
 
  {!isPlaying && !isBuffering && (
- <div className="absolute inset-0 flex items-center justify-center bg-white/30 group-hover:bg-white/45 transition-all">
- <div className="w-16 h-16 rounded-full bg-[var(--gold)] flex items-center justify-center text-black shadow-lg hover:scale-110 transition-transform duration-300">
+ <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+ <div className="w-16 h-16 rounded-full bg-[var(--gold)] flex items-center justify-center text-black shadow-lg hover:scale-110 transition-transform duration-300 pointer-events-auto">
  <Play className="w-7 h-7 fill-black ml-1" />
  </div>
  </div>
@@ -322,7 +424,7 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  max={duration || 100}
  value={currentTime}
  onChange={(e) => handleSeek(Number(e.target.value))}
- className="flex-1 h-1.5 rounded-lg appearance-none cursor-pointer accent-[var(--gold)] outline-none transition-all hover:h-2"
+ className="flex-1 h-1.5 rounded-lg appearance-none cursor-pointer outline-none transition-all [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-md [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-0"
  style={{
  background: `linear-gradient(to right, var(--gold) ${
  (currentTime / (duration || 1)) * 100
@@ -351,34 +453,34 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  )}
  </button>
 
- {/* Volume Control */}
- <div className="flex items-center gap-2 group/volume">
- <button
- onClick={toggleMute}
- className="hover:text-[var(--gold)] transition-colors p-1"
- style={{ color: '#ffffff' }}
- title={isMuted ? 'Unmute' : 'Mute'}
- >
- {isMuted || volume === 0 ? (
- <VolumeX className="w-5 h-5" color="#ffffff" />
- ) : (
- <Volume2 className="w-5 h-5" color="#ffffff" />
- )}
- </button>
- <input
- type="range"
- min={0}
- max={100}
- value={isMuted ? 0 : volume}
- onChange={(e) => handleVolumeChange(Number(e.target.value))}
- className="w-0 group-hover/volume:w-16 h-1 rounded-lg appearance-none cursor-pointer accent-[var(--gold)] outline-none transition-all duration-300"
- style={{
- background: `linear-gradient(to right, var(--gold) ${
- isMuted ? 0 : volume
- }%, rgba(255, 255, 255, 0.25) ${isMuted ? 0 : volume}%)`,
- }}
- />
- </div>
+  {/* Volume Control */}
+  <div className="flex items-center gap-2">
+  <button
+  onClick={toggleMute}
+  className="hover:text-[var(--gold)] transition-colors p-1"
+  style={{ color: '#ffffff' }}
+  title={isMuted ? 'Unmute' : 'Mute'}
+  >
+  {isMuted || volume === 0 ? (
+  <VolumeX className="w-5 h-5" color="#ffffff" />
+  ) : (
+  <Volume2 className="w-5 h-5" color="#ffffff" />
+  )}
+  </button>
+  <input
+  type="range"
+  min={0}
+  max={100}
+  value={isMuted ? 0 : volume}
+  onChange={(e) => handleVolumeChange(Number(e.target.value))}
+  className="w-16 sm:w-20 h-1.5 rounded-lg appearance-none cursor-pointer outline-none transition-all [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-md [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-0"
+  style={{
+  background: `linear-gradient(to right, var(--gold) ${
+  isMuted ? 0 : volume
+  }%, rgba(255, 255, 255, 0.25) ${isMuted ? 0 : volume}%)`,
+  }}
+  />
+  </div>
  </div>
 
  <div className="flex items-center gap-4">
@@ -395,6 +497,35 @@ export function VideoPlayer({ youtubeVideoId, onEnded }: VideoPlayerProps) {
  {s === 1 ? 'Normal' : `${s}x`}
  </option>
  ))}
+ </select>
+ </div>
+
+ {/* Quality Controller */}
+ <div className="flex items-center gap-1.5">
+ <span className="text-[10px] font-medium select-none" style={{ color: '#a3a3a3' }}>Quality:</span>
+ <select
+ value={quality}
+ onChange={(e) => handleQualityChange(e.target.value)}
+ className="bg-gray-100 border border-gray-200 text-gray-900 text-xs rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] font-medium cursor-pointer"
+ >
+ {['auto', 'hd1080', 'hd720', 'large', 'medium', 'small', 'tiny'].map((q) => (
+ <option key={q} value={q} className="bg-white text-gray-900">
+ {getQualityLabel(q)}
+ </option>
+ ))}
+ </select>
+ </div>
+
+ {/* Captions Controller */}
+ <div className="flex items-center gap-1.5">
+ <span className="text-[10px] font-medium select-none" style={{ color: '#a3a3a3' }}>CC:</span>
+ <select
+ value={captions}
+ onChange={(e) => handleCaptionsChange(e.target.value)}
+ className="bg-gray-100 border border-gray-200 text-gray-900 text-xs rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] font-medium cursor-pointer"
+ >
+ <option value="off" className="bg-white text-gray-900">Off</option>
+ <option value="on" className="bg-white text-gray-900">On</option>
  </select>
  </div>
 

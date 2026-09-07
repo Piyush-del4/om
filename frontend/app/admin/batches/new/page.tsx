@@ -65,6 +65,8 @@ export default function NewBatchPage() {
  },
  onSuccess: () => {
  queryClient.invalidateQueries({ queryKey: ['admin-batches'] });
+ queryClient.invalidateQueries({ queryKey: ['my-enrolments'] });
+ queryClient.invalidateQueries({ queryKey: ['all-batches'] });
  router.push('/admin/batches');
  },
  onError: (err: any) => {

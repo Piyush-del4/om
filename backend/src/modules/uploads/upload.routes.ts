@@ -12,14 +12,19 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB limit
+    fileSize: 25 * 1024 * 1024, // 25MB limit
   },
   fileFilter: (req, file, cb) => {
-    // Only allow images
-    if (file.mimetype.startsWith('image/')) {
+    // Allow images, PDFs, and document files
+    if (
+      file.mimetype.startsWith('image/') ||
+      file.mimetype === 'application/pdf' ||
+      file.mimetype === 'application/x-pdf' ||
+      file.originalname.match(/\.(pdf|doc|docx|png|jpg|jpeg|webp)$/i)
+    ) {
       cb(null, true);
     } else {
-      cb(new Error('Only image files are allowed!') as any);
+      cb(new Error('Only image and PDF files are allowed!') as any);
     }
   },
 });
@@ -56,7 +61,8 @@ uploadRouter.post(
       const result = await uploadToCloudinary(
         req.file.buffer,
         folder,
-        uniqueName
+        uniqueName,
+        { resource_type: 'auto' }
       );
 
       res.status(200).json({

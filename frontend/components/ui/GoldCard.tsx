@@ -10,7 +10,7 @@ export function GoldCard({ children, noDouble = false, flush = false, className 
  if (noDouble) {
  return (
  <div
- className={`rounded-2xl p-6 shadow-md transition-all duration-300 gold-glow-hover glass-card text-gray-900 ${className}`}
+ className={`rounded-2xl p-6 transition-all duration-300 gold-glow-hover glass-card text-gray-900 ${className}`}
  {...props}
  >
  {children}

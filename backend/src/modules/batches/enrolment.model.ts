@@ -3,7 +3,7 @@ import { Schema, model, Document, Types } from 'mongoose';
 export interface IEnrolment extends Document {
   userId: Types.ObjectId;
   batchId: Types.ObjectId;
-  method: 'payment' | 'code' | 'join';
+  method: 'payment' | 'code' | 'join' | 'admin';
   razorpayPaymentId?: string;
   watchedLectures: Types.ObjectId[];
   createdAt: Date;
@@ -14,7 +14,7 @@ const EnrolmentSchema = new Schema<IEnrolment>(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     batchId: { type: Schema.Types.ObjectId, ref: 'Batch', required: true },
-    method: { type: String, enum: ['payment', 'code', 'join'], required: true },
+    method: { type: String, enum: ['payment', 'code', 'join', 'admin'], required: true },
     razorpayPaymentId: { type: String },
     watchedLectures: [{ type: Schema.Types.ObjectId, ref: 'Lecture' }],
   },

@@ -209,8 +209,7 @@ body {
 }
 
 .gold-glow-hover:hover {
-  box-shadow: 0 12px 35px rgba(204, 143, 51, 0.35), 0 0 15px rgba(204, 143, 51, 0.15);
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   border-color: rgba(204, 143, 51, 0.5) !important;
 }
 
@@ -262,7 +261,6 @@ body {
 
 
 .double-bezel-outer:hover {
-  box-shadow: 0 12px 35px rgba(204, 143, 51, 0.25), 0 0 15px rgba(204, 143, 51, 0.1);
   transform: translateY(-4px);
   border-color: rgba(204, 143, 51, 0.4);
 }

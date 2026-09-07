@@ -107,74 +107,102 @@ export default function BatchDetailPage({ params }: { params: Promise<{ id: stri
  <div className="max-w-6xl mx-auto space-y-10 relative z-10">
  
  {/* Header Block */}
- <div className="border-b border-[var(--gold-200)] pb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
- <div className="space-y-1">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold font-mono block mb-1">
- Sadhana Educational Portal
- </span>
- <div className="flex flex-wrap items-center gap-3">
- <h1 className="font-serif text-3xl md:text-4xl font-bold tracking-tight flex items-center gap-3">
- <GraduationCap className="w-8 h-8 text-[var(--gold)] animate-pulse" /> Academy Portal
- </h1>
- 
- {/* Batch Selector Dropdown (visible if user has multiple batches) */}
- {hasMultipleBatches && (
- <div className="relative inline-block text-left ml-0 sm:ml-2">
- <div className="relative">
- <select
- value={id || ''}
- onChange={(e) => router.push(`/my-batches/${e.target.value}`)}
- className="appearance-none bg-gray-100 border border-[var(--gold-200)] text-gray-900 text-xs font-mono py-1.5 pl-3 pr-8 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--gold)] cursor-pointer hover:border-[var(--gold)] transition-colors"
- >
- {enrolments.map((enr: any) => {
- const b = enr.batchId;
- if (!b) return null;
- return (
- <option key={b._id} value={b._id}>
- {b.title}
- </option>
- );
- })}
- </select>
- <ChevronDown className="w-3.5 h-3.5 text-[var(--gold)] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
- </div>
- </div>
- )}
- </div>
- </div>
+  <div className="border-b border-[var(--gold-200)] pb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <div className="space-y-1">
+  <div className="flex flex-wrap items-center gap-3">
+  <h1 className="font-serif text-3xl md:text-4xl font-bold tracking-tight flex items-center gap-3">
+  <GraduationCap className="w-8 h-8 text-[var(--gold)] animate-pulse" /> Academy Portal
+  </h1>
+  </div>
+  </div>
 
- {/* CTA: Join Batch on top right */}
- <div className="flex items-center gap-3">
- <GoldButton
- variant="filled"
- className="py-2 px-4 text-xs font-semibold flex items-center gap-1.5"
- onClick={() => router.push('/my-batches/join')}
- >
- <PlusCircle className="w-4 h-4 text-black" />
- <span>Join Batch</span>
- </GoldButton>
- </div>
- </div>
+  {/* CTA: Join Batch on top right */}
+  <div className="flex items-center gap-3">
+  <GoldButton
+  variant="filled"
+  className="py-2 px-4 text-xs font-semibold flex items-center gap-1.5"
+  onClick={() => router.push('/my-batches/join')}
+  >
+  <PlusCircle className="w-4 h-4 text-black" />
+  <span>Join Batch</span>
+  </GoldButton>
+  </div>
+  </div>
 
- {/* Main Content Area */}
- <div className="space-y-10">
- {selectedBatch ? (
- <div className="space-y-8">
+  {/* Main Content Area */}
+  <div className="space-y-10">
+  {selectedBatch ? (
+  <div className="space-y-8">
+  
+  {/* Visual Enrolled Batches Cards Switcher (shown when user/admin has multiple enrolled batches) */}
+  {hasMultipleBatches && (
+  <div className="space-y-3 pb-2">
+  <div className="flex items-center justify-between">
+  <h3 className="text-xs font-mono font-bold text-gray-600 uppercase tracking-widest flex items-center gap-2">
+  <GraduationCap className="w-4 h-4 text-[var(--gold)]" /> My Enrolled Batches ({enrolments.length})
+  </h3>
+  <span className="text-[10px] text-gray-500 font-mono">Click a card to switch batch</span>
+  </div>
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  {enrolments.map((enr: any) => {
+  const b = enr.batchId;
+  if (!b) return null;
+  const isCurrent = b._id === id;
+
+  return (
+  <div
+  key={b._id}
+  onClick={() => router.push(`/my-batches/${b._id}`)}
+  className={`p-3.5 rounded-2xl border transition-all duration-300 flex items-center gap-3.5 cursor-pointer ${
+  isCurrent
+  ? 'border-[var(--gold)] bg-[var(--gold-50)]/40 ring-1 ring-[var(--gold-200)] shadow-sm'
+  : 'border-gray-200 bg-white hover:border-[var(--gold-200)] hover:bg-gray-50/60'
+  }`}
+  >
+  {/* Batch Photo */}
+  <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 border border-gray-200">
+  <img
+  src={b.coverImage?.url || '/images/logo.png'}
+  alt={b.title}
+  className="w-full h-full object-cover"
+  onError={(e: any) => {
+  e.target.src = '/images/logo.png';
+  }}
+  />
+  </div>
+
+  {/* Batch Details */}
+  <div className="min-w-0 flex-1">
+  <span className="text-[9px] uppercase font-mono font-bold text-[var(--gold)] tracking-wider">
+  {b.category || 'Batch'}
+  </span>
+  <h4 className="font-sans text-sm font-bold text-gray-900 truncate">{b.title}</h4>
+  <p className="text-[10px] text-gray-500 font-mono mt-0.5">
+  {isCurrent ? '● Active Batch' : 'Click to Open'}
+  </p>
+  </div>
+  </div>
+  );
+  })}
+  </div>
+  </div>
+  )}
  
  {/* Batch Overview Banner */}
- <div className="p-6 rounded-2xl bg-gray-100/30 border border-gray-200/60 relative overflow-hidden">
- <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
- <GraduationCap className="w-40 h-40 text-gray-900" />
- </div>
- <div className="max-w-3xl space-y-2 relative z-10">
- <div className="flex items-center gap-2">
- <span className="bg-[var(--gold-100)] border border-[var(--gold-200)] text-[var(--gold)] text-[9px] uppercase font-mono tracking-widest px-2 py-0.5 rounded-full">
- {selectedBatch.category || 'Academy'} Batch
- </span>
- </div>
+ <div className="p-6 rounded-2xl bg-gray-100/30 border border-gray-200/60 relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+ <div className="max-w-2xl space-y-2 relative z-10 flex-1">
  <h2 className="font-sans text-[34px] sm:text-[40px] font-bold text-gray-900">{selectedBatch.title}</h2>
  <FormattedText text={selectedBatch.description} className="text-gray-600 text-xs sm:text-sm font-light leading-relaxed" />
  </div>
+ {selectedBatch.coverImage?.url ? (
+ <div className="w-full sm:w-56 h-36 rounded-xl overflow-hidden border border-[var(--gold-200)] shadow-md flex-shrink-0 relative z-10 bg-white">
+ <img src={selectedBatch.coverImage.url} alt={selectedBatch.title} className="w-full h-full object-cover" />
+ </div>
+ ) : (
+ <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+ <GraduationCap className="w-40 h-40 text-gray-900" />
+ </div>
+ )}
  </div>
 
  {/* Batch Announcements/Notifications */}
@@ -233,20 +261,41 @@ export default function BatchDetailPage({ params }: { params: Promise<{ id: stri
  ) : lectures && lectures.length > 0 ? (
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
  {lectures.map((lec: any) => (
- <GoldCard key={lec._id} className="transition-spring hover:border-[var(--gold)]">
- <div className="space-y-4 flex flex-col justify-between h-full min-h-[140px]">
+ <GoldCard key={lec._id} className="transition-spring hover:border-[var(--gold)] overflow-hidden p-0 flex flex-col justify-between h-full">
+ <div className="space-y-0 flex flex-col h-full">
+ {/* Lecture Card Thumbnail Image */}
+ <div 
+ className="relative w-full h-40 bg-gray-100 overflow-hidden group cursor-pointer border-b border-gray-200/60"
+ onClick={() => router.push(`/lecture/${lec._id}`)}
+ >
+ <img
+ src={lec.youtubeVideoId ? `https://img.youtube.com/vi/${lec.youtubeVideoId}/hqdefault.jpg` : (selectedBatch?.coverImage?.url || '/images/logo.png')}
+ alt={lec.title}
+ className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+ onError={(e: any) => {
+ if (selectedBatch?.coverImage?.url && e.target.src !== selectedBatch.coverImage.url) {
+ e.target.src = selectedBatch.coverImage.url;
+ }
+ }}
+ />
+ </div>
+
+ <div className="p-5 flex-1 space-y-4 flex flex-col justify-between">
  <div>
  <h4 className="font-sans text-base font-bold text-gray-900 line-clamp-1">{lec.title}</h4>
  <FormattedText text={lec.description} className="text-gray-600 text-[11px] mt-2 line-clamp-2 font-light leading-relaxed" />
  </div>
- <div className="flex items-center justify-between pt-3 border-t border-gray-200/60">
- <span className="text-[10px] text-gray-500 font-mono">Duration: {lec.duration || 'N/A'} mins</span>
+ <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-gray-200/60">
+ {lec.duration ? (
+ <span className="text-xs text-gray-500 font-mono">Duration: {lec.duration} mins</span>
+ ) : <div />}
  <button
  onClick={() => router.push(`/lecture/${lec._id}`)}
- className="bg-[var(--gold)] text-black text-xs font-bold py-1.5 px-3.5 rounded-full hover:bg-[var(--gold-light)] flex items-center gap-1 transition-spring hover:scale-105 cursor-pointer"
+ className="w-full sm:w-auto bg-[var(--gold)] text-black text-sm font-bold py-2.5 px-6 rounded-full hover:bg-[var(--gold-light)] flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-md active:scale-95 cursor-pointer"
  >
- <Play className="w-3 h-3 fill-black" /> Watch
+ <Play className="w-4 h-4 fill-black" /> Watch
  </button>
+ </div>
  </div>
  </div>
  </GoldCard>

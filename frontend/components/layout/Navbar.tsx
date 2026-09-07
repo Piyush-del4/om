@@ -108,7 +108,7 @@ export function Navbar() {
   { name: 'Free Tools', path: '#', isMega: true, megaType: 'freeTools' },
   { name: 'Appointment', path: '/appointments' },
   { name: 'Shop', path: '/shop' },
-  { name: 'Batch', path: '/my-batches' },
+  { name: 'Batch', path: '/my-batches/join' },
   ]
   : [
   { name: 'Home', path: '/' },
@@ -277,7 +277,7 @@ export function Navbar() {
  <span>My Orders</span>
  </Link>
  <Link
- href="/my-batches"
+ href="/my-batches/join"
  onClick={() => setIsProfileOpen(false)}
  className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-[var(--gold)] hover:bg-[var(--gold-50)] transition-colors"
  >
@@ -460,7 +460,7 @@ export function Navbar() {
   <span>My Orders</span>
   </Link>
   <Link
-  href="/my-batches"
+  href="/my-batches/join"
   onClick={() => setIsOpen(false)}
   className="flex items-center gap-2 p-2.5 rounded-lg text-xs font-semibold text-gray-700 bg-gray-50 border border-gray-100 hover:text-[var(--gold)]"
   >

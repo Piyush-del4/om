@@ -129,7 +129,7 @@ export default function JoinBatchPage() {
  <GoldCard 
  key={batch._id} 
  flush 
- className="transition-spring group flex flex-col justify-between h-full border border-neutral-900 hover:border-[var(--gold-200)]"
+ className="transition-spring group flex flex-col justify-between h-full border border-gray-200 hover:border-[var(--gold-200)]"
  >
  <Link href={`/batches/${batch._id}`} className="block flex-grow cursor-pointer">
  {batch.coverImage?.url && (
@@ -139,14 +139,13 @@ export default function JoinBatchPage() {
  alt={batch.title} 
  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
  />
- <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
  {hasActiveOffer && batch.offerExpiresAt && (
  <div className="absolute top-3 right-3 z-10">
  <CountdownTimer expiresAt={batch.offerExpiresAt} />
  </div>
  )}
  {hasActiveOffer && batch.specialOfferTitle && (
- <div className="absolute top-3 left-3 bg-red-600 text-gray-900 font-mono text-xs font-black uppercase tracking-widest px-3 py-1 rounded-md border border-red-500/40 shadow-[0_0_12px_rgba(220,38,38,0.45)]">
+ <div className="absolute top-3 left-3 bg-red-600 text-white font-mono text-xs font-black uppercase tracking-widest px-3 py-1 rounded-md border border-red-500/40">
  {batch.specialOfferTitle}
  </div>
  )}

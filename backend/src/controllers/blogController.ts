@@ -18,6 +18,12 @@ export async function getBlogs(req: Request, res: Response, next: NextFunction) 
     if (search) filter.$text = { $search: search };
 
     const total = await Blog.countDocuments(filter);
+
+    if (total === 0 && !category && !tag && !search) {
+      logger.info('⚠️ No published blogs found in DB. Triggering background blog generation...');
+      generateAndSaveBlog().catch(err => logger.error(`Background blog gen error: ${err.message}`));
+    }
+
     const blogs = await Blog.find(filter)
       .select('title slug metaDescription excerpt category tags readingTime heroImageUrl heroImageAlt publishedAt primaryKeyword')
       .sort({ publishedAt: -1 })

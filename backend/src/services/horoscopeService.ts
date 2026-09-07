@@ -66,8 +66,8 @@ You MUST return ONLY a valid JSON object following this EXACT schema, with no ma
     return JSON.parse(textResponse);
   } catch (err: any) {
     if (err.status === 429 && retries > 0) {
-      logger.warn(`Quota exceeded for ${signName}, waiting 10 seconds before retrying...`);
-      await delay(10000);
+      logger.warn(`Quota/Rate limit hit for ${signName}, pausing 30s before retry (${retries} retries left)...`);
+      await delay(30000);
       return generateForSign(ai, signName, retries - 1);
     }
     logger.error(`Failed for ${signName}`, err);
@@ -82,32 +82,36 @@ export async function generateDailyHoroscopes() {
     return;
   }
 
+  const today = new Date().toISOString().split('T')[0];
   const ai = new GoogleGenAI({ apiKey: API_KEY });
-  const finalData: Record<string, any> = {};
+
+  // Fetch existing document to check which signs are already generated
+  let existingDoc = await Horoscope.findOne({ date: today });
 
   for (const sign of ZODIAC_SIGNS) {
+    // If sign already generated for today, skip it
+    if (existingDoc?.data?.[sign]) {
+      logger.info(`⏩ Horoscope for ${sign.toUpperCase()} already generated for ${today}. Skipping.`);
+      continue;
+    }
+
     try {
       const generated = await generateForSign(ai, sign);
-      finalData[sign] = generated;
-      // Wait to avoid rate limiting
-      await delay(4000);
+      
+      // Incrementally save each sign immediately so progress is preserved and live UI gets data fast
+      existingDoc = await Horoscope.findOneAndUpdate(
+        { date: today },
+        { $set: { [`data.${sign}`]: generated } },
+        { upsert: true, new: true }
+      );
+      logger.info(`💾 Saved horoscope for ${sign.toUpperCase()} (${today})`);
+
+      // Wait 3s to respect Gemini API rate limits
+      await delay(3000);
     } catch (err: any) {
       logger.error(`Error processing ${sign}: ${err.message}`);
     }
   }
 
-  const today = new Date().toISOString().split('T')[0];
-  
-  // Fetch existing data to avoid overwriting successful signs if a quota error occurs midway
-  const existing = await Horoscope.findOne({ date: today });
-  const dataToSave = { ...(existing?.data || {}), ...finalData };
-
-  // Upsert the daily horoscope
-  await Horoscope.findOneAndUpdate(
-    { date: today },
-    { data: dataToSave },
-    { upsert: true, new: true }
-  );
-
-  logger.info(`✅ Successfully generated and saved daily horoscopes for ${today}`);
+  logger.info(`✅ Daily horoscope generation check complete for ${today}`);
 }
