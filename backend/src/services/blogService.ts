@@ -145,11 +145,13 @@ Write 5-7 sections. Make the content genuinely helpful, accurate about Vedic ast
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+      model: 'gemini-2.5-flash',
       contents: prompt,
       config: { responseMimeType: 'application/json' },
     });
-    return JSON.parse(response.text);
+    const textResponse = response.text || '';
+    const cleanedText = textResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+    return JSON.parse(cleanedText);
   } catch (err: any) {
     if (err.status === 429 && retries > 0) {
       logger.warn(`Rate limited generating blog for "${topic}", retrying in 15s...`);

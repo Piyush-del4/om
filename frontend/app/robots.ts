@@ -5,21 +5,25 @@ export default function robots(): MetadataRoute.Robots {
   rules: {
     userAgent: '*',
     allow: '/',
-    disallow: [
-      '/dashboard/', 
-      '/admin/', 
-      '/profile/', 
-      '/orders/', 
-      '/my-batches/', 
-      '/lecture/',
-      '/cart',
-      '/checkout',
-      '/login',
-      '/register',
-      '/forgot-password',
-      '/onboarding'
-    ],
-  },
-  sitemap: 'https://omastrologyamc.com/sitemap.xml',
-};
+      disallow: [
+        '/dashboard/', 
+        '/admin/', 
+        '/profile/', 
+        '/orders/', 
+        '/my-batches/', 
+        '/lecture/',
+        '/cart',
+        '/checkout',
+        '/shop/cart',
+        '/shop/checkout',
+        '/login',
+        '/register',
+        '/forgot-password',
+        '/onboarding',
+        '/saved-kundlis',
+        '/api/'
+      ],
+    },
+    sitemap: 'https://omastrologyamc.com/sitemap.xml',
+  };
 }

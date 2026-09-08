@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/free-tools/birth-chart-generator',
     '/free-tools/daily-horoscope',
     '/free-tools/dasha-calculator',
+    '/free-tools/kundli-generator',
     '/free-tools/lucky-color-calculator',
     '/free-tools/lucky-number-calculator',
     '/free-tools/marriage-compatibility-checker',
@@ -60,7 +61,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  // 4. Numerology 2026 Sub-pages (Numbers 1-9)
+  // 4. Zodiac Horoscope Pages (Daily, Weekly, Monthly, Yearly for 12 Signs)
+  const horoscopePeriods = ['daily', 'weekly', 'monthly', 'yearly'];
+  const zodiacSigns = [
+    'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+    'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+  ];
+  const horoscopeRoutes: MetadataRoute.Sitemap = horoscopePeriods.flatMap((period) =>
+    zodiacSigns.map((rashi) => ({
+      url: `${baseUrl}/horoscope/${period}/${rashi}`,
+      lastModified: new Date(),
+      changeFrequency: period === 'daily' ? ('daily' as const) : ('weekly' as const),
+      priority: period === 'daily' ? 0.9 : 0.8,
+    }))
+  );
+
+  // 5. Numerology 2026 Sub-pages (Numbers 1-9)
   const numerology2026Routes: MetadataRoute.Sitemap = Array.from({ length: 9 }, (_, i) => i + 1).map((num) => ({
     url: `${baseUrl}/numerology-2026/${num}`,
     lastModified: new Date(),
@@ -68,7 +84,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  // 5. Planetary Transit Pages
+  // 6. Planetary Transit Pages
   const transitPlanets = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn', 'rahu', 'ketu'];
   const transitRoutes: MetadataRoute.Sitemap = transitPlanets.map((planet) => ({
     url: `${baseUrl}/transit/${planet}`,
@@ -77,7 +93,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  // 6. Appointment & Team Pages
+  // 7. Appointment & Team Pages
   const appointmentRoutes: MetadataRoute.Sitemap = [
     '/appointments',
     '/appointments/team-raajesh',
@@ -89,7 +105,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  // 7. E-commerce Shop
+  // 8. E-commerce Shop
   const shopRoutes: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/shop`,
@@ -99,7 +115,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // 8. Secondary Information & Course Batches
+  // 9. Secondary Information & Course Batches
   const secondaryRoutes: MetadataRoute.Sitemap = [
     '/about-us',
     '/batches',
@@ -110,7 +126,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // 9. Legal / Utility
+  // 10. Legal / Utility
   const utilityRoutes: MetadataRoute.Sitemap = [
     '/privacy-policy',
   ].map((route) => ({
@@ -124,6 +140,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...homepage,
     ...freeToolsRoutes,
     ...serviceRoutes,
+    ...horoscopeRoutes,
     ...numerology2026Routes,
     ...transitRoutes,
     ...appointmentRoutes,
