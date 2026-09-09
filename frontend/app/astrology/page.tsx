@@ -52,6 +52,8 @@ const ASTROLOGY_FAQS = [
  { _id: '10', q: 'Are online astrology consultations as accurate as in-person?', a: 'Yes. Astrological calculations are based on mathematics and planetary geometry. The physical location of the reading does not impact its accuracy at all.' },
 ];
 
+import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
+
 export default function AstrologyPage() {
 
  return (
@@ -96,7 +98,7 @@ export default function AstrologyPage() {
         </p>
       </div>
       <div className="flex-shrink-0">
-        <Link href="/horoscope/daily/aries">
+        <Link href="/horoscope">
           <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-[#B37B47] font-bold text-base rounded-xl hover:bg-amber-50 transition-all duration-200 shadow-lg">
             <Star className="w-5 h-5 fill-[#B37B47]" />
             Check My Zodiac
@@ -212,15 +214,17 @@ export default function AstrologyPage() {
  Every birth chart is divided into 12 segments representing different aspects of your life journey.
  </p>
  </div>
- <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
- {ASTROLOGY_HOUSES.map((house) => (
- <div key={house._id} className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
- <span className="text-amber-300 font-mono font-bold text-xs">{house.num} House</span>
- <h4 className="text-white text-xs font-bold font-serif mt-1">{house.name}</h4>
- <p className="text-[10px] text-amber-100/70 leading-normal mt-1">{house.desc}</p>
- </div>
- ))}
- </div>
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+  {ASTROLOGY_HOUSES.map((house) => (
+    <Link key={house._id} href={`/astrology/houses/${house._id}`} className="block group">
+      <div className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group-hover:scale-[1.02] duration-300 h-full">
+        <span className="text-amber-300 font-mono font-bold text-xs">{house.num} House →</span>
+        <h4 className="text-white text-xs font-bold font-serif mt-1 group-hover:text-amber-300">{house.name}</h4>
+        <p className="text-[10px] text-amber-100/70 leading-normal mt-1">{house.desc}</p>
+      </div>
+    </Link>
+  ))}
+  </div>
  </motion.div>
 
  {/* Section: The Nakshatras & Vimshottari Dasha */}
@@ -321,22 +325,26 @@ export default function AstrologyPage() {
  </GoldCard>
 
  <GoldCard className="border border-gray-200/60 p-6">
- <h4 className="text-[var(--gold)] font-serif font-bold text-base mb-4">Key Frictional Doshas</h4>
- <div className="space-y-3">
- <div>
- <span className="text-gray-900 text-xs font-bold font-mono">Manglik Dosha (Mars Affliction)</span>
- <p className="text-[11px] text-gray-405">Mars placed in 1st, 2nd, 4th, 7th, 8th, or 12th house. Indicates marital delays, emotional friction, and intense relationship arguments if unaligned.</p>
- </div>
- <div>
- <span className="text-gray-900 text-xs font-bold font-mono">Shani Sade Sati (Saturn's 7.5 Year Transit)</span>
- <p className="text-[11px] text-gray-405">Saturn transiting 12th, 1st, and 2nd houses from natal Moon. A major period of discipline, delays, financial restructuring, and karmic learning.</p>
- </div>
- <div>
- <span className="text-gray-900 text-xs font-bold font-mono">Kaal Sarp Dosha (Karmic Axis Lock)</span>
- <p className="text-[11px] text-gray-405">All planets hemmed between Rahu (North Node) and Ketu (South Node). Indicates sudden highs and lows, intense life struggles, but massive potential achievements.</p>
- </div>
- </div>
- </GoldCard>
+  <h4 className="text-[var(--gold)] font-serif font-bold text-base mb-4">Key Frictional Doshas & Remedies</h4>
+  <div className="space-y-3">
+  <div>
+  <Link href="/astrology/doshas/manglik-dosha" className="text-gray-900 text-xs font-bold font-mono hover:text-[var(--gold)] hover:underline block">Manglik Dosha (Kuja Dosha) Guide →</Link>
+  <p className="text-[11px] text-gray-405">Mars in 1st, 4th, 7th, 8th, 12th house. Causes, effects, and authentic remedies.</p>
+  </div>
+  <div>
+  <Link href="/astrology/doshas/sade-sati" className="text-gray-900 text-xs font-bold font-mono hover:text-[var(--gold)] hover:underline block">Shani Sade Sati 2026 Guide →</Link>
+  <p className="text-[11px] text-gray-405">Saturn transiting 12th, 1st, 2nd houses from Moon. Discipline and karmic remedies.</p>
+  </div>
+  <div>
+  <Link href="/astrology/doshas/kaal-sarp-dosha" className="text-gray-900 text-xs font-bold font-mono hover:text-[var(--gold)] hover:underline block">Kaal Sarp Dosha & 12 Types →</Link>
+  <p className="text-[11px] text-gray-405">All planets hemmed between Rahu & Ketu. Causes, remedies, and cancellation.</p>
+  </div>
+  <div>
+  <Link href="/astrology/doshas/pitra-dosha" className="text-gray-900 text-xs font-bold font-mono hover:text-[var(--gold)] hover:underline block">Pitra Dosha Ancestral Remedies →</Link>
+  <p className="text-[11px] text-gray-405">Afflictions to Sun or 9th house. Ancestral peace rituals and remedies.</p>
+  </div>
+  </div>
+  </GoldCard>
  </div>
  </div>
 
@@ -400,6 +408,9 @@ export default function AstrologyPage() {
  ))}
  </div>
  </div>
+
+ {/* SEO Internal Linking Mesh */}
+ <SEOInternalMesh currentCategory="astrology" />
 
  {/* Active Batches Showcase */}
  <div className="border-t border-gray-200/60 pt-16 mt-8">

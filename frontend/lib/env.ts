@@ -21,3 +21,12 @@ export const env = parsed.success ? parsed.data : {
  NEXT_PUBLIC_API_BASE_URL: 'http://localhost:5001/api/v1',
  NEXT_PUBLIC_RAZORPAY_KEY_ID: 'rzp_test_placeholder',
 };
+
+export function getApiUrl(): string {
+  if (process.env.NEXT_PUBLIC_API_BASE_URL) return process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return `${window.location.origin}/api/v1`;
+  }
+  return env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5001/api/v1';
+}

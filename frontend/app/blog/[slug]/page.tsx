@@ -6,23 +6,35 @@ import { BlogFAQAccordion } from '../../../components/ui/blog/BlogFAQAccordion';
 import { BlogCard } from '../../../components/ui/blog/BlogCard';
 import { ArrowLeft, Clock, Calendar, Tag, Phone, MessageSquare, BookOpen, ShoppingBag, GraduationCap, ArrowRight } from 'lucide-react';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/v1';
+import { getApiUrl } from '@/lib/env';
+import { FALLBACK_BLOGS } from '@/data/seedBlogs';
 
 async function getBlog(slug: string) {
   try {
-    const res = await fetch(`${API_BASE}/blogs/${slug}`, { next: { revalidate: 3600 } });
-    if (!res.ok) return null;
-    const json = await res.json();
-    return json.data;
-  } catch { return null; }
+    const apiBase = getApiUrl();
+    const res = await fetch(`${apiBase}/blogs/${slug}`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const json = await res.json();
+      if (json.data) return json.data;
+    }
+  } catch (err) {
+    console.warn("Could not fetch blog from API, using fallback data:", err);
+  }
+  // Fallback to static seed blog if API fails or returns 404
+  return FALLBACK_BLOGS.find(b => b.slug === slug) || null;
 }
 
 async function getRelated(slug: string) {
   try {
-    const res = await fetch(`${API_BASE}/blogs/related/${slug}`, { next: { revalidate: 3600 } });
-    const json = await res.json();
-    return json.data || [];
-  } catch { return []; }
+    const apiBase = getApiUrl();
+    const res = await fetch(`${apiBase}/blogs/related/${slug}`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const json = await res.json();
+      if (json.data && json.data.length > 0) return json.data;
+    }
+  } catch { /* ignore error and use fallback */ }
+  // Fallback to related blogs from static array
+  return FALLBACK_BLOGS.filter(b => b.slug !== slug).slice(0, 3);
 }
 
 // Internal links to inject at footer of every article

@@ -11,6 +11,7 @@ import { GoldButton } from '@/components/ui/GoldButton';
 import { Calendar, Clock, Plus, Compass, Star, ChevronRight, Phone, MessageSquare, AlertCircle, CheckCircle2, Award } from 'lucide-react';
 import { env } from '@/lib/env';
 import { FormattedText } from '@/components/ui/FormattedText';
+import { SEOInternalMesh } from '@/components/seo/SEOInternalMesh';
 
 export default function AppointmentsPage() {
  const { isAuthenticated, isLoading, user } = useAuth();
@@ -592,6 +593,8 @@ export default function AppointmentsPage() {
  )}
  </div>
  )}
+
+ <SEOInternalMesh currentCategory="appointments" />
 
  </div>
  </div>

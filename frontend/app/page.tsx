@@ -390,7 +390,7 @@ export default function Home() {
  id: 'horoscope',
  desc: 'Read accurate daily, weekly, and monthly horoscopes tailored for all 12 Rashis.',
  icon: <Moon className="w-12 h-12 text-[var(--gold)] animate-pulse" />,
- link: '/horoscope/daily/aries',
+ link: '/horoscope',
  image: '/images/cosmic_synthesis_realistic.png',
  tagline: 'NAVIGATE YOUR DAY',
  taglineSize: '22px',

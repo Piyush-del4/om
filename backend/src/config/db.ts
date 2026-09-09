@@ -16,7 +16,13 @@ export async function connectDB(): Promise<void> {
       logger.warn('🔌 MongoDB disconnected.');
     });
 
-    await mongoose.connect(env.MONGODB_URI, { serverSelectionTimeoutMS: 10000 });
+    try {
+      await mongoose.connect(env.MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+    } catch (primaryErr: any) {
+      logger.warn(`⚠️ Primary MongoDB Atlas connection failed (${primaryErr.message}). Trying local MongoDB fallback...`);
+      const localUri = process.env.LOCAL_MONGODB_URI || 'mongodb://127.0.0.1:27017/om-astrology';
+      await mongoose.connect(localUri, { serverSelectionTimeoutMS: 5000 });
+    }
     await seedDefaultAppointmentTypes();
   } catch (error) {
     logger.error('❌ Failed to connect to MongoDB on startup:', error);

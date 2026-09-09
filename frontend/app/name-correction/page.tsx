@@ -7,6 +7,7 @@ import { GoldCard } from '@/components/ui/GoldCard';
 import { CategoryBookingWidget } from '@/components/ui/CategoryBookingWidget';
 import { CategoryBatchesList } from '@/components/ui/CategoryBatchesList';
 import { FAQSection } from '@/components/ui/FAQSection';
+import { SEOInternalMesh } from '@/components/seo/SEOInternalMesh';
 
 const NAME_CORRECTION_FAQS = [
  { q: 'What is Name Correction in numerology?', a: 'Name correction involves slightly altering the spelling of your name (by adding or removing a letter) to align the numerological total of your name with your favorable birth date planets. This removes energetic blockages and attracts success.' },
@@ -149,6 +150,9 @@ export default function NameCorrectionPage() {
  <div className="pt-12">
  <FAQSection faqs={NAME_CORRECTION_FAQS} />
  </div>
+
+ {/* SEO Internal Mesh */}
+ <SEOInternalMesh currentCategory="numerology" />
 
  {/* Batches & Booking Section */}
  <div className="border-t border-gray-200/60 pt-16">

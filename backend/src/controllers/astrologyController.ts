@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 import axios from 'axios';
 import KundliSubmission from '../models/KundliSubmission';
 import Horoscope from '../models/Horoscope';
 import { generateDailyHoroscopes } from '../services/horoscopeService';
+import { logger } from '../utils/logger';
 
 const GENERAL_API_BASE_URL = 'https://json.freeastrologyapi.com';
 const DASHA_API_BASE_URL = 'https://api.freeastroapi.com/api/v2';
@@ -233,15 +236,15 @@ export const getLatestHoroscope = async (req: Request, res: Response) => {
       return res.status(200).json({ success: true, data: latest.data });
     }
 
-    // If NO horoscope exists in DB at all, wait for initial generation to complete
-    console.log('[Horoscope API] No existing horoscopes in DB. Generating synchronously...');
+    // If NO horoscope exists in DB for today, trigger AI generation with gemini-2.5-flash
+    console.log('[Horoscope API] No existing horoscopes for today. Generating live predictions...');
     await generateDailyHoroscopes();
     const newlyGenerated = (await Horoscope.findOne({ date: today }).lean()) as any;
     if (newlyGenerated && newlyGenerated.data) {
       return res.status(200).json({ success: true, data: newlyGenerated.data });
     }
 
-    return res.status(404).json({ success: false, message: 'No horoscope found' });
+    return res.status(404).json({ success: false, message: 'Today\'s horoscope predictions are currently being calculated by our astrologers. Please try again shortly.' });
   } catch (error: any) {
     console.error('Get Latest Horoscope Error:', error.message);
     return res.status(500).json({ success: false, message: 'Failed to fetch latest horoscope.', error: error.message });

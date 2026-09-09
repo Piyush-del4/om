@@ -86,23 +86,25 @@ async function generateBlogContent(ai: any, topicData: typeof BLOG_TOPICS[0], re
     .sort(() => Math.random() - 0.5)
     .slice(0, 6);
 
-  const prompt = `You are an expert SEO content writer and Vedic Astrology specialist for OM Astrology AMC — a professional astrology consultation website.
+  const prompt = `You are Rajessh Paanday (9+ years experience master astrologer & numerologist) and senior content strategist for OM Astrology AMC.
 
-Write a comprehensive, SEO-optimized blog post in JSON format. Follow ALL rules below strictly.
+Write an exceptionally thorough, high-value, human-centric SEO blog post in JSON format.
+Google strictly penalizes thin, generic AI content. Every blog post MUST provide real depth, step-by-step calculations/examples, practical Vedic/numerological remedies, clear comparison tables, and genuine expert commentary.
 
 ## Topic: "${topic}"
 ## Primary Keyword: "${keyword}"
 ## Category: ${category}
 ## Tags: ${tags.join(', ')}
 
-## STRICT SEO RULES:
-1. Front-load the primary keyword "${keyword}" in the very first sentence of the intro paragraph
-2. Use "${keyword}" naturally in H1 title and at least 2 H2 subheadings
-3. Write ONLY short paragraphs — MAXIMUM 3 sentences per paragraph
-4. Keep slug SHORT: 3-6 words, use primary keyword, no filler words
-5. Include 5-8 specific, high-value FAQ questions that real users would Google
-6. Make every section heading clear and descriptive (tells users exactly what they'll learn)
-7. Meta description must be exactly 140-165 characters and include the primary keyword
+## CONTENT QUALITY & SEO MANDATES:
+1. Front-load the primary keyword "${keyword}" in the very first sentence of the intro.
+2. Structure with clear H2 headings and H3 subheadings. Use "${keyword}" in at least 2 H2 headings.
+3. Include real step-by-step examples or calculation breakdowns (e.g., date of birth math, transit degrees, letter values).
+4. Include actionable remedies, practical lifestyle advice, or decision framework tables where applicable.
+5. Provide commentary from expert perspective (Rajessh Paanday / Kusum Panday).
+6. Write scannable paragraphs (2-3 sentences per paragraph maximum).
+7. Include 5-8 specific, high-intent FAQ questions that real seekers ask on Google with thorough 3-4 sentence answers.
+8. Meta description must be exactly 140-165 characters, front-loading the keyword with high-CTR intent.
 
 ## INTERNAL LINKS TO INCLUDE (inject naturally into section internalLinkText+internalLinkUrl):
 ${relevantLinks.map((l, i) => `${i + 1}. Text: "${l.text}" → URL: "${l.url}"`).join('\n')}
@@ -137,21 +139,27 @@ Distribute these links across different sections (1 link per section maximum).
     }
   ],
   "faq": [
-    { "question": "string — real user search question", "answer": "string — 2-4 sentences, helpful answer" }
+    { "question": "string — real user search question", "answer": "string — 3-4 sentences, thorough expert answer" }
   ]
 }
 
-Write 5-7 sections. Make the content genuinely helpful, accurate about Vedic astrology and FEAN Method, and engaging. Include practical advice, specific predictions, and remedy suggestions where relevant.`;
+Write 5-7 comprehensive sections. Focus heavily on practical value, exact calculations, expert advice, and clear remedies.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
       contents: prompt,
       config: { responseMimeType: 'application/json' },
     });
     const textResponse = response.text || '';
     const cleanedText = textResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-    return JSON.parse(cleanedText);
+    try {
+      return JSON.parse(cleanedText);
+    } catch (e) {
+      const match = cleanedText.match(/\{[\s\S]*\}/);
+      if (match) return JSON.parse(match[0]);
+      throw e;
+    }
   } catch (err: any) {
     if (err.status === 429 && retries > 0) {
       logger.warn(`Rate limited generating blog for "${topic}", retrying in 15s...`);
@@ -225,8 +233,8 @@ export async function generateAndSaveBlog(): Promise<void> {
     const blogTitle = generated.title;
     let heroImageUrl = getSEOImage(blogCategory, blogTitle);
 
-    // 1. Call Imagen 3 to generate Hero Image
-    if (API_KEY && generated.heroImagePrompt) {
+    // 1. Call Imagen 3 to generate Hero Image (if ENABLE_IMAGEN is true)
+    if (API_KEY && generated.heroImagePrompt && process.env.ENABLE_IMAGEN === 'true') {
       try {
         logger.info(`🎨 Generating AI Hero Image for: "${blogTitle}"...`);
         const imgResponse = await ai.models.generateImages({
@@ -250,11 +258,11 @@ export async function generateAndSaveBlog(): Promise<void> {
       }
     }
 
-    // 2. Call Imagen 3 to generate Section Images
+    // 2. Process Section Images
     const processedSections = [];
     for (const sec of (generated.sections || [])) {
       let secImageUrl = getSEOImage(blogCategory, sec.heading);
-      if (API_KEY && sec.imagePrompt) {
+      if (API_KEY && sec.imagePrompt && process.env.ENABLE_IMAGEN === 'true') {
         try {
           logger.info(`🎨 Generating AI Section Image for: "${sec.heading}"...`);
           const imgResponse = await ai.models.generateImages({

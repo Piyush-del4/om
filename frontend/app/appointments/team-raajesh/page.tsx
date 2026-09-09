@@ -38,7 +38,7 @@ export default function RaajeshProfilePage() {
  { label: 'Five Elements Balance' }
  ];
  const description = member?.description || "With decades of deep study and practice in ancient Indian sciences, Rajessh Paanday has guided thousands of individuals toward clarity, confidence, and lasting success. His holistic methodology uniquely blends Vedic Astrology, Numerology, Graphology, Signature Analysis, and Five Elements principles to offer a complete, personalized roadmap for each client. Whether you are navigating career transitions, relationship challenges, financial decisions, health concerns, or seeking deeper personal growth — Raajesh Ji's grounded wisdom helps you understand your true strengths, remove hidden blockages, and align with the universe's natural timing. He is known for his practical, compassionate, and results-driven approach that empowers clients with real, actionable guidance rather than vague predictions.";
- const experienceYears = member?.experienceYears || 25;
+ const experienceYears = member?.experienceYears || 9;
  return (
  <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900">
  <div className="max-w-4xl mx-auto space-y-12 relative z-10">

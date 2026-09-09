@@ -25,10 +25,12 @@ const NUMEROLOGY_FAQS = [
  { q: 'Can changing my name spelling change my life?', a: 'Yes. Name correction alters the frequency of your Expression number. Aligning your name vibration with your birth date removes blockages and attracts better opportunities.' }
 ];
 
+import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
+
 export default function NumerologyPage() {
- const [calcSystem, setCalcSystem] = useState<'pythagorean' | 'chaldean'>('pythagorean');
- const [calcInput, setCalcInput] = useState('');
- const [showMappingRef, setShowMappingRef] = useState(false);
+  const [calcSystem, setCalcSystem] = useState<'pythagorean' | 'chaldean'>('pythagorean');
+  const [calcInput, setCalcInput] = useState('');
+  const [showMappingRef, setShowMappingRef] = useState(false);
 
  const pythagoreanMap: Record<string, number> = {
  a: 1, j: 1, s: 1,
@@ -255,6 +257,36 @@ export default function NumerologyPage() {
  </div>
 
 
+  {/* Section: Dedicated Life Path Number Deep-Dives */}
+  <div className="space-y-6">
+    <div className="space-y-2 text-center max-w-2xl mx-auto">
+      <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">Life Path Blueprint</span>
+      <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+        Explore Life Path & Master Numbers
+      </h2>
+      <p className="text-gray-600 text-xs font-light">
+        Click any Life Path or Master Number below for a complete profile guide including 2026 predictions.
+      </p>
+    </div>
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '11', '22', '33'].map((n) => (
+        <Link key={n} href={`/numerology/life-path/${n}`} className="block group">
+          <GoldCard className="h-full text-center p-4 group-hover:border-[var(--gold)] transition-all">
+            <div className="space-y-1">
+              <span className="text-2xl font-serif font-bold text-[var(--gold)] group-hover:scale-110 block transition-transform">
+                {n}
+              </span>
+              <span className="text-[11px] font-semibold text-gray-800 block">
+                {['11', '22', '33'].includes(n) ? `Master ${n}` : `Life Path ${n}`}
+              </span>
+              <span className="text-[9px] text-[var(--gold-600)] block font-mono uppercase">Read Guide →</span>
+            </div>
+          </GoldCard>
+        </Link>
+      ))}
+    </div>
+  </div>
+
  {/* Section: The Four Core Numbers */}
  <div className="space-y-6">
  <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
@@ -461,6 +493,9 @@ export default function NumerologyPage() {
  ))}
  </div>
  </div>
+
+ {/* SEO Internal Linking Mesh */}
+ <SEOInternalMesh currentCategory="numerology" />
 
  {/* Active Batches Showcase */}
  <div className="border-t border-gray-200/60 pt-16">

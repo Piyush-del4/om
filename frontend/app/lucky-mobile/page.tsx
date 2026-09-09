@@ -7,6 +7,9 @@ import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackground';
 import { FAQSection } from '../../components/ui/FAQSection';
+import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
+
+import { MobileNumerologyCalculator } from '../../components/ui/MobileNumerologyCalculator';
 
 export default function LuckyMobilePage() {
  const numberVibrations = [
@@ -57,6 +60,9 @@ export default function LuckyMobilePage() {
  Your mobile number represents your personal frequency in the digital world. Choose a number that resonates with your birth date to attract business leads, health, harmony, and prosperity.
  </p>
  </motion.div>
+
+ {/* Interactive Calculator */}
+ <MobileNumerologyCalculator />
 
  {/* Section: Science of Mobile Numerology */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -129,6 +135,9 @@ export default function LuckyMobilePage() {
  <div className="pt-12">
  <FAQSection faqs={MOBILE_FAQS} />
  </div>
+
+ {/* SEO Internal Mesh */}
+ <SEOInternalMesh currentCategory="numerology" />
 
  {/* Category Booking Widget */}
  <div className="border-t border-gray-200/60 pt-16 pb-8">

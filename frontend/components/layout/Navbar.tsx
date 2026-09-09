@@ -35,32 +35,38 @@ export function Navbar() {
  return () => document.removeEventListener('mousedown', handleClickOutside);
  }, []);
 
- const services = [
- {
- name: 'Astrology',
- description: 'Explore birth charts, planetary transits, and custom horoscope alignments.',
- href: '/astrology',
- icon: Sparkles,
- },
- {
- name: 'Numerology',
- description: 'Unlock numbers of your life path, destiny, and personality.',
- href: '/numerology',
- icon: Hash,
- },
- {
- name: 'Tarot Card',
- description: 'Gain deep guidance, wisdom, and clarity from custom tarot spreads.',
- href: '/tarot-card',
- icon: Layers,
- },
- {
- name: 'Graphology',
- description: 'Understand personality traits and hidden habits through handwriting analysis.',
- href: '/graphology',
- icon: PenTool,
- },
- ];
+  const services = [
+  {
+  name: 'Astrology',
+  description: 'Explore birth charts, planetary transits, and custom horoscope alignments.',
+  href: '/astrology',
+  icon: Sparkles,
+  },
+  {
+  name: 'Numerology',
+  description: 'Unlock numbers of your life path, destiny, and personality.',
+  href: '/numerology',
+  icon: Hash,
+  },
+  {
+  name: 'Tarot Card',
+  description: 'Gain deep guidance, wisdom, and clarity from custom tarot spreads.',
+  href: '/tarot-card',
+  icon: Layers,
+  },
+  {
+  name: 'Graphology',
+  description: 'Understand personality traits and hidden habits through handwriting analysis.',
+  href: '/graphology',
+  icon: PenTool,
+  },
+  {
+  name: 'Occult Synthesis',
+  description: 'Cross-domain synthesis combining Astrology, Numerology, Graphology & Tarot.',
+  href: '/occult-synthesis',
+  icon: Compass,
+  },
+  ];
 
   const horoscopes = [
     { name: 'Daily Horoscope', href: '/horoscope/daily/aries', icon: Sun },

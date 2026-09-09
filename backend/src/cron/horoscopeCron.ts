@@ -7,13 +7,14 @@ async function checkAndGenerateDailyHoroscope() {
   const today = new Date().toISOString().split('T')[0];
   try {
     const existing = await Horoscope.findOne({ date: today });
-    if (!existing || !existing.data || Object.keys(existing.data).length === 0) {
-      logger.info(`⚠️ Horoscope missing for today (${today}). Triggering background generation...`);
+    if (!existing || !existing.data || Object.keys(existing.data).length < 12) {
+      const currentCount = existing?.data ? Object.keys(existing.data).length : 0;
+      logger.info(`⚠️ Horoscope missing or incomplete for today (${today}, ${currentCount}/12 signs). Triggering background generation...`);
       generateDailyHoroscopes().catch(err => {
         logger.error(`❌ Error in background horoscope generation: ${err.message}`);
       });
     } else {
-      logger.info(`✅ Horoscope for today (${today}) is already up to date.`);
+      logger.info(`✅ Horoscope for today (${today}) is already up to date (12/12 signs).`);
     }
   } catch (err: any) {
     logger.error(`❌ Error checking daily horoscope: ${err.message}`);

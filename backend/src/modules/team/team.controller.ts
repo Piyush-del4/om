@@ -112,7 +112,7 @@ export async function seedTeamMembers(req: Request, res: Response, next: NextFun
         accent: 'from-amber-600/20 to-yellow-600/5',
         borderColor: 'border-amber-600/30',
         order: 1,
-        experienceYears: 25,
+        experienceYears: 9,
       },
       {
         name: 'Kusum Panday',
@@ -129,7 +129,7 @@ export async function seedTeamMembers(req: Request, res: Response, next: NextFun
         accent: 'from-rose-600/20 to-pink-600/5',
         borderColor: 'border-rose-600/30',
         order: 2,
-        experienceYears: 15,
+        experienceYears: 7,
       },
       {
         name: 'Aayush Kumar',

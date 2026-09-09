@@ -2,10 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import { HoroscopeDatabaseLinks } from '@/components/ui/astrology/HoroscopeDatabaseLinks';
 import { DailyPanchangMuhuratWidget } from '@/components/ui/astrology/DailyPanchangMuhuratWidget';
+import { SEOInternalMesh } from '@/components/seo/SEOInternalMesh';
 
 export const metadata = {
-  title: 'All Zodiac Horoscopes - Daily, Weekly, Monthly, Yearly',
-  description: 'Select your zodiac sign to read your detailed daily, weekly, monthly, and yearly horoscopes.',
+  title: 'Daily Horoscope & Zodiac Predictions 2026',
+  description: 'Select your zodiac sign to read your detailed daily, weekly, monthly, and yearly horoscopes for 2026.',
 };
 
 const rashiInfo = [
@@ -118,6 +119,9 @@ export default function HoroscopeIndexPage() {
 
         {/* Today's Daily Panchang & Muhurat Widget */}
         <DailyPanchangMuhuratWidget variant="card" />
+
+        {/* SEO Internal Mesh */}
+        <SEOInternalMesh currentCategory="horoscope" />
 
         {/* Global Database Services Footer */}
         <HoroscopeDatabaseLinks variant="full" />

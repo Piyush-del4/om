@@ -55,7 +55,7 @@ You MUST return ONLY a valid JSON object following this EXACT schema, with no ma
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -64,7 +64,13 @@ You MUST return ONLY a valid JSON object following this EXACT schema, with no ma
 
     const textResponse = response.text || '';
     const cleanedText = textResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-    return JSON.parse(cleanedText);
+    try {
+      return JSON.parse(cleanedText);
+    } catch (e) {
+      const match = cleanedText.match(/\{[\s\S]*\}/);
+      if (match) return JSON.parse(match[0]);
+      throw e;
+    }
   } catch (err: any) {
     if (err.status === 429 && retries > 0) {
       logger.warn(`Quota/Rate limit hit for ${signName}, pausing 30s before retry (${retries} retries left)...`);

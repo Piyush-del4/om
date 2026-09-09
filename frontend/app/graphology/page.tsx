@@ -24,6 +24,8 @@ const GRAPHOLOGY_FAQS = [
  { q: 'Is signature analysis different from handwriting analysis?', a: 'Yes. Your handwriting reveals your true inner self, while your signature reveals your public persona (how you want the world to see you). Discrepancies between the two are very revealing.' }
 ];
 
+import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
+
 export default function GraphologyPage() {
 
  const strokeIndicators = [
@@ -94,6 +96,58 @@ export default function GraphologyPage() {
  </div>
  </div>
 
+
+  {/* Section: Dedicated Graphology Sub-Pages Grid */}
+  <div className="space-y-6">
+    <div className="space-y-2">
+      <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">Specialized Guides</span>
+      <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+        Explore Graphology Deep-Dives
+      </h2>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <Link href="/graphology/signature-analysis" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Signature Analysis Science →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Public persona, underlines, strike-throughs & social confidence.</p>
+          </div>
+        </GoldCard>
+      </Link>
+      <Link href="/graphology/handwriting-slant" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Handwriting Slant Psychology →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Right, left, and vertical slant emotional responsiveness.</p>
+          </div>
+        </GoldCard>
+      </Link>
+      <Link href="/graphology/graphotherapy" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">21-Day Graphotherapy Protocol →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Neurological habit rewiring through somatic penmanship.</p>
+          </div>
+        </GoldCard>
+      </Link>
+      <Link href="/graphology/letter-formations" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Letter Micro-Analysis ('t', 'i', 'g') →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Willpower, attention to detail, intimacy, and ambition.</p>
+          </div>
+        </GoldCard>
+      </Link>
+      <Link href="/graphology/pressure-and-zones" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Pen Pressure & 3 Writing Zones →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Upper, middle, and lower zone energy distribution.</p>
+          </div>
+        </GoldCard>
+      </Link>
+    </div>
+  </div>
 
   {/* Section: Handwriting Stroke Indicators */}
   <div className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
@@ -271,6 +325,9 @@ export default function GraphologyPage() {
  <div className="pt-12">
  <FAQSection faqs={GRAPHOLOGY_FAQS} />
  </div>
+
+ {/* SEO Internal Linking Mesh */}
+ <SEOInternalMesh currentCategory="graphology" />
 
  {/* Active Batches Showcase */}
  <div className="border-t border-gray-200/60 pt-16">

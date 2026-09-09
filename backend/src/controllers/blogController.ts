@@ -1,7 +1,22 @@
 import { Request, Response, NextFunction } from 'express';
 import Blog from '../models/Blog';
 import { generateAndSaveBlog } from '../services/blogService';
+import { SEED_BLOGS } from '../data/seedBlogs';
 import { logger } from '../utils/logger';
+
+// Auto-seed function to ensure cloud DB is never empty
+async function ensureSeedBlogs() {
+  try {
+    const count = await Blog.countDocuments({ isPublished: true });
+    if (count === 0) {
+      logger.info('🌱 Empty blog collection detected on server. Seeding initial blogs...');
+      await Blog.insertMany(SEED_BLOGS);
+      logger.info(`✅ Seeded ${SEED_BLOGS.length} initial blogs into MongoDB.`);
+    }
+  } catch (err: any) {
+    logger.error(`Failed to auto-seed blogs: ${err.message}`);
+  }
+}
 
 // GET /api/v1/blogs — paginated listing with filters
 export async function getBlogs(req: Request, res: Response, next: NextFunction) {
@@ -12,12 +27,15 @@ export async function getBlogs(req: Request, res: Response, next: NextFunction) 
     const tag = req.query.tag as string;
     const search = req.query.search as string;
 
+    // Check & seed initial blogs if database is completely empty
+    await ensureSeedBlogs();
+
     const filter: any = { isPublished: true };
     if (category && category !== 'All') filter.category = category;
     if (tag) filter.tags = { $in: [tag] };
     if (search) filter.$text = { $search: search };
 
-    const total = await Blog.countDocuments(filter);
+    let total = await Blog.countDocuments(filter);
 
     if (total === 0 && !category && !tag && !search) {
       logger.info('⚠️ No published blogs found in DB. Triggering background blog generation...');
@@ -38,7 +56,7 @@ export async function getBlogs(req: Request, res: Response, next: NextFunction) 
         total,
         page,
         limit,
-        totalPages: Math.ceil(total / limit),
+        totalPages: Math.ceil(total / limit) || 1,
       },
     });
   } catch (err) {
@@ -49,7 +67,17 @@ export async function getBlogs(req: Request, res: Response, next: NextFunction) 
 // GET /api/v1/blogs/:slug — single blog post
 export async function getBlogBySlug(req: Request, res: Response, next: NextFunction) {
   try {
-    const blog = await Blog.findOne({ slug: req.params.slug, isPublished: true }).lean();
+    await ensureSeedBlogs();
+    let blog = await Blog.findOne({ slug: req.params.slug, isPublished: true }).lean();
+    
+    // Fallback search in SEED_BLOGS if DB search missed
+    if (!blog) {
+      const seedMatch = SEED_BLOGS.find(b => b.slug === req.params.slug);
+      if (seedMatch) {
+        blog = seedMatch as any;
+      }
+    }
+
     if (!blog) {
       return res.status(404).json({ success: false, error: { message: 'Blog not found' } });
     }

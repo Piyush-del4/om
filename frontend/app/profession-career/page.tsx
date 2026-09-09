@@ -7,6 +7,7 @@ import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackground';
 import { FAQSection } from '../../components/ui/FAQSection';
+import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
 
 export default function ProfessionCareerPage() {
  const careerHouses = [
@@ -130,6 +131,9 @@ export default function ProfessionCareerPage() {
  <div className="pt-12">
  <FAQSection faqs={CAREER_FAQS} />
  </div>
+
+ {/* SEO Internal Mesh */}
+ <SEOInternalMesh currentCategory="astrology" />
 
  {/* Category Booking Widget */}
  <div className="border-t border-gray-200/60 pt-16 pb-8">

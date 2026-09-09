@@ -25,6 +25,8 @@ const TAROT_FAQS = [
  { q: 'Is tarot card reading related to dark magic?', a: 'No. This is a common myth. Tarot is simply a deck of cards with archetypal images used for psychological reflection and spiritual guidance. It has nothing to do with dark magic.' }
 ];
 
+import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
+
 export default function TarotCardPage() {
  const [suit, setSuit] = useState<'none' | 'wands' | 'cups' | 'swords' | 'pentacles'>('none');
 
@@ -217,6 +219,58 @@ export default function TarotCardPage() {
     </div>
   </div>
 
+  {/* Section: Dedicated Tarot Topic Guides */}
+  <div className="space-y-6">
+    <div className="space-y-2">
+      <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">In-Depth Guides</span>
+      <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+        Explore Special Tarot Topics
+      </h2>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <Link href="/tarot-card/major-arcana" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">The 22 Major Arcana Cards →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Complete archetype guide from The Fool to The World.</p>
+          </div>
+        </GoldCard>
+      </Link>
+      <Link href="/tarot-card/three-card-spread" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">3-Card Past/Present/Future →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Master immediate clarity spreads for core life questions.</p>
+          </div>
+        </GoldCard>
+      </Link>
+      <Link href="/tarot-card/love-tarot" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Love & Relationship Tarot →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Soulmates, romantic compatibility, and emotional clarity.</p>
+          </div>
+        </GoldCard>
+      </Link>
+      <Link href="/tarot-card/career-tarot" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Career & Money Tarot →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Business growth, job switches, and wealth opportunities.</p>
+          </div>
+        </GoldCard>
+      </Link>
+      <Link href="/tarot-card/tarot-suits" className="block group">
+        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+          <div className="space-y-2">
+            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">4 Minor Arcana Suits →</h3>
+            <p className="text-xs text-gray-600 font-light leading-relaxed">Wands, Cups, Swords, and Pentacles complete elemental breakdown.</p>
+          </div>
+        </GoldCard>
+      </Link>
+    </div>
+  </div>
+
  {/* Spreads Grid */}
  <div className="space-y-6">
  <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
@@ -340,8 +394,11 @@ export default function TarotCardPage() {
  <FAQSection faqs={TAROT_FAQS} />
  </div>
 
- {/* Active Batches Showcase */}
- <div className="border-t border-gray-200/60 pt-16">
+  {/* SEO Internal Linking Mesh */}
+  <SEOInternalMesh currentCategory="tarot" />
+
+  {/* Active Batches Showcase */}
+  <div className="border-t border-gray-200/60 pt-16">
  <CategoryBatchesList category="Tarot Card" />
  </div>
 

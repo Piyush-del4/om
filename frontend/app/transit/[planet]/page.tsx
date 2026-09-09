@@ -5,7 +5,7 @@ import transitsData from '../../../data/transits.json';
 import { GoldCard } from '../../../components/ui/GoldCard';
 import { FormattedText } from '../../../components/ui/FormattedText';
 import { ArrowLeft } from 'lucide-react';
-import Image from 'next/image';
+import { SEOInternalMesh } from '../../../components/seo/SEOInternalMesh';
 
 const PLANETS = [
   { id: 'sun', name: 'Sun' },
@@ -135,6 +135,9 @@ export default async function TransitPredictionPage({ params }: { params: Promis
             })}
           </div>
         </div>
+
+        {/* SEO Internal Mesh */}
+        <SEOInternalMesh currentCategory="astrology" />
 
       </div>
     </div>

@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { BlogCard } from '../../components/ui/blog/BlogCard';
 import { Search, BookOpen, ChevronLeft, ChevronRight, Sparkles, ArrowRight, Phone, MessageSquare, ShoppingBag, GraduationCap } from 'lucide-react';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/v1';
+import { getApiUrl } from '@/lib/env';
+import { FALLBACK_BLOGS } from '@/data/seedBlogs';
 
 const CATEGORIES = ['All', 'Astrology', 'Numerology', 'Vedic', 'FEAN Method', 'Tarot', 'Graphology', 'Remedies'];
 
@@ -33,16 +34,33 @@ export default function BlogPage() {
   const fetchBlogs = useCallback(async () => {
     setLoading(true);
     try {
+      const apiBase = getApiUrl();
       const params = new URLSearchParams({ page: page.toString(), limit: '9' });
       if (category !== 'All') params.set('category', category);
       if (search) params.set('search', search);
-      const res = await fetch(`${API_BASE}/blogs?${params}`);
+      const res = await fetch(`${apiBase}/blogs?${params}`);
+      if (!res.ok) throw new Error('API response not ok');
       const json = await res.json();
-      setBlogs(json.data || []);
-      setTotalPages(json.pagination?.totalPages || 1);
-      setTotal(json.pagination?.total || 0);
+      if (json.data && json.data.length > 0) {
+        setBlogs(json.data);
+        setTotalPages(json.pagination?.totalPages || 1);
+        setTotal(json.pagination?.total || json.data.length);
+      } else {
+        // Fallback to static blogs if API returned 0 items
+        let filtered = FALLBACK_BLOGS;
+        if (category !== 'All') filtered = filtered.filter(b => b.category === category);
+        if (search) filtered = filtered.filter(b => b.title.toLowerCase().includes(search.toLowerCase()) || b.primaryKeyword.toLowerCase().includes(search.toLowerCase()));
+        setBlogs(filtered);
+        setTotalPages(1);
+        setTotal(filtered.length);
+      }
     } catch {
-      setBlogs([]);
+      let filtered = FALLBACK_BLOGS;
+      if (category !== 'All') filtered = filtered.filter(b => b.category === category);
+      if (search) filtered = filtered.filter(b => b.title.toLowerCase().includes(search.toLowerCase()) || b.primaryKeyword.toLowerCase().includes(search.toLowerCase()));
+      setBlogs(filtered);
+      setTotalPages(1);
+      setTotal(filtered.length);
     } finally {
       setLoading(false);
     }

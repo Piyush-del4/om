@@ -37,7 +37,7 @@ export default function KusumProfilePage() {
  { label: 'Wellness Consultation' }
  ];
  const description = member?.description || "Kusum Panday brings a deeply compassionate and nurturing energy to every session. As an experienced Tarot Card Reader, Relationship Coach, and certified Yoga Teacher, she creates a safe and non-judgmental space for clients to explore their emotions, heal old wounds, and rediscover their inner strength. Her tarot readings go beyond prediction — they act as a mirror, reflecting the subconscious patterns that influence your choices in love, relationships, and daily life. Combined with relationship coaching techniques and the mindful discipline of yoga, Kusum Ji helps clients find emotional balance, improve communication in relationships, overcome anxiety, and cultivate a deeper connection with themselves. Her warm and intuitive approach makes even the most complex life situations feel manageable and clear.";
- const experienceYears = member?.experienceYears || 15;
+ const experienceYears = member?.experienceYears || 7;
  return (
  <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900">
  <div className="max-w-4xl mx-auto space-y-12 relative z-10">

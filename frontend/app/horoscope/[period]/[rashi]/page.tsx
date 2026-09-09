@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import horoscopeData from '../../../../data/horoscope.json';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { HoroscopeDatabaseLinks } from '@/components/ui/astrology/HoroscopeDatabaseLinks';
+import { getApiUrl } from '@/lib/env';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,7 +23,7 @@ export default async function HoroscopePage({ params }: { params: Promise<{ peri
   // Check if live AI horoscopes exist via backend API
   let liveData = null;
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api/v1';
+    const apiUrl = getApiUrl();
     console.log(`Fetching from: ${apiUrl}/astrology/horoscope/latest`);
     const res = await fetch(`${apiUrl}/astrology/horoscope/latest`, { cache: 'no-store' });
     if (res.ok) {
@@ -36,7 +37,7 @@ export default async function HoroscopePage({ params }: { params: Promise<{ peri
   }
 
   // If live API data is missing or doesn't have predictions for this period, 
-  // show preparation error state instead of incorrect/dummy fallback predictions.
+  // show preparation state instead of outdated/static fallback predictions.
   if (!liveData || !liveData[period]) {
     return (
       <div className="min-h-[60vh] bg-[#FFFDF7] font-sans flex items-center justify-center px-4">

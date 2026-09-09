@@ -13,7 +13,7 @@ export function OrganizationSchema() {
  url: 'https://omastrologyamc.com',
  logo: 'https://omastrologyamc.com/images/logo.png',
  description:
- "India's trusted astrology consultancy offering Vedic Astrology, Numerology, Tarot Card readings, Graphology & handwriting analysis with 25+ years experienced master consultants.",
+ "India's trusted astrology consultancy offering Vedic Astrology, Numerology, Tarot Card readings, Graphology & handwriting analysis with 9+ years experienced master consultants.",
  foundingDate: '2000',
  contactPoint: [
  {

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
  template: '%s | OM Astrology AMC',
  },
  description:
- 'India\'s trusted astrology consultancy — expert Vedic Astrology readings, Numerology name correction, Tarot card guidance, Graphology & handwriting analysis. Book a 1-on-1 session with 25+ years experienced master consultants. Online video consultations available 7 days a week.',
+ 'India\'s trusted astrology consultancy — expert Vedic Astrology readings, Numerology name correction, Tarot card guidance, Graphology & handwriting analysis. Book a 1-on-1 session with 9+ years experienced master consultants. Online video consultations available 7 days a week.',
  keywords: [
  'best astrologer', 'online astrology consultation', 'vedic astrology', 'numerology consultation',
  'best numerologist', 'tarot reading online', 'best tarot reader', 'graphology analysis',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
  siteName: 'OM Astrology AMC',
  title: 'OM Astrology AMC — Best Astrologer, Numerologist & Tarot Reader Online',
  description:
- 'India\'s trusted astrology consultancy — expert Vedic Astrology, Numerology, Tarot & Graphology consultations with 25+ years experienced master consultants.',
+ 'India\'s trusted astrology consultancy — expert Vedic Astrology, Numerology, Tarot & Graphology consultations with 9+ years experienced master consultants.',
  },
  twitter: {
  card: 'summary_large_image',

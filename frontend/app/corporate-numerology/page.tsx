@@ -8,6 +8,8 @@ import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget
 import { AstrologyHeroBackground } from '../../components/ui/AstrologyHeroBackground';
 import { FAQSection } from '../../components/ui/FAQSection';
 
+import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
+
 export default function CorporateNumerologyPage() {
  const corporatePillars = [
  { num: 'Pillar 1', name: 'Brand Name Spelling', desc: 'Ensures the alphabetic spelling total of your business name vibrates on a lucky number like 1, 5, or 6 to generate trust and brand awareness.' },
@@ -130,6 +132,9 @@ export default function CorporateNumerologyPage() {
  <div className="pt-12">
  <FAQSection faqs={CORPORATE_FAQS} />
  </div>
+
+ {/* SEO Internal Mesh */}
+ <SEOInternalMesh currentCategory="numerology" />
 
  {/* Category Booking Widget */}
  <div className="border-t border-gray-200/60 pt-16 pb-8">

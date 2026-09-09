@@ -92,6 +92,7 @@ export function Footer() {
     { name: 'Numerology Forecasts', href: '/numerology' },
     { name: 'Tarot Spreads', href: '/tarot-card' },
     { name: 'Graphology Assessment', href: '/graphology' },
+    { name: 'Occult Synthesis Hub', href: '/occult-synthesis' },
   ];
 
   // Helper renderer
