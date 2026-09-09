@@ -12,6 +12,7 @@ import { Calendar, Clock, Plus, Compass, Star, ChevronRight, Phone, MessageSquar
 import { env } from '@/lib/env';
 import { FormattedText } from '@/components/ui/FormattedText';
 import { SEOInternalMesh } from '@/components/seo/SEOInternalMesh';
+import { FAQSchema, BreadcrumbSchema } from '@/components/seo/JsonLd';
 
 export default function AppointmentsPage() {
  const { isAuthenticated, isLoading, user } = useAuth();
@@ -593,6 +594,17 @@ export default function AppointmentsPage() {
  )}
  </div>
  )}
+
+  <BreadcrumbSchema items={[
+    { name: 'Home', url: '/' },
+    { name: 'Appointments & Consultations', url: '/appointments' }
+  ]} />
+  <FAQSchema faqs={[
+    { question: 'How do online video consultations work with Rajessh Paanday and Kusum Panday?', answer: 'Once you book a slot, you receive an automated confirmation with a Google Meet / Video call link. Sessions are 1-on-1 and confidential.' },
+    { question: 'What details are required before my consultation?', answer: 'Your full name, exact date of birth, time of birth, and birth city. If you do not know your birth time, birth time rectification or numerology/handwriting analysis will be used.' },
+    { question: 'Can I record or take notes during my astrology consultation?', answer: 'Yes! You are encouraged to take notes. A detailed Janam Kundli or summary blueprint is also provided after your session.' },
+    { question: 'What is the refund policy for consultation bookings?', answer: 'Rescheduling is free up to 24 hours prior to your slot. Unused bookings can be rescheduled for any available date within 90 days.' }
+  ]} />
 
  <SEOInternalMesh currentCategory="appointments" />
 

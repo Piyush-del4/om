@@ -7,6 +7,9 @@ import { FormattedText } from '../../../components/ui/FormattedText';
 import { ArrowLeft } from 'lucide-react';
 import { SEOInternalMesh } from '../../../components/seo/SEOInternalMesh';
 
+import { Metadata } from 'next';
+import { BreadcrumbSchema } from '../../../components/seo/JsonLd';
+
 const PLANETS = [
   { id: 'sun', name: 'Sun' },
   { id: 'moon', name: 'Moon' },
@@ -23,6 +26,30 @@ export async function generateStaticParams() {
   return Object.keys(transitsData).map((planet) => ({
     planet: planet.toLowerCase(),
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ planet: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const planet = resolvedParams.planet.toLowerCase();
+  const data = (transitsData as any)[planet];
+  if (!data) return { title: 'Transit Not Found' };
+  const capitalizedPlanet = planet.charAt(0).toUpperCase() + planet.slice(1);
+  return {
+    title: `${capitalizedPlanet} Transit 2026 Effects on All 12 Zodiac Signs — Vedic Astrology`,
+    description: `Complete guide to ${capitalizedPlanet} transit 2026. Discover career, marriage, health, and financial predictions for all 12 rashis by Rajessh Paanday.`,
+    keywords: [`${planet} transit 2026`, `${planet} transit effects`, `vedic astrology transit 2026`, `OM Astrology AMC`],
+    openGraph: {
+      title: `${capitalizedPlanet} Transit 2026 Effects on All 12 Signs | OM Astrology AMC`,
+      description: `Detailed Vedic astrology analysis of ${capitalizedPlanet} transit in 2026 across all 12 zodiac signs.`,
+      url: `https://omastrologyamc.com/transit/${planet}`,
+      siteName: 'OM Astrology AMC',
+      images: [{ url: `https://omastrologyamc.com/images/planets/${planet}.png` }],
+      type: 'article',
+    },
+    alternates: {
+      canonical: `https://omastrologyamc.com/transit/${planet}`,
+    },
+  };
 }
 
 export default async function TransitPredictionPage({ params }: { params: Promise<{ planet: string }> }) {
@@ -45,6 +72,11 @@ export default async function TransitPredictionPage({ params }: { params: Promis
 
   return (
     <div className="min-h-screen bg-white text-gray-900 py-24 px-4 radial-mesh-bg sacred-geometry-bg">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Astrology', url: '/astrology' },
+        { name: `${planet.charAt(0).toUpperCase() + planet.slice(1)} Transit 2026`, url: `/transit/${planet}` }
+      ]} />
       <div className="max-w-5xl mx-auto space-y-8 relative z-10">
         
         {/* Navigation & Header */}

@@ -7,12 +7,38 @@ import { FormattedText } from '../../../components/ui/FormattedText';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 
+import { Metadata } from 'next';
+import { BreadcrumbSchema } from '../../../components/seo/JsonLd';
+
 const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export async function generateStaticParams() {
   return Object.keys(numerologyData).map((number) => ({
     number: number,
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ number: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const number = resolvedParams.number;
+  const data = (numerologyData as any)[number];
+  if (!data) return { title: 'Numerology Prediction Not Found' };
+  return {
+    title: `Numerology Number ${number} Predictions 2026 — Career, Love & Wealth | OM Astrology AMC`,
+    description: `Complete Chaldean & Pythagorean Numerology 2026 forecast for Root Number ${number}. Learn career choices, relationship compatibility, and lucky remedies by Kusum Panday.`,
+    keywords: [`numerology 2026 number ${number}`, `life path number ${number} 2026`, `numerology predictions 2026`, `Kusum Panday`],
+    openGraph: {
+      title: `Numerology Number ${number} Predictions 2026 | OM Astrology AMC`,
+      description: `Discover your Root Number ${number} 2026 life path, career, and marriage forecast.`,
+      url: `https://omastrologyamc.com/numerology-2026/${number}`,
+      siteName: 'OM Astrology AMC',
+      images: [{ url: `https://omastrologyamc.com/images/numerology/number-${number}.png` }],
+      type: 'article',
+    },
+    alternates: {
+      canonical: `https://omastrologyamc.com/numerology-2026/${number}`,
+    },
+  };
 }
 
 export default async function NumerologyPredictionPage({ params }: { params: Promise<{ number: string }> }) {
@@ -35,6 +61,11 @@ export default async function NumerologyPredictionPage({ params }: { params: Pro
 
   return (
     <div className="min-h-screen bg-white text-gray-900 py-24 px-4 radial-mesh-bg sacred-geometry-bg">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Numerology', url: '/numerology' },
+        { name: `Number ${number} Predictions 2026`, url: `/numerology-2026/${number}` }
+      ]} />
       <div className="max-w-5xl mx-auto space-y-8 relative z-10">
         
         {/* Navigation & Header */}

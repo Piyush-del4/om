@@ -8,6 +8,7 @@ import { CategoryBookingWidget } from '../../../components/ui/CategoryBookingWid
 import { CategoryBatchesList } from '../../../components/ui/CategoryBatchesList';
 import { FAQSection } from '../../../components/ui/FAQSection';
 import { SEOInternalMesh } from '../../../components/seo/SEOInternalMesh';
+import { FAQSchema, BreadcrumbSchema } from '../../../components/seo/JsonLd';
 
 interface SynthesisTopicData {
   title: string;
@@ -286,8 +287,35 @@ export async function generateMetadata({ params }: { params: Promise<{ topic: st
   const data = SYNTHESIS_TOPICS[topic];
   if (!data) return { title: 'Occult Synthesis Topic Not Found' };
   return {
-    title: `${data.title} | OM Astrology AMC`,
-    description: data.subtitle,
+    title: `${data.title} — Vedic & Occult Synthesis Guide | OM Astrology AMC`,
+    description: data.description.substring(0, 160),
+    keywords: [
+      data.title,
+      data.category,
+      'occult synthesis',
+      'Vedic astrology',
+      'Numerology consultation',
+      'Graphology handwriting analysis',
+      'Tarot card reading',
+      'Rajessh Paanday',
+      'Kusum Panday'
+    ],
+    openGraph: {
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+      url: `https://omastrologyamc.com/occult-synthesis/${topic}`,
+      siteName: 'OM Astrology AMC',
+      images: [{ url: `https://omastrologyamc.com${data.image}` }],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+    },
+    alternates: {
+      canonical: `https://omastrologyamc.com/occult-synthesis/${topic}`,
+    },
   };
 }
 
@@ -301,6 +329,14 @@ export default async function OccultSynthesisTopicPage({ params }: { params: Pro
 
   return (
     <div className="relative min-h-screen bg-white overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-gray-900">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Occult Synthesis', url: '/occult-synthesis' },
+        { name: data.title, url: `/occult-synthesis/${topic}` }
+      ]} />
+      {data.faqs && data.faqs.length > 0 && (
+        <FAQSchema faqs={data.faqs.map(f => ({ question: f.q, answer: f.a }))} />
+      )}
       <div className="max-w-5xl mx-auto space-y-12 relative z-10">
         
         {/* Back Link */}
