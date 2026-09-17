@@ -410,29 +410,29 @@ export default function Home() {
  </svg>
  </motion.div>
 
- {/* Hero Section */}
- <section className="relative z-10 flex flex-col items-center justify-center text-center px-4 pt-24 pb-16 min-h-[85vh] overflow-hidden">
- {/* Background Animation */}
- <CosmicHeroBackground />
+  {/* Hero Section */}
+  <section className="relative z-10 flex flex-col items-center justify-center text-center px-4 pt-24 pb-16 min-h-[85vh] overflow-hidden">
+    {/* Background Animation */}
+    <CosmicHeroBackground />
 
- {/* Centered Content */}
- <motion.div
- initial={{ opacity: 0, y: 30 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.8 }}
- className="relative z-10 max-w-4xl mx-auto space-y-6"
- >
- <span className="text-[var(--gold)] text-sm uppercase tracking-widest font-semibold block font-mono">
- Life Set when Planet Connect
- </span>
- <h1 className="font-serif text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-tight">
- Unlock the <span className="gold-gradient-text">Mysteries</span> <br /> of the Universe
- </h1>
- <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
- Get honest and helpful guidance in Astrology, Numerology, Tarot, and Graphology from our experienced consultants.
- </p>
- </motion.div>
- </section>
+    {/* Centered Content */}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="relative z-10 max-w-4xl mx-auto space-y-6"
+    >
+      <span className="text-[var(--gold)] text-sm uppercase tracking-widest font-semibold block font-mono">
+        Life Set when Planet Connect
+      </span>
+      <h1 className="font-serif text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-tight">
+        Unlock the <span className="gold-gradient-text">Mysteries</span> <br /> of the Universe
+      </h1>
+      <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+        Get honest and helpful guidance in Astrology, Numerology, Tarot, and Graphology from our experienced consultants.
+      </p>
+    </motion.div>
+  </section>
 
  {/* === PREMIUM PERSONALIZED KUNDLI SECTION === */}
  <motion.section

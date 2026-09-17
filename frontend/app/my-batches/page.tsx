@@ -1,23 +1,18 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/auth/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/api/client';
-import { GoldButton } from '@/components/ui/GoldButton';
-import { GoldCard } from '@/components/ui/GoldCard';
-import { GraduationCap, ArrowRight, BookOpen, PlusCircle } from 'lucide-react';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { UserPanelShell } from '@/components/user/UserPanelShell';
+import { GraduationCap, ArrowRight, BookOpen, PlusCircle, PlayCircle } from 'lucide-react';
 import { FormattedText } from '@/components/ui/FormattedText';
 
 export default function MyBatchesPage() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) router.push('/login');
-  }, [isAuthenticated, isLoading, router]);
 
   // Fetch enrolled batches
   const { data: enrolments, isLoading: loadingEnrolled } = useQuery({
@@ -29,142 +24,127 @@ export default function MyBatchesPage() {
     enabled: isAuthenticated,
   });
 
-  // If user has exactly 1 enrolled batch, auto-redirect directly to that batch
-  useEffect(() => {
-    if (enrolments && enrolments.length === 1) {
-      const firstBatch = enrolments[0]?.batchId?._id || enrolments[0]?.batchId;
-      if (firstBatch && typeof firstBatch === 'string') {
-        router.replace(`/my-batches/${firstBatch}`);
-      }
-    }
-  }, [enrolments, router]);
-
-  if (isLoading || loadingEnrolled) {
-    return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center text-gray-600">
-        <LoadingSpinner size="lg" />
-        <p className="text-xs text-gray-500 font-mono tracking-widest uppercase animate-pulse mt-4">
-          Loading Enrolled Batches...
-        </p>
-      </div>
-    );
-  }
-
-  // If user has 0 enrolled batches
-  if (!enrolments || enrolments.length === 0) {
-    return (
-      <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900 flex items-center justify-center">
-        <div className="max-w-md mx-auto py-16 text-center relative z-10">
-          <div className="double-bezel-outer p-1 bg-gray-50/20 max-w-sm mx-auto">
-            <div className="double-bezel-inner py-12 px-6 flex flex-col items-center">
-              <GraduationCap className="w-16 h-16 text-[var(--gold)] mb-4 animate-bounce" />
-              <h3 className="font-serif text-xl font-bold text-gray-900 mb-2">Welcome to the Academy</h3>
-              <p className="text-gray-600 text-xs font-light leading-relaxed max-w-xs mb-8">
-                You are not enrolled in any academy study batches yet. Explore our open batches to start learning.
-              </p>
-              <GoldButton
-                variant="filled"
-                className="py-2.5 px-6 text-xs font-semibold"
-                onClick={() => router.push('/my-batches/join')}
-              >
-                Join Batch
-              </GoldButton>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // If user has multiple enrolled batches, display all enrolled batches with photo & title
   return (
-    <div className="radial-mesh-bg min-h-screen bg-white text-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto space-y-8">
-        
-        {/* Header Bar */}
-        <div className="border-b border-[var(--gold-200)] pb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <UserPanelShell
+      activeTab="my-batches"
+      title="Enrolled Courses & Batches"
+      subtitle="Access your academy study batches, video lectures, pdf notes, and classroom materials."
+    >
+      <div className="space-y-6 max-w-5xl">
+        {/* Header Action Row */}
+        <div className="flex justify-between items-center bg-white p-4 rounded-2xl border border-gray-200 shadow-sm">
           <div>
-            <h1 className="font-serif text-3xl md:text-4xl font-bold tracking-tight flex items-center gap-3">
-              <GraduationCap className="w-8 h-8 text-[var(--gold)]" /> My Enrolled Batches
-            </h1>
-            <p className="text-gray-600 text-xs mt-1 font-light">
-              Select a batch below to access its lectures, video materials, and notes.
+            <h3 className="font-serif font-bold text-base text-gray-900 flex items-center gap-2">
+              <GraduationCap className="w-5 h-5 text-rose-600" />
+              <span>Academy Enrolments</span>
+            </h3>
+            <p className="text-gray-500 text-xs">
+              {enrolments?.length || 0} active study batch{enrolments?.length === 1 ? '' : 'es'}
             </p>
           </div>
-          <GoldButton
-            variant="filled"
-            className="py-2 px-4 text-xs font-semibold flex items-center gap-1.5"
-            onClick={() => router.push('/my-batches/join')}
+
+          <Link
+            href="/my-batches/join"
+            className="flex items-center gap-1.5 px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-sm transition-colors"
           >
-            <PlusCircle className="w-4 h-4 text-black" />
+            <PlusCircle className="w-4 h-4" />
             <span>Join New Batch</span>
-          </GoldButton>
+          </Link>
         </div>
 
-        {/* Enrolled Batches Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {enrolments.map((enr: any) => {
-            const batch = enr.batchId;
-            if (!batch || !batch._id) return null;
+        {/* Batches Grid */}
+        {loadingEnrolled ? (
+          <div className="bg-white p-8 rounded-3xl border border-gray-200 text-center">
+            <BookOpen className="w-8 h-8 text-rose-500 mx-auto animate-bounce mb-3" />
+            <p className="text-gray-500 text-xs animate-pulse font-mono">Loading enrolled courses...</p>
+          </div>
+        ) : enrolments && enrolments.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {enrolments.map((enr: any) => {
+              const batch = enr.batchId;
+              if (!batch || !batch._id) return null;
 
-            return (
-              <GoldCard
-                key={enr._id || batch._id}
-                flush
-                className="transition-spring group flex flex-col justify-between h-full border border-gray-200 hover:border-[var(--gold)] cursor-pointer"
-                onClick={() => router.push(`/my-batches/${batch._id}`)}
-              >
-                <div className="block flex-grow">
-                  {/* Batch Photo / Cover Image */}
-                  <div className="w-full h-48 bg-gray-100 overflow-hidden relative">
-                    <img
-                      src={batch.coverImage?.url || '/images/logo.png'}
-                      alt={batch.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e: any) => {
-                        e.target.src = '/images/logo.png';
-                      }}
-                    />
-                    <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md border border-[var(--gold-200)] text-[var(--gold)] text-[9px] uppercase font-mono tracking-widest px-2.5 py-1 rounded-full font-bold">
-                      {batch.category || 'Academy'}
+              const watchedCount = enr.watchedLectures?.length || 0;
+              const totalCount = batch.totalLectures || 1;
+              const pct = Math.min(100, Math.round((watchedCount / totalCount) * 100));
+
+              return (
+                <div
+                  key={enr._id || batch._id}
+                  onClick={() => router.push(`/my-batches/${batch._id}`)}
+                  className="bg-white rounded-3xl border border-gray-200 hover:border-rose-400/80 transition-all duration-200 shadow-sm overflow-hidden flex flex-col justify-between group cursor-pointer"
+                >
+                  <div>
+                    {/* Cover Image */}
+                    <div className="w-full h-40 bg-slate-900 relative overflow-hidden">
+                      <img
+                        src={batch.coverImage?.url || '/images/logo.png'}
+                        alt={batch.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e: any) => {
+                          e.target.src = '/images/logo.png';
+                        }}
+                      />
+                      <div className="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md border border-slate-800 text-rose-300 text-[10px] font-mono tracking-wider px-2.5 py-1 rounded-full font-bold">
+                        {batch.category || 'Academy'}
+                      </div>
+                    </div>
+
+                    <div className="p-5 space-y-3">
+                      <h4 className="font-serif font-bold text-base text-gray-900 group-hover:text-rose-600 transition-colors">
+                        {batch.title}
+                      </h4>
+                      <FormattedText
+                        text={batch.description || ''}
+                        className="text-gray-500 text-xs line-clamp-2 font-light leading-relaxed"
+                      />
+
+                      {/* Watch Progress Slider */}
+                      <div className="space-y-1 pt-2">
+                        <div className="flex justify-between text-[11px] font-mono text-gray-500">
+                          <span>Progress</span>
+                          <span className="font-bold text-rose-600">{pct}% watched</span>
+                        </div>
+                        <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                          <div className="bg-rose-500 h-full transition-all" style={{ width: `${pct}%` }} />
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="p-6 space-y-3">
-                    <h3 className="font-sans text-xl font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors">
-                      {batch.title}
-                    </h3>
-                    <FormattedText
-                      text={batch.description}
-                      className="text-gray-600 text-xs leading-relaxed line-clamp-3 font-light"
-                    />
+                  <div className="p-5 pt-0 border-t border-gray-100 mt-2">
+                    <div className="pt-3 flex items-center justify-between">
+                      <span className="text-[11px] font-mono text-gray-400">
+                        {watchedCount} / {totalCount} lectures
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-rose-600 group-hover:translate-x-1 transition-transform">
+                        <span>Enter Portal</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
                   </div>
                 </div>
-
-                <div className="p-6 pt-0">
-                  <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between">
-                    <span className="text-xs text-green-600 font-semibold bg-green-50 px-2.5 py-1 rounded-md border border-green-200">
-                      Active Access
-                    </span>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        router.push(`/my-batches/${batch._id}`);
-                      }}
-                      className="bg-[var(--gold)] text-black text-xs font-bold py-2 px-4 rounded-full hover:bg-[var(--gold-light)] flex items-center gap-1.5 transition-all group-hover:scale-105 cursor-pointer"
-                    >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      <span>Study Portal</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              </GoldCard>
-            );
-          })}
-        </div>
-
+              );
+            })}
+          </div>
+        ) : (
+          <div className="bg-white p-12 rounded-3xl border border-gray-200 text-center space-y-4">
+            <GraduationCap className="w-12 h-12 text-gray-300 mx-auto" />
+            <div className="space-y-1">
+              <h3 className="font-serif font-bold text-lg text-gray-800">Not Enrolled in Any Batches</h3>
+              <p className="text-gray-500 text-xs max-w-xs mx-auto">
+                Explore our upcoming astrology and occult science academy courses to enroll.
+              </p>
+            </div>
+            <Link
+              href="/my-batches/join"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-md transition-colors"
+            >
+              <span>Explore Batches</span>
+            </Link>
+          </div>
+        )}
       </div>
-    </div>
+    </UserPanelShell>
   );
 }

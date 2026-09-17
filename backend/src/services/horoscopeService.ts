@@ -1,5 +1,4 @@
 import { GoogleGenAI } from '@google/genai';
-import { env } from '../config/env';
 import Horoscope from '../models/Horoscope';
 import { logger } from '../utils/logger';
 
@@ -8,54 +7,68 @@ const ZODIAC_SIGNS = [
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
 ];
 
+const FALLBACK_MODELS = [
+  process.env.GEMINI_MODEL || 'gemini-3.6-flash',
+  'gemini-2.5-pro',
+  'gemini-2.5-flash-lite',
+  'gemini-3.5-flash',
+  'gemini-flash-latest'
+];
+
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-async function generateForSign(ai: any, signName: string, retries = 3) {
-  logger.info(`Generating horoscope for ${signName.toUpperCase()}...`);
-  
-  const prompt = `You are an expert Vedic Astrologer. Generate a highly detailed horoscope prediction for the zodiac sign ${signName} for the current date.
-  
-You MUST return ONLY a valid JSON object following this EXACT schema, with no markdown formatting, no code blocks, and no extra text.
+async function generateBatchWithFallback(ai: any, signNames: string[], attempt = 0): Promise<Record<string, any>> {
+  const model = FALLBACK_MODELS[attempt % FALLBACK_MODELS.length];
+  logger.info(`🔮 Generating horoscope batch for [${signNames.join(', ').toUpperCase()}] using model: ${model}...`);
 
-{
-  "daily": {
-    "married_life": "String (1-2 sentences)",
-    "career": "String (1-2 sentences)",
-    "family": "String (1-2 sentences)",
-    "love_life": "String (1-2 sentences)",
-    "finances": "String (1-2 sentences)",
-    "health": "String (1-2 sentences)"
-  },
-  "weekly": {
-    "education": "String (3-4 sentences)",
-    "career": "String (3-4 sentences)",
-    "family": "String (3-4 sentences)",
-    "finance": "String (3-4 sentences)",
-    "health": "String (3-4 sentences)",
-    "lucky_colours": "String (e.g., 'Red and Yellow')",
-    "remedies": "String (1-2 sentences detailing a specific astrological remedy)",
-    "conclusion": "Perform ${signName} lagna puja for courage, confidence, and success."
-  },
-  "monthly": [
-    "String (Paragraph 1 of monthly overview)",
-    "String (Paragraph 2 of monthly overview)",
-    "String (Paragraph 3 of monthly overview)",
-    "String (Paragraph 4 of monthly overview)"
-  ],
-  "yearly": {
-    "intro": "String (3-4 sentences about 2026 overall)",
-    "career": "String (3-4 sentences)",
-    "finance": "String (3-4 sentences)",
-    "health": "String (3-4 sentences)",
-    "family_life": "String (3-4 sentences)",
-    "love_and_relationship": "String (3-4 sentences)",
-    "conclusion": "String (3-4 sentences concluding the year 2026)"
-  }
-}`;
+  const schemaSample = signNames.reduce((acc, sign) => {
+    acc[sign] = {
+      daily: {
+        married_life: "1-2 sentences",
+        career: "1-2 sentences",
+        family: "1-2 sentences",
+        love_life: "1-2 sentences",
+        finances: "1-2 sentences",
+        health: "1-2 sentences"
+      },
+      weekly: {
+        education: "3-4 sentences",
+        career: "3-4 sentences",
+        family: "3-4 sentences",
+        finance: "3-4 sentences",
+        health: "3-4 sentences",
+        lucky_colours: "Red and Yellow",
+        remedies: "1-2 sentences detailing a specific astrological remedy",
+        conclusion: `Perform ${sign} lagna puja for courage, confidence, and success.`
+      },
+      monthly: [
+        "Paragraph 1 of monthly overview",
+        "Paragraph 2 of monthly overview",
+        "Paragraph 3 of monthly overview",
+        "Paragraph 4 of monthly overview"
+      ],
+      yearly: {
+        intro: "3-4 sentences about 2026 overall",
+        career: "3-4 sentences",
+        finance: "3-4 sentences",
+        health: "3-4 sentences",
+        family_life: "3-4 sentences",
+        love_and_relationship: "3-4 sentences",
+        conclusion: "3-4 sentences concluding 2026"
+      }
+    };
+    return acc;
+  }, {} as any);
+
+  const prompt = `You are an expert Vedic Astrologer. Generate detailed horoscope predictions for the following zodiac signs: ${signNames.join(', ')} for the current date.
+  
+You MUST return ONLY a valid JSON object where keys are the sign names: [${signNames.join(', ')}]. Follow this structure:
+${JSON.stringify(schemaSample, null, 2)}
+Return ONLY JSON without markdown formatting.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+      model,
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -72,12 +85,18 @@ You MUST return ONLY a valid JSON object following this EXACT schema, with no ma
       throw e;
     }
   } catch (err: any) {
-    if (err.status === 429 && retries > 0) {
-      logger.warn(`Quota/Rate limit hit for ${signName}, pausing 30s before retry (${retries} retries left)...`);
-      await delay(30000);
-      return generateForSign(ai, signName, retries - 1);
+    const status = err.status || err.statusCode;
+    const isHighDemandOrQuota = status === 503 || status === 429 || (err.message && (err.message.includes('high demand') || err.message.includes('quota')));
+
+    if (isHighDemandOrQuota && attempt < FALLBACK_MODELS.length * 2) {
+      const nextModel = FALLBACK_MODELS[(attempt + 1) % FALLBACK_MODELS.length];
+      const waitTime = Math.min(30000, 5000 * Math.pow(2, Math.floor(attempt / FALLBACK_MODELS.length)));
+      logger.warn(`⚠️ Model ${model} returned ${status || 'demand error'}. Switching to ${nextModel} (waiting ${waitTime / 1000}s)...`);
+      await delay(waitTime);
+      return generateBatchWithFallback(ai, signNames, attempt + 1);
     }
-    logger.error(`Failed for ${signName}`, err);
+
+    logger.error(`❌ Batch generation failed for [${signNames.join(', ')}]: ${err.message}`);
     throw err;
   }
 }
@@ -92,33 +111,47 @@ export async function generateDailyHoroscopes() {
   const today = new Date().toISOString().split('T')[0];
   const ai = new GoogleGenAI({ apiKey: API_KEY });
 
-  // Fetch existing document to check which signs are already generated
   let existingDoc = await Horoscope.findOne({ date: today });
 
-  for (const sign of ZODIAC_SIGNS) {
-    // If sign already generated for today, skip it
-    if (existingDoc?.data?.[sign]) {
-      logger.info(`⏩ Horoscope for ${sign.toUpperCase()} already generated for ${today}. Skipping.`);
-      continue;
-    }
+  // Filter missing signs that are not generated yet
+  const missingSigns = ZODIAC_SIGNS.filter(sign => !existingDoc?.data?.[sign]);
 
+  if (missingSigns.length === 0) {
+    logger.info(`✅ Horoscope for today (${today}) is already complete for all 12 signs.`);
+    return;
+  }
+
+  logger.info(`📋 Missing ${missingSigns.length} signs for ${today}. Processing in resilient batches...`);
+
+  // Process in batches of 6 to minimize API calls (2 API calls total instead of 12)
+  const batchSize = 6;
+  for (let i = 0; i < missingSigns.length; i += batchSize) {
+    const currentBatch = missingSigns.slice(i, i + batchSize);
     try {
-      const generated = await generateForSign(ai, sign);
-      
-      // Incrementally save each sign immediately so progress is preserved and live UI gets data fast
-      existingDoc = await Horoscope.findOneAndUpdate(
-        { date: today },
-        { $set: { [`data.${sign}`]: generated } },
-        { upsert: true, new: true }
-      );
-      logger.info(`💾 Saved horoscope for ${sign.toUpperCase()} (${today})`);
+      const batchResult = await generateBatchWithFallback(ai, currentBatch);
 
-      // Wait 3s to respect Gemini API rate limits
-      await delay(3000);
+      // Build update payload
+      const updatePayload: Record<string, any> = {};
+      for (const sign of currentBatch) {
+        if (batchResult[sign]) {
+          updatePayload[`data.${sign}`] = batchResult[sign];
+        }
+      }
+
+      if (Object.keys(updatePayload).length > 0) {
+        existingDoc = await Horoscope.findOneAndUpdate(
+          { date: today },
+          { $set: updatePayload },
+          { upsert: true, new: true }
+        );
+        logger.info(`💾 Batch saved successfully for [${Object.keys(batchResult).join(', ').toUpperCase()}] (${today})`);
+      }
+
+      await delay(2000);
     } catch (err: any) {
-      logger.error(`Error processing ${sign}: ${err.message}`);
+      logger.error(`❌ Failed to process batch [${currentBatch.join(', ')}]: ${err.message}`);
     }
   }
 
-  logger.info(`✅ Daily horoscope generation check complete for ${today}`);
+  logger.info(`✅ Daily horoscope generation complete for ${today}`);
 }

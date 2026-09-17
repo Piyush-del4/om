@@ -188,7 +188,7 @@ export default function ShopPage() {
         {isLoading ? (
           <ShopItemSkeleton count={6} />
         ) : filtered.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((item: any) => {
               const now = new Date();
               const hasActiveOffer = item.offerPrice !== undefined && item.offerPrice !== null &&
@@ -198,80 +198,80 @@ export default function ShopPage() {
               return (
                 <div
                   key={item._id}
-                  className="bg-white border border-amber-200 rounded-2xl p-4 flex flex-col sm:flex-row gap-6 items-center sm:items-stretch relative cursor-pointer hover:border-amber-400 hover:shadow-md transition-all duration-300"
+                  className="bg-white border border-amber-200 rounded-2xl p-4 flex flex-col justify-between gap-4 relative cursor-pointer hover:border-amber-400 hover:shadow-md transition-all duration-300 h-full group"
                   onClick={() => router.push(`/shop/${item._id}`)}
                 >
-                  {/* Left Side: Image */}
-                  {item.imageUrl && (
-                    <div className="w-full sm:w-64 h-64 flex-shrink-0">
-                      <ShopItemImage 
-                        imageUrl={item.imageUrl} 
-                        images={item.images} 
-                        title={item.title} 
-                        isOutOfStock={isOutOfStock}
-                        hasActiveOffer={hasActiveOffer}
-                        offerExpiresAt={item.offerExpiresAt}
-                        specialOfferTitle={item.specialOfferTitle}
-                      />
-                    </div>
-                  )}
-
-                  {/* Right Side: Content */}
-                  <div className="flex-grow flex flex-col justify-between py-1 w-full">
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-start gap-2">
-                        <h3 className="font-sans text-lg font-bold text-gray-900 transition-colors group-hover:text-[var(--gold)]">{item.title}</h3>
-                        {item.inStock !== false && item.stockCount !== undefined && item.stockCount > 0 && item.stockCount < 5 && (
-                          <span className="bg-orange-50 border border-orange-200 text-orange-600 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded whitespace-nowrap">
-                            Only {item.stockCount} left
-                          </span>
-                        )}
+                  <div className="space-y-3 flex-1 flex flex-col">
+                    {/* Top Side: Image */}
+                    {item.imageUrl && (
+                      <div className="w-full h-56 flex-shrink-0">
+                        <ShopItemImage 
+                          imageUrl={item.imageUrl} 
+                          images={item.images} 
+                          title={item.title} 
+                          isOutOfStock={isOutOfStock}
+                          hasActiveOffer={hasActiveOffer}
+                          offerExpiresAt={item.offerExpiresAt}
+                          specialOfferTitle={item.specialOfferTitle}
+                        />
                       </div>
-                      <FormattedText text={item.description} className="text-gray-500 text-xs leading-relaxed font-light line-clamp-3" />
-                    </div>
+                    )}
 
-                    <div className="pt-3 mt-3 border-t border-neutral-100 flex items-center justify-between w-full">
-                      <div className="flex flex-col">
-                        {hasActiveOffer ? (
-                          <>
-                            <div className="flex items-baseline gap-2">
-                              <span className="text-[#e77600] font-sans font-bold text-3xl">
-                                ₹{(item.offerPrice / 100).toLocaleString()}
-                              </span>
-                              <span className="text-neutral-400 line-through text-base font-sans">
-                                ₹{(item.price / 100).toLocaleString()}
-                              </span>
-                            </div>
-                          </>
-                        ) : (
-                          <span className="text-[#e77600] font-sans font-bold text-3xl">
+                    {/* Bottom Side: Content */}
+                    <div className="space-y-2 pt-1 flex-1 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-start gap-2">
+                          <h3 className="font-sans text-lg font-bold text-gray-900 transition-colors group-hover:text-[var(--gold)] line-clamp-2">{item.title}</h3>
+                          {item.inStock !== false && item.stockCount !== undefined && item.stockCount > 0 && item.stockCount < 5 && (
+                            <span className="bg-orange-50 border border-orange-200 text-orange-600 font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded whitespace-nowrap">
+                              Only {item.stockCount} left
+                            </span>
+                          )}
+                        </div>
+                        <FormattedText text={item.description} className="text-gray-500 text-xs leading-relaxed font-light line-clamp-3" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-neutral-100 flex items-center justify-between w-full">
+                    <div className="flex flex-col">
+                      {hasActiveOffer ? (
+                        <div className="flex items-baseline gap-1.5 flex-wrap">
+                          <span className="text-[#e77600] font-sans font-bold text-2xl">
+                            ₹{(item.offerPrice / 100).toLocaleString()}
+                          </span>
+                          <span className="text-neutral-400 line-through text-xs font-sans">
                             ₹{(item.price / 100).toLocaleString()}
                           </span>
-                        )}
-                      </div>
-                      <div className="flex gap-3" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          title="Add to Cart"
-                          disabled={isOutOfStock}
-                          className="p-3 border border-amber-200 hover:border-amber-400 hover:bg-amber-50 rounded-xl text-amber-900 disabled:opacity-30 transition-colors"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            addToCartMutation.mutate(item._id);
-                          }}
-                        >
-                          <ShoppingCart className="w-5 h-5" />
-                        </button>
-                        <button
-                          disabled={isOutOfStock}
-                          className="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-900 font-bold rounded-xl text-sm transition border border-amber-400/40"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            router.push(`/shop/checkout?itemId=${item._id}&quantity=1`);
-                          }}
-                        >
-                          Buy Now
-                        </button>
-                      </div>
+                        </div>
+                      ) : (
+                        <span className="text-[#e77600] font-sans font-bold text-2xl">
+                          ₹{(item.price / 100).toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+                      <button
+                        title="Add to Cart"
+                        disabled={isOutOfStock}
+                        className="p-2.5 border border-amber-200 hover:border-amber-400 hover:bg-amber-50 rounded-xl text-amber-900 disabled:opacity-30 transition-colors"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCartMutation.mutate(item._id);
+                        }}
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                      </button>
+                      <button
+                        disabled={isOutOfStock}
+                        className="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-900 font-bold rounded-xl text-xs transition border border-amber-400/40"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          router.push(`/shop/checkout?itemId=${item._id}&quantity=1`);
+                        }}
+                      >
+                        Buy Now
+                      </button>
                     </div>
                   </div>
                 </div>

@@ -271,7 +271,7 @@ export default function AppointmentsPage() {
  {loadingTypes ? (
  <p className="text-gray-600 text-sm animate-pulse font-light">Loading available consultation packages...</p>
  ) : appointmentTypes && appointmentTypes.length > 0 ? (
- <div className="grid grid-cols-1 gap-8 w-full">
+ <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
  {appointmentTypes.map((type: any) => {
  const now = new Date();
  const hasActiveOffer = type.offerPrice !== undefined && type.offerPrice !== null &&
@@ -280,30 +280,31 @@ export default function AppointmentsPage() {
  const originalPriceVal = type.price;
 
  return (
- <div key={type._id} className="cursor-pointer" onClick={() => router.push(`/appointments/${type._id}`)}>
- <GoldCard flush className="border border-gray-200 hover:border-[var(--gold-200)] transition-all duration-300 h-full group overflow-hidden">
- <div className="flex flex-col sm:flex-row h-full">
+ <div key={type._id} className="cursor-pointer h-full" onClick={() => router.push(`/appointments/${type._id}`)}>
+ <GoldCard flush className="border border-gray-200 hover:border-[var(--gold-200)] transition-all duration-300 h-full group overflow-hidden flex flex-col justify-between">
+ <div className="flex flex-col h-full justify-between">
+ <div>
  {type.imageUrl && (
- <div className="w-full sm:w-1/2 shrink-0 bg-white border-b sm:border-b-0 sm:border-r border-gray-200/50 flex items-center justify-center p-6">
- <img src={type.imageUrl} alt={type.name} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 max-h-[350px]" />
+ <div className="w-full h-52 shrink-0 bg-white border-b border-gray-200/50 flex items-center justify-center p-4 relative overflow-hidden">
+ <img src={type.imageUrl} alt={type.name} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" />
  </div>
  )}
- <div className="flex-1 p-8 flex flex-col justify-between w-full bg-white/50">
- <div className="space-y-4">
- <div className="flex justify-between items-start">
- <span className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-800 text-lg font-bold font-sans px-3 py-1.5 rounded-lg shadow-sm">
- <Clock className="w-5 h-5 text-amber-500" /> {type.duration} mins
+ <div className="p-5 space-y-3">
+ <div className="flex justify-between items-center">
+ <span className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold font-sans px-2.5 py-1 rounded-md shadow-sm">
+ <Clock className="w-3.5 h-3.5 text-amber-500" /> {type.duration} mins
  </span>
  </div>
- <h3 className="font-sans text-[26px] font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors line-clamp-2 leading-tight">{type.name}</h3>
- <FormattedText text={type.description || 'Consultation details and custom alchemical remedy selections.'} className="text-gray-600 text-sm line-clamp-3 leading-relaxed font-light" />
+ <h3 className="font-sans text-xl font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors line-clamp-2 leading-tight">{type.name}</h3>
+ <FormattedText text={type.description || 'Consultation details and custom alchemical remedy selections.'} className="text-gray-600 text-xs line-clamp-3 leading-relaxed font-light" />
  </div>
- <div className="space-y-3 border-t border-gray-200 pt-4 mt-6">
- <div className="flex items-center justify-between">
+ </div>
+ <div className="p-5 pt-0 mt-2 border-t border-gray-100 space-y-3">
+ <div className="flex items-center justify-between pt-3">
  <div className="flex items-baseline gap-1.5 flex-wrap font-sans">
- <span className="text-[#e77600] font-bold text-[38px]">₹{(priceVal / 100).toLocaleString()}</span>
+ <span className="text-[#e77600] font-bold text-2xl">₹{(priceVal / 100).toLocaleString()}</span>
  {hasActiveOffer && (
- <span className="text-gray-500 line-through text-[20px]">₹{(originalPriceVal / 100).toLocaleString()}</span>
+ <span className="text-gray-400 line-through text-xs">₹{(originalPriceVal / 100).toLocaleString()}</span>
  )}
  </div>
  <span className="text-[var(--gold)] font-medium text-xs flex items-center gap-0.5 group-hover:underline">
@@ -317,11 +318,10 @@ export default function AppointmentsPage() {
  setSelectedTypeId(type._id);
  scrollToBooking();
  }}
- className="w-full py-3.5 text-base font-bold bg-[var(--gold)] hover:bg-[var(--gold-300)] text-black rounded-lg transition-all duration-300 shadow-[0_0_12px_rgba(204,143,51,0.25)] flex items-center justify-center gap-2 hover:scale-[1.01]"
+ className="w-full py-2.5 text-sm font-bold bg-[var(--gold)] hover:bg-[var(--gold-300)] text-black rounded-lg transition-all duration-300 shadow-[0_0_12px_rgba(204,143,51,0.25)] flex items-center justify-center gap-2 hover:scale-[1.01]"
  >
- <Calendar className="w-5 h-5" /> Book Now
+ <Calendar className="w-4 h-4" /> Book Now
  </button>
- </div>
  </div>
  </div>
  </GoldCard>

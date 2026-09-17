@@ -78,8 +78,17 @@ function computeReadingTime(sections: any[]): number {
   return Math.max(3, Math.ceil(totalWords / 200));
 }
 
-async function generateBlogContent(ai: any, topicData: typeof BLOG_TOPICS[0], retries = 2): Promise<any> {
+const FALLBACK_MODELS = [
+  process.env.GEMINI_MODEL || 'gemini-3.6-flash',
+  'gemini-2.5-pro',
+  'gemini-2.5-flash-lite',
+  'gemini-3.5-flash',
+  'gemini-flash-latest'
+];
+
+async function generateBlogContent(ai: any, topicData: typeof BLOG_TOPICS[0], attempt = 0): Promise<any> {
   const { topic, keyword, category, tags } = topicData;
+  const model = FALLBACK_MODELS[attempt % FALLBACK_MODELS.length];
 
   // Pick 6 relevant internal links from pool to inject
   const relevantLinks = INTERNAL_LINKS
@@ -147,7 +156,7 @@ Write 5-7 comprehensive sections. Focus heavily on practical value, exact calcul
 
   try {
     const response = await ai.models.generateContent({
-      model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+      model,
       contents: prompt,
       config: { responseMimeType: 'application/json' },
     });
@@ -161,11 +170,17 @@ Write 5-7 comprehensive sections. Focus heavily on practical value, exact calcul
       throw e;
     }
   } catch (err: any) {
-    if (err.status === 429 && retries > 0) {
-      logger.warn(`Rate limited generating blog for "${topic}", retrying in 15s...`);
-      await delay(15000);
-      return generateBlogContent(ai, topicData, retries - 1);
+    const status = err.status || err.statusCode;
+    const isHighDemandOrQuota = status === 503 || status === 429 || (err.message && (err.message.includes('high demand') || err.message.includes('quota')));
+
+    if (isHighDemandOrQuota && attempt < FALLBACK_MODELS.length * 2) {
+      const nextModel = FALLBACK_MODELS[(attempt + 1) % FALLBACK_MODELS.length];
+      const waitTime = Math.min(30000, 5000 * Math.pow(2, Math.floor(attempt / FALLBACK_MODELS.length)));
+      logger.warn(`⚠️ Blog generation hit ${status || 'demand error'} on model ${model}. Switching to ${nextModel} (waiting ${waitTime / 1000}s)...`);
+      await delay(waitTime);
+      return generateBlogContent(ai, topicData, attempt + 1);
     }
+
     throw err;
   }
 }
