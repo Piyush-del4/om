@@ -80,10 +80,9 @@ function computeReadingTime(sections: any[]): number {
 
 const FALLBACK_MODELS = [
   process.env.GEMINI_MODEL || 'gemini-3.6-flash',
-  'gemini-2.5-pro',
-  'gemini-2.5-flash-lite',
+  'gemini-3.6-flash',
   'gemini-3.5-flash',
-  'gemini-flash-latest'
+  'gemini-3.5-flash-lite'
 ];
 
 async function generateBlogContent(ai: any, topicData: typeof BLOG_TOPICS[0], attempt = 0): Promise<any> {
@@ -171,12 +170,18 @@ Write 5-7 comprehensive sections. Focus heavily on practical value, exact calcul
     }
   } catch (err: any) {
     const status = err.status || err.statusCode;
-    const isHighDemandOrQuota = status === 503 || status === 429 || (err.message && (err.message.includes('high demand') || err.message.includes('quota')));
+    const errMessage = err.message || '';
 
-    if (isHighDemandOrQuota && attempt < FALLBACK_MODELS.length * 2) {
+    if (attempt < FALLBACK_MODELS.length * 3) {
       const nextModel = FALLBACK_MODELS[(attempt + 1) % FALLBACK_MODELS.length];
-      const waitTime = Math.min(30000, 5000 * Math.pow(2, Math.floor(attempt / FALLBACK_MODELS.length)));
-      logger.warn(`⚠️ Blog generation hit ${status || 'demand error'} on model ${model}. Switching to ${nextModel} (waiting ${waitTime / 1000}s)...`);
+      const isRateOrDemand = status === 503 || status === 429 || errMessage.includes('high demand') || errMessage.includes('quota') || errMessage.includes('UNAVAILABLE');
+      const isNotFound = status === 404;
+
+      const waitTime = isRateOrDemand
+        ? Math.min(30000, 3000 * Math.pow(1.5, attempt))
+        : isNotFound ? 500 : 2000;
+
+      logger.warn(`⚠️ Blog generation failed on model ${model} (${status || errMessage}). Retrying with ${nextModel} (waiting ${(waitTime / 1000).toFixed(1)}s)...`);
       await delay(waitTime);
       return generateBlogContent(ai, topicData, attempt + 1);
     }

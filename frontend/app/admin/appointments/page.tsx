@@ -578,6 +578,39 @@ export default function AdminAppointmentsPage() {
                   />
                 </div>
 
+                {/* Image Upload */}
+                <div className="space-y-2 pt-2 border-t border-gray-100">
+                  <span className="text-[10px] font-mono uppercase font-bold text-amber-600 tracking-wider">
+                    Offering Image
+                  </span>
+                  {imageUrl && (
+                    <div className="relative group border border-gray-200 rounded-xl overflow-hidden h-24 w-full bg-gray-100 mb-2">
+                      <img src={imageUrl} alt="Offering preview" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setImageUrl('')}
+                        className="absolute inset-0 bg-slate-950/70 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] font-bold cursor-pointer"
+                      >
+                        Remove Image
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="relative border border-dashed border-gray-300 hover:border-amber-500 rounded-xl p-4 flex flex-col items-center justify-center bg-gray-50/50 hover:bg-amber-50/30 transition-colors cursor-pointer group text-center">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      disabled={isUploading}
+                    />
+                    <Upload className="w-5 h-5 text-gray-400 group-hover:text-amber-600 transition-colors mb-1" />
+                    <span className="text-xs text-gray-600 group-hover:text-gray-900">
+                      {isUploading ? 'Uploading...' : imageUrl ? 'Click to Replace Image' : 'Click to Upload Offering Image'}
+                    </span>
+                  </div>
+                </div>
+
                 <button
                   type="submit"
                   disabled={addTypeMutation.isPending || updateTypeMutation.isPending}
@@ -600,19 +633,37 @@ export default function AdminAppointmentsPage() {
                     key={type._id}
                     className="p-4 rounded-2xl bg-white border border-gray-200/80 shadow-sm space-y-3 flex flex-col justify-between"
                   >
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-bold text-xs text-gray-900 truncate">{type.name}</h4>
-                        <span className="text-[9px] bg-amber-100 text-amber-800 border border-amber-200 rounded-full px-2 py-0.5 font-bold uppercase">
-                          {type.category || 'Astrology'}
-                        </span>
+                    <div className="flex items-start gap-3">
+                      {type.imageUrl ? (
+                        <img
+                          src={type.imageUrl}
+                          alt={type.name}
+                          className="w-14 h-14 rounded-xl object-cover border border-gray-200 flex-shrink-0"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-xl bg-amber-50 border border-amber-200/80 flex items-center justify-center text-amber-600 flex-shrink-0">
+                          <Calendar className="w-6 h-6" />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0 space-y-1">
+                        <div className="flex items-center justify-between gap-1">
+                          <h4 className="font-bold text-xs text-gray-900 truncate">{type.name}</h4>
+                          <span className="text-[9px] bg-amber-100 text-amber-800 border border-amber-200 rounded-full px-2 py-0.5 font-bold uppercase flex-shrink-0">
+                            {type.category || 'Astrology'}
+                          </span>
+                        </div>
+                        <p className="text-xs text-amber-600 font-bold">
+                          ₹{(type.price / 100).toLocaleString()}{' '}
+                          <span className="text-gray-500 font-normal text-[11px]">
+                            · {type.duration} Mins
+                          </span>
+                        </p>
+                        {type.description && (
+                          <p className="text-[11px] text-gray-500 line-clamp-2">
+                            {type.description}
+                          </p>
+                        )}
                       </div>
-                      <p className="text-xs text-amber-600 font-bold">
-                        ₹{(type.price / 100).toLocaleString()}{' '}
-                        <span className="text-gray-500 font-normal text-[11px]">
-                          · {type.duration} Mins
-                        </span>
-                      </p>
                     </div>
 
                     <div className="flex items-center justify-end gap-1 pt-2 border-t border-gray-100">

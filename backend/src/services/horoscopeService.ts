@@ -9,10 +9,9 @@ const ZODIAC_SIGNS = [
 
 const FALLBACK_MODELS = [
   process.env.GEMINI_MODEL || 'gemini-3.6-flash',
-  'gemini-2.5-pro',
-  'gemini-2.5-flash-lite',
+  'gemini-3.6-flash',
   'gemini-3.5-flash',
-  'gemini-flash-latest'
+  'gemini-3.5-flash-lite'
 ];
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
@@ -86,12 +85,18 @@ Return ONLY JSON without markdown formatting.`;
     }
   } catch (err: any) {
     const status = err.status || err.statusCode;
-    const isHighDemandOrQuota = status === 503 || status === 429 || (err.message && (err.message.includes('high demand') || err.message.includes('quota')));
+    const errMessage = err.message || '';
 
-    if (isHighDemandOrQuota && attempt < FALLBACK_MODELS.length * 2) {
+    if (attempt < FALLBACK_MODELS.length * 3) {
       const nextModel = FALLBACK_MODELS[(attempt + 1) % FALLBACK_MODELS.length];
-      const waitTime = Math.min(30000, 5000 * Math.pow(2, Math.floor(attempt / FALLBACK_MODELS.length)));
-      logger.warn(`⚠️ Model ${model} returned ${status || 'demand error'}. Switching to ${nextModel} (waiting ${waitTime / 1000}s)...`);
+      const isRateOrDemand = status === 503 || status === 429 || errMessage.includes('high demand') || errMessage.includes('quota') || errMessage.includes('UNAVAILABLE');
+      const isNotFound = status === 404;
+
+      const waitTime = isRateOrDemand
+        ? Math.min(30000, 3000 * Math.pow(1.5, attempt))
+        : isNotFound ? 500 : 2000;
+
+      logger.warn(`⚠️ Model ${model} returned status ${status || 'error'} (${errMessage.substring(0, 80)}...). Switching to ${nextModel} (waiting ${(waitTime / 1000).toFixed(1)}s)...`);
       await delay(waitTime);
       return generateBatchWithFallback(ai, signNames, attempt + 1);
     }
