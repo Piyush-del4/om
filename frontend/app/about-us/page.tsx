@@ -295,112 +295,311 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        {/* ── 4. FOUNDER PROFILE SECTION ───────────────────────────────────── */}
-        <section ref={founderRef} id="founder" className="scroll-mt-24 space-y-8">
+        {/* ── 4. LEADERSHIP & TEAM PROFILES SECTION ─────────────────────────── */}
+        <section ref={founderRef} id="founder" className="scroll-mt-24 space-y-12">
           <div className="text-center space-y-2">
             <span className="text-[#A78652] text-xs font-mono font-semibold uppercase tracking-widest block">
               Leadership & Guidance
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#1D1C1A]">
-              Meet Our Founder & Chief Consultant
+              Meet Our Consultants & Leadership Team
             </h2>
             <div className="h-0.5 w-16 bg-[#A78652] mx-auto" />
+            <p className="text-gray-600 text-xs sm:text-sm font-light max-w-xl mx-auto pt-1">
+              Experienced practitioners dedicated to bringing clarity, purpose, and spiritual harmony into your life.
+            </p>
           </div>
 
-          <div className="bg-white border border-[#E7E0D4] rounded-3xl p-6 sm:p-10 shadow-lg overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-              
-              {/* Left Column: Portrait */}
-              <div className="lg:col-span-5 space-y-4">
-                <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
-                  <img
-                    src={founderMember?.image || '/images/rajessh_paanday.jpg'}
-                    alt="Rajessh Paanday — Founder & Chief Consultant"
-                    className="w-full h-full object-cover object-top hover:scale-103 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <h3 className="font-serif text-2xl font-bold">Rajessh Paanday</h3>
-                    <p className="text-xs font-mono text-amber-200 uppercase tracking-widest">Founder & Chief Consultant</p>
+          <div className="space-y-12">
+            {/* ── MEMBER 1: RAAJESH S PANDAY ────────────────────────────── */}
+            <div className="bg-white border border-[#E7E0D4] rounded-3xl p-6 sm:p-10 shadow-lg overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                
+                {/* Left Column: Portrait */}
+                <div className="lg:col-span-5 space-y-4">
+                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
+                    <img
+                      src={founderMember?.image || '/images/rajessh_paanday.jpg'}
+                      alt="Rajessh Paanday — Founder & Chief Consultant"
+                      className="w-full h-full object-cover object-top hover:scale-103 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="font-serif text-2xl font-bold">Rajessh Paanday</h3>
+                      <p className="text-xs font-mono text-amber-200 uppercase tracking-widest">Founder & Chief Consultant</p>
+                    </div>
+                  </div>
+
+                  {/* Quick Credentials Badge */}
+                  <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#1D1C1A]">
+                      <Award className="w-5 h-5 text-[#A78652]" />
+                      <span>9+ Years of Professional Experience</span>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold text-[#6F2935] bg-[#6F2935]/10 px-2 py-0.5 rounded">Verified</span>
                   </div>
                 </div>
 
-                {/* Quick Credentials Badge */}
-                <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#1D1C1A]">
-                    <Award className="w-5 h-5 text-[#A78652]" />
-                    <span>9+ Years of Professional Experience</span>
+                {/* Right Column: Biography & Specializations */}
+                <div className="lg:col-span-7 space-y-6">
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
+                      Founder & Master Consultant
+                    </span>
+                    <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#1D1C1A]">
+                      Rajessh Paanday
+                    </h3>
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-[#6F2935] bg-[#6F2935]/10 px-2 py-0.5 rounded">Verified</span>
+
+                  <div className="text-gray-600 text-sm sm:text-base font-light leading-relaxed space-y-4">
+                    <p>
+                      Rajessh Paanday is a professional Life Consultant dedicated to helping individuals transform life struggles into meaningful clarity and personal fulfillment. With over 9 years of dedicated practice across Vedic disciplines, he has guided clients from diverse backgrounds toward greater purpose and self-understanding.
+                    </p>
+                    <p>
+                      His consultation methodology combines multiple specialized fields: Vedic Astrology, Numerology, Five Elements Analysis, Signature Science, Graphology, and Career Coaching. By analyzing Date of Birth frequencies alongside handwriting and signature structures, he identifies hidden talents and life blockages — often without requiring an in-person meeting.
+                    </p>
+                    <p>
+                      Rajessh’s mission is to empower clients to make informed life choices, align with suitable career trajectories, and navigate complex timing windows with confidence and peace of mind.
+                    </p>
+                  </div>
+
+                  {/* Specializations Grid */}
+                  <div className="space-y-3 pt-2">
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500">
+                      Specializations & Areas of Practice
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        'Vedic Astrologer', 'Kundali Analysis', 'Numerology Expert',
+                        '5 Element Analysis', 'Rudraksha Therapy', 'Signature Science',
+                        'Graphologist', 'Career Guidance Coach'
+                      ].map((spec, i) => (
+                        <span
+                          key={i}
+                          className="text-xs font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-3.5 py-1.5 rounded-full font-sans shadow-2xs"
+                        >
+                          ✦ {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Direct Action Buttons */}
+                  <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-3">
+                    <Link href="/appointments">
+                      <GoldButton variant="burgundy" className="py-2.5 px-5 text-xs font-bold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" /> Book Session with Rajessh
+                      </GoldButton>
+                    </Link>
+                    <a href="tel:+919922352666">
+                      <GoldButton variant="outlined" className="py-2.5 px-4 text-xs font-bold flex items-center gap-2">
+                        <Phone className="w-4 h-4 text-[#A78652]" /> Call (+91 9922352666)
+                      </GoldButton>
+                    </a>
+                    <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
+                      <button className="py-2.5 px-4 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer">
+                        <MessageSquare className="w-4 h-4" /> WhatsApp
+                      </button>
+                    </a>
+                  </div>
+
                 </div>
+
               </div>
-
-              {/* Right Column: Biography & Specializations */}
-              <div className="lg:col-span-7 space-y-6">
-                <div className="space-y-2">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
-                    Founder & Master Consultant
-                  </span>
-                  <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#1D1C1A]">
-                    Rajessh Paanday
-                  </h2>
-                </div>
-
-                <div className="text-gray-600 text-sm sm:text-base font-light leading-relaxed space-y-4">
-                  <p>
-                    Rajessh Paanday is a professional Life Consultant dedicated to helping individuals transform life struggles into meaningful clarity and personal fulfillment. With over 9 years of dedicated practice across Vedic disciplines, he has guided clients from diverse backgrounds toward greater purpose and self-understanding.
-                  </p>
-                  <p>
-                    His consultation methodology combines multiple specialized fields: Vedic Astrology, Numerology, Five Elements Analysis, Signature Science, Graphology, and Career Coaching. By analyzing Date of Birth frequencies alongside handwriting and signature structures, he identifies hidden talents and life blockages — often without requiring an in-person meeting.
-                  </p>
-                  <p>
-                    Rajessh’s mission is to empower clients to make informed life choices, align with suitable career trajectories, and navigate complex timing windows with confidence and peace of mind.
-                  </p>
-                </div>
-
-                {/* Specializations Grid */}
-                <div className="space-y-3 pt-2">
-                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500">
-                    Specializations & Areas of Practice
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      'Vedic Astrologer', 'Kundali Analysis', 'Numerology Expert',
-                      '5 Element Analysis', 'Rudraksha Therapy', 'Signature Science',
-                      'Graphologist', 'Career Guidance Coach'
-                    ].map((spec, i) => (
-                      <span
-                        key={i}
-                        className="text-xs font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-3.5 py-1.5 rounded-full font-sans shadow-2xs"
-                      >
-                        ✦ {spec}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Direct Action Buttons */}
-                <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-3">
-                  <Link href="/appointments">
-                    <GoldButton variant="burgundy" className="py-2.5 px-5 text-xs font-bold flex items-center gap-2">
-                      <Calendar className="w-4 h-4" /> Book Session with Rajessh
-                    </GoldButton>
-                  </Link>
-                  <a href="tel:+919922352666">
-                    <GoldButton variant="outlined" className="py-2.5 px-4 text-xs font-bold flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-[#A78652]" /> Call (+91 9922352666)
-                    </GoldButton>
-                  </a>
-                  <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
-                    <button className="py-2.5 px-4 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer">
-                      <MessageSquare className="w-4 h-4" /> WhatsApp
-                    </button>
-                  </a>
-                </div>
-
-              </div>
-
             </div>
+
+            {/* ── MEMBER 2: KUSUM PANDAY ────────────────────────────────── */}
+            <div className="bg-white border border-[#E7E0D4] rounded-3xl p-6 sm:p-10 shadow-lg overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                
+                {/* Left Column: Portrait */}
+                <div className="lg:col-span-5 space-y-4">
+                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
+                    <img
+                      src="/images/team_kusum.png"
+                      alt="Kusum Panday — Tarot Card Reader & Wellness Coach"
+                      className="w-full h-full object-cover object-top hover:scale-103 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="font-serif text-2xl font-bold">Kusum Panday</h3>
+                      <p className="text-xs font-mono text-amber-200 uppercase tracking-widest">Tarot Reader & Wellness Coach</p>
+                    </div>
+                  </div>
+
+                  {/* Quick Credentials Badge */}
+                  <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#1D1C1A]">
+                      <Award className="w-5 h-5 text-[#A78652]" />
+                      <span>7+ Years of Professional Experience</span>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold text-[#6F2935] bg-[#6F2935]/10 px-2 py-0.5 rounded">Verified</span>
+                  </div>
+                </div>
+
+                {/* Right Column: Biography & Specializations */}
+                <div className="lg:col-span-7 space-y-6">
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
+                      Tarot & Wellness Specialist
+                    </span>
+                    <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#1D1C1A]">
+                      Kusum Panday
+                    </h3>
+                  </div>
+
+                  <div className="text-gray-600 text-sm sm:text-base font-light leading-relaxed space-y-4">
+                    <p>
+                      Kusum Panday brings a deeply compassionate and nurturing energy to every consultation. As an experienced Tarot Card Reader, Relationship Coach, and certified Yoga Teacher, she creates a safe, empathetic space for clients to explore emotions, heal old patterns, and rediscover inner strength.
+                    </p>
+                    <p>
+                      Her tarot readings go beyond surface prediction — they act as a psychological mirror, reflecting subconscious patterns that influence choices in love, family dynamics, and personal growth. Combined with relationship coaching techniques and yogic discipline, Kusum Ji helps clients find emotional balance and regain confidence.
+                    </p>
+                    <p>
+                      Her warm and intuitive approach makes even the most complex personal and emotional challenges feel manageable, peaceful, and clear.
+                    </p>
+                  </div>
+
+                  {/* Specializations Grid */}
+                  <div className="space-y-3 pt-2">
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500">
+                      Specializations & Areas of Practice
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        'Tarot Card Reader', 'Relationship Coach', 'Yoga Teacher',
+                        'Emotional Healing', 'Mindfulness & Wellness', 'Intuitive Guidance'
+                      ].map((spec, i) => (
+                        <span
+                          key={i}
+                          className="text-xs font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-3.5 py-1.5 rounded-full font-sans shadow-2xs"
+                        >
+                          ✦ {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Direct Action Buttons */}
+                  <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-3">
+                    <Link href="/appointments">
+                      <GoldButton variant="burgundy" className="py-2.5 px-5 text-xs font-bold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" /> Book Session with Kusum
+                      </GoldButton>
+                    </Link>
+                    <a href="tel:+919922352666">
+                      <GoldButton variant="outlined" className="py-2.5 px-4 text-xs font-bold flex items-center gap-2">
+                        <Phone className="w-4 h-4 text-[#A78652]" /> Call (+91 9922352666)
+                      </GoldButton>
+                    </a>
+                    <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
+                      <button className="py-2.5 px-4 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer">
+                        <MessageSquare className="w-4 h-4" /> WhatsApp
+                      </button>
+                    </a>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            {/* ── MEMBER 3: AAYUSH KUMAR ────────────────────────────────── */}
+            <div className="bg-white border border-[#E7E0D4] rounded-3xl p-6 sm:p-10 shadow-lg overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                
+                {/* Left Column: Portrait */}
+                <div className="lg:col-span-5 space-y-4">
+                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
+                    <img
+                      src="/images/team_aayush.png"
+                      alt="Aayush Kumar — Social Media Manager & Brand Strategist"
+                      className="w-full h-full object-cover object-top hover:scale-103 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="font-serif text-2xl font-bold">Aayush Kumar</h3>
+                      <p className="text-xs font-mono text-amber-200 uppercase tracking-widest">Social Media Manager</p>
+                    </div>
+                  </div>
+
+                  {/* Quick Credentials Badge */}
+                  <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#1D1C1A]">
+                      <Award className="w-5 h-5 text-[#A78652]" />
+                      <span>5+ Years of Professional Experience</span>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold text-[#6F2935] bg-[#6F2935]/10 px-2 py-0.5 rounded">Verified</span>
+                  </div>
+                </div>
+
+                {/* Right Column: Biography & Specializations */}
+                <div className="lg:col-span-7 space-y-6">
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
+                      Digital Strategy & Media Lead
+                    </span>
+                    <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#1D1C1A]">
+                      Aayush Kumar
+                    </h3>
+                  </div>
+
+                  <div className="text-gray-600 text-sm sm:text-base font-light leading-relaxed space-y-4">
+                    <p>
+                      Aayush Kumar is the digital voice behind OM Astrology AMC's growing online presence. With a keen eye for compelling storytelling and digital engagement, he crafts content that resonates authentically with audiences seeking genuine spiritual guidance.
+                    </p>
+                    <p>
+                      From visually inspiring media and educational video reels to community management and campaign strategy, Aayush ensures that the profound knowledge shared by the OM Astrology team reaches seekers across the globe at the right time.
+                    </p>
+                    <p>
+                      His work bridges ancient occult science with modern digital communication — making astrology, numerology, graphology, and tarot accessible, relatable, and engaging for today's digital-first audience.
+                    </p>
+                  </div>
+
+                  {/* Specializations Grid */}
+                  <div className="space-y-3 pt-2">
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500">
+                      Specializations & Areas of Practice
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        'Social Media Strategy', 'Content Creation', 'Community Engagement',
+                        'Digital Branding', 'Visual Storytelling', 'Media Growth'
+                      ].map((spec, i) => (
+                        <span
+                          key={i}
+                          className="text-xs font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-3.5 py-1.5 rounded-full font-sans shadow-2xs"
+                        >
+                          ✦ {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Direct Action Buttons */}
+                  <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-3">
+                    <Link href="/blog">
+                      <GoldButton variant="burgundy" className="py-2.5 px-5 text-xs font-bold flex items-center gap-2">
+                        <Sparkles className="w-4 h-4" /> Explore Brand Content
+                      </GoldButton>
+                    </Link>
+                    <Link href="/appointments">
+                      <GoldButton variant="outlined" className="py-2.5 px-4 text-xs font-bold flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-[#A78652]" /> Contact Us
+                      </GoldButton>
+                    </Link>
+                    <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
+                      <button className="py-2.5 px-4 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer">
+                        <MessageSquare className="w-4 h-4" /> WhatsApp
+                      </button>
+                    </a>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
           </div>
         </section>
 
