@@ -499,7 +499,7 @@ export default function Home() {
  {/* Price row */}
  <div className="flex items-center gap-3 justify-center md:justify-start">
  <span className="text-gray-600 line-through text-lg">₹1000</span>
- <span className="text-3xl font-sans font-bold text-[#e77600] ">₹50</span>
+ <span className="text-4xl font-sans font-black text-[#1D1C1A]">₹50</span>
  </div>
 
  {/* CTA */}
@@ -701,7 +701,7 @@ export default function Home() {
  <div className="p-6 pt-0 mt-6 border-t border-gray-200 space-y-3">
  <div className="flex justify-between items-center pt-3">
  <span className="text-gray-500 text-xs">Course Fee:</span>
- <span className="text-[#e77600] font-bold text-[26px] font-sans">₹{(batch.price / 100).toLocaleString()}</span>
+ <span className="text-[#1D1C1A] font-black text-3xl font-sans">₹{(batch.price / 100).toLocaleString()}</span>
  </div>
  {isAuthenticated ? (
  <Link href="/my-batches" className="block w-full">
@@ -790,7 +790,7 @@ export default function Home() {
  </div>
 
  <div className="p-6 pt-0 mt-6 border-t border-gray-200 flex items-center justify-between pt-4" onClick={(e) => e.stopPropagation()}>
- <span className="text-[#e77600] font-bold text-[26px] font-sans">₹{(item.price / 100).toLocaleString()}</span>
+ <span className="text-[#1D1C1A] font-black text-3xl font-sans">₹{(item.price / 100).toLocaleString()}</span>
  <GoldButton
  variant="filled"
  className="py-1.5 px-4 text-xs flex items-center gap-1.5"

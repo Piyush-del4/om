@@ -96,7 +96,7 @@ export function CategoryBatchesList({ category }: CategoryBatchesListProps) {
  <div className="mt-6 pt-4 border-t border-gray-200 space-y-4 font-sans">
  <div className="flex justify-between items-center text-xs">
  <span className="text-gray-500">Course Value:</span>
- <span className="text-[var(--gold)] font-bold text-[26px]">₹{(batch.price / 100).toLocaleString()}</span>
+ <span className="text-[#1D1C1A] font-black text-3xl">₹{(batch.price / 100).toLocaleString()}</span>
  </div>
 
  {isEnrolled ? (

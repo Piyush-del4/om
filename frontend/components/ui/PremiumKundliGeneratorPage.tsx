@@ -211,7 +211,7 @@ function PremiumPaywall({
  <div className="bg-white border-2 border-amber-200 rounded-2xl p-6 space-y-4 shadow-lg shadow-amber-100/60 ">
  <div className="flex items-center justify-center gap-3">
  <span className="text-gray-600 line-through text-lg">₹1000</span>
- <span className="text-4xl font-sans font-bold text-[var(--gold-dark)] ">₹50</span>
+ <span className="text-5xl font-sans font-black text-[#1D1C1A]">₹50</span>
  </div>
 
 
@@ -689,7 +689,7 @@ export default function PremiumKundliGeneratorPage() {
  </div>
 
  <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between">
- <span className="font-sans font-bold text-xl md:text-2xl text-amber-800 ">
+ <span className="font-sans font-black text-2xl md:text-3xl text-[#1D1C1A]">
  ₹{service.price.toLocaleString()}
  </span>
  <Link

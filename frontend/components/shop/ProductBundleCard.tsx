@@ -78,7 +78,7 @@ export function ProductBundleCard({ currentProduct }: ProductBundleCardProps) {
           <div className="min-w-0">
             <span className="text-[10px] font-bold text-amber-800 uppercase tracking-widest block">This Item</span>
             <h4 className="font-bold text-xs text-gray-900 truncate">{currentProduct.title}</h4>
-            <span className="font-bold text-xs text-amber-900">₹{mainPrice.toLocaleString()}</span>
+            <span className="font-extrabold text-sm text-[#1D1C1A]">₹{mainPrice.toLocaleString()}</span>
           </div>
         </div>
 
@@ -94,7 +94,7 @@ export function ProductBundleCard({ currentProduct }: ProductBundleCardProps) {
           <div className="min-w-0">
             <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest block">Recommended Add-on</span>
             <h4 className="font-bold text-xs text-gray-900 truncate">{bundleItem.title}</h4>
-            <span className="font-bold text-xs text-amber-900">₹{bundlePrice.toLocaleString()}</span>
+            <span className="font-extrabold text-sm text-[#1D1C1A]">₹{bundlePrice.toLocaleString()}</span>
           </div>
         </div>
 
@@ -104,7 +104,7 @@ export function ProductBundleCard({ currentProduct }: ProductBundleCardProps) {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-amber-200/80">
         <div>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold font-serif text-amber-950">₹{totalDiscounted.toLocaleString()}</span>
+            <span className="text-3xl font-black font-serif text-[#1D1C1A]">₹{totalDiscounted.toLocaleString()}</span>
             <span className="text-xs text-gray-400 line-through font-mono">₹{totalOriginal.toLocaleString()}</span>
           </div>
           <p className="text-xs text-emerald-700 font-semibold">

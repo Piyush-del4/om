@@ -196,169 +196,187 @@ export function AddressForm({
       </div>
 
       {/* Field 1: Full Name */}
-      <div className="space-y-1.5">
-        <label className="block text-xs font-semibold text-[#1D1C1A]">
-          Full name <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          name="fullName"
-          value={form.fullName}
-          onChange={handleChange}
-          placeholder="e.g. John Doe"
-          className={getInputClass('fullName')}
-        />
-        {errors.fullName && <p className="text-[11px] text-red-500 font-medium">{errors.fullName}</p>}
+      <div>
+        <fieldset className={`border ${errors.fullName ? 'border-red-400' : 'border-[#E7E0D4] focus-within:border-[#A78652]'} rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs`}>
+          <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+            Full name <span className="text-red-500">*</span>
+          </legend>
+          <input
+            type="text"
+            name="fullName"
+            value={form.fullName}
+            onChange={handleChange}
+            placeholder="e.g. John Doe"
+            className="w-full bg-transparent text-[#1D1C1A] text-sm placeholder-[#77736D]/50 outline-none border-0 p-0 focus:ring-0"
+          />
+        </fieldset>
+        {errors.fullName && <p className="text-[11px] text-red-500 font-medium mt-1 pl-1">{errors.fullName}</p>}
       </div>
 
       {/* Row 2: Mobile & Email */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-1.5">
-          <label className="block text-xs font-semibold text-[#1D1C1A]">
-            Mobile number <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="tel"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            placeholder="+91 XXXXX XXXXX"
-            className={getInputClass('phone')}
-          />
-          {errors.phone && <p className="text-[11px] text-red-500 font-medium">{errors.phone}</p>}
+        <div>
+          <fieldset className={`border ${errors.phone ? 'border-red-400' : 'border-[#E7E0D4] focus-within:border-[#A78652]'} rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs`}>
+            <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+              Mobile number <span className="text-red-500">*</span>
+            </legend>
+            <input
+              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="+91 XXXXX XXXXX"
+              className="w-full bg-transparent text-[#1D1C1A] text-sm placeholder-[#77736D]/50 outline-none border-0 p-0 focus:ring-0"
+            />
+          </fieldset>
+          {errors.phone && <p className="text-[11px] text-red-500 font-medium mt-1 pl-1">{errors.phone}</p>}
         </div>
 
-        <div className="space-y-1.5">
-          <label className="block text-xs font-semibold text-[#1D1C1A]">
-            Email address <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="you@example.com"
-            className={getInputClass('email')}
-          />
-          {errors.email && <p className="text-[11px] text-red-500 font-medium">{errors.email}</p>}
+        <div>
+          <fieldset className={`border ${errors.email ? 'border-red-400' : 'border-[#E7E0D4] focus-within:border-[#A78652]'} rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs`}>
+            <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+              Email address <span className="text-red-500">*</span>
+            </legend>
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="you@example.com"
+              className="w-full bg-transparent text-[#1D1C1A] text-sm placeholder-[#77736D]/50 outline-none border-0 p-0 focus:ring-0"
+            />
+          </fieldset>
+          {errors.email && <p className="text-[11px] text-red-500 font-medium mt-1 pl-1">{errors.email}</p>}
         </div>
       </div>
 
       {/* Field 4: Address */}
-      <div className="space-y-1.5">
-        <label className="block text-xs font-semibold text-[#1D1C1A]">
-          Address <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          name="flatHouse"
-          value={form.flatHouse}
-          onChange={handleChange}
-          placeholder="e.g. Building 7A, Block C-3, Vasant Kunj"
-          className={getInputClass('flatHouse')}
-        />
-        {errors.flatHouse && <p className="text-[11px] text-red-500 font-medium">{errors.flatHouse}</p>}
+      <div>
+        <fieldset className={`border ${errors.flatHouse ? 'border-red-400' : 'border-[#E7E0D4] focus-within:border-[#A78652]'} rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs`}>
+          <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+            Address <span className="text-red-500">*</span>
+          </legend>
+          <input
+            type="text"
+            name="flatHouse"
+            value={form.flatHouse}
+            onChange={handleChange}
+            placeholder="e.g. Building 7A, Block C-3, Vasant Kunj"
+            className="w-full bg-transparent text-[#1D1C1A] text-sm placeholder-[#77736D]/50 outline-none border-0 p-0 focus:ring-0"
+          />
+        </fieldset>
+        {errors.flatHouse && <p className="text-[11px] text-red-500 font-medium mt-1 pl-1">{errors.flatHouse}</p>}
       </div>
 
       {/* Field 5: Area / Street / Sector */}
-      <div className="space-y-1.5">
-        <label className="block text-xs font-semibold text-[#1D1C1A]">
-          Area / Street / Sector <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          name="areaStreet"
-          value={form.areaStreet}
-          onChange={handleChange}
-          placeholder="e.g. Nelson Mandela Marg, Pocket 9"
-          className={getInputClass('areaStreet')}
-        />
-        {errors.areaStreet && <p className="text-[11px] text-red-500 font-medium">{errors.areaStreet}</p>}
+      <div>
+        <fieldset className={`border ${errors.areaStreet ? 'border-red-400' : 'border-[#E7E0D4] focus-within:border-[#A78652]'} rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs`}>
+          <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+            Area / Street / Sector <span className="text-red-500">*</span>
+          </legend>
+          <input
+            type="text"
+            name="areaStreet"
+            value={form.areaStreet}
+            onChange={handleChange}
+            placeholder="e.g. Nelson Mandela Marg, Pocket 9"
+            className="w-full bg-transparent text-[#1D1C1A] text-sm placeholder-[#77736D]/50 outline-none border-0 p-0 focus:ring-0"
+          />
+        </fieldset>
+        {errors.areaStreet && <p className="text-[11px] text-red-500 font-medium mt-1 pl-1">{errors.areaStreet}</p>}
       </div>
 
       {/* Field 6: Landmark (optional) */}
-      <div className="space-y-1.5">
-        <label className="block text-xs font-semibold text-[#1D1C1A]">
-          Landmark <span className="text-[#77736D] font-normal">(optional)</span>
-        </label>
-        <input
-          type="text"
-          name="landmark"
-          value={form.landmark}
-          onChange={handleChange}
-          placeholder="e.g. Near Heritage Park"
-          className={getInputClass('landmark')}
-        />
+      <div>
+        <fieldset className="border border-[#E7E0D4] focus-within:border-[#A78652] rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs">
+          <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+            Landmark <span className="text-[#77736D] font-normal">(optional)</span>
+          </legend>
+          <input
+            type="text"
+            name="landmark"
+            value={form.landmark}
+            onChange={handleChange}
+            placeholder="e.g. Near Heritage Park"
+            className="w-full bg-transparent text-[#1D1C1A] text-sm placeholder-[#77736D]/50 outline-none border-0 p-0 focus:ring-0"
+          />
+        </fieldset>
       </div>
 
       {/* Row 7: Pincode & City */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-1.5 relative">
-          <label className="block text-xs font-semibold text-[#1D1C1A]">
-            Pincode <span className="text-red-500">*</span>
-          </label>
-          <div className="relative">
-            <input
-              type="text"
-              name="pincode"
-              value={form.pincode}
-              onChange={handleChange}
-              maxLength={6}
-              placeholder="e.g. 110070"
-              className={getInputClass('pincode')}
-            />
-            {isPincodeLoading && (
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A78652]">
-                <Loader2 className="w-4 h-4 animate-spin" />
-              </span>
-            )}
-          </div>
+        <div>
+          <fieldset className={`border ${errors.pincode ? 'border-red-400' : 'border-[#E7E0D4] focus-within:border-[#A78652]'} rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs`}>
+            <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+              Pincode <span className="text-red-500">*</span>
+            </legend>
+            <div className="relative flex items-center">
+              <input
+                type="text"
+                name="pincode"
+                value={form.pincode}
+                onChange={handleChange}
+                maxLength={6}
+                placeholder="e.g. 110070"
+                className="w-full bg-transparent text-[#1D1C1A] text-sm placeholder-[#77736D]/50 outline-none border-0 p-0 focus:ring-0"
+              />
+              {isPincodeLoading && (
+                <span className="text-[#A78652] ml-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                </span>
+              )}
+            </div>
+          </fieldset>
           {pincodeHelperText && !errors.pincode && (
-            <p className="text-[11px] text-[#A78652] font-medium">{pincodeHelperText}</p>
+            <p className="text-[11px] text-[#A78652] font-medium mt-1 pl-1">{pincodeHelperText}</p>
           )}
-          {errors.pincode && <p className="text-[11px] text-red-500 font-medium">{errors.pincode}</p>}
+          {errors.pincode && <p className="text-[11px] text-red-500 font-medium mt-1 pl-1">{errors.pincode}</p>}
         </div>
 
-        <div className="space-y-1.5">
-          <label className="block text-xs font-semibold text-[#1D1C1A]">
-            City <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            name="townCity"
-            value={form.townCity}
-            onChange={handleChange}
-            placeholder="e.g. New Delhi"
-            className={getInputClass('townCity')}
-          />
-          {errors.townCity && <p className="text-[11px] text-red-500 font-medium">{errors.townCity}</p>}
+        <div>
+          <fieldset className={`border ${errors.townCity ? 'border-red-400' : 'border-[#E7E0D4] focus-within:border-[#A78652]'} rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs`}>
+            <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+              City <span className="text-red-500">*</span>
+            </legend>
+            <input
+              type="text"
+              name="townCity"
+              value={form.townCity}
+              onChange={handleChange}
+              placeholder="e.g. New Delhi"
+              className="w-full bg-transparent text-[#1D1C1A] text-sm placeholder-[#77736D]/50 outline-none border-0 p-0 focus:ring-0"
+            />
+          </fieldset>
+          {errors.townCity && <p className="text-[11px] text-red-500 font-medium mt-1 pl-1">{errors.townCity}</p>}
         </div>
       </div>
 
       {/* Field 8: State */}
-      <div className="space-y-1.5">
-        <label className="block text-xs font-semibold text-[#1D1C1A]">
-          State <span className="text-red-500">*</span>
-        </label>
-        <div className="relative">
-          <select
-            name="state"
-            value={form.state}
-            onChange={handleChange}
-            className={`${getInputClass('state')} appearance-none cursor-pointer pr-10`}
-          >
-            <option value="" disabled>Select your state</option>
-            {STATES_AND_UTS.map((st) => (
-              <option key={st} value={st.toUpperCase()}>{st}</option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#77736D]">
-            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-            </svg>
+      <div>
+        <fieldset className={`border ${errors.state ? 'border-red-400' : 'border-[#E7E0D4] focus-within:border-[#A78652]'} rounded-lg px-3.5 pb-2.5 pt-0 bg-white transition-all shadow-xs`}>
+          <legend className="text-[11px] font-semibold text-[#1D1C1A] px-1.5 ml-1">
+            State <span className="text-red-500">*</span>
+          </legend>
+          <div className="relative">
+            <select
+              name="state"
+              value={form.state}
+              onChange={handleChange}
+              className="w-full bg-transparent text-[#1D1C1A] text-sm outline-none border-0 p-0 focus:ring-0 appearance-none cursor-pointer pr-8"
+            >
+              <option value="" disabled>Select your state</option>
+              {STATES_AND_UTS.map((st) => (
+                <option key={st} value={st.toUpperCase()}>{st}</option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-[#77736D]">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
+            </div>
           </div>
-        </div>
-        {errors.state && <p className="text-[11px] text-red-500 font-medium">{errors.state}</p>}
+        </fieldset>
+        {errors.state && <p className="text-[11px] text-red-500 font-medium mt-1 pl-1">{errors.state}</p>}
       </div>
 
       {/* Submit Button inside form if buttonText passed */}

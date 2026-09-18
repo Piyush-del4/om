@@ -53,6 +53,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Universal Button Hover Animations ──────────────────── */
+
+button, .btn-animate {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:not(:disabled):hover, .btn-animate:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -4px rgba(167, 134, 82, 0.25);
+}
+
+button:not(:disabled):active, .btn-animate:not(:disabled):active {
+  transform: translateY(0px) scale(0.98);
+}
+
 /* ── Custom Scrollbar ────────────────────────────────────── */
 
 ::-webkit-scrollbar {

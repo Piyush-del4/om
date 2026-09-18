@@ -223,10 +223,10 @@ export function Navbar() {
  <div className="relative" ref={profileRef}>
  <button
  onClick={() => setIsProfileOpen(!isProfileOpen)}
- className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-200 cursor-pointer ${
+ className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-200 cursor-pointer ${
  isProfileOpen
- ? 'border-[var(--gold)] text-[var(--gold)] bg-[var(--gold-50)]'
- : 'border-[var(--gold-200)] text-gray-600 hover:border-[var(--gold)] hover:text-[var(--gold)]'
+ ? 'bg-[var(--gold-50)] text-[var(--gold)] shadow-sm'
+ : 'text-gray-700 hover:text-[var(--gold)] hover:bg-gray-100/60'
  }`}
  >
  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--gold-dark)] to-[var(--gold)] flex items-center justify-center">
@@ -238,14 +238,14 @@ export function Navbar() {
 
  {/* Profile Dropdown Panel */}
  <div
- className={`absolute right-0 mt-2 w-56 rounded-2xl border border-[var(--gold-200)] bg-white/95 backdrop-blur-md shadow-2xl overflow-hidden transition-all duration-200 z-50 ${
+ className={`absolute right-0 mt-2 w-60 rounded-2xl bg-white shadow-2xl overflow-hidden transition-all duration-200 z-50 ${
  isProfileOpen
  ? 'opacity-100 translate-y-0 pointer-events-auto'
  : 'opacity-0 -translate-y-2 pointer-events-none'
  }`}
  >
  {/* User Info Header */}
- <div className="px-4 py-3 border-b border-[var(--gold-100)] bg-[var(--gold-50)]">
+ <div className="px-4 py-3 bg-[var(--gold-50)]/50">
  <div className="flex items-center gap-3">
  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--gold-dark)] to-[var(--gold)] flex items-center justify-center flex-shrink-0">
  <User className="w-4 h-4 text-black" />
@@ -312,10 +312,10 @@ export function Navbar() {
  </div>
 
  {/* Logout */}
- <div className="px-3 pb-3 pt-1 border-t border-[var(--gold-100)]">
+ <div className="px-3 pb-3 pt-1">
  <button
  onClick={() => { setIsProfileOpen(false); logout(); }}
- className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-50 transition-colors cursor-pointer"
+ className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100/70 transition-all cursor-pointer"
  >
  <LogOut className="w-4 h-4" />
  <span>Sign Out</span>
@@ -532,202 +532,202 @@ export function Navbar() {
   </div>
   )}
 
- {/* Services Mega Menu Dropdown */}
- <div
- onMouseEnter={() => setIsServicesHovered(true)}
- onMouseLeave={() => setIsServicesHovered(false)}
- className={`hidden md:block absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md border-b border-[var(--gold-200)] shadow-2xl transition-all duration-300 z-40 ${
- isServicesHovered
- ? 'opacity-100 translate-y-0 pointer-events-auto visible'
- : 'opacity-0 -translate-y-2 pointer-events-none invisible'
- }`}
- >
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
- <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
- {/* Left Column: Grid of Services (spans 3 columns) */}
- <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
- {services.map((service) => {
- const IconComponent = service.icon;
- return (
- <Link
- key={service.name}
- href={service.href}
- onClick={() => setIsServicesHovered(false)}
- className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 :bg-white/5 border border-transparent hover:border-[var(--gold-100)] transition-all duration-300"
- >
- <div className="p-3 rounded-lg bg-[var(--gold-50)] text-[var(--gold)] border border-[var(--gold-200)] group-hover/item:bg-[var(--gold)] group-hover/item:text-black transition-all duration-300">
- <IconComponent className="w-6 h-6" />
- </div>
- <div>
- <h4 className="font-serif text-base font-semibold text-gray-900 group-hover/item:text-[var(--gold)] transition-colors flex items-center gap-1.5" >
- {service.name}
- <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-1 transition-all" />
- </h4>
- <p className="mt-1 text-xs text-gray-600 leading-relaxed">
- {service.description}
- </p>
- </div>
- </Link>
- );
- })}
- </div>
+      {/* Services Mega Menu Dropdown */}
+      <div
+        onMouseEnter={() => setIsServicesHovered(true)}
+        onMouseLeave={() => setIsServicesHovered(false)}
+        className={`hidden md:block absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300 z-40 ${
+          isServicesHovered
+            ? 'opacity-100 translate-y-0 pointer-events-auto visible'
+            : 'opacity-0 -translate-y-2 pointer-events-none invisible'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Left Column: Grid of Services (spans 3 columns) */}
+            <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {services.map((service) => {
+                const IconComponent = service.icon;
+                return (
+                  <Link
+                    key={service.name}
+                    href={service.href}
+                    onClick={() => setIsServicesHovered(false)}
+                    className="group/item flex items-start gap-4 p-4 rounded-2xl bg-gray-50/50 hover:bg-white shadow-none hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+                  >
+                    <div className="p-3 rounded-xl bg-[var(--gold-50)] text-[var(--gold)] shadow-xs group-hover/item:bg-[var(--gold)] group-hover/item:text-black transition-all duration-300">
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif text-base font-semibold text-gray-900 group-hover/item:text-[var(--gold)] transition-colors flex items-center gap-1.5">
+                        {service.name}
+                        <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-1 transition-all" />
+                      </h4>
+                      <p className="mt-1 text-xs text-gray-600 leading-relaxed">
+                        {service.description}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
 
- {/* Right Column: Feanured CTA Card (spans 1 column) */}
- <div className="md:col-span-1">
- <div className="h-full flex flex-col justify-between p-6 rounded-2xl border border-[var(--gold-200)] bg-[var(--gold-50)]/30 relative overflow-hidden group/cta">
- {/* Subtle glow background */}
- <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
- 
- <div className="relative z-10">
- <span className="text-[10px] font-bold tracking-widest text-[var(--gold)] uppercase bg-[var(--gold-100)] px-2 py-1 rounded">
- Premium Guidance
- </span>
- <h4 className="font-serif text-lg font-bold mt-3 leading-snug" >
- Book One-on-One Session
- </h4>
- <p className="text-xs text-gray-600 mt-2 leading-relaxed">
- Connect directly with our master astrologer to resolve life struggles and align with your stars.
- </p>
- </div>
- 
- <div className="mt-6 relative z-10">
- <Link href="/appointments" onClick={() => setIsServicesHovered(false)}>
- <GoldButton variant="outlined" className="w-full py-2 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
- <Calendar className="w-4 h-4" />
- <span>Schedule Now</span>
- </GoldButton>
- </Link>
- </div>
- </div>
- </div>
- </div>
- </div>
- </div>
+            {/* Right Column: Featured CTA Card (spans 1 column) */}
+            <div className="md:col-span-1">
+              <div className="h-full flex flex-col justify-between p-6 rounded-2xl bg-gradient-to-br from-[var(--gold-50)]/60 to-amber-50/30 shadow-sm relative overflow-hidden group/cta">
+                {/* Subtle glow background */}
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
 
-  {/* Horoscope Mega Menu Dropdown */}
-  <div
-  onMouseEnter={() => setIsHoroscopeHovered(true)}
-  onMouseLeave={() => setIsHoroscopeHovered(false)}
-  className={`hidden md:block absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md border-b border-[var(--gold-200)] shadow-2xl transition-all duration-300 z-40 ${
-  isHoroscopeHovered
-  ? 'opacity-100 translate-y-0 pointer-events-auto visible'
-  : 'opacity-0 -translate-y-2 pointer-events-none invisible'
-  }`}
-  >
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-  <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-  {horoscopes.map((item) => {
-  const IconComponent = item.icon;
-  return (
-  <Link
-  key={item.name}
-  href={item.href}
-  onClick={() => setIsHoroscopeHovered(false)}
-  className="group/item flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 border border-[var(--gold-100)] hover:border-[var(--gold)] transition-all duration-300 bg-white"
-  >
-  <div className="p-2 rounded-lg bg-[var(--gold-50)] text-[var(--gold)] border border-[var(--gold-200)] group-hover/item:bg-[var(--gold)] group-hover/item:text-black transition-all duration-300">
-  <IconComponent className="w-5 h-5" />
-  </div>
-  <h4 className="font-serif text-sm font-semibold text-gray-900 group-hover/item:text-[var(--gold)] transition-colors" >
-  {item.name}
-  </h4>
-  </Link>
+                <div className="relative z-10">
+                  <span className="text-[10px] font-bold tracking-widest text-[var(--gold)] uppercase bg-[var(--gold-100)] px-2 py-1 rounded">
+                    Premium Guidance
+                  </span>
+                  <h4 className="font-serif text-lg font-bold mt-3 leading-snug">
+                    Book One-on-One Session
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+                    Connect directly with our master astrologer to resolve life struggles and align with your stars.
+                  </p>
+                </div>
+
+                <div className="mt-6 relative z-10">
+                  <Link href="/appointments" onClick={() => setIsServicesHovered(false)}>
+                    <GoldButton variant="outlined" className="w-full py-2 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
+                      <Calendar className="w-4 h-4" />
+                      <span>Schedule Now</span>
+                    </GoldButton>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Horoscope Mega Menu Dropdown */}
+      <div
+        onMouseEnter={() => setIsHoroscopeHovered(true)}
+        onMouseLeave={() => setIsHoroscopeHovered(false)}
+        className={`hidden md:block absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300 z-40 ${
+          isHoroscopeHovered
+            ? 'opacity-100 translate-y-0 pointer-events-auto visible'
+            : 'opacity-0 -translate-y-2 pointer-events-none invisible'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {horoscopes.map((item) => {
+                const IconComponent = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsHoroscopeHovered(false)}
+                    className="group/item flex items-center gap-3 p-3.5 rounded-2xl bg-gray-50/60 hover:bg-white shadow-xs hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+                  >
+                    <div className="p-2.5 rounded-xl bg-[var(--gold-50)] text-[var(--gold)] shadow-xs group-hover/item:bg-[var(--gold)] group-hover/item:text-black transition-all duration-300">
+                      <IconComponent className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif text-sm font-semibold text-gray-900 group-hover/item:text-[var(--gold)] transition-colors">
+                      {item.name}
+                    </h4>
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="md:col-span-1">
+              <div className="h-full flex flex-col justify-between p-6 rounded-2xl bg-gradient-to-br from-[var(--gold-50)]/60 to-amber-50/30 shadow-sm relative overflow-hidden group/cta">
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
+                <div className="relative z-10">
+                  <span className="text-[10px] font-bold tracking-widest text-[var(--gold)] uppercase bg-[var(--gold-100)] px-2 py-1 rounded">Daily Updates</span>
+                  <h4 className="font-serif text-lg font-bold mt-3 leading-snug">Personalized Insights</h4>
+                  <p className="text-xs text-gray-600 mt-2 leading-relaxed">Check your personalized daily horoscope based on accurate Vedic transit calculations.</p>
+                </div>
+                <div className="mt-6 relative z-10">
+                  <Link href="/horoscope/daily/aries" onClick={() => setIsHoroscopeHovered(false)}>
+                    <GoldButton variant="filled" className="w-full py-2.5 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
+                      <Moon className="w-4 h-4 text-[var(--gold-light)] group-hover/cta:text-black" />
+                      <span className="text-white group-hover/cta:text-black font-medium">Check Now</span>
+                    </GoldButton>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Free Tools Mega Menu Dropdown */}
+      <div
+        onMouseEnter={() => setIsFreeToolsHovered(true)}
+        onMouseLeave={() => setIsFreeToolsHovered(false)}
+        className={`hidden md:block absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300 z-40 ${
+          isFreeToolsHovered
+            ? 'opacity-100 translate-y-0 pointer-events-auto visible'
+            : 'opacity-0 -translate-y-2 pointer-events-none invisible'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Left Column: Grid of Tools (spans 3 columns) */}
+            <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {freeTools.map((tool) => {
+                const IconComponent = tool.icon;
+                return (
+                  <Link
+                    key={tool.name}
+                    href={tool.href}
+                    onClick={() => setIsFreeToolsHovered(false)}
+                    className="group/item flex items-start gap-4 p-4 rounded-2xl bg-gray-50/50 hover:bg-white shadow-none hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+                  >
+                    <div className="p-3 rounded-xl bg-[var(--gold-50)] text-[var(--gold)] shadow-xs group-hover/item:bg-[var(--gold)] group-hover/item:text-black transition-all duration-300">
+                      <IconComponent className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif text-sm font-semibold text-gray-900 group-hover/item:text-[var(--gold)] transition-colors flex items-center gap-1.5">
+                        {tool.name}
+                      </h4>
+                      <p className="mt-1 text-[10px] text-gray-600 leading-relaxed">
+                        {tool.description}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Right Column: Featured CTA Card (spans 1 column) */}
+            <div className="md:col-span-1">
+              <div className="h-full flex flex-col justify-between p-6 rounded-2xl bg-gradient-to-br from-[var(--gold-50)]/60 to-amber-50/30 shadow-sm relative overflow-hidden group/cta">
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
+
+                <div className="relative z-10">
+                  <span className="text-[10px] font-bold tracking-widest text-[var(--gold)] uppercase bg-[var(--gold-100)] px-2 py-1 rounded">
+                    Free Utilities
+                  </span>
+                  <h4 className="font-serif text-lg font-bold mt-3 leading-snug">
+                    Unlimited Calculations
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+                    Use our premium free tools to generate Kundlis, check lucky numbers, and match making.
+                  </p>
+                </div>
+
+                <div className="mt-6 relative z-10">
+                  <Link href="/appointments" onClick={() => setIsFreeToolsHovered(false)}>
+                    <GoldButton variant="filled" className="w-full py-2.5 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
+                      <Sparkles className="w-4 h-4 text-[var(--gold-light)] group-hover/cta:text-black" />
+                      <span className="text-white group-hover/cta:text-black font-medium">Consult Expert</span>
+                    </GoldButton>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </>
   );
-  })}
-  </div>
-  <div className="md:col-span-1">
-  <div className="h-full flex flex-col justify-between p-6 rounded-2xl border border-[var(--gold-200)] bg-[var(--gold-50)]/30 relative overflow-hidden group/cta">
-  <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
-  <div className="relative z-10">
-  <span className="text-[10px] font-bold tracking-widest text-[var(--gold)] uppercase bg-[var(--gold-100)] px-2 py-1 rounded">Daily Updates</span>
-  <h4 className="font-serif text-lg font-bold mt-3 leading-snug">Personalized Insights</h4>
-  <p className="text-xs text-gray-600 mt-2 leading-relaxed">Check your personalized daily horoscope based on accurate Vedic transit calculations.</p>
-  </div>
-  <div className="mt-6 relative z-10">
-  <Link href="/horoscope/daily/aries" onClick={() => setIsHoroscopeHovered(false)}>
-  <GoldButton variant="filled" className="w-full py-2 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
-  <Moon className="w-4 h-4 text-black" />
-  <span className="text-black">Check Now</span>
-  </GoldButton>
-  </Link>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-
- {/* Free Tools Mega Menu Dropdown */}
- <div
- onMouseEnter={() => setIsFreeToolsHovered(true)}
- onMouseLeave={() => setIsFreeToolsHovered(false)}
- className={`hidden md:block absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md border-b border-[var(--gold-200)] shadow-2xl transition-all duration-300 z-40 ${
- isFreeToolsHovered
- ? 'opacity-100 translate-y-0 pointer-events-auto visible'
- : 'opacity-0 -translate-y-2 pointer-events-none invisible'
- }`}
- >
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
- <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
- {/* Left Column: Grid of Tools (spans 3 columns) */}
- <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
- {freeTools.map((tool) => {
- const IconComponent = tool.icon;
- return (
- <Link
- key={tool.name}
- href={tool.href}
- onClick={() => setIsFreeToolsHovered(false)}
- className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 :bg-white/5 border border-transparent hover:border-[var(--gold-100)] transition-all duration-300"
- >
- <div className="p-3 rounded-lg bg-[var(--gold-50)] text-[var(--gold)] border border-[var(--gold-200)] group-hover/item:bg-[var(--gold)] group-hover/item:text-black transition-all duration-300">
- <IconComponent className="w-5 h-5" />
- </div>
- <div>
- <h4 className="font-serif text-sm font-semibold text-gray-900 group-hover/item:text-[var(--gold)] transition-colors flex items-center gap-1.5" >
- {tool.name}
- </h4>
- <p className="mt-1 text-[10px] text-gray-600 leading-relaxed">
- {tool.description}
- </p>
- </div>
- </Link>
- );
- })}
- </div>
-
- {/* Right Column: Feanured CTA Card (spans 1 column) */}
- <div className="md:col-span-1">
- <div className="h-full flex flex-col justify-between p-6 rounded-2xl border border-[var(--gold-200)] bg-[var(--gold-50)]/30 relative overflow-hidden group/cta">
- <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--gold)]/10 rounded-full blur-2xl group-hover/cta:scale-150 transition-transform duration-700" />
- 
- <div className="relative z-10">
- <span className="text-[10px] font-bold tracking-widest text-[var(--gold)] uppercase bg-[var(--gold-100)] px-2 py-1 rounded">
- Free Utilities
- </span>
- <h4 className="font-serif text-lg font-bold mt-3 leading-snug" >
- Unlimited Calculations
- </h4>
- <p className="text-xs text-gray-600 mt-2 leading-relaxed">
- Use our premium free tools to generate Kundlis, check lucky numbers, and match making.
- </p>
- </div>
- 
- <div className="mt-6 relative z-10">
- <Link href="/appointments" onClick={() => setIsFreeToolsHovered(false)}>
- <GoldButton variant="filled" className="w-full py-2 flex items-center justify-center gap-2 group-hover/cta:bg-[var(--gold)] group-hover/cta:text-black transition-all">
- <Sparkles className="w-4 h-4 text-black" />
- <span className="text-black">Consult Expert</span>
- </GoldButton>
- </Link>
- </div>
- </div>
- </div>
- </div>
- </div>
- </div>
- </nav>
- </>
- );
 }

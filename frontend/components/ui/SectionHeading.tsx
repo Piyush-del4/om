@@ -29,9 +29,7 @@ export function SectionHeading({
       </h2>
       {showOrbitLine && (
         <div className={`flex items-center gap-2 pt-1 ${centered ? 'justify-center' : ''}`}>
-          <span className="h-[1px] w-12 bg-[#DED2BE]" />
-          <span className="w-1.5 h-1.5 rounded-full border border-[#A78652] bg-white" />
-          <span className="h-[1px] w-12 bg-[#DED2BE]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#A78652]" />
         </div>
       )}
       {subtitle && (

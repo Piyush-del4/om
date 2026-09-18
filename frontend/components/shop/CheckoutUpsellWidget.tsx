@@ -22,7 +22,7 @@ export function CheckoutUpsellWidget() {
       await client.post('/shop/cart/items', { itemId, quantity: 1 });
     },
     onSuccess: () => {
-      toast.success('Add-on added to order!');
+      toast.success('Add-on added to cart!');
       queryClient.invalidateQueries({ queryKey: ['cart'] });
     },
   });
@@ -33,11 +33,11 @@ export function CheckoutUpsellWidget() {
   const upsellItems = items.slice(0, 3);
 
   return (
-    <div className="bg-gradient-to-r from-amber-50/80 via-amber-100/40 to-amber-50/80 border border-amber-300/80 rounded-2xl p-4 sm:p-5 space-y-3 my-4">
+    <div className="bg-white border border-[#E7E0D4] rounded-xl p-5 sm:p-6 space-y-4 shadow-sm my-6">
       <div className="flex items-center gap-2">
-        <Sparkles className="w-4 h-4 text-amber-700" />
-        <h4 className="font-serif font-bold text-xs sm:text-sm text-amber-950 uppercase tracking-wider">
-          Complete Your Spiritual Kit (Special Checkout Offers)
+        <Sparkles className="w-4 h-4 text-[#A78652]" />
+        <h4 className="font-serif font-bold text-sm text-[#1D1C1A]">
+          Add to Your Collection
         </h4>
       </div>
 
@@ -46,23 +46,23 @@ export function CheckoutUpsellWidget() {
           const priceRupees = ((item.offerPrice || item.price) / 100).toLocaleString();
 
           return (
-            <div key={item._id} className="bg-white p-3 rounded-xl border border-amber-200 shadow-xs flex items-center justify-between gap-2">
+            <div key={item._id} className="bg-[#FAF8F5] p-3 rounded-lg border border-[#E7E0D4] flex items-center justify-between gap-3 group hover:border-[#A78652] transition-colors">
               <div className="flex items-center gap-2.5 min-w-0">
                 <img 
                   src={item.imageUrl || '/images/logo.png'} 
                   alt={item.title} 
-                  className="w-10 h-10 object-contain rounded-lg bg-gray-50 flex-shrink-0"
+                  className="w-12 h-12 object-contain rounded-md bg-white p-1 border border-[#E7E0D4] shrink-0"
                 />
                 <div className="min-w-0">
-                  <h5 className="font-bold text-xs text-gray-900 truncate">{item.title}</h5>
-                  <span className="font-bold text-xs text-amber-800">₹{priceRupees}</span>
+                  <h5 className="font-bold text-xs text-gray-900 truncate group-hover:text-[#6F2935] transition-colors">{item.title}</h5>
+                  <span className="font-bold text-xs text-[#1D1C1A]">₹{priceRupees}</span>
                 </div>
               </div>
 
               <button
                 onClick={() => addToCartMutation.mutate(item._id)}
                 disabled={addToCartMutation.isPending}
-                className="p-1.5 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 transition cursor-pointer flex-shrink-0"
+                className="p-2 rounded-md bg-white hover:bg-[#6F2935] text-gray-700 hover:text-white border border-[#E7E0D4] shadow-xs transition shrink-0 flex items-center justify-center cursor-pointer"
                 title="Add to Cart"
               >
                 <Plus className="w-4 h-4" />
