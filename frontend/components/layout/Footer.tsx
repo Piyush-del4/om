@@ -2,205 +2,189 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
-import { client } from '../../lib/api/client';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
-  // 1. Dynamic Data Fetching
-  const { data: appointmentsRes } = useQuery({
-    queryKey: ['footer-appointments'],
-    queryFn: async () => {
-      const res = await client.get('/appointments/types');
-      return res.data?.data || [];
-    },
-    staleTime: 5 * 60 * 1000,
-  });
-
-  const { data: shopRes } = useQuery({
-    queryKey: ['footer-shop'],
-    queryFn: async () => {
-      const res = await client.get('/shop');
-      return res.data?.data || [];
-    },
-    staleTime: 5 * 60 * 1000,
-  });
-
-  const { data: batchesRes } = useQuery({
-    queryKey: ['footer-batches'],
-    queryFn: async () => {
-      const res = await client.get('/batches');
-      return res.data?.data || [];
-    },
-    staleTime: 5 * 60 * 1000,
-  });
-
-  const appointments = appointmentsRes || [];
-  const shopItems = shopRes || [];
-  const batches = batchesRes || [];
-
-  // 2. Static Data Arrays
-  const freeTools = [
-    { name: 'Premium Ebook', href: '/fean-ebook' },
-    { name: 'Numerology', href: '/free-tools/numerology-calculator' },
-    { name: 'Lucky Number', href: '/free-tools/lucky-number-calculator' },
-    { name: 'Name Numerology', href: '/free-tools/name-numerology-calculator' },
-    { name: 'Marriage Match', href: '/free-tools/marriage-compatibility-checker' },
-    { name: 'Zodiac Finder', href: '/free-tools/zodiac-sign-finder' },
-    { name: 'Moon Sign', href: '/free-tools/moon-sign-calculator' },
-    { name: 'Ascendant', href: '/free-tools/ascendant-calculator' },
-    { name: 'Nakshatra', href: '/free-tools/nakshatra-finder' },
-    { name: 'Panchang', href: '/free-tools/panchang' },
-    { name: 'Daily Horoscope', href: '/free-tools/daily-horoscope' },
-    { name: 'Muhurat', href: '/free-tools/muhurat-calculator' },
-    { name: 'Dasha Calc', href: '/free-tools/dasha-calculator' },
-    { name: 'Lucky Color', href: '/free-tools/lucky-color-calculator' },
-  ];
-
-  const horoscopes = [
-    { name: 'Daily Horoscope', href: '/horoscope/daily/aries' },
-    { name: 'Weekly Horoscope', href: '/horoscope/weekly/aries' },
-    { name: 'Monthly Horoscope', href: '/horoscope/monthly/aries' },
-    { name: 'Yearly Horoscope', href: '/horoscope/yearly/aries' }
-  ];
-
-  const transits = [
-    { name: 'Sun Transit', href: '/transit/sun' },
-    { name: 'Moon Transit', href: '/transit/moon' },
-    { name: 'Mars Transit', href: '/transit/mars' },
-    { name: 'Mercury Transit', href: '/transit/mercury' },
-    { name: 'Jupiter Transit', href: '/transit/jupiter' },
-    { name: 'Venus Transit', href: '/transit/venus' },
-    { name: 'Saturn Transit', href: '/transit/saturn' },
-    { name: 'Rahu Transit', href: '/transit/rahu' },
-    { name: 'Ketu Transit', href: '/transit/ketu' },
-  ];
-
-  const numerology2026 = Array.from({ length: 9 }, (_, i) => ({
-    name: `Number ${i + 1} Predictions`,
-    href: `/numerology-2026/${i + 1}`
-  }));
-
-  const expertTeam = [
-    { name: 'Team Kusum', href: '/appointments/team-kusum' },
-    { name: 'Team Raajesh', href: '/appointments/team-raajesh' },
-  ];
-
-  const specializedAreas = [
-    { name: 'Astrology Readings', href: '/astrology' },
-    { name: 'Numerology Forecasts', href: '/numerology' },
-    { name: 'Tarot Spreads', href: '/tarot-card' },
-    { name: 'Graphology Assessment', href: '/graphology' },
-    { name: 'Occult Synthesis Hub', href: '/occult-synthesis' },
-  ];
-
-  // Helper renderer
-  const renderList = (title: string, links: { name: string, href: string }[]) => (
-    <div className="flex flex-col space-y-4">
-      <h4 className="text-gray-900 text-sm font-bold tracking-wider uppercase border-b border-[var(--gold-200)] pb-2 inline-block">
-        {title}
-      </h4>
-      <ul className="space-y-2.5 text-sm flex-1">
-        {links.length > 0 ? (
-          links.map((link, i) => (
-            <li key={i}>
-              <Link href={link.href} className="hover:text-[var(--gold-dark)] text-gray-600 transition-colors line-clamp-2 leading-tight">
-                {link.name}
-              </Link>
-            </li>
-          ))
-        ) : (
-          <li className="text-gray-400 italic text-xs">Coming soon...</li>
-        )}
-      </ul>
-    </div>
-  );
-
   return (
-    <footer className="bg-white border-t border-[var(--gold-200)] mt-auto pt-16 pb-8 print:hidden">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Top Section - Brand Info */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
-          <div className="lg:col-span-4 xl:col-span-3 space-y-5">
+    <footer className="bg-[#FAF7F2] border-t border-[#E7E0D4] mt-auto pt-16 pb-12 text-[#1D1C1A] print:hidden">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main 4-Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-14 border-b border-[#E7E0D4]">
+          {/* Col 1: Brand Philosophy (4 cols) */}
+          <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <img src="/images/logo.png" alt="OM Astrology AMC Logo" className="w-10 h-10 object-contain border border-[var(--gold-200)] rounded-full bg-white shadow-md p-1" />
+              <img
+                src="/images/logo.png"
+                alt="OM Astrology AMC Logo"
+                className="w-10 h-10 object-contain border border-[#DED2BE] rounded-full bg-white p-1"
+              />
               <div>
-                <h3 className="font-serif text-xl font-extrabold text-[var(--gold-dark)] tracking-wide">
+                <h3 className="font-serif text-lg font-bold text-[#1D1C1A] tracking-wide">
                   OM Astrology AMC
                 </h3>
-                <p className="text-[10px] text-[var(--gold)] font-mono uppercase tracking-widest font-bold">
-                  Life Set when Planet Connect
+                <p className="text-[10px] text-[#A78652] font-mono uppercase tracking-widest font-semibold">
+                  Personal Guidance &amp; Occult Sciences
                 </p>
               </div>
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Discover the ancient wisdom of occult sciences. We offer professional consultations in Astrology, Numerology, Tarot Cards, and Graphology, alongside select items to support your spiritual path.
+            <p className="text-xs text-[#77736D] leading-relaxed max-w-sm">
+              A thoughtful, personal guidance platform rooted in traditional Indian occult practices and presented with modern clarity. Directed by 9+ years experienced master consultants.
             </p>
-            <div className="space-y-2 pt-2">
-              <Link href="/about-us" className="block text-sm font-semibold text-gray-900 hover:text-[var(--gold-dark)]">
-                About Us
-              </Link>
-              <Link href="/blog" className="block text-sm font-semibold text-gray-900 hover:text-[var(--gold-dark)]">
-                Blog &amp; Knowledge Hub
-              </Link>
-              <Link href="/privacy-policy" className="block text-sm font-semibold text-gray-900 hover:text-[var(--gold-dark)]">
-                Privacy Policy
-              </Link>
-              <Link href="#" className="block text-sm font-semibold text-gray-900 hover:text-[var(--gold-dark)]">
-                Review Our Products & Services
-              </Link>
+            <div className="pt-2 flex flex-col space-y-2 text-xs text-[#1D1C1A]">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#6F2935]"></span>
+                <span className="font-medium">100% Confidential Private Sessions</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#A78652]"></span>
+                <span className="font-medium">Online Video &amp; In-Person Consultations</span>
+              </div>
             </div>
           </div>
 
-          {/* Links Grid */}
-          <div className="lg:col-span-8 xl:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12">
-            
-            {/* Free Tools */}
-            {renderList('Free Tools', freeTools)}
+          {/* Col 2: Core Disciplines & Life Guidance (3 cols) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="font-serif text-sm font-bold text-[#1D1C1A] uppercase tracking-wider border-b border-[#E7E0D4] pb-2">
+              Disciplines &amp; Guidance
+            </h4>
+            <ul className="space-y-2 text-xs text-[#77736D]">
+              <li>
+                <Link href="/astrology" className="hover:text-[#6F2935] transition-colors">
+                  Vedic Astrology &amp; Birth Chart
+                </Link>
+              </li>
+              <li>
+                <Link href="/numerology" className="hover:text-[#6F2935] transition-colors">
+                  Numerology &amp; Life Path Analysis
+                </Link>
+              </li>
+              <li>
+                <Link href="/tarot-card" className="hover:text-[#6F2935] transition-colors">
+                  Tarot Card Consultations
+                </Link>
+              </li>
+              <li>
+                <Link href="/graphology" className="hover:text-[#6F2935] transition-colors">
+                  Graphology &amp; Handwriting Science
+                </Link>
+              </li>
+              <li>
+                <Link href="/occult-synthesis" className="hover:text-[#6F2935] transition-colors">
+                  Occult Synthesis System
+                </Link>
+              </li>
+              <li>
+                <Link href="/profession-career" className="hover:text-[#6F2935] transition-colors">
+                  Career &amp; Business Guidance
+                </Link>
+              </li>
+              <li>
+                <Link href="/marriage-matching" className="hover:text-[#6F2935] transition-colors">
+                  Marriage &amp; Kundli Matching
+                </Link>
+              </li>
+              <li>
+                <Link href="/name-correction" className="hover:text-[#6F2935] transition-colors">
+                  Name Correction Numerology
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-            {/* Specialized, Team & Horoscopes */}
-            <div className="flex flex-col gap-8">
-              {renderList('Horoscopes', horoscopes)}
-              {renderList('Specialized Areas', specializedAreas)}
-              {renderList('Meet Our Experts', expertTeam)}
-            </div>
+          {/* Col 3: Free Interactive Tools (3 cols) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="font-serif text-sm font-bold text-[#1D1C1A] uppercase tracking-wider border-b border-[#E7E0D4] pb-2">
+              Free Occult Tools
+            </h4>
+            <ul className="space-y-2 text-xs text-[#77736D]">
+              <li>
+                <Link href="/free-tools/zodiac-sign-finder" className="hover:text-[#6F2935] transition-colors">
+                  Zodiac &amp; Sun Sign Finder
+                </Link>
+              </li>
+              <li>
+                <Link href="/free-tools/moon-sign-calculator" className="hover:text-[#6F2935] transition-colors">
+                  Moon Sign Calculator
+                </Link>
+              </li>
+              <li>
+                <Link href="/free-tools/ascendant-calculator" className="hover:text-[#6F2935] transition-colors">
+                  Ascendant (Lagna) Finder
+                </Link>
+              </li>
+              <li>
+                <Link href="/free-tools/numerology-calculator" className="hover:text-[#6F2935] transition-colors">
+                  Chaldean Numerology Calculator
+                </Link>
+              </li>
+              <li>
+                <Link href="/free-tools/marriage-compatibility-checker" className="hover:text-[#6F2935] transition-colors">
+                  Ashtakoot Guna Milan Matcher
+                </Link>
+              </li>
+              <li>
+                <Link href="/free-tools/panchang" className="hover:text-[#6F2935] transition-colors">
+                  Daily Vedic Panchang &amp; Tithi
+                </Link>
+              </li>
+              <li>
+                <Link href="/horoscope/daily/aries" className="hover:text-[#6F2935] transition-colors">
+                  Daily &amp; Weekly Horoscopes
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-            {/* 2026 Predictions */}
-            <div className="flex flex-col gap-8">
-              {renderList('2026 Transits', transits)}
-              {renderList('2026 Numerology', numerology2026)}
-            </div>
-
-            {/* Dynamic: Appointments & Batches */}
-            <div className="flex flex-col gap-8">
-              {renderList('Appointments', appointments.map((a: any) => ({
-                name: a.title || a.name || 'Appointment',
-                href: `/appointments/${a._id}`
-              })))}
-              {renderList('Study Batches', batches.map((b: any) => ({
-                name: b.title || b.name || 'Batch',
-                href: `/batches/${b._id}`
-              })))}
-            </div>
-
-            {/* Dynamic: Shop */}
-            {renderList('Our Shop', shopItems.map((s: any) => ({
-              name: s.title || s.name || 'Shop Item',
-              href: `/shop/${s._id}`
-            })))}
-
+          {/* Col 4: Practice & Trust (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="font-serif text-sm font-bold text-[#1D1C1A] uppercase tracking-wider border-b border-[#E7E0D4] pb-2">
+              Practice
+            </h4>
+            <ul className="space-y-2 text-xs text-[#77736D]">
+              <li>
+                <Link href="/about-us" className="hover:text-[#6F2935] transition-colors">
+                  About OM Astrology
+                </Link>
+              </li>
+              <li>
+                <Link href="/appointments" className="hover:text-[#6F2935] transition-colors">
+                  Book a Consultation
+                </Link>
+              </li>
+              <li>
+                <Link href="/shop" className="hover:text-[#6F2935] transition-colors">
+                  Spiritual Shop
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="hover:text-[#6F2935] transition-colors">
+                  Journal &amp; Insights
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy" className="hover:text-[#6F2935] transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-[var(--gold-100)] pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4 text-center md:text-left">
+        <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-[#77736D] gap-4">
           <p>
-            &copy; {currentYear} OM Astrology AMC Occult Science Web Platform. All rights reserved.
+            &copy; {currentYear} OM Astrology AMC. All consultation reports &amp; insights are confidential.
           </p>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy-policy" className="hover:text-[#1D1C1A] transition-colors">
+              Privacy &amp; Data Ethics
+            </Link>
+            <Link href="/appointments" className="hover:text-[#1D1C1A] transition-colors">
+              Consultation Terms
+            </Link>
+          </div>
         </div>
-
       </div>
     </footer>
   );

@@ -75,100 +75,100 @@ export default function NumerologyPage() {
  { name: 'Personality Number', desc: 'Calculated from the consonants in your name. Shows how other people see you and what first impression you give.' },
  ];
 
- return (
- <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900 number-grid-bg">
- {/* Pythagorean Number Matrix Background Animation */}
- <NumerologyHeroBackground />
+  return (
+    <div className="relative min-h-screen bg-[#F7F3EA] overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-[#1D1C1A]">
+      {/* Pythagorean Number Matrix Background Animation */}
+      <NumerologyHeroBackground />
 
- <div className="max-w-6xl mx-auto space-y-16 relative z-10">
- {/* Header Hero */}
- <motion.div
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- className="text-center space-y-4"
- >
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
- <Sparkles className="w-3.5 h-3.5" /> Pythagorean & Chaldean Systems
- </span>
- <h1 className="font-serif text-4xl md:text-6xl font-bold tracking-tight">
- Understand What Your <span className="gold-gradient-text">Numbers</span> Say About You
- </h1>
- <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
- Every number in your birth date and name carries a special meaning. Learn how your numbers can guide you to better decisions in life, career, and relationships.
- </p>
- </motion.div>
+      <div className="max-w-6xl mx-auto space-y-16 relative z-10">
+        {/* Header Hero */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center space-y-4"
+        >
+          <span className="text-[#A78652] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5" /> Pythagorean & Chaldean Systems
+          </span>
+          <h1 className="font-serif text-4xl md:text-6xl font-bold tracking-tight">
+            Understand What Your <span className="gold-gradient-text">Numbers</span> Say About You
+          </h1>
+          <p className="text-[#77736D] text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+            Every number in your birth date and name carries a special meaning. Learn how your numbers can guide you to better decisions in life, career, and relationships.
+          </p>
+        </motion.div>
 
- {/* Section: Pythagorean vs Chaldean */}
- <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
- <div className="lg:col-span-4 flex relative group">
- <div className="absolute inset-0 bg-[var(--gold)]/10 rounded-2xl blur-xl group-hover:bg-[var(--gold)]/20 transition-all duration-500"></div>
- <GoldCard flush className="border border-[var(--gold-200)] flex-1 overflow-hidden min-h-[220px]">
- <img src="/images/numerology_vibration_realistic.png" alt="Numerology Vibrations" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
- </GoldCard>
- </div>
- <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
- <GoldCard className="border border-[var(--gold-200)] p-6 space-y-3 flex flex-col justify-center">
- <h3 className="font-serif text-lg font-bold text-[var(--gold)]">The Pythagorean System</h3>
- <p className="text-xs text-gray-600 leading-relaxed">
- Created by the Greek mathematician Pythagoras, this is the most popular method used in India and worldwide. Each letter of the English alphabet gets a number from 1 to 9 (A=1, B=2 ... and so on). This helps calculate your name number.
- </p>
- </GoldCard>
- <GoldCard className="border border-[var(--gold-200)] p-6 space-y-3 flex flex-col justify-center">
- <h3 className="font-serif text-lg font-bold text-[var(--gold)]">The Chaldean System</h3>
- <p className="text-xs text-gray-600 leading-relaxed">
- This is an ancient system from Babylon (Iraq). It gives numbers to letters based on their sound, not just alphabetical order. The number 9 is treated as sacred and is not assigned to any letter directly. It is known for being very accurate for name readings.
- </p>
- </GoldCard>
- </div>
- </div>
+        {/* Section: Pythagorean vs Chaldean */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <div className="lg:col-span-4 flex relative group">
+            <div className="absolute inset-0 bg-[#A78652]/10 rounded-2xl blur-xl group-hover:bg-[#A78652]/20 transition-all duration-500"></div>
+            <GoldCard flush className="border border-[#E7E0D4] bg-white flex-1 overflow-hidden min-h-[220px]">
+              <img src="/images/numerology_vibration_realistic.png" alt="Numerology Vibrations" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </GoldCard>
+          </div>
+          <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <GoldCard className="border border-[#E7E0D4] bg-white p-6 space-y-3 flex flex-col justify-center">
+              <h3 className="font-serif text-lg font-bold text-[#6F2935]">The Pythagorean System</h3>
+              <p className="text-xs text-[#77736D] leading-relaxed">
+                Created by the Greek mathematician Pythagoras, this is the most popular method used in India and worldwide. Each letter of the English alphabet gets a number from 1 to 9 (A=1, B=2 ... and so on). This helps calculate your name number.
+              </p>
+            </GoldCard>
+            <GoldCard className="border border-[#E7E0D4] bg-white p-6 space-y-3 flex flex-col justify-center">
+              <h3 className="font-serif text-lg font-bold text-[#6F2935]">The Chaldean System</h3>
+              <p className="text-xs text-[#77736D] leading-relaxed">
+                This is an ancient system from Babylon (Iraq). It gives numbers to letters based on their sound, not just alphabetical order. The number 9 is treated as sacred and is not assigned to any letter directly. It is known for being very accurate for name readings.
+              </p>
+            </GoldCard>
+          </div>
+        </div>
 
- {/* Section: Interactive Numerology Calculator */}
- <div className="space-y-6">
- <div className="space-y-2 text-center max-w-2xl mx-auto">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
- Interactive Numerology Calculator
- </h2>
- <p className="text-gray-600 text-xs">
- Type your name or phone number below to calculate your core numerical frequencies instantly.
- </p>
- </div>
+        {/* Section: Interactive Numerology Calculator */}
+        <div className="space-y-6">
+          <div className="space-y-2 text-center max-w-2xl mx-auto">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[#E7E0D4] pb-3">
+              Interactive Numerology Calculator
+            </h2>
+            <p className="text-[#77736D] text-xs">
+              Type your name or phone number below to calculate your core numerical frequencies instantly.
+            </p>
+          </div>
 
- {/* System Selection pill switcher */}
- <div className="flex justify-center border border-[var(--gold-200)]/30 p-1 rounded-full bg-gray-50/60 max-w-[280px] mx-auto mt-4">
- <button
- type="button"
- onClick={() => setCalcSystem('pythagorean')}
- className={`flex-1 py-1.5 px-4 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer ${
- calcSystem === 'pythagorean'
- ? 'bg-gradient-to-r from-[var(--gold)] to-[var(--gold-light)] text-black shadow-md'
- : 'text-gray-600 hover:text-gray-900'
- }`}
- >
- Pythagorean
- </button>
- <button
- type="button"
- onClick={() => setCalcSystem('chaldean')}
- className={`flex-1 py-1.5 px-4 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer ${
- calcSystem === 'chaldean'
- ? 'bg-gradient-to-r from-[var(--gold)] to-[var(--gold-light)] text-black shadow-md'
- : 'text-gray-600 hover:text-gray-900'
- }`}
- >
- Chaldean
- </button>
- </div>
+          {/* System Selection pill switcher */}
+          <div className="flex justify-center border border-[#E7E0D4] p-1 rounded-full bg-[#FAF7F2] max-w-[280px] mx-auto mt-4">
+            <button
+              type="button"
+              onClick={() => setCalcSystem('pythagorean')}
+              className={`flex-1 py-1.5 px-4 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer ${
+                calcSystem === 'pythagorean'
+                  ? 'bg-[#1D1C1A] text-white shadow-sm'
+                  : 'text-[#77736D] hover:text-[#1D1C1A]'
+              }`}
+            >
+              Pythagorean
+            </button>
+            <button
+              type="button"
+              onClick={() => setCalcSystem('chaldean')}
+              className={`flex-1 py-1.5 px-4 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer ${
+                calcSystem === 'chaldean'
+                  ? 'bg-[#1D1C1A] text-white shadow-sm'
+                  : 'text-[#77736D] hover:text-[#1D1C1A]'
+              }`}
+            >
+              Chaldean
+            </button>
+          </div>
 
- {/* Calculator Input */}
- <div className="relative max-w-md mx-auto pt-2">
- <input
- type="text"
- placeholder="Type your name or phone number..."
- value={calcInput}
- onChange={(e) => setCalcInput(e.target.value)}
- className="w-full bg-white/50 border border-[var(--gold-200)]/30 rounded-xl py-3 px-4 text-gray-900 placeholder-neutral-600 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] focus:border-transparent text-sm text-center shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
- />
- </div>
+          {/* Calculator Input */}
+          <div className="relative max-w-md mx-auto pt-2">
+            <input
+              type="text"
+              placeholder="Type your name or phone number..."
+              value={calcInput}
+              onChange={(e) => setCalcInput(e.target.value)}
+              className="w-full bg-white border border-[#DED2BE] rounded-lg py-3 px-4 text-[#1D1C1A] placeholder-[#77736D] focus:outline-none focus:ring-1 focus:ring-[#1D1C1A] text-sm text-center shadow-sm"
+            />
+          </div>
 
  {/* Live Calculations */}
  {calcInput.replace(/[^a-zA-Z0-9]/g, '').length > 0 && (() => {

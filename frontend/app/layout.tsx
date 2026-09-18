@@ -91,7 +91,7 @@ export default function RootLayout({
  <LocalBusinessSchema />
  <WebSiteSchema />
  </head>
- <body className="h-full bg-white text-gray-900">
+ <body className="h-full bg-[#F7F3EA] text-[#1D1C1A]">
  <ClientProviders>{children}</ClientProviders>
  </body>
  </html>

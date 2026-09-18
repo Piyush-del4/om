@@ -36,7 +36,7 @@ export default function GraphologyPage() {
  ];
 
  return (
- <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900">
+ <div className="relative min-h-screen bg-[#F7F3EA] overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-[#1D1C1A]">
  <div className="max-w-6xl mx-auto space-y-16 relative z-10">
  {/* Header Hero Section (Horizontal Layout) */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-8">
@@ -46,13 +46,13 @@ export default function GraphologyPage() {
  animate={{ opacity: 1, x: 0 }}
  className="lg:col-span-6 space-y-4 text-left"
  >
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 justify-start">
+ <span className="text-[#A78652] text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 justify-start">
  <PenTool className="w-3.5 h-3.5" /> Graphology & Signature Science
  </span>
  <h1 className="font-serif text-4xl md:text-5xl font-bold tracking-tight leading-tight">
  Reveal Your Personality Through <span className="gold-gradient-text">Handwriting</span>
  </h1>
- <p className="text-gray-600 text-sm md:text-base font-light leading-relaxed max-w-lg">
+ <p className="text-[#77736D] text-sm md:text-base font-light leading-relaxed max-w-lg">
  Your handwriting shows what is happening inside your mind. The way you write — your letter shapes, slant, and pressure — reflects your personality, habits, and emotions. By changing how you write (Graphotherapy), you can actually improve your mindset and behavior.
  </p>
  </motion.div>
@@ -70,20 +70,20 @@ export default function GraphologyPage() {
  {/* Section: Brain Writing */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mt-8">
  <div className="lg:col-span-5 flex relative group">
- <div className="absolute inset-0 bg-[var(--gold)]/10 rounded-2xl blur-xl group-hover:bg-[var(--gold)]/20 transition-all duration-500"></div>
- <GoldCard flush className="w-full min-h-[240px] flex-grow transition-spring">
+ <div className="absolute inset-0 bg-[#A78652]/10 rounded-2xl blur-xl group-hover:bg-[#A78652]/20 transition-all duration-500"></div>
+ <GoldCard flush className="w-full min-h-[240px] flex-grow transition-spring bg-white border border-[#E7E0D4]">
  <div className="relative w-full h-full overflow-hidden">
  <img src="/images/step_analyze_realistic.png" alt="Graphology Analysis" className="w-full h-full object-cover group-hover:scale-105 transition-spring duration-700" />
  </div>
  </GoldCard>
  </div>
  <div className="lg:col-span-7 flex">
- <GoldCard className="transition-spring w-full">
+ <GoldCard className="transition-spring w-full bg-white border border-[#E7E0D4]">
  <div className="space-y-4 flex flex-col justify-center h-full">
- <h3 className="font-serif text-xl font-bold text-[var(--gold)] flex items-center gap-2">
- <Info className="w-5 h-5 animate-pulse text-[var(--gold)]" /> Brain-Writing: The Science
+ <h3 className="font-serif text-xl font-bold text-[#6F2935] flex items-center gap-2">
+ <Info className="w-5 h-5 animate-pulse text-[#A78652]" /> Brain-Writing: The Science
  </h3>
- <div className="space-y-4 text-sm text-gray-600 leading-relaxed font-light">
+ <div className="space-y-4 text-sm text-[#77736D] leading-relaxed font-light">
  <p>
  When you write, your brain sends signals to your hand muscles. Every stroke, space, curve, and angle you make is not just habit — it reflects your thoughts, emotions, and personality at that moment.
  </p>
@@ -100,49 +100,49 @@ export default function GraphologyPage() {
   {/* Section: Dedicated Graphology Sub-Pages Grid */}
   <div className="space-y-6">
     <div className="space-y-2">
-      <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">Specialized Guides</span>
-      <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+      <span className="text-[#A78652] text-xs uppercase tracking-widest font-semibold block">Specialized Guides</span>
+      <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[#E7E0D4] pb-3">
         Explore Graphology Deep-Dives
       </h2>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <Link href="/graphology/signature-analysis" className="block group">
-        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+        <GoldCard className="h-full group-hover:border-[#A78652] transition-all bg-white border border-[#E7E0D4]">
           <div className="space-y-2">
-            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Signature Analysis Science →</h3>
-            <p className="text-xs text-gray-600 font-light leading-relaxed">Public persona, underlines, strike-throughs & social confidence.</p>
+            <h3 className="font-serif font-bold text-lg text-[#6F2935] group-hover:underline">Signature Analysis Science →</h3>
+            <p className="text-xs text-[#77736D] font-light leading-relaxed">Public persona, underlines, strike-throughs & social confidence.</p>
           </div>
         </GoldCard>
       </Link>
       <Link href="/graphology/handwriting-slant" className="block group">
-        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+        <GoldCard className="h-full group-hover:border-[#A78652] transition-all bg-white border border-[#E7E0D4]">
           <div className="space-y-2">
-            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Handwriting Slant Psychology →</h3>
-            <p className="text-xs text-gray-600 font-light leading-relaxed">Right, left, and vertical slant emotional responsiveness.</p>
+            <h3 className="font-serif font-bold text-lg text-[#6F2935] group-hover:underline">Handwriting Slant Psychology →</h3>
+            <p className="text-xs text-[#77736D] font-light leading-relaxed">Right, left, and vertical slant emotional responsiveness.</p>
           </div>
         </GoldCard>
       </Link>
       <Link href="/graphology/graphotherapy" className="block group">
-        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+        <GoldCard className="h-full group-hover:border-[#A78652] transition-all bg-white border border-[#E7E0D4]">
           <div className="space-y-2">
-            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">21-Day Graphotherapy Protocol →</h3>
-            <p className="text-xs text-gray-600 font-light leading-relaxed">Neurological habit rewiring through somatic penmanship.</p>
+            <h3 className="font-serif font-bold text-lg text-[#6F2935] group-hover:underline">21-Day Graphotherapy Protocol →</h3>
+            <p className="text-xs text-[#77736D] font-light leading-relaxed">Neurological habit rewiring through somatic penmanship.</p>
           </div>
         </GoldCard>
       </Link>
       <Link href="/graphology/letter-formations" className="block group">
-        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+        <GoldCard className="h-full group-hover:border-[#A78652] transition-all bg-white border border-[#E7E0D4]">
           <div className="space-y-2">
-            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Letter Micro-Analysis ('t', 'i', 'g') →</h3>
-            <p className="text-xs text-gray-600 font-light leading-relaxed">Willpower, attention to detail, intimacy, and ambition.</p>
+            <h3 className="font-serif font-bold text-lg text-[#6F2935] group-hover:underline">Letter Micro-Analysis ('t', 'i', 'g') →</h3>
+            <p className="text-xs text-[#77736D] font-light leading-relaxed">Willpower, attention to detail, intimacy, and ambition.</p>
           </div>
         </GoldCard>
       </Link>
       <Link href="/graphology/pressure-and-zones" className="block group">
-        <GoldCard className="h-full group-hover:border-[var(--gold)] transition-all">
+        <GoldCard className="h-full group-hover:border-[#A78652] transition-all bg-white border border-[#E7E0D4]">
           <div className="space-y-2">
-            <h3 className="font-serif font-bold text-lg text-[var(--gold)] group-hover:underline">Pen Pressure & 3 Writing Zones →</h3>
-            <p className="text-xs text-gray-600 font-light leading-relaxed">Upper, middle, and lower zone energy distribution.</p>
+            <h3 className="font-serif font-bold text-lg text-[#6F2935] group-hover:underline">Pen Pressure & 3 Writing Zones →</h3>
+            <p className="text-xs text-[#77736D] font-light leading-relaxed">Upper, middle, and lower zone energy distribution.</p>
           </div>
         </GoldCard>
       </Link>
@@ -150,8 +150,8 @@ export default function GraphologyPage() {
   </div>
 
   {/* Section: Handwriting Stroke Indicators */}
-  <div className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
-    <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-amber-600 pb-3 text-white">
+  <div className="space-y-6 p-6 bg-[#6F2935] rounded-2xl border border-[#A78652]/30 shadow-md text-white">
+    <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-white/20 pb-3 text-white">
       Handwriting Stroke Indicators
     </h2>
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

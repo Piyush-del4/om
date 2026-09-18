@@ -37,7 +37,7 @@ export default function MarriageMatchingPage() {
  ];
 
  return (
- <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900">
+ <div className="relative min-h-screen bg-[#F7F3EA] overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-[#1D1C1A]">
  <AstrologyHeroBackground />
 
  <div className="max-w-6xl mx-auto space-y-16 relative z-10">

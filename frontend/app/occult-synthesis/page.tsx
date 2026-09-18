@@ -73,18 +73,18 @@ const SYNTHESIS_CARDS = [
 
 export default function OccultSynthesisHubPage() {
   return (
-    <div className="relative min-h-screen bg-white overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-gray-900">
+    <div className="relative min-h-screen bg-[#F7F3EA] overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-[#1D1C1A]">
       <div className="max-w-6xl mx-auto space-y-12 relative z-10">
         
         {/* Header Hero */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--gold-dark)] bg-[var(--gold-50)] px-4 py-1.5 rounded-full border border-[var(--gold-200)]">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-[#A78652] bg-[#FAF7F2] px-4 py-1.5 rounded-full border border-[#E7E0D4]">
             Cross-Domain Occult Mastery
           </span>
-          <h1 className="font-serif text-3xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
+          <h1 className="font-serif text-3xl sm:text-5xl font-extrabold text-[#1D1C1A] leading-tight">
             Intersecting Guides: Astrology, Numerology, Graphology & Tarot
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-[#77736D] font-light leading-relaxed">
             True occult wisdom is never isolated. Explore our synthesis guides combining Vedic Kundli, Chaldean Numerology, Graphology Signature Science, and Tarot Cards to unlock complete life guidance.
           </p>
         </div>
@@ -95,20 +95,20 @@ export default function OccultSynthesisHubPage() {
             const IconComp = card.icon;
             return (
               <Link key={card.slug} href={`/occult-synthesis/${card.slug}`}>
-                <GoldCard className="h-full hover:border-[var(--gold)] transition-all duration-300 group cursor-pointer">
+                <GoldCard className="h-full bg-white border border-[#E7E0D4] hover:border-[#A78652] transition-all duration-300 group cursor-pointer">
                   <div className="flex items-start gap-4">
-                    <div className={`p-3.5 rounded-2xl bg-gradient-to-br ${card.color} border border-[var(--gold-200)] text-[var(--gold-dark)] group-hover:scale-105 transition-transform`}>
+                    <div className="p-3.5 rounded-2xl bg-[#FAF7F2] border border-[#E7E0D4] text-[#6F2935] group-hover:scale-105 transition-transform">
                       <IconComp className="w-6 h-6" />
                     </div>
                     <div className="space-y-2 flex-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--gold-dark)] bg-[var(--gold-50)] px-2 py-0.5 rounded">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#A78652] bg-[#FAF7F2] px-2 py-0.5 rounded border border-[#E7E0D4]">
                         {card.category}
                       </span>
-                      <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[var(--gold-dark)] transition-colors flex items-center justify-between">
+                      <h3 className="font-serif text-lg font-bold text-[#1D1C1A] group-hover:text-[#6F2935] transition-colors flex items-center justify-between">
                         <span>{card.title}</span>
-                        <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[var(--gold-dark)]" />
+                        <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#6F2935]" />
                       </h3>
-                      <p className="text-xs text-gray-600 font-light leading-relaxed">
+                      <p className="text-xs text-[#77736D] font-light leading-relaxed">
                         {card.desc}
                       </p>
                     </div>

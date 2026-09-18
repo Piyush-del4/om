@@ -45,7 +45,7 @@ export default function TarotCardPage() {
  ];
 
  return (
- <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900">
+ <div className="relative min-h-screen bg-[#F7F3EA] overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-[#1D1C1A]">
  {/* Tarot Energy Particle Background */}
  <TarotHeroBackground suit={suit} />
 
@@ -56,13 +56,13 @@ export default function TarotCardPage() {
  animate={{ opacity: 1, y: 0 }}
  className="text-center space-y-4"
  >
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
+ <span className="text-[#A78652] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
  <Layers className="w-3.5 h-3.5" /> Tarot Card Guidance
  </span>
  <h1 className="font-serif text-4xl md:text-6xl font-bold tracking-tight">
  Understand Your Life Through <span className="gold-gradient-text">Tarot</span>
  </h1>
- <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+ <p className="text-[#77736D] text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
  Tarot is not about telling the future. It is a tool that helps you understand your current situation, fears, and choices — so you can make better decisions in life.
  </p>
  </motion.div>
@@ -70,30 +70,30 @@ export default function TarotCardPage() {
  {/* Section: Major vs Minor Arcana */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
  <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-3 flex flex-col justify-center h-full">
- <h3 className="font-serif text-lg font-bold text-[var(--gold)] flex items-center gap-2">
- <Sparkles className="w-5 h-5 text-[var(--gold)]" /> The Major Arcana (22 Cards)
+ <h3 className="font-serif text-lg font-bold text-[#6F2935] flex items-center gap-2">
+ <Sparkles className="w-5 h-5 text-[#A78652]" /> The Major Arcana (22 Cards)
  </h3>
- <p className="text-xs text-gray-600 leading-relaxed font-light">
+ <p className="text-xs text-[#77736D] leading-relaxed font-light">
  These 22 cards represent major events and big changes in your life. When one of these cards appears in your reading, it means something very important and life-changing is happening or is about to happen.
  </p>
  </div>
  </GoldCard>
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-3 flex flex-col justify-center h-full">
- <h3 className="font-serif text-lg font-bold text-[var(--gold)] flex items-center gap-2">
- <BookOpen className="w-5 h-5 text-[var(--gold)]" /> The Minor Arcana (56 Cards)
+ <h3 className="font-serif text-lg font-bold text-[#6F2935] flex items-center gap-2">
+ <BookOpen className="w-5 h-5 text-[#A78652]" /> The Minor Arcana (56 Cards)
  </h3>
- <p className="text-xs text-gray-600 leading-relaxed font-light">
+ <p className="text-xs text-[#77736D] leading-relaxed font-light">
  These 56 cards represent everyday situations and daily challenges. They are divided into 4 groups: Wands (work and energy), Cups (emotions and love), Swords (thinking and conflict), and Pentacles (money and health).
  </p>
  </div>
  </GoldCard>
  </div>
  <div className="lg:col-span-4 flex relative group">
- <div className="absolute inset-0 bg-[var(--gold)]/10 rounded-2xl blur-xl group-hover:bg-[var(--gold)]/20 transition-all duration-500"></div>
- <GoldCard flush className="flex-1 overflow-hidden min-h-[220px] transition-spring">
+ <div className="absolute inset-0 bg-[#A78652]/10 rounded-2xl blur-xl group-hover:bg-[#A78652]/20 transition-all duration-500"></div>
+ <GoldCard flush className="flex-1 overflow-hidden min-h-[220px] transition-spring border border-[#E7E0D4] bg-white">
  <div className="relative w-full h-full overflow-hidden">
  <img src="/images/tarot_card_hero.png" alt="Tarot Deck" className="w-full h-full object-cover group-hover:scale-105 transition-spring duration-700" />
  </div>
@@ -104,34 +104,34 @@ export default function TarotCardPage() {
  {/* Section: The Fool's Journey */}
  <div className="space-y-6">
  <div className="space-y-2">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+ <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[#E7E0D4] pb-3">
  The Fool's Journey (Psychological Maturity)
  </h2>
- <p className="text-gray-600 text-xs">
+ <p className="text-[#77736D] text-xs">
  The 22 Major Arcana cards tell the story of a person's journey through life — from the beginning to complete wisdom.
  </p>
  </div>
  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-2">
- <span className="text-xs text-[var(--gold)] font-bold uppercase tracking-widest block">Phase 1: The Material World (Cards 1-7)</span>
- <p className="text-[11px] text-gray-600 leading-relaxed font-light">
+ <span className="text-xs text-[#6F2935] font-bold uppercase tracking-widest block">Phase 1: The Material World (Cards 1-7)</span>
+ <p className="text-[11px] text-[#77736D] leading-relaxed font-light">
  Cards 1 to 7 are about your early life and growing up. You learn about family, rules, society, and how to fit into the world around you.
  </p>
  </div>
  </GoldCard>
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-2">
- <span className="text-xs text-[var(--gold)] font-bold uppercase tracking-widest block">Phase 2: The Intuitive World (Cards 8-14)</span>
- <p className="text-[11px] text-gray-600 leading-relaxed font-light">
+ <span className="text-xs text-[#6F2935] font-bold uppercase tracking-widest block">Phase 2: The Intuitive World (Cards 8-14)</span>
+ <p className="text-[11px] text-[#77736D] leading-relaxed font-light">
  Cards 8 to 14 are about looking inside yourself. You face challenges, go through changes, and learn to trust your inner voice. This phase is about personal growth and self-understanding.
  </p>
  </div>
  </GoldCard>
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-2">
- <span className="text-xs text-[var(--gold)] font-bold uppercase tracking-widest block">Phase 3: The Spiritual World (Cards 15-21)</span>
- <p className="text-[11px] text-gray-600 leading-relaxed font-light">
+ <span className="text-xs text-[#6F2935] font-bold uppercase tracking-widest block">Phase 3: The Spiritual World (Cards 15-21)</span>
+ <p className="text-[11px] text-[#77736D] leading-relaxed font-light">
  Cards 15 to 21 are about facing deep fears, breaking free from old habits, and reaching a higher level of peace and understanding. This is the most transformational phase of the journey.
  </p>
  </div>
@@ -141,56 +141,56 @@ export default function TarotCardPage() {
 
  {/* Section: Major Arcana Deep-Dive */}
  <div className="space-y-6">
- <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[var(--gold-200)] pb-3">
+ <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-[#E7E0D4] pb-3">
  Key Major Arcana Archetypes
  </h2>
  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-3">
  <div className="flex justify-between items-center w-full">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">0. The Fool</h4>
- <span className="text-[9px] bg-[var(--gold-50)] text-gray-450 px-2 py-0.5 rounded border border-[var(--gold-200)] whitespace-nowrap">Air Element</span>
+ <h4 className="text-[#6F2935] font-serif font-bold text-sm">0. The Fool</h4>
+ <span className="text-[9px] bg-[#FAF7F2] text-[#77736D] px-2 py-0.5 rounded border border-[#E7E0D4] whitespace-nowrap">Air Element</span>
  </div>
- <p className="text-xs text-gray-600 leading-relaxed font-light">
+ <p className="text-xs text-[#77736D] leading-relaxed font-light">
  <strong>Upright:</strong> New beginning, fresh start, excitement, trust, and a chance to take a leap of faith. <br />
  <strong>Reversed:</strong> Being reckless, not thinking before acting, running away from problems, or being too afraid to start something new.
  </p>
  </div>
  </GoldCard>
 
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-3">
  <div className="flex justify-between items-center w-full">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">I. The Magician</h4>
- <span className="text-[9px] bg-[var(--gold-50)] text-gray-450 px-2 py-0.5 rounded border border-[var(--gold-200)] whitespace-nowrap">Mercury / Focus</span>
+ <h4 className="text-[#6F2935] font-serif font-bold text-sm">I. The Magician</h4>
+ <span className="text-[9px] bg-[#FAF7F2] text-[#77736D] px-2 py-0.5 rounded border border-[#E7E0D4] whitespace-nowrap">Mercury / Focus</span>
  </div>
- <p className="text-xs text-gray-600 leading-relaxed font-light">
+ <p className="text-xs text-[#77736D] leading-relaxed font-light">
  <strong>Upright:</strong> You have all the skills and power you need. Focus, take action, and you can achieve your goal right now. <br />
  <strong>Reversed:</strong> Misusing your skills, deceiving others, or letting your energy scatter without focus.
  </p>
  </div>
  </GoldCard>
 
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-3">
  <div className="flex justify-between items-center w-full">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">II. The High Priestess</h4>
- <span className="text-[9px] bg-[var(--gold-50)] text-gray-455 px-2 py-0.5 rounded border border-[var(--gold-200)] whitespace-nowrap">Moon / Intuition</span>
+ <h4 className="text-[#6F2935] font-serif font-bold text-sm">II. The High Priestess</h4>
+ <span className="text-[9px] bg-[#FAF7F2] text-[#77736D] px-2 py-0.5 rounded border border-[#E7E0D4] whitespace-nowrap">Moon / Intuition</span>
  </div>
- <p className="text-xs text-gray-600 leading-relaxed font-light">
+ <p className="text-xs text-[#77736D] leading-relaxed font-light">
  <strong>Upright:</strong> Trust your gut feeling. Something is hidden right now — wait before making a decision. Wisdom is coming. <br />
  <strong>Reversed:</strong> Ignoring your inner voice, letting secrets come out, feeling confused or misled.
  </p>
  </div>
  </GoldCard>
 
- <GoldCard className="transition-spring">
+ <GoldCard className="transition-spring bg-white border border-[#E7E0D4]">
  <div className="space-y-3">
  <div className="flex justify-between items-center w-full">
- <h4 className="text-[var(--gold)] font-serif font-bold text-sm">XIII. Death</h4>
- <span className="text-[9px] bg-[var(--gold-50)] text-gray-455 px-2 py-0.5 rounded border border-[var(--gold-200)] whitespace-nowrap">Scorpio / Transition</span>
+ <h4 className="text-[#6F2935] font-serif font-bold text-sm">XIII. Death</h4>
+ <span className="text-[9px] bg-[#FAF7F2] text-[#77736D] px-2 py-0.5 rounded border border-[#E7E0D4] whitespace-nowrap">Scorpio / Transition</span>
  </div>
- <p className="text-xs text-gray-600 leading-relaxed font-light">
+ <p className="text-xs text-[#77736D] leading-relaxed font-light">
  <strong>Upright:</strong> Something is ending so something better can begin. A phase of your life is complete — let it go and move on. <br />
  <strong>Reversed:</strong> Refusing to accept change, staying stuck in old patterns, fear of ending something that is no longer good for you.
  </p>
@@ -203,16 +203,16 @@ export default function TarotCardPage() {
  <TarotSpreadWidget activeSuit={suit} onSuitChange={setSuit} />
 
   {/* Section: The Suits of the Minor Arcana */}
-  <div className="space-y-6 p-6 bg-gradient-to-br from-amber-900 to-amber-800 rounded-2xl border border-amber-600 shadow-md">
-    <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-amber-600 pb-3 text-white">
+  <div className="space-y-6 p-6 bg-[#6F2935] rounded-2xl border border-[#A78652]/30 shadow-md text-white">
+    <h2 className="font-serif text-2xl md:text-3xl font-bold border-b border-white/20 pb-3 text-white">
       The Suits & Elements
     </h2>
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
       {suits.map((s) => (
-        <div key={s.name} className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-amber-400 hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
+        <div key={s.name} className="bg-white/10 rounded-xl border border-white/10 p-4 hover:border-[#A78652] hover:bg-white/15 hover:shadow-md transition-all group hover:scale-[1.02] duration-300">
           <div className="space-y-2">
-            <h4 className="text-amber-300 font-serif font-bold text-sm mb-2">{s.name}</h4>
-            <p className="text-xs text-amber-100/70 leading-relaxed font-light">{s.governs}</p>
+            <h4 className="text-[#A78652] font-serif font-bold text-sm mb-2">{s.name}</h4>
+            <p className="text-xs text-white/80 leading-relaxed font-light">{s.governs}</p>
           </div>
         </div>
       ))}

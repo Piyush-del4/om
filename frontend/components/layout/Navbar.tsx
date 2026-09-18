@@ -128,20 +128,29 @@ export function Navbar() {
  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-  <>
-  <NotificationToastBanner />
-  <nav className="sticky top-0 z-50 bg-white/75 backdrop-blur-md border-b border-[var(--gold-200)] text-gray-900 overflow-visible print:hidden">
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="flex items-center justify-between h-16">
- {/* Logo */}
- <div className="flex-shrink-0">
- <Link href="/" className="flex items-center gap-2.5 group">
- <img src="/images/logo.png" alt="OM Astrology AMC Logo" className="w-8 h-8 object-contain border border-[var(--gold-200)] rounded-full bg-white/60 shadow-md p-0.5" />
- <span className="font-serif text-lg font-bold tracking-wider text-[var(--gold)] group-hover:text-[var(--gold-light)] transition-colors hidden sm:inline-block">
- OM Astrology AMC
- </span>
- </Link>
- </div>
+    <>
+      <NotificationToastBanner />
+      <nav className="sticky top-0 z-50 bg-[#F7F3EA]/95 backdrop-blur-md border-b border-[#E7E0D4] text-[#1D1C1A] overflow-visible print:hidden">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <Link href="/" className="flex items-center gap-3 group">
+                <img
+                  src="/images/logo.png"
+                  alt="OM Astrology AMC Logo"
+                  className="w-9 h-9 object-contain border border-[#DED2BE] rounded-full bg-white p-0.5"
+                />
+                <div className="hidden sm:block">
+                  <span className="font-serif text-base font-bold tracking-wide text-[#1D1C1A] block leading-tight">
+                    OM Astrology AMC
+                  </span>
+                  <span className="text-[9px] text-[#A78652] font-mono uppercase tracking-widest block font-semibold">
+                    Occult Consultations
+                  </span>
+                </div>
+              </Link>
+            </div>
 
  {/* Desktop Nav Links */}
  <div className="hidden md:flex items-center space-x-4 lg:space-x-8 h-full">

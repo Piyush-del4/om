@@ -1,1539 +1,859 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useAuth } from '../auth/AuthProvider';
 import { client } from '../lib/api/client';
 import { env } from '../lib/env';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Compass, Hash, Layers, PenTool, Calendar, Check, AlertCircle, ShoppingCart, Star, Quote, HelpCircle, Brain, Briefcase, PhoneCall, Building2, Heart, ArrowRight, BookOpen, Download, Moon } from 'lucide-react';
+import {
+  Compass,
+  Hash,
+  Layers,
+  PenTool,
+  Calendar,
+  Star,
+  HelpCircle,
+  Briefcase,
+  PhoneCall,
+  Building2,
+  Heart,
+  ArrowRight,
+  BookOpen,
+  Download,
+  Moon,
+  Lock,
+  CheckCircle2,
+  ShieldCheck,
+  UserCheck,
+  Sparkles,
+  Clock,
+  AlertCircle
+} from 'lucide-react';
 import { GoldButton } from '../components/ui/GoldButton';
-import { GoldCard } from '../components/ui/GoldCard';
-import { CosmicHeroBackground } from '../components/ui/CosmicHeroBackground';
+import { EditorialCard } from '../components/ui/EditorialCard';
+import { SectionHeading } from '../components/ui/SectionHeading';
 import { BatchCardSkeleton, ShopItemSkeleton } from '../components/ui/Skeleton';
 import { FormattedText } from '../components/ui/FormattedText';
 import { FAQSection } from '../components/ui/FAQSection';
 import { DailyPanchangMuhuratWidget } from '../components/ui/astrology/DailyPanchangMuhuratWidget';
 
 const testimonials = [
- {
- name: "Rohan Deshmukh",
- initials: "RD",
- role: "SaaS Founder, Mumbai",
- quote: "I was not sure about name spelling change at first. But after Numerology consultation and following the suggested business launch date from my birth chart, everything changed. We grew from 3 clients to 45 clients in just 8 months!"
- },
- {
- name: "Ananya Mehta",
- initials: "AM",
- role: "Creative Director, Delhi",
- quote: "Dr. Sen looked at my handwriting and found I had a self-doubt pattern. She gave me simple daily writing exercises. Within a few weeks, I felt much more focused and my anxiety reduced a lot."
- },
- {
- name: "Sarah Jenkins",
- initials: "SJ",
- role: "Jungian Analyst, London",
- quote: "My Tarot session with Sarah was very eye-opening. For 2 years I could not decide my next career step. After the reading, I clearly understood what was holding me back and finally had the confidence to make my move."
- },
- {
- name: "Priya Sharma",
- initials: "PS",
- role: "Product Manager, Bengaluru",
- quote: "Unbelievably accurate! The Transit report predicted a career transition in September, and I received an unexpected job offer from Google exactly then. The remedies suggested were very practical."
- },
- {
- name: "Dr. Amit Patel",
- initials: "AP",
- role: "Cardiologist, Ahmedabad",
- quote: "As a doctor, I was skeptical. But the handwriting analysis session accurately pointed out my stress triggers. The recommended stroke corrections helped me regain calm during surgery hours."
- },
- {
- name: "Clara Dubois",
- initials: "CD",
- role: "Writer, Paris",
- quote: "The Tarot reading felt like therapy. It bypassed my intellectual defenses and got straight to the heart of my creative block. Highly recommend OM Astrology for authentic guidance."
- },
- {
- name: "Vikram Aditya Rao",
- initials: "VR",
- role: "Real Estate Developer, Hyderabad",
- quote: "The auspicious date (Muhurat) selected for our new project launch was a blessing. Despite market slowdowns, 90% of our units sold out in the first week. Astrological timing is real."
- },
- {
- name: "Sunita Krishnan",
- initials: "SK",
- role: "Teacher, Chennai",
- quote: "Tarot and Numerology reading helped me choose the right path during a very dark phase in my family. The guidance was incredibly accurate and compassionate."
- },
- {
- name: "Rajesh Nair",
- initials: "RN",
- role: "IT Director, Kochi",
- quote: "I was facing continuous delays in my visa approval. The astrologer suggested a simple daily mantra. Within 12 days, my passport arrived with the visa. Coincidence or cosmos, it worked."
- },
- {
- name: "Michael Vance",
- initials: "MV",
- role: "Startup Lead, San Francisco",
- quote: "Their holistic approach combining astrology with graphology is unique. It gave me both macro timing (when to scale) and micro tools (improving focus through writing). Incredible value."
- },
- {
- name: "Karan Johar",
- initials: "KJ",
- role: "Restaurateur, Chandigarh",
- quote: "The Gemstone recommendation for my career block worked wonders. I feel much more energetic and our restaurant business has seen a steady 30% month-on-month growth."
- },
- {
- name: "Divya Suryavanshi",
- initials: "DS",
- role: "Fashion Designer, Jaipur",
- quote: "Their tarot readings are magical! I got clear insight on which collections to launch. It saved me from a major financial mistake."
- }
+  {
+    name: "Rohan Deshmukh",
+    initials: "RD",
+    role: "SaaS Founder, Mumbai",
+    quote: "I was uncertain about a name spelling modification. After our Numerology session and launching on the suggested auspicious date, our momentum completely shifted."
+  },
+  {
+    name: "Ananya Mehta",
+    initials: "AM",
+    role: "Creative Director, Delhi",
+    quote: "The handwriting analysis identified subtle stress triggers I was unaware of. The daily writing exercises provided noticeable calm and focus."
+  },
+  {
+    name: "Sarah Jenkins",
+    initials: "SJ",
+    role: "Analyst, London",
+    quote: "My Tarot session bypassed generic answers and got straight to the core of my career transition. I gained clear confidence for my next steps."
+  },
+  {
+    name: "Priya Sharma",
+    initials: "PS",
+    role: "Product Lead, Bengaluru",
+    quote: "The Transit analysis accurately outlined the timing for my career change. The guidance was grounded, practical, and highly reassuring."
+  }
 ];
 
 export default function Home() {
- const heroRef = useRef<HTMLDivElement>(null);
- const { scrollY } = useScroll();
- const bgParallaxY = useTransform(scrollY, [0, 800], [0, 120]);
- const router = useRouter();
- const { isAuthenticated, user } = useAuth();
- const queryClient = useQueryClient();
+  const router = useRouter();
+  const { isAuthenticated, user } = useAuth();
+  const queryClient = useQueryClient();
 
- useEffect(() => {
- document.title = 'OM Astrology AMC — Occult Science & Astrology Consultations';
- }, []);
+  useEffect(() => {
+    document.title = 'OM Astrology AMC — Personal Guidance & Occult Consultations';
+  }, []);
 
- // Booking states
- const [selectedTypeId, setSelectedTypeId] = useState('');
- const [selectedDate, setSelectedDate] = useState('');
- const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
- const [bookingMessage, setBookingMessage] = useState('');
- const [phone, setPhone] = useState('');
+  // Booking states
+  const [selectedTypeId, setSelectedTypeId] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+  const [bookingMessage, setBookingMessage] = useState('');
 
- // Fetch active batches
- const { data: batches, isLoading: isLoadingBatches } = useQuery({
- queryKey: ['public-batches'],
- queryFn: async () => {
- const res = await client.get('/batches');
- return res.data?.data || [];
- },
- });
-
- // Fetch team members
- const { data: teamMembers = [] } = useQuery({
- queryKey: ['team'],
- queryFn: async () => {
- const res = await client.get('/team');
- return res.data?.data || [];
- },
- });
-
- // Fetch shop items
- const { data: shopItems, isLoading: isLoadingShopItems } = useQuery({
- queryKey: ['public-shop-items'],
- queryFn: async () => {
- const res = await client.get('/shop');
- return res.data?.data || [];
- },
- });
- // Fetch reviews (success stories)
- const { data: dynamicReviews = [] } = useQuery({
- queryKey: ['success-stories'],
- queryFn: async () => {
- const res = await client.get('/reviews/success-stories');
- return res.data?.data || [];
- },
- });
-
- // Submit review mutation
- const submitReviewMutation = useMutation({
- mutationFn: async (data: { name: string; rating: number; comment: string }) => {
- return client.post('/reviews', data);
- },
- onSuccess: () => {
- queryClient.invalidateQueries({ queryKey: ['success-stories'] });
- alert('Thank you! Your review has been submitted successfully.');
- setReviewForm({ name: '', rating: 5, comment: '' });
- },
- onError: (err: any) => {
- alert(err.response?.data?.error || 'Failed to submit review. Please try again.');
- },
- });
-
- const [reviewForm, setReviewForm] = useState({ name: '', rating: 5, comment: '' });
-
- // Add to cart mutation
- const addToCartMutation = useMutation({
- mutationFn: async (itemId: string) => {
- return client.post('/shop/cart/items', { itemId, quantity: 1 });
- },
- onSuccess: () => {
- queryClient.invalidateQueries({ queryKey: ['cart'] });
- alert('Item added to cart!');
- router.push('/shop/cart');
- },
- onError: (err: any) => {
- alert(err.response?.data?.error?.message || 'Failed to add to cart');
- },
- });
-
- const handleAddToCart = (itemId: string) => {
- if (!isAuthenticated) {
- alert('Please login to add items to your cart.');
- router.push('/login');
- return;
- }
- addToCartMutation.mutate(itemId);
- };
-
- // Fetch appointment types
- const { data: appointmentTypes } = useQuery({
- queryKey: ['appointmentTypes'],
- queryFn: async () => {
- const res = await client.get('/appointments/types');
- return res.data?.data || [];
- },
- });
-
- const selectedType = appointmentTypes?.find((t: any) => t._id === selectedTypeId);
-
- // Fetch available slots when type and date are selected
- const { data: availableSlots, isFetching: isFetchingSlots } = useQuery({
- queryKey: ['slots', selectedDate, selectedType?.duration],
- queryFn: async () => {
- if (!selectedDate || !selectedType) return [];
- const res = await client.get('/appointments/slots', {
- params: {
- date: selectedDate,
- duration: selectedType.duration,
- },
- });
- return res.data?.data || [];
- },
- enabled: !!selectedDate && !!selectedType,
- });
-
- const loadRazorpayScript = (): Promise<boolean> => {
- return new Promise((resolve) => {
- if ((window as any).Razorpay) { resolve(true); return; }
- const script = document.createElement('script');
- script.src = 'https://checkout.razorpay.com/v1/checkout.js';
- script.onload = () => resolve(true);
- script.onerror = () => resolve(false);
- document.body.appendChild(script);
- });
- };
-
- // Booking mutation
- const bookingMutation = useMutation({
- mutationFn: async () => {
- if (!selectedTypeId || !selectedTimeSlot) {
- throw new Error('Please select type and time slot');
- }
- const res = await client.post('/appointments', {
- appointmentTypeId: selectedTypeId,
- scheduledAt: selectedTimeSlot,
- });
- return res.data?.data;
- },
- onSuccess: async (data: any) => {
- // Free appointment — confirmed immediately
- if (!data.paymentRequired) {
- alert('🎉 Consultation booked successfully! A confirmation email and Google Calendar event have been created.');
- setSelectedTypeId('');
- setSelectedDate('');
- setSelectedTimeSlot('');
- return;
- }
-
- // Paid appointment — open Razorpay checkout
- const loaded = await loadRazorpayScript();
- if (!loaded) {
- alert('Failed to load payment gateway. Please check your connection.');
- return;
- }
-
- const options = {
- key: data.key || env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
- amount: data.amount,
- currency: data.currency || 'INR',
- name: 'OM Astrology AMC',
- description: `Consultation: ${selectedType?.name || 'Appointment'}`,
- order_id: data.razorpayOrderId,
- handler: async (response: any) => {
- try {
- await client.post('/appointments/verify', {
- razorpayOrderId: response.razorpay_order_id,
- razorpayPaymentId: response.razorpay_payment_id,
- razorpaySignature: response.razorpay_signature,
- });
- setSelectedTypeId('');
- setSelectedDate('');
- setSelectedTimeSlot('');
- alert('🎉 Payment successful! Your consultation slot has been confirmed.');
- } catch (err: any) {
- alert('Payment verification failed. Please contact support.');
- }
- },
- prefill: {
- name: user?.name || '',
- email: user?.email || '',
- contact: user?.phone || '',
- },
- theme: { color: '#cc8f33' },
- };
-
- const rzp = new (window as any).Razorpay(options);
- rzp.open();
- },
- onError: (err: any) => {
- const msg = err.response?.data?.error?.message || err.message || 'Booking failed';
- alert(`❌ Error: ${msg}`);
- },
- });
-
- const handleBookSubmit = (e: React.FormEvent) => {
- e.preventDefault();
- if (!isAuthenticated) {
- alert('Please login to book a consultation.');
- router.push('/login');
- return;
- }
- bookingMutation.mutate();
- };
-
- const services = [
- {
- title: 'Astrology Readings',
- id: 'astrology',
- desc: 'Know your life path, best career options, and important life timings from your birth chart and planetary positions.',
- icon: <Compass className="w-12 h-12 text-[var(--gold)] animate-spin-slow" />,
- link: '/astrology',
- image: '/images/astrology_zodiac_realistic.png',
- tagline: 'LIFE SET WHEN PLANETS CONNECT',
- taglineSize: '26px',
- },
- {
- title: 'Numerology Analysis',
- id: 'numerology',
- desc: 'Find your lucky numbers, check if your name spelling is correct, and know the best time for important decisions in life.',
- icon: <Hash className="w-12 h-12 text-[var(--gold)] hover:scale-110 transition-transform duration-300" />,
- link: '/numerology',
- image: '/images/numerology_brain.jpg',
- tagline: 'BORN WITH NUMBERS',
- },
- {
- title: 'Tarot Consultations',
- id: 'tarot',
- desc: 'Get clear answers about your relationship, job, or future plans through a simple and honest Tarot card reading.',
- icon: <Layers className="w-12 h-12 text-[var(--gold)] hover:-translate-y-2 transition-transform duration-300" />,
- link: '/tarot-card',
- image: '/images/tarot_card_hero.png',
- tagline: 'PREDICTION IN ONE MIN',
- },
- {
- title: 'Graphology & Handwriting',
- id: 'graphology',
- desc: 'Understand your personality and hidden strengths by analyzing your handwriting and signature.',
- icon: <PenTool className="w-12 h-12 text-[var(--gold)]" />,
- link: '/graphology',
- image: '/images/step_analyze_realistic.png',
- tagline: 'Sign करें ✍️ , Shine करें ✨...',
- taglineSize: '24px',
- },
- {
- title: 'Happy Profession & Career Guidance',
- id: 'profession-career',
- desc: 'Find the ideal career direction aligned with your 10th house and Amatyakaraka to achieve success and happiness.',
- icon: <Briefcase className="w-12 h-12 text-[var(--gold)] animate-pulse" />,
- link: '/profession-career',
- image: '/images/career_blueprint_realistic.png',
- },
- {
- title: 'Lucky Mobile Number Selection',
- id: 'lucky-mobile',
- desc: 'Align your digital communication vibration with your driver and conductor numbers to attract wealth.',
- icon: <PhoneCall className="w-12 h-12 text-[var(--gold)]" />,
- link: '/lucky-mobile',
- image: '/images/mobile_numerology_realistic.png',
- },
- {
- title: 'Corporate & Brand Numerology',
- id: 'corporate-numerology',
- desc: 'Optimize your business name spelling, logo design colors, and incorporation date to secure financial gains.',
- icon: <Building2 className="w-12 h-12 text-[var(--gold)]" />,
- link: '/corporate-numerology',
- image: '/images/corporate_numerology_realistic.png',
- },
- {
- title: 'Marriage Matching',
- id: 'marriage-matching',
- desc: ' deep analysis of 36 Gunas, Manglik Dosha, and 7th house compatibility for a lifelong happy union.',
- icon: <Heart className="w-12 h-12 text-red-600 fill-red-500" />,
- link: '/marriage-matching',
- image: '/images/marriage_matching_realistic.png',
- },
- {
- title: 'Name Correction',
- id: 'name-correction',
- desc: 'Align your name vibrations with your birth blueprint to remove life blockages and invite prosperity.',
- icon: <PenTool className="w-12 h-12 text-[var(--gold)]" />,
- link: '/name-correction',
- image: '/images/step_realign_realistic.png',
- tagline: 'नाम सही तो काम सही',
- taglineSize: '22px',
- },
- {
- title: 'Daily Horoscope',
- id: 'horoscope',
- desc: 'Read accurate daily, weekly, and monthly horoscopes tailored for all 12 Rashis.',
- icon: <Moon className="w-12 h-12 text-[var(--gold)] animate-pulse" />,
- link: '/horoscope',
- image: '/images/cosmic_synthesis_realistic.png',
- tagline: 'NAVIGATE YOUR DAY',
- taglineSize: '22px',
- },
- ];
-
- return (
- <div className="relative sacred-geometry-bg radial-mesh-bg min-h-screen bg-white overflow-hidden flex flex-col text-gray-900">
- {/* SEO head tags */}
- {/* Background sacred geometry SVG lines */}
- <motion.div style={{ y: bgParallaxY }} className="absolute inset-0 z-0 opacity-10 flex items-center justify-center pointer-events-none">
- <svg viewBox="0 0 100 100" className="w-[80vw] h-[80vw] animate-spin-slow">
- <circle cx="50" cy="50" r="45" fill="none" stroke="#cc8f33" strokeWidth="0.2" />
- <polygon points="50,5 93.3,30 93.3,80 50,95 6.7,80 6.7,30" fill="none" stroke="#cc8f33" strokeWidth="0.1" />
- <polygon points="50,5 93.3,80 6.7,80" fill="none" stroke="#cc8f33" strokeWidth="0.1" />
- <polygon points="50,95 93.3,30 6.7,30" fill="none" stroke="#cc8f33" strokeWidth="0.1" />
- </svg>
- </motion.div>
-
-  {/* Hero Section */}
-  <section className="relative z-10 flex flex-col items-center justify-center text-center px-4 pt-24 pb-16 min-h-[85vh] overflow-hidden">
-    {/* Background Animation */}
-    <CosmicHeroBackground />
-
-    {/* Centered Content */}
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="relative z-10 max-w-4xl mx-auto space-y-6"
-    >
-      <span className="text-[var(--gold)] text-sm uppercase tracking-widest font-semibold block font-mono">
-        Life Set when Planet Connect
-      </span>
-      <h1 className="font-serif text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-tight">
-        Unlock the <span className="gold-gradient-text">Mysteries</span> <br /> of the Universe
-      </h1>
-      <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-        Get honest and helpful guidance in Astrology, Numerology, Tarot, and Graphology from our experienced consultants.
-      </p>
-    </motion.div>
-  </section>
-
- {/* === PREMIUM PERSONALIZED KUNDLI SECTION === */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 w-full bg-gradient-to-br from-amber-50 via-white to-amber-50/60 border-y border-amber-200/60 py-20 px-4 overflow-hidden"
- >
- {/* Glow decorations */}
- <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-80 h-80 bg-amber-300/10 rounded-full blur-3xl pointer-events-none" />
- <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
-
- <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 md:pr-24">
- {/* Left — Book Image */}
- <div className="flex justify-center md:justify-end md:pr-8">
- <motion.div
- initial={{ opacity: 0, scale: 0.98 }}
- animate={{ opacity: 1, scale: 1 }}
- transition={{ duration: 0.4, ease: 'easeOut' }}
- className="relative w-64 h-80 md:w-72 md:h-96 flex items-center justify-center hover:scale-105 transition-transform duration-500"
- >
- <Image
- src="/images/premium-kundli-book.jpg"
- alt="Premium Personalized Kundli Book"
- fill
- priority
- quality={100}
- sizes="(max-width: 768px) 100vw, 50vw"
- className="object-contain"
- />
- </motion.div>
- </div>
-
- {/* Right — Content */}
- <div className="space-y-6 text-center md:text-left">
- <div className="space-y-1">
- <span className="text-[var(--gold-dark)] text-xs uppercase tracking-widest font-bold flex items-center gap-2 justify-center md:justify-start">
- <span>✦</span> Exclusive Premium Service
- </span>
- <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-extrabold text-neutral-900 leading-tight">
- PREMIUM PERSONALIZED
- <span className="gold-gradient-text block">KUNDLI</span>
- </h2>
- </div>
- <p className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-lg">
- Get a comprehensive 20+ section personalized Janam Kundli — crafted from your exact birth coordinates. Includes Lagna Chart, Chalit Chart, Dasha timeline, Yoga &amp; Dosha analysis, Vedic Remedies, and Numerology.
- </p>
-
- {/* Feanure list */}
- <div className="grid grid-cols-2 gap-2">
- {[
- 'Lagna & Chalit Charts', 'Vimshottari Dasha',
- 'Yoga & Dosha Analysis', 'Vedic Remedies & Mantras',
- 'Numerology Report'
- ].map((f, i) => (
- <div key={i} className="text-xs text-amber-900/80 flex items-center gap-1.5">
- <span className="w-1.5 h-1.5 bg-[var(--gold)] rounded-full flex-shrink-0" />
- {f}
- </div>
- ))}
- </div>
-
- {/* Price row */}
- <div className="flex items-center gap-3 justify-center md:justify-start">
- <span className="text-gray-600 line-through text-lg">₹1000</span>
- <span className="text-3xl font-sans font-bold text-[#e77600] ">₹50</span>
- </div>
-
- {/* CTA */}
- <Link href="/premium-personalized-kundli">
- <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 cursor-pointer">
- <span>✦</span>
- Get PREMIUM PERSONALIZED KUNDLI
- <span>✦</span>
- </button>
- </Link>
-
- </div>
- </div>
- </motion.section>
-
-  {/* === FEAN EBOOK SECTION === */}
-  <motion.section
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 'some' }}
-    transition={{ duration: 0.7, ease: 'easeOut' }}
-    className="relative z-10 w-full bg-gradient-to-br from-white via-amber-50/30 to-white border-b border-amber-200/60 py-20 px-4 overflow-hidden"
-  >
-    <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 md:pl-16">
-      {/* Left — Content */}
-      <div className="space-y-6 text-center md:text-left order-2 md:order-1 pl-0 md:pl-12">
-        <div className="space-y-1">
-          <span className="text-[var(--gold-dark)] text-xs uppercase tracking-widest font-bold flex items-center gap-2 justify-center md:justify-start">
-            <span>✦</span> Essential Knowledge
-          </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-extrabold text-neutral-900 leading-tight">
-            FEAN METHOD
-            <span className="gold-gradient-text block">ASTROLOGY EBOOK</span>
-          </h2>
-        </div>
-        <p className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-lg mx-auto md:mx-0">
-          Discover the foundational principles of our patented FEAN Method Astrology AMB™. This comprehensive digital guide walks you through numbers, grids, remedies, and the exact science we use to set your life on the right path.
-        </p>
-
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-4">
-          <Link href="/fean-ebook">
-            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 w-full sm:w-auto">
-              <BookOpen className="w-5 h-5" />
-              Read Ebook
-            </button>
-          </Link>
-          <a href="/FEAN Method Astrology Ebook.pdf" download="FEAN_Method_Astrology_Ebook.pdf">
-            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white border-2 border-[var(--gold)] text-[var(--gold-dark)] font-bold text-base rounded-xl hover:bg-amber-50 transition-all duration-200 shadow-sm w-full sm:w-auto">
-              <Download className="w-5 h-5" />
-              Download PDF
-            </button>
-          </a>
-        </div>
-      </div>
-      
-      {/* Right — Book Image */}
-      <div className="flex justify-center md:justify-center order-1 md:order-2">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="relative w-64 h-80 md:w-72 md:h-96 flex items-center justify-center hover:scale-105 transition-transform duration-500"
-        >
-          <Image
-            src="/Fean-ebook-cover.png"
-            alt="FEAN Method Astrology Ebook"
-            fill
-            quality={100}
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-contain"
-          />
-        </motion.div>
-      </div>
-    </div>
-  </motion.section>
-
-  {/* === DAILY PANCHANG & MUHURAT WIDGET === */}
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 relative w-full my-12">
-    <DailyPanchangMuhuratWidget variant="card" />
-  </div>
-
- {/* Major Sections — Service Cards */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full space-y-16">
- <div className="text-center space-y-2">
- <h2 className="font-serif text-3xl md:text-4xl font-semibold">Our Specialized Areas</h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
- <p className="text-gray-600 max-w-lg mx-auto text-sm pt-2">
- Click on any card to explore deep readings or book specialized consultations.
- </p>
- </div>
-
- <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
- {services.map((svc, idx) => (
- <motion.div
- key={svc.id}
- className="h-full"
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
- >
- <Link href={svc.link} className="block h-full">
- <GoldCard flush className="h-full flex flex-col items-center text-center justify-between min-h-[400px] border border-[var(--gold-100)] relative group">
- <div className="w-full h-48 relative overflow-hidden">
- <img src={svc.image} alt={svc.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
- {/* Golden tagline overlay — only for cards that have one */}
- {(svc as any).tagline && (
- <div className="absolute top-0 inset-x-0 flex items-start justify-center pt-4 px-4 z-10">
- <span
- style={{
- fontFamily: 'Georgia, serif',
- letterSpacing: '0.1em',
- fontSize: (svc as any).taglineSize || '36px',
- color: '#ffffff',
- textShadow: '0 2px 16px rgba(0,0,0,1), 0 0px 8px rgba(0,0,0,1)',
- }}
- className="font-extrabold uppercase text-center leading-tight drop-shadow-2xl"
- >
- {(svc as any).tagline}
- </span>
- </div>
- )}
- <div className="absolute bottom-4 left-1/2 -translate-x-1/2 p-3 rounded-full bg-white/60 backdrop-blur-md border border-[var(--gold-200)] z-10">
- {svc.icon}
- </div>
- </div>
- <div className="p-6 pt-8 flex-1 flex flex-col items-center justify-between">
- <div className="space-y-2">
- <h3 className="font-serif text-xl font-bold tracking-wider text-gray-900 group-hover:text-[var(--gold)] transition-colors">
- {svc.title}
- </h3>
- <p className="text-gray-600 text-xs leading-relaxed max-w-sm">
- {svc.desc}
- </p>
- </div>
- <span className="text-[var(--gold)] font-medium text-xs tracking-wider uppercase mt-6 group-hover:underline inline-flex items-center gap-1">
- Learn More &rarr;
- </span>
- </div>
- </GoldCard>
- </Link>
- </motion.div>
- ))}
- </div>
- </motion.section>
-
- {/* ── Section: Academy Batches Showcase ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
- <div className="text-center space-y-2">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
- Learn Occult Science
- </span>
- <h2 className="font-serif text-3xl md:text-4xl font-semibold">Active Academy Batches</h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
- <p className="text-gray-600 text-xs pt-2">
- Join our structured courses led by master consultants and unlock certified wisdom.
- </p>
- </div>
-
- {isLoadingBatches ? (
- <BatchCardSkeleton count={3} className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full" />
- ) : batches && batches.filter((b: any) => !b.isDeleted).length > 0 ? (
- <div className="space-y-8">
- <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
- {batches
- .filter((b: any) => !b.isDeleted)
- .slice(0, 3)
- .map((batch: any) => (
- <GoldCard key={batch._id} flush className="border border-[var(--gold-100)] flex flex-col justify-between">
- <div className="flex flex-col h-full justify-between">
- <div>
- {batch.coverImage?.url && (
- <div className="w-full h-40 bg-gray-100 overflow-hidden mb-4">
- <img src={batch.coverImage.url} alt={batch.title} className="w-full h-full object-cover" />
- </div>
- )}
- <div className="px-6 space-y-2">
- <div className="flex items-center justify-between gap-2">
- <h3 className="font-sans text-[26px] font-bold text-gray-900 truncate">{batch.title}</h3>
- <span className="text-[9px] bg-gray-200 text-[var(--gold)] border border-[var(--gold-100)] rounded-full px-1.5 py-0.5 whitespace-nowrap">
- {batch.category || 'Astrology'}
- </span>
- </div>
- <FormattedText text={batch.description} className="text-gray-600 text-xs leading-relaxed line-clamp-3" />
- </div>
- </div>
-
- <div className="p-6 pt-0 mt-6 border-t border-gray-200 space-y-3">
- <div className="flex justify-between items-center pt-3">
- <span className="text-gray-500 text-xs">Course Fee:</span>
- <span className="text-[#e77600] font-bold text-[26px] font-sans">₹{(batch.price / 100).toLocaleString()}</span>
- </div>
- {isAuthenticated ? (
- <Link href="/my-batches" className="block w-full">
- <GoldButton variant="outlined" fullWidth className="py-2 text-xs">
- View My Batches
- </GoldButton>
- </Link>
- ) : (
- <div className="grid grid-cols-2 gap-2">
- <Link href="/login" className="w-full">
- <GoldButton variant="ghost" fullWidth className="py-2 text-[10px]">
- Login to Unlock
- </GoldButton>
- </Link>
- <Link href="/register" className="w-full">
- <GoldButton variant="outlined" fullWidth className="py-2 text-[10px]">
- Register to Enroll
- </GoldButton>
- </Link>
- </div>
- )}
- </div>
- </div>
- </GoldCard>
- ))}
- </div>
- {batches.filter((b: any) => !b.isDeleted).length > 3 && (
- <div className="text-center pt-4">
- <Link href={isAuthenticated ? "/my-batches" : "/register"}>
- <GoldButton variant="ghost" className="px-6 py-2 text-xs">
- View All Batches &rarr;
- </GoldButton>
- </Link>
- </div>
- )}
- </div>
- ) : (
- <p className="text-gray-500 text-center text-xs py-8">No live batches scheduled at this moment.</p>
- )}
- </motion.section>
-
- {/* ── Section: Curated Shop Showcase ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
- <div className="text-center space-y-2">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
- Sourced Energies
- </span>
- <h2 className="font-serif text-3xl md:text-4xl font-semibold">Our Shop</h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
- <p className="text-gray-600 text-xs pt-2">
- Acquire energized crystals, authentic gemstones, and personalized planetary remedies.
- </p>
- </div>
-
- {isLoadingShopItems ? (
- <ShopItemSkeleton count={3} className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full" />
- ) : shopItems && shopItems.filter((i: any) => !i.isDeleted).length > 0 ? (
- <div className="space-y-8">
- <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
- {shopItems
- .filter((i: any) => !i.isDeleted)
- .slice(0, 3)
- .map((item: any) => (
- <GoldCard
- key={item._id}
- flush
- className="border border-[var(--gold-100)] flex flex-col justify-between cursor-pointer group transition-transform duration-300 hover:scale-[1.01]"
- onClick={() => router.push(`/shop/${item._id}`)}
- >
- <div className="flex flex-col h-full justify-between">
- <div>
- {item.imageUrl && (
- <div className="w-full h-40 bg-gray-100 overflow-hidden mb-4">
- <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
- </div>
- )}
- <div className="px-6 space-y-2">
- <h3 className="font-sans text-[26px] font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors truncate">{item.title}</h3>
- <FormattedText text={item.description} className="text-gray-600 text-xs leading-relaxed line-clamp-3" />
- </div>
- </div>
-
- <div className="p-6 pt-0 mt-6 border-t border-gray-200 flex items-center justify-between pt-4" onClick={(e) => e.stopPropagation()}>
- <span className="text-[#e77600] font-bold text-[26px] font-sans">₹{(item.price / 100).toLocaleString()}</span>
- <GoldButton
- variant="filled"
- className="py-1.5 px-4 text-xs flex items-center gap-1.5"
- onClick={(e) => {
- e.preventDefault();
- e.stopPropagation();
- handleAddToCart(item._id);
- }}
- isLoading={addToCartMutation.isPending && addToCartMutation.variables === item._id}
- >
- <ShoppingCart className="w-3.5 h-3.5" /> Add to Cart
- </GoldButton>
- </div>
- </div>
- </GoldCard>
- ))}
- </div>
- <div className="text-center pt-4">
- <Link href="/shop">
- <GoldButton variant="outlined" className="px-6 py-2 text-xs">
- View Full Shop &rarr;
- </GoldButton>
- </Link>
- </div>
- </div>
- ) : (
- <p className="text-gray-500 text-center text-xs py-8">No shop items available at the moment.</p>
- )}
- </motion.section>
-
- {/* ── Section: The Cosmic Synthesis ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40 mt-10">
- <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
- <div className="lg:col-span-7 space-y-6">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
- How We Help You
- </span>
- <h2 className="font-serif text-3xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
- How All Four Sciences
- Work Together for
- <span className="gold-gradient-text">You</span>
- </h2>
- <div className="text-gray-600 text-sm md:text-base space-y-4 font-light leading-relaxed">
- <p>
- Your life problems often have patterns. We use four proven Indian sciences together to understand your situation completely and guide you in the right direction:
- </p>
- <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
- <li className="flex gap-2">
- <Compass className="w-5 h-5 text-[var(--gold)] flex-shrink-0" />
- <span><strong>Astrology</strong> — tells you the best and tough times in your life.</span>
- </li>
- <li className="flex gap-2">
- <Hash className="w-5 h-5 text-[var(--gold)] flex-shrink-0" />
- <span><strong>Numerology</strong> — checks if your name is lucky for you.</span>
- </li>
- <li className="flex gap-2">
- <Layers className="w-5 h-5 text-[var(--gold)] flex-shrink-0" />
- <span><strong>Tarot</strong> — gives a clear picture of your current situation.</span>
- </li>
- <li className="flex gap-2">
- <PenTool className="w-5 h-5 text-[var(--gold)] flex-shrink-0" />
- <span><strong>Graphology</strong> — reads your personality through your handwriting.</span>
- </li>
- </ul>
- </div>
- </div>
- <div className="lg:col-span-5 relative group">
- <div className="absolute inset-0 bg-[var(--gold)]/10 rounded-2xl blur-xl group-hover:bg-[var(--gold)]/20 transition-all duration-500"></div>
- <GoldCard flush className="border border-[var(--gold-200)] flex flex-col justify-between h-full relative">
- <div>
- <div className="w-full h-56 relative">
- <img src="/images/cosmic_synthesis_realistic.png" alt="Cosmic Synthesis" className="w-full h-full object-cover" />
- <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
- </div>
- <div className="p-6 space-y-3 text-center">
- <h4 className="font-serif font-bold text-lg text-[var(--gold)]">Why Our Methodology?</h4>
- <p className="text-xs text-gray-350 leading-relaxed">
- We combine all four sciences — Astrology, Numerology, Tarot, and Graphology — to give you a complete, clear, and practical plan for your life.
- </p>
- </div>
- </div>
- </GoldCard>
- </div>
- </div>
- </motion.section>
-
- {/* ── Section: Scientific Framework ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
- <div className="text-center space-y-2">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
- Science Behind Our Work
- </span>
- <h2 className="font-serif text-3xl md:text-4xl font-semibold">Why These Sciences Actually Work</h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
- <p className="text-gray-600 text-xs pt-2">
- These are ancient studies based on logical principles, not just random beliefs.
- </p>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
- <GoldCard className="border border-[var(--gold-100)] flex flex-col justify-between p-6 hover:border-[var(--gold-300)] transition-all duration-300">
- <div className="space-y-4">
- <div className="w-12 h-12 rounded-lg bg-[var(--gold-50)] border border-[var(--gold-200)] flex items-center justify-center text-[var(--gold)]">
- <Compass className="w-6 h-6 animate-spin-slow" />
- </div>
- <h3 className="font-serif text-lg font-bold text-gray-900">Astrology & Solar Cycles</h3>
- <p className="text-gray-600 text-xs leading-relaxed">
- Planets like Saturn, Jupiter, and Mars have real gravitational effects on Earth. These effects influence our mood, health, and energy levels. Your birth time determines which planet was most active, shaping your personality and life path.
- </p>
- </div>
- </GoldCard>
-
- <GoldCard className="border border-[var(--gold-100)] flex flex-col justify-between p-6 hover:border-[var(--gold-300)] transition-all duration-300">
- <div className="space-y-4">
- <div className="w-12 h-12 rounded-lg bg-[var(--gold-50)] border border-[var(--gold-200)] flex items-center justify-center text-[var(--gold)]">
- <Hash className="w-6 h-6" />
- </div>
- <h3 className="font-serif text-lg font-bold text-gray-900">Numerology & Resonance</h3>
- <p className="text-gray-600 text-xs leading-relaxed">
- Every letter in your name has a number value. These numbers create a vibration or energy. When your name number matches your birth number, life flows easily. When it does not match, there can be struggle and delay.
- </p>
- </div>
- </GoldCard>
-
- <GoldCard className="border border-[var(--gold-100)] flex flex-col justify-between p-6 hover:border-[var(--gold-300)] transition-all duration-300">
- <div className="space-y-4">
- <div className="w-12 h-12 rounded-lg bg-[var(--gold-50)] border border-[var(--gold-200)] flex items-center justify-center text-[var(--gold)]">
- <Layers className="w-6 h-6" />
- </div>
- <h3 className="font-serif text-lg font-bold text-gray-900">Tarot & Archetypes</h3>
- <p className="text-gray-600 text-xs leading-relaxed">
- Tarot cards work like a mirror. They reflect what is happening deep inside your mind. When you pick cards, your inner feelings guide the selection — helping you see your problems and fears more clearly so you can deal with them.
- </p>
- </div>
- </GoldCard>
-
- <GoldCard className="border border-[var(--gold-100)] flex flex-col justify-between p-6 hover:border-[var(--gold-300)] transition-all duration-300">
- <div className="space-y-4">
- <div className="w-12 h-12 rounded-lg bg-[var(--gold-50)] border border-[var(--gold-200)] flex items-center justify-center text-[var(--gold)]">
- <PenTool className="w-6 h-6" />
- </div>
- <h3 className="font-serif text-lg font-bold text-gray-900">Graphology & Neuromotor</h3>
- <p className="text-gray-600 text-xs leading-relaxed">
- Your handwriting comes directly from your brain. The way you write — your letter slants, how hard you press, the shape of letters — reveals your habits, confidence, and thinking style. You can actually change bad habits by changing how you write.
- </p>
- </div>
- </GoldCard>
- </div>
- </motion.section>
- {/* ── Section: Our 3-Step Methodology ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
- <div className="text-center space-y-2">
- <h2 className="font-serif text-3xl md:text-4xl font-semibold">Our Alignment Process</h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
- <p className="text-gray-600 text-xs pt-2">A simple 3-step process to understand your life and start making better decisions.</p>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
- <GoldCard flush className="border border-gray-200 flex flex-col justify-between h-full relative group">
- <div className="w-full h-40 relative">
- <img src="/images/step_analyze_realistic.png" alt="Map & Analyze" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
- <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/30 to-transparent"></div>
- <div className="absolute top-4 left-4 w-10 h-10 rounded-full bg-white/60 backdrop-blur-md border border-[var(--gold-200)] z-10 flex items-center justify-center text-[var(--gold)] font-bold">1</div>
- </div>
- <div className="p-6 space-y-2 flex-1">
- <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors">1. Map & Analyze</h3>
- <p className="text-xs text-gray-600 leading-relaxed">
- We collect your birth details, full name, and a handwriting sample. Using these, we prepare a complete report of your strengths, weak areas, and important life timings.
- </p>
- </div>
- </GoldCard>
-
- <GoldCard flush className="border border-gray-200 flex flex-col justify-between h-full relative group">
- <div className="w-full h-40 relative">
- <img src="/images/step_realign_realistic.png" alt="Realign & Tune" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
- <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/30 to-transparent"></div>
- <div className="absolute top-4 left-4 w-10 h-10 rounded-full bg-white/60 backdrop-blur-md border border-[var(--gold-200)] z-10 flex items-center justify-center text-[var(--gold)] font-bold">2</div>
- </div>
- <div className="p-6 space-y-2 flex-1">
- <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors">2. Realign & Tune</h3>
- <p className="text-xs text-gray-600 leading-relaxed">
- Based on the report, we suggest simple corrections — like a name spelling change, writing practice exercises, or the best dates to take action — to remove obstacles from your path.
- </p>
- </div>
- </GoldCard>
-
- <GoldCard flush className="border border-gray-200 flex flex-col justify-between h-full relative group">
- <div className="w-full h-40 relative">
- <img src="/images/step_thrive_realistic.png" alt="Schedule & Thrive" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
- <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/30 to-transparent"></div>
- <div className="absolute top-4 left-4 w-10 h-10 rounded-full bg-white/60 backdrop-blur-md border border-[var(--gold-200)] z-10 flex items-center justify-center text-[var(--gold)] font-bold">3</div>
- </div>
- <div className="p-6 space-y-2 flex-1">
- <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[var(--gold)] transition-colors">3. Schedule & Thrive</h3>
- <p className="text-xs text-gray-600 leading-relaxed">
- We help you find the best days (Muhuraat) for starting a business, signing agreements, moving house, or any important event — so your efforts get the best results.
- </p>
- </div>
- </GoldCard>
- </div>
- </motion.section>
-
- {/* ── Section: Client Success Stories ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40 overflow-hidden">
-
- {/* Style Tag for Marquee keyframes */}
- <style dangerouslySetInnerHTML={{
- __html: `
- @keyframes marquee {
- 0% { transform: translateX(0); }
- 100% { transform: translateX(-50%); }
- }
- .animate-marquee {
- display: flex;
- gap: 2rem;
- animation: marquee 50s linear infinite;
- }
- `}} />
-
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
- Real Transformations
- </span>
- <h2 className="font-serif text-3xl md:text-4xl font-semibold">Client Success Stories</h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
- <p className="text-gray-600 text-xs pt-2">
-See how real people solved their real problems with our guidance.
- </p>
- </div>
-
- {/* Carousel Outer Track Container with Fade Masks */}
- <div className="relative w-full overflow-hidden py-4 testimonial-marquee-fade">
- <div className="animate-marquee hover:[animation-play-state:paused] flex gap-8">
- {/* First Set of Cards */}
- {(() => {
- const mappedDynamicReviews = dynamicReviews.map((r: any) => ({
- name: r.name,
- initials: r.name.substring(0, 2).toUpperCase(),
- role: 'Verified Client',
- quote: r.comment,
- rating: r.rating
- }));
- const mappedTestimonials = testimonials.map(t => ({ ...t, rating: 5 }));
- const displayReviews = [...mappedDynamicReviews, ...mappedTestimonials];
-
- return displayReviews.map((test: any, index: number) => (
- <div key={`set1-${index}`} className="w-[350px] shrink-0 text-left">
- <GoldCard className="border border-[var(--gold-100)]/40 p-6 flex flex-col justify-between h-full min-h-[260px] relative">
- <div className="space-y-4">
- <div className="flex gap-1 text-[var(--gold)]">
- {[...Array(test.rating || 5)].map((_, i) => (
- <Star key={i} className="w-4 h-4 fill-[var(--gold)]" stroke="none" />
- ))}
- </div>
- <p className="text-xs text-gray-600 italic leading-relaxed">
- "{test.quote}"
- </p>
- </div>
- <div className="mt-6 flex items-center gap-3">
- <div className="w-8 h-8 rounded-full bg-[var(--gold)]/20 border border-[var(--gold)]/30 flex items-center justify-center text-[var(--gold)] font-serif font-bold text-xs">
- {test.initials}
- </div>
- <div>
- <p className="text-sm font-bold text-gray-900">{test.name}</p>
- <p className="text-[10px] text-gray-600 uppercase tracking-wider">{test.role}</p>
- </div>
- </div>
- </GoldCard>
- </div>
- ));
- })()}
-
- {/* Duplicate for infinite scroll effect */}
- {(() => {
- const mappedDynamicReviews = dynamicReviews.map((r: any) => ({
- name: r.name,
- initials: r.name.substring(0, 2).toUpperCase(),
- role: 'Verified Client',
- quote: r.comment,
- rating: r.rating
- }));
- const mappedTestimonials = testimonials.map(t => ({ ...t, rating: 5 }));
- const displayReviews = [...mappedDynamicReviews, ...mappedTestimonials];
-
- return displayReviews.map((test: any, index: number) => (
- <div key={`set2-${index}`} className="w-[350px] shrink-0 text-left">
- <GoldCard className="border border-[var(--gold-100)]/40 p-6 flex flex-col justify-between h-full min-h-[260px] relative">
- <div className="space-y-4">
- <div className="flex gap-1 text-[var(--gold)]">
- {[...Array(test.rating || 5)].map((_, i) => (
- <Star key={i} className="w-4 h-4 fill-[var(--gold)]" stroke="none" />
- ))}
- </div>
- <p className="text-xs text-gray-600 italic leading-relaxed">
- "{test.quote}"
- </p>
- </div>
- <div className="mt-6 flex items-center gap-3">
- <div className="w-8 h-8 rounded-full bg-[var(--gold)]/20 border border-[var(--gold)]/30 flex items-center justify-center text-[var(--gold)] font-serif font-bold text-xs">
- {test.initials}
- </div>
- <div>
- <p className="text-sm font-bold text-gray-900">{test.name}</p>
- <p className="text-[10px] text-gray-600 uppercase tracking-wider">{test.role}</p>
- </div>
- </div>
- </GoldCard>
- </div>
- ));
- })()}
-
- </div>
- </div>
- </motion.section>
-
- {/* ── Section: General FAQs ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40">
- <div className="text-center space-y-2">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
- Common Inquiries
- </span>
- <h2 className="font-serif text-3xl md:text-4xl font-semibold flex items-center justify-center gap-2">
- <HelpCircle className="w-7 h-7 text-[var(--gold)]" /> General FAQs
- </h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
- </div>
-
- <FAQSection faqs={[
-    {
-      q: 'How do these four disciplines connect?',
-      a: 'We combine all four sciences to give you a complete picture. Astrology tells your timing, Numerology checks your name, Tarot shows your current situation, and Graphology reads your habits. Together they give very clear and practical advice.'
+  // Queries
+  const { data: batches, isLoading: isLoadingBatches } = useQuery({
+    queryKey: ['public-batches'],
+    queryFn: async () => {
+      const res = await client.get('/batches');
+      return res.data?.data || [];
     },
-    {
-      q: 'Are consultations held online?',
-      a: 'Yes! All sessions happen online via video call (Zoom or Google Meet). After you book, you will get a meeting link on your email. You can join from home.'
+  });
+
+  const { data: teamMembers = [] } = useQuery({
+    queryKey: ['team'],
+    queryFn: async () => {
+      const res = await client.get('/team');
+      return res.data?.data || [];
     },
-    {
-      q: 'What information must I provide beforehand?',
-      a: 'For Astrology — your exact birth date, birth time (as accurate as possible), and birth place. For Numerology — your current full name. For Graphology — a photo or scan of your handwriting on plain white paper (no lines), sent before the call.'
+  });
+
+  const { data: shopItems, isLoading: isLoadingShopItems } = useQuery({
+    queryKey: ['public-shop-items'],
+    queryFn: async () => {
+      const res = await client.get('/shop');
+      return res.data?.data || [];
     },
-    {
-      q: 'How long does a graphotherapy course take?',
-      a: 'Graphotherapy (handwriting exercises) takes just 10–15 minutes every day for 21 days. It is simple to do at home. Many people notice a positive change in their thinking and confidence within 3 weeks.'
+  });
+
+  const { data: dynamicReviews = [] } = useQuery({
+    queryKey: ['success-stories'],
+    queryFn: async () => {
+      const res = await client.get('/reviews/success-stories');
+      return res.data?.data || [];
+    },
+  });
+
+  const { data: appointmentTypes } = useQuery({
+    queryKey: ['appointmentTypes'],
+    queryFn: async () => {
+      const res = await client.get('/appointments/types');
+      return res.data?.data || [];
+    },
+  });
+
+  const selectedType = appointmentTypes?.find((t: any) => t._id === selectedTypeId);
+
+  const { data: availableSlots, isFetching: isFetchingSlots } = useQuery({
+    queryKey: ['slots', selectedDate, selectedType?.duration],
+    queryFn: async () => {
+      if (!selectedDate || !selectedType) return [];
+      const res = await client.get('/appointments/slots', {
+        params: {
+          date: selectedDate,
+          duration: selectedType.duration,
+        },
+      });
+      return res.data?.data || [];
+    },
+    enabled: !!selectedDate && !!selectedType,
+  });
+
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if ((window as any).Razorpay) { resolve(true); return; }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const bookingMutation = useMutation({
+    mutationFn: async () => {
+      if (!selectedTypeId || !selectedTimeSlot) {
+        throw new Error('Please select type and time slot');
+      }
+      const res = await client.post('/appointments', {
+        appointmentTypeId: selectedTypeId,
+        scheduledAt: selectedTimeSlot,
+      });
+      return res.data?.data;
+    },
+    onSuccess: async (data: any) => {
+      if (!data.paymentRequired) {
+        alert('🎉 Consultation booked successfully! Confirmation email and calendar invite sent.');
+        setSelectedTypeId('');
+        setSelectedDate('');
+        setSelectedTimeSlot('');
+        return;
+      }
+      const loaded = await loadRazorpayScript();
+      if (!loaded) {
+        alert('Failed to load payment gateway. Please check connection.');
+        return;
+      }
+      const options = {
+        key: data.key || env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency || 'INR',
+        name: 'OM Astrology AMC',
+        description: `Consultation: ${selectedType?.name || 'Appointment'}`,
+        order_id: data.razorpayOrderId,
+        handler: async (response: any) => {
+          try {
+            await client.post('/appointments/verify', {
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+            });
+            setSelectedTypeId('');
+            setSelectedDate('');
+            setSelectedTimeSlot('');
+            alert('🎉 Payment confirmed! Your consultation has been booked.');
+          } catch (err: any) {
+            alert('Payment verification failed.');
+          }
+        },
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+          contact: user?.phone || '',
+        },
+        theme: { color: '#6F2935' },
+      };
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    },
+    onError: (err: any) => {
+      alert(`❌ Error: ${err.response?.data?.error?.message || err.message}`);
+    },
+  });
+
+  const handleBookSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      alert('Please login to book a consultation.');
+      router.push('/login');
+      return;
     }
-  ]} />
- </motion.section>
+    bookingMutation.mutate();
+  };
 
- {/* Booking Consultation Widget */}
- <motion.section
- id="book"
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 py-20 w-full">
- <GoldCard className="border border-[var(--gold-300)] p-8 md:p-12">
- <div className="text-center space-y-3 mb-8">
- <div className="inline-flex p-3 rounded-full bg-[var(--gold-50)] border border-[var(--gold-200)]">
- <Calendar className="w-8 h-8 text-[var(--gold)]" />
- </div>
- <h2 className="font-serif text-3xl font-bold tracking-wide">Book Your Consultation</h2>
- <p className="text-gray-600 text-sm">
- Choose your consultation type and pick a date and time that works for you.
- </p>
- </div>
+  const questionCategories = [
+    {
+      num: '01',
+      title: 'Career & Business Direction',
+      desc: 'Uncertainty about timing, job transitions, business launch dates, or corporate name alignment.',
+      link: '/profession-career'
+    },
+    {
+      num: '02',
+      title: 'Relationship & Marriage Harmony',
+      desc: 'Guna Milan compatibility, Ashtakoot analysis, 7th house alignments, and partner timing.',
+      link: '/marriage-matching'
+    },
+    {
+      num: '03',
+      title: 'Name & Signature Vibration',
+      desc: 'Chaldean numerology name correction, lucky mobile selection, and graphology stroke tuning.',
+      link: '/name-correction'
+    },
+    {
+      num: '04',
+      title: 'Auspicious Timing & Transits',
+      desc: 'Saturn, Jupiter & Rahu-Ketu transits, Sade Sati timing, and Panchang Muhurat selection.',
+      link: '/horoscope'
+    }
+  ];
 
- <form onSubmit={handleBookSubmit} className="space-y-6">
- {/* Consultation Type */}
- <div className="space-y-2">
- <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
- 1. Select Consultation Type
- </label>
- <select
- value={selectedTypeId}
- onChange={(e) => {
- setSelectedTypeId(e.target.value);
- setSelectedDate('');
- setSelectedTimeSlot('');
- }}
- required
- className="w-full bg-white/60 border border-[var(--gold-200)] rounded-lg py-3 px-4 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent text-sm"
- >
- <option value="">-- Choose a consultation service --</option>
- {appointmentTypes?.map((type: any) => {
- const now = new Date();
- const hasActiveOffer = type.offerPrice !== undefined && type.offerPrice !== null &&
- (!type.offerExpiresAt || now < new Date(type.offerExpiresAt));
- const priceText = hasActiveOffer
- ? `₹${(type.offerPrice / 100).toLocaleString()} (Special Offer! Original ₹${(type.price / 100).toLocaleString()})`
- : `₹${(type.price / 100).toLocaleString()}`;
- return (
- <option key={type._id} value={type._id} className="bg-gray-100">
- {type.name} - {type.duration} mins ({priceText})
- </option>
- );
- })}
- </select>
- </div>
+  const coreDisciplines = [
+    {
+      title: 'Vedic Astrology',
+      desc: 'Birth chart (Janam Kundli) analysis, planetary transits, Mahadasha timing, and customized Vedic remedies.',
+      icon: <Compass className="w-6 h-6 text-[#6F2935]" />,
+      link: '/astrology'
+    },
+    {
+      title: 'Numerology',
+      desc: 'Life Path math, driver/conductor numbers, name spelling correction, and mobile number resonance.',
+      icon: <Hash className="w-6 h-6 text-[#6F2935]" />,
+      link: '/numerology'
+    },
+    {
+      title: 'Tarot Guidance',
+      desc: 'Archetypal card spreads providing immediate clarity on present situations and imminent decision points.',
+      icon: <Layers className="w-6 h-6 text-[#6F2935]" />,
+      link: '/tarot-card'
+    },
+    {
+      title: 'Graphology',
+      desc: 'Neuromotor handwriting analysis & signature correction to re-align subconscious habits.',
+      icon: <PenTool className="w-6 h-6 text-[#6F2935]" />,
+      link: '/graphology'
+    },
+    {
+      title: 'Occult Synthesis',
+      desc: 'Cross-discipline methodology synthesizing planetary transits, numbers, tarot spreads, and graphology.',
+      icon: <Sparkles className="w-6 h-6 text-[#6F2935]" />,
+      link: '/occult-synthesis'
+    }
+  ];
 
- {selectedTypeId && (
- <>
- {/* Date Picker */}
- <div className="space-y-2">
- <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
- 2. Select Appointment Date
- </label>
- <input
- type="date"
- value={selectedDate}
- min={new Date().toISOString().split('T')[0]}
- onChange={(e) => {
- setSelectedDate(e.target.value);
- setSelectedTimeSlot('');
- }}
- required
- className="w-full bg-white/60 border border-[var(--gold-200)] rounded-lg py-3 px-4 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent text-sm"
- />
- </div>
+  const lifeSolutions = [
+    { title: 'Love & Marriage Harmony', desc: 'Detailed Ashtakoot 36-Guna matching, 7th house planetary alignment, and relationship remedies.', link: '/marriage-matching', icon: <Heart className="w-5 h-5 text-[#6F2935]" /> },
+    { title: 'Career & Business Blueprint', desc: '10th house & Amatyakaraka analysis to identify your optimal profession and venture timings.', link: '/profession-career', icon: <Briefcase className="w-5 h-5 text-[#6F2935]" /> },
+    { title: 'Name Correction Numerology', desc: 'Align your name letter vibrations with your driver/conductor numbers for obstacle removal.', link: '/name-correction', icon: <PenTool className="w-5 h-5 text-[#6F2935]" /> },
+    { title: 'Lucky Mobile Selection', desc: 'Choose digital phone number vibrations that harmonize with your birth blueprint.', link: '/lucky-mobile', icon: <PhoneCall className="w-5 h-5 text-[#6F2935]" /> },
+    { title: 'Corporate & Brand Numerology', desc: 'Business title spelling, logo color resonance, and auspicious incorporation dates.', link: '/corporate-numerology', icon: <Building2 className="w-5 h-5 text-[#6F2935]" /> }
+  ];
 
- {/* Available Hours Slots */}
- {selectedDate && (
- <div className="space-y-3">
- <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
- 3. Available Time Slots (IST Business Hours)
- </label>
+  const journeySteps = [
+    { num: '01', title: 'Tell us what you are navigating', desc: 'Share your questions, birth details, or current decision points in confidence.' },
+    { num: '02', title: 'We identify the right consultation', desc: 'Our team maps your situation to the appropriate discipline or cross-discipline synthesis.' },
+    { num: '03', title: 'Meet your consultant', desc: 'Private 1-on-1 video or in-person session with senior astrologers & numerologists.' },
+    { num: '04', title: 'Leave with greater clarity', desc: 'Receive structured guidance, recorded findings, and practical lifestyle remedies.' }
+  ];
 
- {isFetchingSlots ? (
- <p className="text-gray-600 text-xs animate-pulse">Calculating slot availability against Google Calendar...</p>
- ) : availableSlots && availableSlots.length > 0 ? (
- <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
- {availableSlots.map((slot: string) => {
- const dateObj = new Date(slot);
- // Format to readable time in local browser timezone (representing IST)
- const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
- const isSelected = selectedTimeSlot === slot;
- return (
- <button
- key={slot}
- type="button"
- onClick={() => setSelectedTimeSlot(slot)}
- className={`py-2 px-3 text-xs border rounded-lg transition-all duration-300 font-medium ${isSelected
- ? 'bg-[var(--gold)] text-black border-transparent shadow-[0_0_10px_rgba(204,143,51,0.5)]'
- : 'bg-white/40 text-[var(--gold)] border-[var(--gold-200)] hover:bg-[var(--gold-50)]'
- }`}
- >
- {timeStr}
- </button>
- );
- })}
- </div>
- ) : (
- <div className="flex items-center gap-2 text-yellow-600 bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-xs">
- <AlertCircle className="w-4 h-4 flex-shrink-0" />
- <span>No slots available for this date. Please select another date.</span>
- </div>
- )}
- </div>
- )}
- </>
- )}
+  return (
+    <div className="min-h-screen bg-[#F7F3EA] text-[#1D1C1A] flex flex-col font-sans">
+      
+      {/* ── 1. HERO SECTION ── */}
+      <section className="relative pt-12 pb-20 md:py-28 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4] overflow-hidden">
+        <div className="max-w-[1280px] mx-auto text-center space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-4 max-w-4xl mx-auto"
+          >
+            <span className="inline-block text-xs font-mono uppercase tracking-[0.2em] font-semibold text-[#6F2935] bg-[#6F2935]/10 px-3.5 py-1.5 rounded-full">
+              Personal Guidance Practice
+            </span>
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] text-[#1D1C1A]">
+              Personal guidance rooted in traditional Indian occult practice, presented with modern clarity.
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg text-[#77736D] max-w-2xl mx-auto leading-relaxed pt-2 font-normal">
+              A quiet, thoughtful consultation practice blending Vedic Astrology, Chaldean Numerology, Tarot, and Graphology — directed by master consultants.
+            </p>
+          </motion.div>
 
- {/* Additional User notes */}
- <div className="space-y-2">
- <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
- Additional Details (Optional)
- </label>
- <textarea
- value={bookingMessage}
- onChange={(e) => setBookingMessage(e.target.value)}
- placeholder="Include questions you have, birth info, or particular issues..."
- rows={3}
- className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-3 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] focus:border-transparent text-sm"
- />
- </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
+          >
+            <Link href="/appointments">
+              <GoldButton variant="filled" className="w-full sm:w-auto px-8 py-3.5 text-sm font-semibold">
+                Book a Consultation &rarr;
+              </GoldButton>
+            </Link>
+            <Link href="/free-tools">
+              <GoldButton variant="outlined" className="w-full sm:w-auto px-8 py-3.5 text-sm font-semibold">
+                Explore Free Tools
+              </GoldButton>
+            </Link>
+          </motion.div>
 
- {/* Submit */}
- <GoldButton
- type="submit"
- variant="filled"
- fullWidth
- disabled={!selectedTimeSlot || bookingMutation.isPending}
- isLoading={bookingMutation.isPending}
- className="py-3 text-base"
- >
- Confirm Appointment Slot
- </GoldButton>
- </form>
- </GoldCard>
- </motion.section>
+          {/* Trust statistics banner */}
+          <div className="pt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto text-center border-t border-[#E7E0D4]">
+            <div className="space-y-1">
+              <p className="font-serif text-2xl font-bold text-[#1D1C1A]">9+ Years</p>
+              <p className="text-xs text-[#77736D] uppercase tracking-wider">Active Practice</p>
+            </div>
+            <div className="space-y-1">
+              <p className="font-serif text-2xl font-bold text-[#1D1C1A]">10,000+</p>
+              <p className="text-xs text-[#77736D] uppercase tracking-wider">Consultations Delivered</p>
+            </div>
+            <div className="space-y-1">
+              <p className="font-serif text-2xl font-bold text-[#6F2935]">100%</p>
+              <p className="text-xs text-[#77736D] uppercase tracking-wider">Confidential &amp; Private</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
- {/* ── Section: Leave a Review ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 py-16 w-full space-y-12 border-t border-[var(--gold-100)]/40"
- >
- <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
- <div className="text-center space-y-2 mb-10">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
- Share Your Experience
- </span>
- <h2 className="font-serif text-3xl md:text-4xl font-semibold">Review Our Products & Services</h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto"></div>
- <p className="text-gray-600 text-xs pt-2">
- Have you received a product from our shop or completed a consultation? Share your feedback to help others!
- </p>
- </div>
- 
- <GoldCard className="border border-[var(--gold-100)] p-6 md:p-10">
- <form 
- onSubmit={(e) => {
- e.preventDefault();
- submitReviewMutation.mutate(reviewForm);
- }}
- className="space-y-6"
- >
- <div>
- <label className="block text-xs font-semibold uppercase tracking-widest text-gray-600 mb-2">Your Name</label>
- <input 
- type="text"
- required
- value={reviewForm.name}
- onChange={(e) => setReviewForm({ ...reviewForm, name: e.target.value })}
- placeholder="E.g. Rahul Sharma"
- className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[var(--gold)] transition-colors text-gray-900"
- />
- </div>
+      {/* ── 2. "WHAT BRINGS YOU HERE?" SECTION ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4] bg-[#FAF7F2]">
+        <div className="max-w-[1280px] mx-auto space-y-12">
+          <SectionHeading
+            kicker="Situation Entry Points"
+            title="What brings you here today?"
+            subtitle="Explore guidance tailored to the exact question or situation you are navigating."
+            showOrbitLine
+          />
 
- <div>
- <label className="block text-xs font-semibold uppercase tracking-widest text-gray-600 mb-2">Rating</label>
- <div className="flex gap-2">
- {[1, 2, 3, 4, 5].map((star) => (
- <button 
- key={star}
- type="button"
- onClick={() => setReviewForm({ ...reviewForm, rating: star })}
- className="focus:outline-none transition-transform hover:scale-110"
- >
- <Star className={`w-8 h-8 ${star <= reviewForm.rating ? 'fill-[var(--gold)] text-[var(--gold)]' : 'text-neutral-700'}`} />
- </button>
- ))}
- </div>
- </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {questionCategories.map((item) => (
+              <Link href={item.link} key={item.num} className="block group">
+                <EditorialCard className="h-full flex flex-col justify-between space-y-4 hover:border-[#6F2935]/40 transition-colors">
+                  <div className="space-y-3">
+                    <span className="font-mono text-xs font-bold text-[#A78652] block">
+                      {item.num}
+                    </span>
+                    <h3 className="font-serif text-base font-bold text-[#1D1C1A] group-hover:text-[#6F2935] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-[#77736D] leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold text-[#6F2935] inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    Explore Guidance &rarr;
+                  </span>
+                </EditorialCard>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
- <div>
- <label className="block text-xs font-semibold uppercase tracking-widest text-gray-600 mb-2">Your Review</label>
- <textarea 
- required
- value={reviewForm.comment}
- onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
- placeholder="How was your experience? Did the product meet your expectations?"
- className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[var(--gold)] transition-colors text-gray-900 min-h-[120px] resize-none"
- />
- </div>
+      {/* ── 3. CORE DISCIPLINES SECTION ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4]">
+        <div className="max-w-[1280px] mx-auto space-y-12">
+          <SectionHeading
+            kicker="Our Core Disciplines"
+            title="Ancient occult sciences applied with systematic rigor."
+            subtitle="We utilize four traditional Indian occult disciplines, individually or synthesized, to provide complete perspective."
+          />
 
- <GoldButton 
- type="submit" 
- variant="filled" 
- className="w-full py-4 font-bold tracking-widest"
- disabled={submitReviewMutation.isPending}
- >
- {submitReviewMutation.isPending ? 'SUBMITTING...' : 'SUBMIT REVIEW'}
- </GoldButton>
- </form>
- </GoldCard>
- </div>
- </motion.section>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {coreDisciplines.map((disc) => (
+              <Link href={disc.link} key={disc.title} className="block group">
+                <EditorialCard className="h-full flex flex-col justify-between space-y-4">
+                  <div className="space-y-3">
+                    <div className="w-10 h-10 rounded-lg bg-[#FAF7F2] border border-[#E7E0D4] flex items-center justify-center">
+                      {disc.icon}
+                    </div>
+                    <h3 className="font-serif text-lg font-bold text-[#1D1C1A] group-hover:text-[#6F2935] transition-colors">
+                      {disc.title}
+                    </h3>
+                    <p className="text-xs text-[#77736D] leading-relaxed">
+                      {disc.desc}
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold text-[#1D1C1A] group-hover:text-[#6F2935] inline-flex items-center gap-1">
+                    Learn Discipline &rarr;
+                  </span>
+                </EditorialCard>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
- {/* ── Section: About Our Team Preview ── */}
- <motion.section
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, amount: 'some' }}
- transition={{ duration: 0.7, ease: 'easeOut' }}
- className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full border-t border-[var(--gold-100)]/40"
- >
- {/* Soft glow backdrop */}
- <div className="absolute inset-0 pointer-events-none opacity-20"
- style={{ backgroundImage: 'radial-gradient(ellipse at center, rgba(204,143,51,0.25) 0%, transparent 70%)' }}
- />
+      {/* ── 4. PERSONALIZED LIFE GUIDANCE SECTION ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4] bg-[#FAF7F2]">
+        <div className="max-w-[1280px] mx-auto space-y-12">
+          <SectionHeading
+            kicker="Tailored Solutions"
+            title="Personalized Life Guidance"
+            subtitle="Structured consultation offerings addressing specific personal, financial, and relational alignment needs."
+          />
 
- <div className="relative z-10 text-center space-y-3 mb-12">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
- The People Behind Your Journey
- </span>
- <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900">Meet Our Expert Team</h2>
- <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto" />
- <p className="text-gray-600 text-sm max-w-2xl mx-auto pt-1 leading-relaxed">
- OM Astrology AMC is led by a passionate team of specialists in Astrology, Numerology, Tarot, Graphology, and Digital Outreach. Together, we bring you a holistic and deeply personalized approach to occult science guidance — combining ancient Indian wisdom with modern clarity, compassion, and confidentiality. Every consultation is crafted around <em>you</em>.
- </p>
- </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {lifeSolutions.map((sol) => (
+              <Link href={sol.link} key={sol.title} className="block group">
+                <EditorialCard className="h-full flex flex-col justify-between space-y-4">
+                  <div className="space-y-3">
+                    <div className="w-9 h-9 rounded-lg bg-white border border-[#E7E0D4] flex items-center justify-center">
+                      {sol.icon}
+                    </div>
+                    <h3 className="font-serif text-base font-bold text-[#1D1C1A] group-hover:text-[#6F2935] transition-colors">
+                      {sol.title}
+                    </h3>
+                    <p className="text-xs text-[#77736D] leading-relaxed">
+                      {sol.desc}
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold text-[#6F2935] inline-flex items-center gap-1">
+                    View Solution Details &rarr;
+                  </span>
+                </EditorialCard>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
- {/* Team preview cards */}
- <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
- {(teamMembers && teamMembers.length > 0
- ? teamMembers.slice(0, 3).map((m: any) => ({ name: m.name, role: m.role, img: m.image }))
- : [
- { name: 'Rajessh Paanday', role: 'Founder & Chief Consultant', img: '/images/team_raajesh.png' },
- { name: 'Kusum Panday', role: 'Tarot Reader & Wellness Coach', img: '/images/team_kusum.png' },
- { name: 'Aayush Kumar', role: 'Social Media Manager', img: '/images/team_aayush.png' },
- ]
- ).map((member: any, idx: number) => (
- <motion.div
- key={member.name}
- initial={{ opacity: 0, y: 30 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true }}
- transition={{ duration: 0.5, delay: idx * 0.1 }}
- >
- <GoldCard flush className="border border-[var(--gold-100)] overflow-hidden group hover:border-[var(--gold-300)] transition-all duration-300">
- <div className="w-full h-52 relative overflow-hidden">
- <img
- src={member.img}
- alt={member.name}
- className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
- />
- <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
- <div className="absolute bottom-0 inset-x-0 p-4">
- <h3 className="font-serif text-xl font-bold" style={{ color: 'white', fontSize: '22px' }}>{member.name}</h3>
- <p className="text-xs font-semibold uppercase tracking-wider mt-0.5" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>{member.role}</p>
- </div>
- </div>
- </GoldCard>
- </motion.div>
- ))}
- </div>
+      {/* ── 5. THE CONSULTATION JOURNEY ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4]">
+        <div className="max-w-[1280px] mx-auto space-y-12">
+          <SectionHeading
+            kicker="The Process"
+            title="What happens during a consultation?"
+            subtitle="Transparent, respectful 4-step consultation workflow ensuring absolute privacy and actionable recommendations."
+            showOrbitLine
+          />
 
- <div className="text-center">
- <Link href="/about-us">
- <GoldButton variant="filled" className="px-8 py-3 text-sm">
- Learn More About Our Team →
- </GoldButton>
- </Link>
- </div>
- </motion.section>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {journeySteps.map((step) => (
+              <EditorialCard key={step.num} hoverable={false} className="space-y-3 relative">
+                <span className="font-mono text-sm font-bold text-[#6F2935] bg-[#6F2935]/10 px-2.5 py-1 rounded inline-block">
+                  Step {step.num}
+                </span>
+                <h4 className="font-serif text-base font-bold text-[#1D1C1A]">
+                  {step.title}
+                </h4>
+                <p className="text-xs text-[#77736D] leading-relaxed">
+                  {step.desc}
+                </p>
+              </EditorialCard>
+            ))}
+          </div>
+        </div>
+      </section>
 
- {/* ── Section: Blog Preview Section ── */}
- <motion.section
-   initial={{ opacity: 0, y: 40 }}
-   whileInView={{ opacity: 1, y: 0 }}
-   viewport={{ once: true, amount: 'some' }}
-   transition={{ duration: 0.7, ease: 'easeOut' }}
-   className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full border-t border-[var(--gold-100)]/40 text-center space-y-12"
- >
-   <div className="space-y-3">
-     <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold block">
-       Knowledge Hub
-     </span>
-     <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900">Explore Our Blog &amp; Insights</h2>
-     <div className="h-0.5 w-20 bg-[var(--gold)] mx-auto" />
-     <p className="text-gray-600 text-sm max-w-2xl mx-auto pt-1 leading-relaxed">
-       Stay updated with expert articles written by our specialized consultants. Learn about upcoming planetary transits, lucky numbers, name spelling corrections, and Vedic remedies to transform your path.
-     </p>
-   </div>
+      {/* ── 6. MEET MASTER CONSULTANT ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4] bg-[#FAF7F2]">
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 space-y-4">
+            <div className="relative rounded-xl overflow-hidden border border-[#E7E0D4] aspect-[4/5] bg-white">
+              <img
+                src="/images/team_raajesh.png"
+                alt="Rajessh Paanday - Master Consultant"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+          </div>
+          <div className="lg:col-span-7 space-y-6">
+            <SectionHeading
+              kicker="Expert Practice Ethos"
+              title="Guided by 9+ years of research and personal practice."
+              subtitle="At OM Astrology AMC, we believe occult sciences are thoughtful tools for self-discovery and conscious decision-making — not superstitious shortcuts."
+              centered={false}
+            />
+            <div className="space-y-4 text-xs sm:text-sm text-[#77736D] leading-relaxed">
+              <p>
+                Our consultations are conducted by Rajessh Paanday and senior practice specialists. Each session is approached with deep respect for your individual journey, offering non-judgmental dialogue and realistic, practical remedies.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-semibold text-[#1D1C1A]">
+                <div className="flex items-center gap-2">
+                  <UserCheck className="w-4 h-4 text-[#6F2935]" />
+                  <span>Senior Master Consultants</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Lock className="w-4 h-4 text-[#6F2935]" />
+                  <span>Strict Data Ethics &amp; Confidentiality</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#6F2935]" />
+                  <span>No Blind Superstitions</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#6F2935]" />
+                  <span>Practical Lifestyle Remedies</span>
+                </div>
+              </div>
+            </div>
+            <div className="pt-2">
+              <Link href="/about-us">
+                <GoldButton variant="outlined" className="px-6 py-2.5 text-xs font-semibold">
+                  Read Practice Ethos &rarr;
+                </GoldButton>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-   {/* Featured Blog Cards Preview */}
-   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-     {[
-       {
-         title: "Chaldean vs Pythagorean Numerology — Which System Is More Accurate?",
-         desc: "Compare the ancient babyloin sound-vibration method with the Greek alphabetical system for name correction.",
-         category: "Numerology",
-         link: "/blog/chaldean-vs-pythagorean-numerology-accuracy",
-         image: "/images/numerology_vibration_realistic.png"
-       },
-       {
-         title: "Saturn Transit 2026 Effects on All 12 Zodiac Signs",
-         desc: "Understand how the movement of Saturn into Pisces will alter your career, health, and finances in 2026.",
-         category: "Astrology",
-         link: "/blog/saturn-transit-2026-effects-on-all-12-zodiac-signs",
-         image: "/images/planets/saturn.png"
-       },
-       {
-         title: "What Is FEAN Method Astrology? — Complete Explanation",
-         desc: "Discover how we blend Five Elements, Astrology, and Numerology to create your ultimate lifetime blueprint.",
-         category: "FEAN Method",
-         link: "/blog/what-is-fean-method-astrology-complete-explanation",
-         image: "/images/numerology_brain.jpg"
-       }
-     ].map((item) => (
-       <Link href={item.link} key={item.title} className="group">
-         <GoldCard flush className="border border-gray-200/80 hover:border-[var(--gold-200)] transition-all duration-300 h-full flex flex-col overflow-hidden bg-white hover:shadow-[0_8px_25px_rgba(204,143,51,0.1)]">
-           <div className="w-full h-44 overflow-hidden relative bg-neutral-900">
-             <img
-               src={item.image}
-               alt={item.title}
-               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-             />
-             <span className="absolute top-3 left-3 bg-amber-500 text-black text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-amber-600/30">
-               {item.category}
-             </span>
-           </div>
-           <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-             <h3 className="font-sans font-bold text-gray-900 text-sm leading-snug group-hover:text-[var(--gold)] transition-colors line-clamp-2">
-               {item.title}
-             </h3>
-             <p className="text-gray-600 text-xs leading-relaxed line-clamp-2">
-               {item.desc}
-             </p>
-             <span className="text-[var(--gold)] text-xs font-semibold inline-flex items-center gap-1 group-hover:underline">
-               Read Article &rarr;
-             </span>
-           </div>
-         </GoldCard>
-       </Link>
-     ))}
-   </div>
+      {/* ── 7. FREE INTERACTIVE OCCULT TOOLS SHOWCASE ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4]">
+        <div className="max-w-[1280px] mx-auto space-y-12">
+          <SectionHeading
+            kicker="Free Tools &amp; Calculators"
+            title="Explore free interactive occult modules."
+            subtitle="Generate birth details, Chaldean numerology charts, Panchang timings, and relationship compatibility instantly."
+          />
 
-   <div className="pt-4">
-     <Link href="/blog">
-       <GoldButton variant="filled" className="px-10 py-4 text-xs font-bold tracking-widest uppercase">
-         Explore All Blog Articles &rarr;
-       </GoldButton>
-     </Link>
-   </div>
- </motion.section>
- </div>
- );
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { title: 'Zodiac Sign Finder', desc: 'Identify Sun & Moon signs from your birth details.', link: '/free-tools/zodiac-sign-finder' },
+              { title: 'Moon Sign Calculator', desc: 'Calculate your natal Moon sign (Rashi) and emotional core.', link: '/free-tools/moon-sign-calculator' },
+              { title: 'Ascendant (Lagna) Finder', desc: 'Determine your rising sign and 1st house blueprint.', link: '/free-tools/ascendant-calculator' },
+              { title: 'Chaldean Numerology', desc: 'Compute Life Path numbers and name vibration counts.', link: '/free-tools/numerology-calculator' },
+              { title: 'Ashtakoot Guna Matcher', desc: 'Check 36-Guna compatibility for marriage alignment.', link: '/free-tools/marriage-compatibility-checker' },
+              { title: 'Daily Panchang &amp; Tithi', desc: 'View traditional Hindu calendar timings and Muhurats.', link: '/free-tools/panchang' }
+            ].map((tool) => (
+              <Link href={tool.link} key={tool.title} className="block group">
+                <EditorialCard className="h-full flex flex-col justify-between space-y-3">
+                  <div className="space-y-2">
+                    <h4 className="font-serif text-base font-bold text-[#1D1C1A] group-hover:text-[#6F2935] transition-colors">
+                      {tool.title}
+                    </h4>
+                    <p className="text-xs text-[#77736D] leading-relaxed">
+                      {tool.desc}
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold text-[#6F2935] inline-flex items-center gap-1">
+                    Calculate Now &rarr;
+                  </span>
+                </EditorialCard>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center pt-2">
+            <Link href="/free-tools">
+              <GoldButton variant="outlined" className="px-8 py-3 text-xs font-semibold">
+                View All Free Tools &rarr;
+              </GoldButton>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. TRUST & CONFIDENTIALITY ASSURANCE ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4] bg-[#FAF7F2]">
+        <div className="max-w-[1280px] mx-auto text-center space-y-8">
+          <SectionHeading
+            kicker="Client Protection"
+            title="Your privacy and peace of mind are guaranteed."
+            subtitle="We maintain absolute confidentiality. Your birth details, personal history, and consultation recordings are never shared."
+            showOrbitLine
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto pt-4 text-left">
+            <EditorialCard hoverable={false} className="space-y-2">
+              <Lock className="w-6 h-6 text-[#6F2935]" />
+              <h4 className="font-serif text-base font-bold text-[#1D1C1A]">Confidentiality First</h4>
+              <p className="text-xs text-[#77736D] leading-relaxed">
+                All records, audio files, and birth charts remain strictly confidential between you and your consultant.
+              </p>
+            </EditorialCard>
+
+            <EditorialCard hoverable={false} className="space-y-2">
+              <Clock className="w-6 h-6 text-[#6F2935]" />
+              <h4 className="font-serif text-base font-bold text-[#1D1C1A]">Post-Session Support</h4>
+              <p className="text-xs text-[#77736D] leading-relaxed">
+                Receive clear written summaries and post-consultation clarification windows for any follow-up questions.
+              </p>
+            </EditorialCard>
+
+            <EditorialCard hoverable={false} className="space-y-2">
+              <ShieldCheck className="w-6 h-6 text-[#6F2935]" />
+              <h4 className="font-serif text-base font-bold text-[#1D1C1A]">Grounded Guidance</h4>
+              <p className="text-xs text-[#77736D] leading-relaxed">
+                Clear, actionable guidance free from fear-inducing predictions or costly mandatory ritual demands.
+              </p>
+            </EditorialCard>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 9. CLIENT EXPERIENCES ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4]">
+        <div className="max-w-[1280px] mx-auto space-y-12">
+          <SectionHeading
+            kicker="Client Feedback"
+            title="Experiences from seekers who found clarity."
+            subtitle="Reflections from individuals, business founders, and families who consulted with our practice."
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {testimonials.map((t, idx) => (
+              <EditorialCard key={idx} hoverable={false} className="flex flex-col justify-between space-y-4">
+                <div className="space-y-3">
+                  <div className="flex text-[#A78652] gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#A78652]" stroke="none" />
+                    ))}
+                  </div>
+                  <p className="text-xs text-[#77736D] italic leading-relaxed">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-[#E7E0D4] flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-full bg-[#6F2935]/10 flex items-center justify-center font-bold text-[10px] text-[#6F2935]">
+                    {t.initials}
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-[#1D1C1A]">{t.name}</p>
+                    <p className="text-[10px] text-[#77736D]">{t.role}</p>
+                  </div>
+                </div>
+              </EditorialCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 10. JOURNAL & INSIGHTS PREVIEW ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4] bg-[#FAF7F2]">
+        <div className="max-w-[1280px] mx-auto space-y-12">
+          <SectionHeading
+            kicker="Editorial Journal"
+            title="Insights &amp; Articles"
+            subtitle="In-depth writings on planetary transits, Chaldean mathematics, graphology strokes, and Vedic remedies."
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Chaldean vs Pythagorean Numerology — Which System Is More Accurate?",
+                desc: "Compare the ancient Babylonian sound-vibration method with the Greek alphabetical system.",
+                category: "Numerology",
+                link: "/blog/chaldean-vs-pythagorean-numerology-accuracy"
+              },
+              {
+                title: "Saturn Transit 2026 Effects on All 12 Zodiac Signs",
+                desc: "Understand how the movement of Saturn into Pisces will alter your career and health in 2026.",
+                category: "Astrology",
+                link: "/blog/saturn-transit-2026-effects-on-all-12-zodiac-signs"
+              },
+              {
+                title: "What Is FEAN Method Astrology? — Complete Explanation",
+                desc: "Discover how we blend Five Elements, Astrology, and Numerology to create your lifetime blueprint.",
+                category: "FEAN Method",
+                link: "/blog/what-is-fean-method-astrology-complete-explanation"
+              }
+            ].map((art) => (
+              <Link href={art.link} key={art.title} className="block group">
+                <EditorialCard className="h-full flex flex-col justify-between space-y-4">
+                  <div className="space-y-3">
+                    <span className="text-[10px] font-mono uppercase tracking-wider font-semibold text-[#6F2935] bg-[#6F2935]/10 px-2.5 py-0.5 rounded">
+                      {art.category}
+                    </span>
+                    <h3 className="font-serif text-base font-bold text-[#1D1C1A] group-hover:text-[#6F2935] transition-colors leading-snug">
+                      {art.title}
+                    </h3>
+                    <p className="text-xs text-[#77736D] leading-relaxed">
+                      {art.desc}
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold text-[#6F2935] inline-flex items-center gap-1">
+                    Read Article &rarr;
+                  </span>
+                </EditorialCard>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center pt-2">
+            <Link href="/blog">
+              <GoldButton variant="outlined" className="px-8 py-3 text-xs font-semibold">
+                Explore Journal Archive &rarr;
+              </GoldButton>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 11. FINAL BOOKING CTA SECTION ── */}
+      <section id="book" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="bg-white rounded-2xl border border-[#E7E0D4] p-8 sm:p-12 lg:p-16 max-w-4xl mx-auto space-y-8">
+            <SectionHeading
+              kicker="Take the Next Step"
+              title="Schedule your 1-on-1 Consultation"
+              subtitle="Select your preferred discipline, pick a date, and reserve your private session."
+              showOrbitLine
+            />
+
+            <form onSubmit={handleBookSubmit} className="space-y-6 max-w-2xl mx-auto">
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-[#1D1C1A]">
+                  1. Select Consultation Type *
+                </label>
+                <select
+                  value={selectedTypeId}
+                  onChange={(e) => {
+                    setSelectedTypeId(e.target.value);
+                    setSelectedDate('');
+                    setSelectedTimeSlot('');
+                  }}
+                  required
+                  className="w-full bg-[#FAF7F2] border border-[#E7E0D4] rounded-lg py-3 px-4 text-[#1D1C1A] text-xs focus:outline-none focus:ring-2 focus:ring-[#A78652]"
+                >
+                  <option value="">-- Select a consultation offering --</option>
+                  {appointmentTypes?.map((type: any) => {
+                    const now = new Date();
+                    const hasActiveOffer = type.offerPrice !== undefined && type.offerPrice !== null &&
+                      (!type.offerExpiresAt || now < new Date(type.offerExpiresAt));
+                    const priceText = hasActiveOffer
+                      ? `₹${(type.offerPrice / 100).toLocaleString()} (Offer!)`
+                      : `₹${(type.price / 100).toLocaleString()}`;
+                    return (
+                      <option key={type._id} value={type._id}>
+                        {type.name} — {type.duration} Mins ({priceText})
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+
+              {selectedTypeId && (
+                <>
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#1D1C1A]">
+                      2. Select Date *
+                    </label>
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      min={new Date().toISOString().split('T')[0]}
+                      onChange={(e) => {
+                        setSelectedDate(e.target.value);
+                        setSelectedTimeSlot('');
+                      }}
+                      required
+                      className="w-full bg-[#FAF7F2] border border-[#E7E0D4] rounded-lg py-3 px-4 text-[#1D1C1A] text-xs focus:outline-none focus:ring-2 focus:ring-[#A78652]"
+                    />
+                  </div>
+
+                  {selectedDate && (
+                    <div className="space-y-2">
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#1D1C1A]">
+                        3. Available IST Time Slots
+                      </label>
+
+                      {isFetchingSlots ? (
+                        <p className="text-xs text-[#77736D] animate-pulse">Checking calendar availability...</p>
+                      ) : availableSlots && availableSlots.length > 0 ? (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                          {availableSlots.map((slot: string) => {
+                            const dateObj = new Date(slot);
+                            const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            const isSelected = selectedTimeSlot === slot;
+                            return (
+                              <button
+                                key={slot}
+                                type="button"
+                                onClick={() => setSelectedTimeSlot(slot)}
+                                className={`py-2 px-3 text-xs rounded-lg border font-medium transition-colors cursor-pointer ${
+                                  isSelected
+                                    ? 'bg-[#1D1C1A] text-white border-transparent'
+                                    : 'bg-[#FAF7F2] text-[#1D1C1A] border-[#E7E0D4] hover:bg-white hover:border-[#A78652]'
+                                }`}
+                              >
+                                {timeStr} IST
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2 text-amber-800 bg-amber-50 border border-amber-200 p-3 rounded-lg text-xs">
+                          <AlertCircle className="w-4 h-4 flex-shrink-0 text-amber-600" />
+                          <span>No slots available for this date. Please choose another date.</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
+
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-[#1D1C1A]">
+                  Additional Notes (Optional)
+                </label>
+                <textarea
+                  value={bookingMessage}
+                  onChange={(e) => setBookingMessage(e.target.value)}
+                  placeholder="Mention your birth details or specific situation..."
+                  rows={3}
+                  className="w-full bg-[#FAF7F2] border border-[#E7E0D4] rounded-lg py-3 px-4 text-[#1D1C1A] text-xs focus:outline-none focus:ring-2 focus:ring-[#A78652]"
+                />
+              </div>
+
+              <GoldButton
+                type="submit"
+                variant="burgundy"
+                fullWidth
+                disabled={!selectedTimeSlot || bookingMutation.isPending}
+                isLoading={bookingMutation.isPending}
+                className="py-3.5 text-sm font-semibold"
+              >
+                Confirm Consultation Booking
+              </GoldButton>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  );
 }

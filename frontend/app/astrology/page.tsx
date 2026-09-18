@@ -56,8 +56,8 @@ import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
 
 export default function AstrologyPage() {
 
- return (
- <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900">
+  return (
+    <div className="relative min-h-screen bg-[#F7F3EA] overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-[#1D1C1A]">
  {/* Astrological Meridian Star Background */}
  <AstrologyHeroBackground />
 
@@ -86,7 +86,7 @@ export default function AstrologyPage() {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 'some' }}
     transition={{ duration: 0.7, ease: 'easeOut' }}
-    className="relative z-10 w-full bg-[#B37B47] text-white rounded-2xl py-12 px-4 md:px-12 overflow-hidden shadow-sm"
+    className="relative z-10 w-full bg-[#6F2935] text-white rounded-2xl py-12 px-4 md:px-12 overflow-hidden shadow-sm"
   >
     <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-8 items-center justify-between relative z-10">
       <div className="space-y-4 text-center md:text-left flex-1">
@@ -99,8 +99,8 @@ export default function AstrologyPage() {
       </div>
       <div className="flex-shrink-0">
         <Link href="/horoscope">
-          <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-[#B37B47] font-bold text-base rounded-xl hover:bg-amber-50 transition-all duration-200 shadow-lg">
-            <Star className="w-5 h-5 fill-[#B37B47]" />
+          <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-[#6F2935] font-bold text-base rounded-xl hover:bg-[#FAF7F2] transition-all duration-200 shadow-lg">
+            <Star className="w-5 h-5 fill-[#6F2935]" />
             Check My Zodiac
           </button>
         </Link>
@@ -114,34 +114,34 @@ export default function AstrologyPage() {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 'some' }}
     transition={{ duration: 0.7, ease: 'easeOut' }}
-    className="relative z-10 w-full bg-gradient-to-br from-white via-amber-50/30 to-white border border-[var(--gold-200)] rounded-2xl py-12 px-4 md:px-12 overflow-hidden shadow-sm"
+    className="relative z-10 w-full bg-[#FAF7F2] border border-[#E7E0D4] rounded-2xl py-12 px-4 md:px-12 overflow-hidden shadow-sm"
   >
     <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 md:pl-16">
       {/* Left — Content */}
       <div className="space-y-6 text-center md:text-left order-2 md:order-1 pl-0 md:pl-12">
         <div className="space-y-1">
-          <span className="text-[var(--gold-dark)] text-xs uppercase tracking-widest font-bold flex items-center gap-2 justify-center md:justify-start">
+          <span className="text-[#A78652] text-xs uppercase tracking-widest font-bold flex items-center gap-2 justify-center md:justify-start">
             <span>✦</span> Essential Knowledge
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-extrabold text-neutral-900 leading-tight">
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#1D1C1A] leading-tight">
             FEAN METHOD
             <span className="gold-gradient-text block">ASTROLOGY EBOOK</span>
           </h2>
         </div>
-        <p className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-lg mx-auto md:mx-0">
+        <p className="text-[#77736D] text-sm md:text-base leading-relaxed max-w-lg mx-auto md:mx-0">
           Discover the foundational principles of our patented FEAN Method Astrology AMB™. This comprehensive digital guide walks you through numbers, grids, remedies, and the exact science we use to set your life on the right path.
         </p>
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-4">
           <Link href="/fean-ebook">
-            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 w-full sm:w-auto">
+            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-[#1D1C1A] text-white font-bold text-base rounded-xl hover:bg-[#3A3732] transition-all duration-200 shadow-md w-full sm:w-auto">
               <BookOpen className="w-5 h-5" />
               Read Ebook
             </button>
           </Link>
           <a href="/FEAN Method Astrology Ebook.pdf" download="FEAN_Method_Astrology_Ebook.pdf">
-            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white border-2 border-[var(--gold)] text-[var(--gold-dark)] font-bold text-base rounded-xl hover:bg-amber-50 transition-all duration-200 shadow-sm w-full sm:w-auto">
+            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-white border border-[#DED2BE] text-[#1D1C1A] font-bold text-base rounded-xl hover:bg-[#FAF7F2] transition-all duration-200 shadow-sm w-full sm:w-auto">
               <Download className="w-5 h-5" />
               Download PDF
             </button>
