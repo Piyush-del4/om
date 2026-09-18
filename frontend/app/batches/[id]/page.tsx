@@ -145,43 +145,9 @@ export default function PublicBatchDetailPage({ params }: { params: Promise<{ id
   const offerPrice = hasActiveOffer ? (batch.offerPrice || 0) / 100 : batchPrice;
   const isFree = batchPrice === 0 && !hasActiveOffer;
 
-  // Learning outcomes
-  const learningOutcomes = [
-    { title: 'Core Principles & Symbology', desc: 'Master fundamental archetypes, elemental dignities, and sacred correspondences.' },
-    { title: 'Arcana & Card Synthesis', desc: 'Understand major and minor arcana interactions for accurate reading breakdowns.' },
-    { title: 'Custom Spread Formations', desc: 'Learn 3-card, 7-card, and advanced Celtic Cross spread layouts for deep clarity.' },
-    { title: 'Intuitive Reading Practice', desc: 'Develop confidence in synthesizing planetary transits and card symbolism.' },
-    { title: 'Client Consultation Ethics', desc: 'Framing constructive questions, managing client readings, and ethical boundaries.' },
-    { title: 'Practical Case Studies', desc: 'Real-world reading analysis across love, career, finances, and personal growth.' },
-  ];
-
-  // Modules accordion data
-  const modules = [
-    {
-      title: 'Module 1: Foundations & Sacred Symbology',
-      lessons: [
-        'Introduction to course structure & foundational history',
-        'Understanding primary symbols, elements, and planetary alignments',
-        'Cleansing, tuning, and preparing your sacred space',
-      ],
-    },
-    {
-      title: 'Module 2: Deep Arcana & Pattern Synthesis',
-      lessons: [
-        'Major Arcana journey: The 22 steps of spiritual transformation',
-        'Minor Arcana suites: Cups, Pentacles, Swords, and Wands in detail',
-        'Synthesizing dignity combinations and reversed interpretations',
-      ],
-    },
-    {
-      title: 'Module 3: Advanced Spreads & Professional Practice',
-      lessons: [
-        'Mastering multi-card spread formations and time-frame reads',
-        'Professional ethics, client communication, and question framing',
-        'Live case studies and guided practical reading sessions',
-      ],
-    },
-  ];
+  // Learning outcomes & Modules from batch model
+  const learningOutcomes: { title: string; desc?: string }[] = batch.learningOutcomes || [];
+  const modules: { title: string; lessons?: string[] }[] = batch.curriculumModules || [];
 
   // FAQs
   const faqs = [
@@ -269,71 +235,77 @@ export default function PublicBatchDetailPage({ params }: { params: Promise<{ id
               </div>
             </div>
 
-            {/* 3. What You'll Learn Grid */}
-            <div className="space-y-4">
-              <h3 className="font-serif text-2xl font-bold text-[#1D1C1A] flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-[#A78652]" /> What You'll Learn
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {learningOutcomes.map((item, idx) => (
-                  <div key={idx} className="bg-white p-4 rounded-2xl border border-[#E7E0D4] space-y-1.5 shadow-xs">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-[#6F2935]/10 flex items-center justify-center text-[#6F2935] shrink-0">
-                        <Check className="w-3.5 h-3.5" />
-                      </div>
-                      <h4 className="font-serif text-sm font-bold text-[#1D1C1A]">{item.title}</h4>
-                    </div>
-                    <p className="text-xs text-gray-500 font-light leading-relaxed pl-8">
-                      {item.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 4. Interactive Curriculum Syllabus Modules Accordion */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-[#E7E0D4] pb-3">
+            {/* 3. What You'll Learn Grid (Render ONLY if admin provided items) */}
+            {learningOutcomes.length > 0 && (
+              <div className="space-y-4">
                 <h3 className="font-serif text-2xl font-bold text-[#1D1C1A] flex items-center gap-2">
-                  <BookOpen className="w-6 h-6 text-[#A78652]" /> Curriculum Syllabus Modules
+                  <Sparkles className="w-6 h-6 text-[#A78652]" /> What You'll Learn
                 </h3>
-                <span className="text-xs font-mono text-[#A78652] font-semibold">3 Modules</span>
-              </div>
 
-              <div className="space-y-3">
-                {modules.map((mod, idx) => {
-                  const isOpen = openModuleIndex === idx;
-                  return (
-                    <div 
-                      key={idx} 
-                      className="bg-white border border-[#E7E0D4] rounded-2xl overflow-hidden transition-all shadow-xs"
-                    >
-                      <button
-                        onClick={() => setOpenModuleIndex(isOpen ? null : idx)}
-                        className="w-full p-4 text-left flex items-center justify-between bg-[#FAF8F5] hover:bg-[#F3EEE6] transition-colors cursor-pointer"
-                      >
-                        <span className="font-serif font-bold text-base text-[#1D1C1A] flex items-center gap-2">
-                          <FileText className="w-4 h-4 text-[#6F2935]" /> {mod.title}
-                        </span>
-                        <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                      </button>
-
-                      {isOpen && (
-                        <div className="p-4 border-t border-[#E7E0D4] space-y-2 bg-white">
-                          {mod.lessons.map((les, lIdx) => (
-                            <div key={lIdx} className="flex items-start gap-2.5 text-xs text-gray-700">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#A78652] mt-1.5 shrink-0" />
-                              <span>{les}</span>
-                            </div>
-                          ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {learningOutcomes.map((item, idx) => (
+                    <div key={idx} className="bg-white p-4 rounded-2xl border border-[#E7E0D4] space-y-1.5 shadow-xs">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-[#6F2935]/10 flex items-center justify-center text-[#6F2935] shrink-0">
+                          <Check className="w-3.5 h-3.5" />
                         </div>
+                        <h4 className="font-serif text-sm font-bold text-[#1D1C1A]">{item.title}</h4>
+                      </div>
+                      {item.desc && (
+                        <p className="text-xs text-gray-500 font-light leading-relaxed pl-8">
+                          {item.desc}
+                        </p>
                       )}
                     </div>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* 4. Interactive Curriculum Syllabus Modules Accordion (Render ONLY if admin provided modules) */}
+            {modules.length > 0 && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-[#E7E0D4] pb-3">
+                  <h3 className="font-serif text-2xl font-bold text-[#1D1C1A] flex items-center gap-2">
+                    <BookOpen className="w-6 h-6 text-[#A78652]" /> Curriculum Syllabus Modules
+                  </h3>
+                  <span className="text-xs font-mono text-[#A78652] font-semibold">{modules.length} {modules.length === 1 ? 'Module' : 'Modules'}</span>
+                </div>
+
+                <div className="space-y-3">
+                  {modules.map((mod, idx) => {
+                    const isOpen = openModuleIndex === idx;
+                    return (
+                      <div 
+                        key={idx} 
+                        className="bg-white border border-[#E7E0D4] rounded-2xl overflow-hidden transition-all shadow-xs"
+                      >
+                        <button
+                          onClick={() => setOpenModuleIndex(isOpen ? null : idx)}
+                          className="w-full p-4 text-left flex items-center justify-between bg-[#FAF8F5] hover:bg-[#F3EEE6] transition-colors cursor-pointer"
+                        >
+                          <span className="font-serif font-bold text-base text-[#1D1C1A] flex items-center gap-2">
+                            <FileText className="w-4 h-4 text-[#6F2935]" /> {mod.title}
+                          </span>
+                          <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        {isOpen && mod.lessons && mod.lessons.length > 0 && (
+                          <div className="p-4 border-t border-[#E7E0D4] space-y-2 bg-white">
+                            {mod.lessons.map((les, lIdx) => (
+                              <div key={lIdx} className="flex items-start gap-2.5 text-xs text-gray-700">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#A78652] mt-1.5 shrink-0" />
+                                <span>{les}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* 5. Key Academy Features Cards */}
             <div className="space-y-4">

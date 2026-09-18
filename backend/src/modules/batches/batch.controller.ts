@@ -89,7 +89,7 @@ export async function getBatch(req: Request, res: Response, next: NextFunction):
 
 export async function createBatch(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { title, description, price, coverImage, category, batchCode, specialOfferTitle, offerPrice, offerExpiresAt } = req.body;
+    const { title, description, price, coverImage, category, batchCode, specialOfferTitle, offerPrice, offerExpiresAt, learningOutcomes, curriculumModules } = req.body;
 
     // Use provided batchCode (mapping to code in model) or generate a random uppercase UUID
     const finalCode = (batchCode || crypto.randomUUID().split('-')[0]).toUpperCase().trim();
@@ -117,6 +117,8 @@ export async function createBatch(req: Request, res: Response, next: NextFunctio
       specialOfferTitle: specialOfferTitle || '',
       offerPrice: offerPrice !== undefined ? offerPrice : undefined,
       offerExpiresAt: offerExpiresAt ? new Date(offerExpiresAt) : undefined,
+      learningOutcomes: Array.isArray(learningOutcomes) ? learningOutcomes : [],
+      curriculumModules: Array.isArray(curriculumModules) ? curriculumModules : [],
     });
 
     // Auto-enroll creator / admin in the newly created batch so it immediately shows up in /my-batches
@@ -142,7 +144,7 @@ export async function createBatch(req: Request, res: Response, next: NextFunctio
 export async function updateBatch(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const { id } = req.params;
-    const { title, description, price, coverImage, category, batchCode, specialOfferTitle, offerPrice, offerExpiresAt } = req.body;
+    const { title, description, price, coverImage, category, batchCode, specialOfferTitle, offerPrice, offerExpiresAt, learningOutcomes, curriculumModules } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(404).json({
@@ -169,6 +171,8 @@ export async function updateBatch(req: Request, res: Response, next: NextFunctio
     if (specialOfferTitle !== undefined) batch.specialOfferTitle = specialOfferTitle;
     if (offerPrice !== undefined) batch.offerPrice = offerPrice;
     if (offerExpiresAt !== undefined) batch.offerExpiresAt = offerExpiresAt ? new Date(offerExpiresAt) : undefined;
+    if (learningOutcomes !== undefined) batch.learningOutcomes = Array.isArray(learningOutcomes) ? learningOutcomes : [];
+    if (curriculumModules !== undefined) batch.curriculumModules = Array.isArray(curriculumModules) ? curriculumModules : [];
     if (batchCode !== undefined) {
       const normalizedCode = batchCode.toUpperCase().trim();
       const duplicateCode = await Batch.findOne({ code: normalizedCode, _id: { $ne: batch._id } });

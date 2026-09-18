@@ -5,6 +5,16 @@ export interface IAnnouncement {
   createdAt: Date;
 }
 
+export interface ILearningOutcome {
+  title: string;
+  desc?: string;
+}
+
+export interface ICurriculumModule {
+  title: string;
+  lessons?: string[];
+}
+
 export interface IBatch extends Document {
   title: string;
   description?: string;
@@ -20,6 +30,8 @@ export interface IBatch extends Document {
   offerExpiresAt?: Date;
   isDeleted: boolean;
   announcements?: IAnnouncement[];
+  learningOutcomes?: ILearningOutcome[];
+  curriculumModules?: ICurriculumModule[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -48,6 +60,18 @@ const BatchSchema = new Schema<IBatch>(
       {
         message: { type: String, required: true },
         createdAt: { type: Date, default: Date.now }
+      }
+    ],
+    learningOutcomes: [
+      {
+        title: { type: String, required: true, trim: true },
+        desc: { type: String, default: '', trim: true }
+      }
+    ],
+    curriculumModules: [
+      {
+        title: { type: String, required: true, trim: true },
+        lessons: [{ type: String, trim: true }]
       }
     ],
   },

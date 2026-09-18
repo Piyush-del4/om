@@ -27,6 +27,22 @@ export default function NewBatchPage() {
  const [errorMsg, setErrorMsg] = useState('');
  const [isUploading, setIsUploading] = useState(false);
 
+ // Dynamic "What You'll Learn" items
+ const [learningOutcomes, setLearningOutcomes] = useState<{ title: string; desc: string }[]>([]);
+ const [newOutcomeTitle, setNewOutcomeTitle] = useState('');
+ const [newOutcomeDesc, setNewOutcomeDesc] = useState('');
+
+ const addLearningOutcome = () => {
+   if (!newOutcomeTitle.trim()) return;
+   setLearningOutcomes([...learningOutcomes, { title: newOutcomeTitle.trim(), desc: newOutcomeDesc.trim() }]);
+   setNewOutcomeTitle('');
+   setNewOutcomeDesc('');
+ };
+
+ const removeLearningOutcome = (index: number) => {
+   setLearningOutcomes(learningOutcomes.filter((_, i) => i !== index));
+ };
+
  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
  const file = e.target.files?.[0];
  if (!file) return;
@@ -97,6 +113,7 @@ export default function NewBatchPage() {
  specialOfferTitle: specialOfferTitle || undefined,
  offerPrice: offerPricePaise,
  offerExpiresAt: offerExpiresAt ? new Date(offerExpiresAt).toISOString() : undefined,
+ learningOutcomes,
  });
  };
 
@@ -249,6 +266,67 @@ export default function NewBatchPage() {
  rows={4}
  className="w-full bg-white/60 border border-[var(--gold-100)] rounded-lg py-2.5 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--gold)] text-xs"
  />
+ </div>
+
+ {/* ── DYNAMIC "WHAT YOU'LL LEARN" SECTION EDITOR ────────────────── */}
+ <div className="space-y-3 pt-4 border-t border-gray-200">
+ <div className="flex items-center justify-between">
+ <label className="block text-xs font-bold uppercase tracking-wider text-[#6F2935]">
+ "What You'll Learn" Section (Optional)
+ </label>
+ <span className="text-[10px] text-gray-500">
+ {learningOutcomes.length} {learningOutcomes.length === 1 ? 'item' : 'items'} added
+ </span>
+ </div>
+ <p className="text-[11px] text-gray-500 font-light">
+ Add learning points below. If no items are added, the "What You'll Learn" section will not be displayed on the batch page.
+ </p>
+
+ {/* List of added outcomes */}
+ {learningOutcomes.length > 0 && (
+ <div className="space-y-2 bg-gray-50 p-3 rounded-xl border border-gray-200">
+ {learningOutcomes.map((item, idx) => (
+ <div key={idx} className="flex items-start justify-between gap-2 p-2 bg-white rounded-lg border border-gray-200 text-xs">
+ <div>
+ <span className="font-bold text-gray-900 block">{item.title}</span>
+ {item.desc && <span className="text-gray-500 text-[11px] block">{item.desc}</span>}
+ </div>
+ <button
+ type="button"
+ onClick={() => removeLearningOutcome(idx)}
+ className="text-red-600 hover:text-red-700 text-xs font-bold shrink-0 ml-2"
+ >
+ Remove
+ </button>
+ </div>
+ ))}
+ </div>
+ )}
+
+ {/* Inputs to add new outcome */}
+ <div className="space-y-2 bg-[#FAF7F2] p-3 rounded-xl border border-[#A78652]/30">
+ <input
+ type="text"
+ value={newOutcomeTitle}
+ onChange={(e) => setNewOutcomeTitle(e.target.value)}
+ placeholder="Outcome Title (e.g. Core Principles & Symbology)"
+ className="w-full bg-white border border-[#E7E0D4] rounded-lg py-2 px-3 text-gray-900 text-xs focus:ring-1 focus:ring-[#A78652]"
+ />
+ <input
+ type="text"
+ value={newOutcomeDesc}
+ onChange={(e) => setNewOutcomeDesc(e.target.value)}
+ placeholder="Outcome Info/Description (e.g. Master fundamental archetypes...)"
+ className="w-full bg-white border border-[#E7E0D4] rounded-lg py-2 px-3 text-gray-900 text-xs focus:ring-1 focus:ring-[#A78652]"
+ />
+ <button
+ type="button"
+ onClick={addLearningOutcome}
+ className="py-1.5 px-4 text-xs font-bold bg-[#6F2935] text-white rounded-lg hover:bg-[#8A3443] transition-all cursor-pointer"
+ >
+ + Add "What You'll Learn" Item
+ </button>
+ </div>
  </div>
 
  <GoldButton type="submit" variant="filled" fullWidth isLoading={createMutation.isPending} className="py-2.5">
