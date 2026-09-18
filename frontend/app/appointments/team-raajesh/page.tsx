@@ -3,128 +3,145 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { MessageSquare, ArrowLeft, Star, Phone, Award, Loader2 } from 'lucide-react';
+import { MessageSquare, ArrowLeft, Star, Phone, Award, Calendar, Sparkles, Loader2 } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
+import { GoldButton } from '@/components/ui/GoldButton';
 import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/api/client';
 import { FormattedText } from '@/components/ui/FormattedText';
 
 export default function RaajeshProfilePage() {
- const { data: team = [], isLoading } = useQuery({
- queryKey: ['team'],
- queryFn: async () => {
- const res = await client.get('/team');
- return res.data?.data || [];
- }
- });
+  const { data: team = [], isLoading } = useQuery({
+    queryKey: ['team'],
+    queryFn: async () => {
+      const res = await client.get('/team');
+      return res.data?.data || [];
+    }
+  });
 
- const member = team.find((m: any) => m.name.includes('Raajesh'));
+  const member = team.find((m: any) => m.name.toLowerCase().includes('raajesh') || m.name.toLowerCase().includes('rajessh'));
 
- if (isLoading) {
- return (
- <div className="min-h-screen bg-white flex items-center justify-center">
- <Loader2 className="w-8 h-8 animate-spin text-[var(--gold)]" />
- </div>
- );
- }
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#A78652]" />
+      </div>
+    );
+  }
 
- // Fallbacks if not seeded
- const specializations = member?.specializations || [
- { label: 'Vedic Astrology' },
- { label: 'Chaldean Numerology' },
- { label: 'Graphology & Handwriting Analysis' },
- { label: 'Signature Science' },
- { label: 'Career Guidance Coaching' },
- { label: 'Five Elements Balance' }
- ];
- const description = member?.description || "With decades of deep study and practice in ancient Indian sciences, Rajessh Paanday has guided thousands of individuals toward clarity, confidence, and lasting success. His holistic methodology uniquely blends Vedic Astrology, Numerology, Graphology, Signature Analysis, and Five Elements principles to offer a complete, personalized roadmap for each client. Whether you are navigating career transitions, relationship challenges, financial decisions, health concerns, or seeking deeper personal growth — Raajesh Ji's grounded wisdom helps you understand your true strengths, remove hidden blockages, and align with the universe's natural timing. He is known for his practical, compassionate, and results-driven approach that empowers clients with real, actionable guidance rather than vague predictions.";
- const experienceYears = member?.experienceYears || 9;
- return (
- <div className="relative radial-mesh-bg min-h-screen bg-white overflow-hidden py-24 px-4 sm:px-6 lg:px-8 text-gray-900">
- <div className="max-w-4xl mx-auto space-y-12 relative z-10">
- 
- {/* Navigation */}
- <Link href="/appointments" className="group flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-gray-600 hover:text-[var(--gold)] transition-colors">
- <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
- Back to Services
- </Link>
+  const specializations = [
+    'Vedic Astrologer', 'Kundali Analysis', 'Numerology Expert',
+    '5 Element Analysis', 'Rudraksha Therapy', 'Signature Science',
+    'Graphologist', 'Career Guidance Coach'
+  ];
 
- {/* Profile Content layout */}
- <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
- 
- {/* Photo */}
- <div className="md:col-span-5 relative group">
- <div className="absolute inset-0 bg-gradient-to-br from-amber-600/20 to-yellow-600/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
- <GoldCard flush className="border border-amber-600/30 relative overflow-hidden bg-white">
- <div className="w-full aspect-square relative overflow-hidden bg-white flex items-end justify-center">
- <img 
- src={member?.image || '/images/team_raajesh.png'} 
- alt={member?.name || 'Rajessh Paanday'} 
- className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-102"
- />
- <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
- </div>
- </GoldCard>
- </div>
+  return (
+    <div className="relative min-h-screen bg-[#FAF8F5] text-gray-900 font-sans py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-8">
+        
+        {/* Navigation */}
+        <Link 
+          href="/appointments" 
+          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#6F2935] hover:text-[#A78652] transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" /> Back to Consultations
+        </Link>
 
- {/* Details */}
- <div className="md:col-span-7 space-y-6">
- <div className="space-y-2">
- <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold font-mono block">
- Founder & Chief Consultant
- </span>
- <h1 className="font-serif text-3xl md:text-4xl font-bold tracking-tight text-gray-900 leading-tight">
- Rajessh Paanday
- </h1>
- {/* Experience badge */}
- {experienceYears > 0 ? (
- <div className="inline-flex items-center gap-2 bg-[var(--gold-50)] border border-[var(--gold-200)] rounded-full px-5 py-2 mt-2">
- <Award className="w-5 h-5 text-[var(--gold)]" />
- <span className="text-[var(--gold)] text-base md:text-lg font-bold">{experienceYears}+ Years of Experience</span>
- </div>
- ) : null}
- <div className="flex gap-1 text-[var(--gold)] pt-1">
- {[...Array(5)].map((_, i) => (
- <Star key={i} className="w-4 h-4 fill-[var(--gold)]" stroke="none" />
- ))}
- </div>
- </div>
+        {/* 2-Column Luxury Profile Card */}
+        <div className="bg-white border border-[#E7E0D4] rounded-3xl p-6 sm:p-10 shadow-lg overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            
+            {/* Left Column: Portrait */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
+                <img
+                  src={member?.image || '/images/rajessh_paanday.jpg'}
+                  alt="Rajessh Paanday — Founder & Chief Consultant"
+                  className="w-full h-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <h3 className="font-serif text-2xl font-bold">Rajessh Paanday</h3>
+                  <p className="text-xs font-mono text-amber-200 uppercase tracking-widest">Founder & Chief Consultant</p>
+                </div>
+              </div>
 
- <div className="text-gray-600 text-sm md:text-base leading-relaxed font-bold">
- <FormattedText text={description} />
- </div>
+              {/* Quick Credentials Badge */}
+              <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-4 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#1D1C1A]">
+                  <Award className="w-5 h-5 text-[#A78652]" />
+                  <span>9+ Years of Professional Experience</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold text-[#6F2935] bg-[#6F2935]/10 px-2 py-0.5 rounded">Verified</span>
+              </div>
+            </div>
 
+            {/* Right Column: Biography & Specializations */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
+                  Founder & Master Consultant
+                </span>
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1D1C1A]">
+                  Rajessh Paanday
+                </h1>
+              </div>
 
- <div className="space-y-3 pt-2">
- <h3 className="text-[var(--gold)] text-xs font-mono uppercase tracking-widest font-semibold">Specializations</h3>
- <div className="flex flex-wrap gap-2">
- {specializations.map((spec: any, i: number) => (
- <span key={i} className="inline-flex items-center gap-1.5 text-xs md:text-sm font-bold uppercase tracking-wider bg-white border border-[var(--gold)] text-[var(--gold)] px-4 py-1.5 rounded-full">
- {spec.label || spec}
- </span>
- ))}
- </div>
- </div>
+              <div className="text-gray-600 text-sm sm:text-base font-light leading-relaxed space-y-4">
+                <p>
+                  Rajessh Paanday is a professional Life Consultant dedicated to helping individuals transform life struggles into meaningful clarity and personal fulfillment. With over 9 years of dedicated practice across Vedic disciplines, he has guided clients from diverse backgrounds toward greater purpose and self-understanding.
+                </p>
+                <p>
+                  His consultation methodology combines multiple specialized fields: Vedic Astrology, Numerology, Five Elements Analysis, Signature Science, Graphology, and Career Coaching. By analyzing Date of Birth frequencies alongside handwriting and signature structures, he identifies hidden talents and life blockages — often without requiring an in-person meeting.
+                </p>
+                <p>
+                  Rajessh’s mission is to empower clients to make informed life choices, align with suitable career trajectories, and navigate complex timing windows with confidence and peace of mind.
+                </p>
+              </div>
 
- {/* Action Buttons */}
- <div className="pt-6 border-t border-neutral-900 grid grid-cols-1 sm:grid-cols-2 gap-4">
- <a href="tel:+919922352666" className="w-full">
- <button className="w-full py-3 text-xs flex items-center justify-center gap-2 font-bold bg-blue-600 hover:bg-blue-700 text-gray-900 rounded-lg transition-colors duration-300 shadow-[0_0_15px_rgba(37,99,235,0.2)]">
- <Phone className="w-4 h-4" /> Call Now (+91 9922352666)
- </button>
- </a>
- <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer" className="w-full">
- <button className="w-full py-3 text-xs flex items-center justify-center gap-2 font-bold bg-[#25d366] hover:bg-[#20ba5a] text-gray-900 rounded-lg transition-colors duration-300 shadow-[0_0_15px_rgba(37,211,102,0.2)]">
- <MessageSquare className="w-4 h-4" /> Chat on WhatsApp
- </button>
- </a>
- </div>
+              {/* Specializations Grid */}
+              <div className="space-y-3 pt-2">
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500">
+                  Specializations & Areas of Practice
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {specializations.map((spec, i) => (
+                    <span
+                      key={i}
+                      className="text-xs font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-3.5 py-1.5 rounded-full font-sans shadow-2xs"
+                    >
+                      ✦ {spec}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
- </div>
+              {/* Direct Action Buttons */}
+              <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-3">
+                <Link href="/appointments#book-slot">
+                  <GoldButton variant="burgundy" className="py-2.5 px-5 text-xs font-bold flex items-center gap-2">
+                    <Calendar className="w-4 h-4" /> Book Session with Rajessh
+                  </GoldButton>
+                </Link>
+                <a href="tel:+919922352666">
+                  <GoldButton variant="outlined" className="py-2.5 px-4 text-xs font-bold flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-[#A78652]" /> Call (+91 9922352666)
+                  </GoldButton>
+                </a>
+                <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
+                  <button className="py-2.5 px-4 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer">
+                    <MessageSquare className="w-4 h-4" /> WhatsApp
+                  </button>
+                </a>
+              </div>
 
- </div>
+            </div>
 
- </div>
- </div>
- );
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
 }
+
