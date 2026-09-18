@@ -17,6 +17,10 @@ shopRouter.post('/cart/items', requireAuth, validate({ body: schemas.addToCartSc
 shopRouter.delete('/cart/items/:itemId', requireAuth, shopController.removeFromCart);
 shopRouter.post('/cart/clear', requireAuth, shopController.clearCart);
 
+// Wishlist management
+shopRouter.get('/wishlist', requireAuth, shopController.getWishlist);
+shopRouter.post('/wishlist/toggle', requireAuth, shopController.toggleWishlist);
+
 // Payment checkouts
 shopRouter.post('/payments/checkout', requireAuth, validate({ body: schemas.checkoutSchema }), shopController.checkout);
 shopRouter.post('/payments/direct-checkout', requireAuth, validate({ body: schemas.directCheckoutSchema }), shopController.directCheckout);

@@ -163,15 +163,44 @@ export default function ShopPage() {
     },
   });
 
+  // Fetch user wishlist items on mount if authenticated
+  useQuery({
+    queryKey: ['wishlist'],
+    queryFn: async () => {
+      const res = await client.get('/shop/wishlist');
+      const list = res.data?.data || [];
+      const map: Record<string, boolean> = {};
+      list.forEach((w: any) => {
+        const id = w.shopItemId?._id || w.shopItemId;
+        if (id) map[id] = true;
+      });
+      setWishlistItems(map);
+      return list;
+    },
+    enabled: isAuthenticated,
+  });
+
   // Wishlist mutation
   const toggleWishlistMutation = useMutation({
     mutationFn: async (shopItemId: string) => {
+      if (!isAuthenticated) {
+        throw new Error('UNAUTH');
+      }
       const res = await client.post('/shop/wishlist/toggle', { shopItemId });
       return res.data;
     },
     onSuccess: (data, shopItemId) => {
-      setWishlistItems(prev => ({ ...prev, [shopItemId]: !prev[shopItemId] }));
-      toast.success(data.message || 'Wishlist updated');
+      const isAdded = data?.isWishlisted ?? !wishlistItems[shopItemId];
+      setWishlistItems(prev => ({ ...prev, [shopItemId]: isAdded }));
+      toast.success(data?.message || (isAdded ? 'Saved to wishlist ❤️' : 'Removed from wishlist'));
+    },
+    onError: (err: any) => {
+      if (err.message === 'UNAUTH' || err.response?.status === 401) {
+        toast.error('Please log in to save items to your wishlist.');
+        router.push('/login');
+      } else {
+        toast.error(err.response?.data?.error?.message || err.message || 'Could not update wishlist');
+      }
     },
   });
 

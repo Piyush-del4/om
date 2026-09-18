@@ -308,7 +308,7 @@ export default function AppointmentsPage() {
               Meet Your Master Consultants
             </h2>
             <p className="text-gray-600 text-xs sm:text-sm font-light">
-              Book high-impact personal guidance sessions directly with our founders and senior advisors.
+              Book high-impact personal guidance sessions directly with our Master Consultants.
             </p>
           </div>
 
