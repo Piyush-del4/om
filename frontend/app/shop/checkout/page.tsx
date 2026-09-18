@@ -351,37 +351,8 @@ function CheckoutContent() {
 }
 
 export default function CheckoutPage() {
-  const router = useRouter();
-
   return (
     <div className="min-h-screen bg-[#F7F3EA] text-[#1D1C1A]">
-      {/* Simplified Focused Header */}
-      <header className="bg-white border-b border-[#E7E0D4] py-4 px-4 sm:px-6 lg:px-8 print:hidden">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <img src="/images/logo.png" alt="OM Astrology AMC Logo" className="w-8 h-8 object-contain" />
-            <span className="font-serif text-lg font-bold text-[#1D1C1A]">
-              OM Astrology AMC
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.back()}
-              className="flex items-center gap-1.5 text-xs text-[#77736D] hover:text-[#1D1C1A] transition-colors cursor-pointer"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back</span>
-            </button>
-            <div className="h-4 w-px bg-[#E7E0D4]" />
-            <div className="flex items-center gap-1.5 text-xs font-medium text-[#77736D]">
-              <Lock className="w-3.5 h-3.5 text-[#A78652]" />
-              <span>Secure Checkout</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Main Container */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <Suspense
