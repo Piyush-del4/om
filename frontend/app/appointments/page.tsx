@@ -299,7 +299,7 @@ export default function AppointmentsPage() {
         </section>
 
         {/* ── 3. DIRECT CONSULTATIONS WITH FOUNDERS ───────────────────────── */}
-        <section className="space-y-10">
+        <section className="space-y-6">
           <div className="space-y-2 text-center sm:text-left">
             <span className="text-[#A78652] text-xs font-mono font-semibold uppercase tracking-widest block">
               Direct Consultations
@@ -313,211 +313,170 @@ export default function AppointmentsPage() {
             </p>
           </div>
 
-          <div className="space-y-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* ── CONSULTANT 1: RAAJESH S PANDAY ────────────────────────────── */}
-            <div className="bg-white border border-[#E7E0D4] rounded-3xl p-6 sm:p-10 shadow-lg overflow-hidden">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            <div className="bg-white border border-[#E7E0D4] hover:border-[#A78652] rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-5 group">
+              <div className="space-y-4">
                 
-                {/* Left Column: Portrait */}
-                <div className="lg:col-span-5 space-y-4">
-                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm group">
+                {/* Header Tag & Link */}
+                <div className="flex items-center justify-between gap-2 border-b border-[#FAF7F2] pb-3">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
+                    Founder & Master Consultant
+                  </span>
+                  <Link
+                    href="/appointments/team-raajesh"
+                    className="text-[#A78652] hover:text-[#6F2935] text-xs font-semibold flex items-center gap-1 transition-colors"
+                  >
+                    View Bio <ChevronRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+
+                {/* Portrait Image & Credentials Badge */}
+                <div className="space-y-3">
+                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/3] shadow-xs group-hover:scale-[1.01] transition-transform duration-500">
                     <img
                       src="/images/rajessh_paanday.jpg"
                       alt="Rajessh Paanday — Founder & Chief Consultant"
-                      className="w-full h-full object-cover object-top group-hover:scale-103 transition-transform duration-700"
+                      className="w-full h-full object-cover object-top"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="font-serif text-2xl font-bold">Rajessh Paanday</h3>
-                      <p className="text-xs font-mono text-amber-200 uppercase tracking-widest">Founder & Chief Consultant</p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <div className="absolute bottom-3 left-4 right-4 text-white">
+                      <h3 className="font-serif text-xl font-bold">Rajessh Paanday</h3>
+                      <p className="text-[11px] font-mono text-amber-200 uppercase tracking-widest">Founder & Chief Consultant</p>
                     </div>
                   </div>
 
-                  {/* Quick Credentials Badge */}
-                  <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-bold text-[#1D1C1A]">
-                      <Award className="w-5 h-5 text-[#A78652]" />
-                      <span>9+ Years of Professional Experience</span>
+                  <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-3 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2 font-bold text-[#1D1C1A]">
+                      <Award className="w-4 h-4 text-[#A78652]" />
+                      <span>9+ Years Experience</span>
                     </div>
                     <span className="text-[10px] font-mono font-bold text-[#6F2935] bg-[#6F2935]/10 px-2 py-0.5 rounded">Verified</span>
                   </div>
                 </div>
 
-                {/* Right Column: Biography & Specializations */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
-                      Founder & Master Consultant
-                    </span>
-                    <Link
-                      href="/appointments/team-raajesh"
-                      className="text-[#A78652] hover:text-[#6F2935] text-xs font-semibold flex items-center gap-1 transition-colors"
-                    >
-                      View Detailed Profile <ChevronRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
+                {/* Concise Bio */}
+                <p className="text-gray-600 text-xs sm:text-sm font-light leading-relaxed">
+                  Dedicated Life Consultant combining Vedic Astrology, Numerology, Graphology, and 5-Elements balance to guide clients toward clarity, confidence, and natural cosmic timing.
+                </p>
 
-                  <div>
-                    <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#1D1C1A]">
-                      Rajessh Paanday
-                    </h3>
+                {/* Specializations Pills */}
+                <div className="space-y-2 pt-1">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-gray-400 block">Core Expertise</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {['Vedic Astrology', 'Kundali Analysis', 'Numerology', 'Graphology', 'Career Guidance'].map((spec, i) => (
+                      <span
+                        key={i}
+                        className="text-[11px] font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-2.5 py-1 rounded-full"
+                      >
+                        ✦ {spec}
+                      </span>
+                    ))}
                   </div>
-
-                  <div className="text-gray-600 text-sm sm:text-base font-light leading-relaxed space-y-4">
-                    <p>
-                      Rajessh Paanday is a professional Life Consultant dedicated to helping individuals transform life struggles into meaningful clarity and personal fulfillment. With over 9 years of dedicated practice across Vedic disciplines, he has guided clients from diverse backgrounds toward greater purpose and self-understanding.
-                    </p>
-                    <p>
-                      His consultation methodology combines multiple specialized fields: Vedic Astrology, Numerology, Five Elements Analysis, Signature Science, Graphology, and Career Coaching. By analyzing Date of Birth frequencies alongside handwriting and signature structures, he identifies hidden talents and life blockages — empowering clients with practical remedies.
-                    </p>
-                  </div>
-
-                  {/* Specializations Grid */}
-                  <div className="space-y-3 pt-2">
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500">
-                      Specializations & Areas of Practice
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        'Vedic Astrologer', 'Kundali Analysis', 'Numerology Expert',
-                        '5 Element Analysis', 'Rudraksha Therapy', 'Signature Science',
-                        'Graphologist', 'Career Guidance Coach'
-                      ].map((spec, i) => (
-                        <span
-                          key={i}
-                          className="text-xs font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-3.5 py-1.5 rounded-full font-sans shadow-2xs"
-                        >
-                          ✦ {spec}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Direct Action Buttons */}
-                  <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-3">
-                    <button
-                      onClick={() => scrollToBooking()}
-                      className="py-2.5 px-5 text-xs font-bold bg-[#6F2935] hover:bg-[#8A3443] text-white rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
-                    >
-                      <Calendar className="w-4 h-4" /> Book Session with Rajessh
-                    </button>
-                    <a href="tel:+919922352666">
-                      <GoldButton variant="outlined" className="py-2.5 px-4 text-xs font-bold flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-[#A78652]" /> Call (+91 9922352666)
-                      </GoldButton>
-                    </a>
-                    <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
-                      <button className="py-2.5 px-4 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer">
-                        <MessageSquare className="w-4 h-4" /> WhatsApp
-                      </button>
-                    </a>
-                  </div>
-
                 </div>
+              </div>
 
+              {/* Action CTAs */}
+              <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => scrollToBooking()}
+                  className="flex-1 py-2.5 px-3 text-xs font-bold bg-[#6F2935] hover:bg-[#8A3443] text-white rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Calendar className="w-3.5 h-3.5" /> Book Session
+                </button>
+                <a href="tel:+919922352666">
+                  <GoldButton variant="outlined" className="py-2.5 px-3 text-xs font-bold flex items-center gap-1">
+                    <Phone className="w-3.5 h-3.5 text-[#A78652]" /> Call
+                  </GoldButton>
+                </a>
+                <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
+                  <button className="py-2.5 px-3 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-1 cursor-pointer">
+                    <MessageSquare className="w-3.5 h-3.5" /> WhatsApp
+                  </button>
+                </a>
               </div>
             </div>
 
             {/* ── CONSULTANT 2: KUSUM PANDAY ────────────────────────────────── */}
-            <div className="bg-white border border-[#E7E0D4] rounded-3xl p-6 sm:p-10 shadow-lg overflow-hidden">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            <div className="bg-white border border-[#E7E0D4] hover:border-[#A78652] rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-5 group">
+              <div className="space-y-4">
                 
-                {/* Left Column: Portrait */}
-                <div className="lg:col-span-5 space-y-4">
-                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm group">
+                {/* Header Tag & Link */}
+                <div className="flex items-center justify-between gap-2 border-b border-[#FAF7F2] pb-3">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
+                    Tarot & Wellness Specialist
+                  </span>
+                  <Link
+                    href="/appointments/team-kusum"
+                    className="text-[#A78652] hover:text-[#6F2935] text-xs font-semibold flex items-center gap-1 transition-colors"
+                  >
+                    View Bio <ChevronRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+
+                {/* Portrait Image & Credentials Badge */}
+                <div className="space-y-3">
+                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/3] shadow-xs group-hover:scale-[1.01] transition-transform duration-500">
                     <img
                       src="/images/team_kusum.png"
                       alt="Kusum Panday — Tarot Card Reader & Wellness Coach"
-                      className="w-full h-full object-cover object-top group-hover:scale-103 transition-transform duration-700"
+                      className="w-full h-full object-cover object-top"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="font-serif text-2xl font-bold">Kusum Panday</h3>
-                      <p className="text-xs font-mono text-amber-200 uppercase tracking-widest">Tarot Reader & Wellness Coach</p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <div className="absolute bottom-3 left-4 right-4 text-white">
+                      <h3 className="font-serif text-xl font-bold">Kusum Panday</h3>
+                      <p className="text-[11px] font-mono text-amber-200 uppercase tracking-widest">Tarot Reader & Wellness Coach</p>
                     </div>
                   </div>
 
-                  {/* Quick Credentials Badge */}
-                  <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-bold text-[#1D1C1A]">
-                      <Award className="w-5 h-5 text-[#A78652]" />
-                      <span>7+ Years of Professional Experience</span>
+                  <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-3 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2 font-bold text-[#1D1C1A]">
+                      <Award className="w-4 h-4 text-[#A78652]" />
+                      <span>7+ Years Experience</span>
                     </div>
                     <span className="text-[10px] font-mono font-bold text-[#6F2935] bg-[#6F2935]/10 px-2 py-0.5 rounded">Verified</span>
                   </div>
                 </div>
 
-                {/* Right Column: Biography & Specializations */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
-                      Tarot & Wellness Specialist
-                    </span>
-                    <Link
-                      href="/appointments/team-kusum"
-                      className="text-[#A78652] hover:text-[#6F2935] text-xs font-semibold flex items-center gap-1 transition-colors"
-                    >
-                      View Detailed Profile <ChevronRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
+                {/* Concise Bio */}
+                <p className="text-gray-600 text-xs sm:text-sm font-light leading-relaxed">
+                  Intuitive Tarot Card Reader, Relationship Coach, and Yoga practitioner creating a nurturing space to heal emotional patterns, regain confidence, and achieve personal clarity.
+                </p>
 
-                  <div>
-                    <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#1D1C1A]">
-                      Kusum Panday
-                    </h3>
+                {/* Specializations Pills */}
+                <div className="space-y-2 pt-1">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-gray-400 block">Core Expertise</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {['Tarot Reader', 'Relationship Coach', 'Yoga Teacher', 'Emotional Healing', 'Wellness'].map((spec, i) => (
+                      <span
+                        key={i}
+                        className="text-[11px] font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-2.5 py-1 rounded-full"
+                      >
+                        ✦ {spec}
+                      </span>
+                    ))}
                   </div>
-
-                  <div className="text-gray-600 text-sm sm:text-base font-light leading-relaxed space-y-4">
-                    <p>
-                      Kusum Panday brings a deeply compassionate and nurturing energy to every consultation. As an experienced Tarot Card Reader, Relationship Coach, and certified Yoga Teacher, she creates a safe, empathetic space for clients to explore emotions, heal old patterns, and rediscover inner strength.
-                    </p>
-                    <p>
-                      Her tarot readings go beyond surface prediction — they act as a psychological mirror, reflecting subconscious patterns that influence choices in love, family dynamics, and personal growth. Combined with relationship coaching techniques and yogic discipline, Kusum Ji helps clients find emotional balance and regain confidence.
-                    </p>
-                  </div>
-
-                  {/* Specializations Grid */}
-                  <div className="space-y-3 pt-2">
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-gray-500">
-                      Specializations & Areas of Practice
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        'Tarot Card Reader', 'Relationship Coach', 'Yoga Teacher',
-                        'Emotional Healing', 'Mindfulness & Wellness', 'Intuitive Guidance'
-                      ].map((spec, i) => (
-                        <span
-                          key={i}
-                          className="text-xs font-medium bg-[#FAF7F2] text-[#1D1C1A] border border-[#E7E0D4] px-3.5 py-1.5 rounded-full font-sans shadow-2xs"
-                        >
-                          ✦ {spec}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Direct Action Buttons */}
-                  <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-3">
-                    <button
-                      onClick={() => scrollToBooking()}
-                      className="py-2.5 px-5 text-xs font-bold bg-[#6F2935] hover:bg-[#8A3443] text-white rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
-                    >
-                      <Calendar className="w-4 h-4" /> Book Session with Kusum
-                    </button>
-                    <a href="tel:+919922352666">
-                      <GoldButton variant="outlined" className="py-2.5 px-4 text-xs font-bold flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-[#A78652]" /> Call (+91 9922352666)
-                      </GoldButton>
-                    </a>
-                    <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
-                      <button className="py-2.5 px-4 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer">
-                        <MessageSquare className="w-4 h-4" /> WhatsApp
-                      </button>
-                    </a>
-                  </div>
-
                 </div>
+              </div>
 
+              {/* Action CTAs */}
+              <div className="pt-4 border-t border-[#E7E0D4] flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => scrollToBooking()}
+                  className="flex-1 py-2.5 px-3 text-xs font-bold bg-[#6F2935] hover:bg-[#8A3443] text-white rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Calendar className="w-3.5 h-3.5" /> Book Session
+                </button>
+                <a href="tel:+919922352666">
+                  <GoldButton variant="outlined" className="py-2.5 px-3 text-xs font-bold flex items-center gap-1">
+                    <Phone className="w-3.5 h-3.5 text-[#A78652]" /> Call
+                  </GoldButton>
+                </a>
+                <a href="https://wa.me/919922352666" target="_blank" rel="noopener noreferrer">
+                  <button className="py-2.5 px-3 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-sm flex items-center gap-1 cursor-pointer">
+                    <MessageSquare className="w-3.5 h-3.5" /> WhatsApp
+                  </button>
+                </a>
               </div>
             </div>
           </div>
