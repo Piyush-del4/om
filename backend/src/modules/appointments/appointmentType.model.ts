@@ -10,6 +10,7 @@ export interface IAppointmentType extends Document {
   specialOfferTitle?: string;
   offerPrice?: number;
   offerExpiresAt?: Date;
+  whoIsThisFor?: Array<{ title: string; subtitle: string }>;
   isDeleted: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -31,6 +32,12 @@ const AppointmentTypeSchema = new Schema<IAppointmentType>(
     specialOfferTitle: { type: String, default: '' },
     offerPrice: { type: Number, min: 0 },
     offerExpiresAt: { type: Date },
+    whoIsThisFor: [
+      {
+        title: { type: String, required: true },
+        subtitle: { type: String, required: true },
+      },
+    ],
     isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true }

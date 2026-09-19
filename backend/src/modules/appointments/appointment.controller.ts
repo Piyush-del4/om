@@ -343,7 +343,7 @@ export async function listAppointmentTypes(req: Request, res: Response, next: Ne
 
 export async function createAppointmentType(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { name, price, duration, description, imageUrl, category, specialOfferTitle, offerPrice, offerExpiresAt } = req.body;
+    const { name, price, duration, description, imageUrl, category, specialOfferTitle, offerPrice, offerExpiresAt, whoIsThisFor } = req.body;
 
     const newType = await AppointmentType.create({
       name,
@@ -355,6 +355,7 @@ export async function createAppointmentType(req: Request, res: Response, next: N
       specialOfferTitle: specialOfferTitle || '',
       offerPrice: offerPrice !== undefined ? offerPrice : undefined,
       offerExpiresAt: offerExpiresAt ? new Date(offerExpiresAt) : undefined,
+      whoIsThisFor: Array.isArray(whoIsThisFor) ? whoIsThisFor : undefined,
     });
 
     res.status(201).json({
@@ -400,7 +401,7 @@ export async function deleteAppointmentType(req: Request, res: Response, next: N
 export async function updateAppointmentType(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const { id } = req.params;
-    const { name, price, duration, description, imageUrl, category, specialOfferTitle, offerPrice, offerExpiresAt } = req.body;
+    const { name, price, duration, description, imageUrl, category, specialOfferTitle, offerPrice, offerExpiresAt, whoIsThisFor } = req.body;
 
     const appType = await AppointmentType.findById(id);
     if (!appType) {
@@ -423,6 +424,7 @@ export async function updateAppointmentType(req: Request, res: Response, next: N
     if (specialOfferTitle !== undefined) appType.specialOfferTitle = specialOfferTitle;
     if (offerPrice !== undefined) appType.offerPrice = offerPrice === null ? undefined : offerPrice;
     if (offerExpiresAt !== undefined) appType.offerExpiresAt = offerExpiresAt === null ? undefined : new Date(offerExpiresAt);
+    if (whoIsThisFor !== undefined) appType.whoIsThisFor = Array.isArray(whoIsThisFor) ? whoIsThisFor : undefined;
 
     await appType.save();
 

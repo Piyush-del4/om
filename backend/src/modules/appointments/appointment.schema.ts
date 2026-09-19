@@ -26,6 +26,14 @@ export const createAppointmentTypeSchema = z.object({
   specialOfferTitle: z.string().optional(),
   offerPrice: z.number().min(0).optional().nullable(),
   offerExpiresAt: z.string().optional().nullable(),
+  whoIsThisFor: z
+    .array(
+      z.object({
+        title: z.string(),
+        subtitle: z.string(),
+      })
+    )
+    .optional(),
 });
 
 export const updateAppointmentTypeSchema = createAppointmentTypeSchema.partial();

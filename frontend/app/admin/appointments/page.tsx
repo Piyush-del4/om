@@ -85,6 +85,12 @@ export default function AdminAppointmentsPage() {
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [category, setCategory] = useState('Astrology');
+  const [whoIsThisFor, setWhoIsThisFor] = useState<{ title: string; subtitle: string }[]>([
+    { title: '', subtitle: '' },
+    { title: '', subtitle: '' },
+    { title: '', subtitle: '' },
+    { title: '', subtitle: '' },
+  ]);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [isUploading, setIsUploading] = useState(false);
@@ -226,6 +232,16 @@ export default function AdminAppointmentsPage() {
     setDescription(type.description || '');
     setImageUrl(type.imageUrl || '');
     setCategory(type.category || 'Astrology');
+    if (type.whoIsThisFor && Array.isArray(type.whoIsThisFor) && type.whoIsThisFor.length > 0) {
+      setWhoIsThisFor(type.whoIsThisFor);
+    } else {
+      setWhoIsThisFor([
+        { title: '', subtitle: '' },
+        { title: '', subtitle: '' },
+        { title: '', subtitle: '' },
+        { title: '', subtitle: '' },
+      ]);
+    }
     setErrorMsg('');
     setSuccessMsg('');
   };
@@ -241,6 +257,12 @@ export default function AdminAppointmentsPage() {
     setDescription('');
     setImageUrl('');
     setCategory('Astrology');
+    setWhoIsThisFor([
+      { title: '', subtitle: '' },
+      { title: '', subtitle: '' },
+      { title: '', subtitle: '' },
+      { title: '', subtitle: '' },
+    ]);
     setErrorMsg('');
     setSuccessMsg('');
   };
@@ -250,6 +272,7 @@ export default function AdminAppointmentsPage() {
     if (!typeName.trim() || !priceInRupees || !duration) return;
     const pricePaise = Math.round(parseFloat(priceInRupees) * 100);
     const offerPricePaise = offerPriceInRupees ? Math.round(parseFloat(offerPriceInRupees) * 100) : undefined;
+    const cleanWhoIsThisFor = whoIsThisFor.filter((item) => item.title.trim() && item.subtitle.trim());
     const payload = {
       name: typeName,
       price: pricePaise,
@@ -260,6 +283,7 @@ export default function AdminAppointmentsPage() {
       specialOfferTitle: specialOfferTitle || undefined,
       offerPrice: offerPricePaise ?? null,
       offerExpiresAt: offerExpiresAt ? new Date(offerExpiresAt).toISOString() : null,
+      whoIsThisFor: cleanWhoIsThisFor.length > 0 ? cleanWhoIsThisFor : undefined,
     };
     if (editingTypeId) {
       updateTypeMutation.mutate({ id: editingTypeId, payload });

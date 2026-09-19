@@ -62,6 +62,87 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
     return appointmentTypes?.find((t: any) => t._id === id);
   }, [appointmentTypes, id]);
 
+  const whoIsThisForItems = useMemo(() => {
+    if (!appType) return [];
+    if (appType.whoIsThisFor && Array.isArray(appType.whoIsThisFor) && appType.whoIsThisFor.length > 0) {
+      return appType.whoIsThisFor;
+    }
+
+    const name = (appType.name || '').toLowerCase();
+    const desc = (appType.description || '').toLowerCase();
+    const category = (appType.category || '').toLowerCase();
+
+    if (name.includes('corporate') || desc.includes('company') || desc.includes('logo') || desc.includes('incorporation')) {
+      return [
+        { title: 'Corporate Branding', subtitle: 'Company name & logo total optimization' },
+        { title: 'Entity Incorporation', subtitle: 'Favorable launch date selection' },
+        { title: 'Brand Vibrations', subtitle: 'Spelling correction for company growth' },
+        { title: 'Partnership Alignment', subtitle: 'Co-founder & executive compatibility' },
+      ];
+    }
+
+    if (name.includes('mobile') || desc.includes('phone') || name.includes('phone')) {
+      return [
+        { title: 'Mobile Vibrations', subtitle: 'Aligning phone digits with birth date' },
+        { title: 'Financial Attraction', subtitle: 'Numbers for business & deal closing' },
+        { title: 'Harmonious Contact', subtitle: 'Peace & positivity in communication' },
+        { title: 'Digit Selection', subtitle: 'Choosing total & lucky digit series' },
+      ];
+    }
+
+    if (category.includes('numerology') || name.includes('numerology')) {
+      return [
+        { title: 'Life Path & Destiny', subtitle: 'Understanding core birth number grid' },
+        { title: 'Name Spelling Correction', subtitle: 'Fixing name vibrational total' },
+        { title: 'Personal Year Cycles', subtitle: 'Predicting personal year opportunities' },
+        { title: 'Vibrational Remedies', subtitle: 'Lucky numbers, dates & colors' },
+      ];
+    }
+
+    if (category.includes('tarot') || name.includes('tarot') || name.includes('card')) {
+      return [
+        { title: 'Love & Relationships', subtitle: 'Crossroads & partner compatibility' },
+        { title: 'Career & Opportunities', subtitle: 'Direction on job shifts & choices' },
+        { title: 'Emotional Healing', subtitle: 'Releasing anxiety & energy blocks' },
+        { title: 'Intuitive Answers', subtitle: 'Direct clarity on urgent questions' },
+      ];
+    }
+
+    if (category.includes('graphology') || name.includes('graphology') || desc.includes('handwriting') || desc.includes('signature')) {
+      return [
+        { title: 'Signature Optimization', subtitle: 'Refining signature for authority & confidence' },
+        { title: 'Subconscious Trait Analysis', subtitle: 'Uncovering hidden mind patterns' },
+        { title: 'Career & Leadership', subtitle: 'Boosting success via stroke corrections' },
+        { title: 'Habit Transformation', subtitle: 'Refining letter strokes for positive mindset' },
+      ];
+    }
+
+    if (name.includes('match') || name.includes('marriage') || desc.includes('guna milan') || desc.includes('compatibility')) {
+      return [
+        { title: 'Kundli Guna Milan', subtitle: '36 Guna analysis & Ashtakoot score' },
+        { title: 'Dosha & Manglik Check', subtitle: 'Identifying & resolving marital doshas' },
+        { title: 'Timing of Marriage', subtitle: 'Favorable marriage windows & Muhurat' },
+        { title: 'Relationship Harmony', subtitle: 'Remedies for long-term understanding' },
+      ];
+    }
+
+    if (name.includes('career') || desc.includes('career') || desc.includes('job') || desc.includes('business')) {
+      return [
+        { title: 'Career & Job Shift', subtitle: 'Promotions, interviews & timing' },
+        { title: 'Financial Wealth Yogas', subtitle: 'Dhana yogas & income activation' },
+        { title: 'Business Expansion', subtitle: 'Auspicious timing for new ventures' },
+        { title: 'Workplace Remedies', subtitle: 'Mitigating office obstacles & transits' },
+      ];
+    }
+
+    return [
+      { title: 'Career & Business', subtitle: 'Job shifts & growth' },
+      { title: 'Love & Marriage', subtitle: 'Compatibility & timing' },
+      { title: 'Life Decisions', subtitle: 'Navigating choices' },
+      { title: 'Personal Growth', subtitle: 'Inner clarity & peace' },
+    ];
+  }, [appType]);
+
   // Related consultation types (excluding current service)
   const relatedTypes = useMemo(() => {
     if (!appointmentTypes) return [];
@@ -482,22 +563,12 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
             </h3>
 
             <div className="grid grid-cols-2 gap-2.5 pt-1">
-              <div className="bg-[#FAF7F2] border border-[#E7E0D4] p-3 rounded-xl text-center">
-                <span className="text-xs font-bold text-gray-900 block">Career & Business</span>
-                <span className="text-[10px] text-gray-500 font-light">Job shifts & growth</span>
-              </div>
-              <div className="bg-[#FAF7F2] border border-[#E7E0D4] p-3 rounded-xl text-center">
-                <span className="text-xs font-bold text-gray-900 block">Love & Marriage</span>
-                <span className="text-[10px] text-gray-500 font-light">Compatibility & timing</span>
-              </div>
-              <div className="bg-[#FAF7F2] border border-[#E7E0D4] p-3 rounded-xl text-center">
-                <span className="text-xs font-bold text-gray-900 block">Life Decisions</span>
-                <span className="text-[10px] text-gray-500 font-light">Navigating choices</span>
-              </div>
-              <div className="bg-[#FAF7F2] border border-[#E7E0D4] p-3 rounded-xl text-center">
-                <span className="text-xs font-bold text-gray-900 block">Personal Growth</span>
-                <span className="text-[10px] text-gray-500 font-light">Inner clarity & peace</span>
-              </div>
+              {whoIsThisForItems.map((item: any, idx: number) => (
+                <div key={idx} className="bg-[#FAF7F2] border border-[#E7E0D4] p-3 rounded-xl text-center flex flex-col justify-center">
+                  <span className="text-xs font-bold text-gray-900 block">{item.title}</span>
+                  <span className="text-[10px] text-gray-500 font-light mt-0.5">{item.subtitle}</span>
+                </div>
+              ))}
             </div>
           </div>
 
