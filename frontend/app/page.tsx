@@ -504,7 +504,7 @@ export default function Home() {
 
  {/* CTA */}
  <Link href="/premium-personalized-kundli">
- <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 cursor-pointer">
+ <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-white font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 cursor-pointer">
  <span>✦</span>
  Get PREMIUM PERSONALIZED KUNDLI
  <span>✦</span>
@@ -542,7 +542,7 @@ export default function Home() {
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-4">
           <Link href="/fean-ebook">
-            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-black font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 w-full sm:w-auto">
+            <button className="inline-flex items-center justify-center gap-3 px-8 py-3 bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] text-white font-bold text-base rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-amber-300/40 w-full sm:w-auto">
               <BookOpen className="w-5 h-5" />
               Read Ebook
             </button>

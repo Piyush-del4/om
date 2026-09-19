@@ -223,6 +223,13 @@ export default function AppointmentsPage() {
     });
   }, [appointments, apptFilterTab]);
 
+  const raajeshMember = teamMembers.find((m: any) =>
+    m.name?.toLowerCase().includes('rajessh') || m.name?.toLowerCase().includes('rajesh')
+  );
+  const kusumMember = teamMembers.find((m: any) =>
+    m.name?.toLowerCase().includes('kusum')
+  );
+
   return (
     <div className="relative radial-mesh-bg min-h-screen bg-[#FAF8F5] overflow-x-hidden text-gray-900 pb-20">
       
@@ -318,32 +325,33 @@ export default function AppointmentsPage() {
             <div className="bg-white border border-[#E7E0D4] hover:border-[#A78652] rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-5 group">
               <div className="space-y-4">
                 
-                {/* Header Tag & Link */}
-                <div className="flex items-center justify-between gap-2 border-b border-[#FAF7F2] pb-3">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
-                    Founder & Master Consultant
-                  </span>
-                  <Link
-                    href="/appointments/team-raajesh"
-                    className="text-[#A78652] hover:text-[#6F2935] text-xs font-semibold flex items-center gap-1 transition-colors"
-                  >
-                    View Bio <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-
                 {/* Portrait Image & Credentials Badge */}
                 <div className="space-y-3">
-                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/3] shadow-xs group-hover:scale-[1.01] transition-transform duration-500">
-                    <img
-                      src="/images/rajessh_paanday.jpg"
-                      alt="Rajessh Paanday — Founder & Chief Consultant"
-                      className="w-full h-full object-cover object-top"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-3 left-4 right-4 text-white">
-                      <h3 className="font-serif text-xl font-bold">Rajessh Paanday</h3>
-                      <p className="text-[11px] font-mono text-amber-200 uppercase tracking-widest">Founder & Chief Consultant</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="relative flex-1 rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[16/9] max-h-52 shadow-xs group-hover:scale-[1.01] transition-transform duration-500">
+                      <Link
+                        href="/appointments/team-raajesh"
+                        className="md:hidden absolute top-3 right-3 z-10 bg-white/85 hover:bg-white text-[#6F2935] hover:text-[#A78652] backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm transition-all"
+                      >
+                        View Bio <ChevronRight className="w-3.5 h-3.5" />
+                      </Link>
+                      <img
+                        src={raajeshMember?.image || '/images/team_raajesh.png'}
+                        alt="Rajessh Paanday — Founder & Chief Consultant"
+                        className="w-full h-full object-cover object-top"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                      <div className="absolute bottom-3 left-4 right-4 text-white">
+                        <h3 className="font-serif text-xl font-bold">Rajessh Paanday</h3>
+                        <p className="text-[11px] font-mono text-amber-200 uppercase tracking-widest">Founder & Chief Consultant</p>
+                      </div>
                     </div>
+                    <Link
+                      href="/appointments/team-raajesh"
+                      className="hidden md:inline-flex shrink-0 text-[#A78652] hover:text-[#6F2935] text-xs font-bold items-center gap-1 transition-colors pt-1"
+                    >
+                      View Bio <ChevronRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
 
                   <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-3 flex items-center justify-between text-xs">
@@ -401,32 +409,33 @@ export default function AppointmentsPage() {
             <div className="bg-white border border-[#E7E0D4] hover:border-[#A78652] rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-5 group">
               <div className="space-y-4">
                 
-                {/* Header Tag & Link */}
-                <div className="flex items-center justify-between gap-2 border-b border-[#FAF7F2] pb-3">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#6F2935] bg-[#6F2935]/10 px-3 py-1 rounded-full">
-                    Tarot & Wellness Specialist
-                  </span>
-                  <Link
-                    href="/appointments/team-kusum"
-                    className="text-[#A78652] hover:text-[#6F2935] text-xs font-semibold flex items-center gap-1 transition-colors"
-                  >
-                    View Bio <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-
                 {/* Portrait Image & Credentials Badge */}
                 <div className="space-y-3">
-                  <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/3] shadow-xs group-hover:scale-[1.01] transition-transform duration-500">
-                    <img
-                      src="/images/team_kusum.png"
-                      alt="Kusum Panday — Tarot Card Reader & Wellness Coach"
-                      className="w-full h-full object-cover object-top"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-3 left-4 right-4 text-white">
-                      <h3 className="font-serif text-xl font-bold">Kusum Panday</h3>
-                      <p className="text-[11px] font-mono text-amber-200 uppercase tracking-widest">Tarot Reader & Wellness Coach</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="relative flex-1 rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[16/9] max-h-52 shadow-xs group-hover:scale-[1.01] transition-transform duration-500">
+                      <Link
+                        href="/appointments/team-kusum"
+                        className="md:hidden absolute top-3 right-3 z-10 bg-white/85 hover:bg-white text-[#6F2935] hover:text-[#A78652] backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm transition-all"
+                      >
+                        View Bio <ChevronRight className="w-3.5 h-3.5" />
+                      </Link>
+                      <img
+                        src={kusumMember?.image || '/images/team_kusum.png'}
+                        alt="Kusum Panday — Tarot Card Reader & Wellness Coach"
+                        className="w-full h-full object-cover object-top"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                      <div className="absolute bottom-3 left-4 right-4 text-white">
+                        <h3 className="font-serif text-xl font-bold">Kusum Panday</h3>
+                        <p className="text-[11px] font-mono text-amber-200 uppercase tracking-widest">Tarot Reader & Wellness Coach</p>
+                      </div>
                     </div>
+                    <Link
+                      href="/appointments/team-kusum"
+                      className="hidden md:inline-flex shrink-0 text-[#A78652] hover:text-[#6F2935] text-xs font-bold items-center gap-1 transition-colors pt-1"
+                    >
+                      View Bio <ChevronRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
 
                   <div className="bg-[#FAF7F2] border border-[#E7E0D4] rounded-xl p-3 flex items-center justify-between text-xs">

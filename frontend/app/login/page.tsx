@@ -566,7 +566,7 @@ export function AuthPortal({ defaultMode = 'login' }: { defaultMode?: 'login' | 
  `}} />
 
  {/* LEFT PANEL: Constellation and Astro Graphics (Desktop only) */}
- <div className="hidden md:flex md:w-1/2 bg-white border-r border-[var(--gold-200)]/15 relative flex-col items-center justify-center p-12 overflow-hidden select-none">
+ <div className="hidden md:flex md:w-1/2 bg-white relative flex-col items-center justify-center p-12 overflow-hidden select-none">
  {/* Sacred Geometry background grid */}
  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(204,143,51,0.04),transparent_65%)] pointer-events-none" />
  <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(204,143,51,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(204,143,51,0.01)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
@@ -634,7 +634,7 @@ export function AuthPortal({ defaultMode = 'login' }: { defaultMode?: 'login' | 
  {/* Premium Auth Portal Card */}
  <GoldCard className="w-full max-w-md relative z-10 transition-all duration-300">
  {/* Custom Tab Switcher */}
- <div className="flex border border-[var(--gold-200)]/30 p-1 rounded-full bg-gray-50/60 max-w-[280px] mx-auto mb-8">
+ <div className="flex p-1 rounded-full bg-gray-50/60 max-w-[280px] mx-auto mb-8">
  <button
  type="button"
  onClick={() => handleModeChange('login')}

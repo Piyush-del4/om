@@ -165,6 +165,8 @@ export default function AboutUsPage() {
 
   const team = teamData ?? [];
   const founderMember = team.find(m => m.name.toLowerCase().includes('rajessh') || m.name.toLowerCase().includes('rajesh'));
+  const kusumMember = team.find(m => m.name.toLowerCase().includes('kusum'));
+  const aayushMember = team.find(m => m.name.toLowerCase().includes('aayush') || m.name.toLowerCase().includes('ayush'));
 
   const scrollToFounder = () => {
     founderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -319,7 +321,7 @@ export default function AboutUsPage() {
                 <div className="lg:col-span-5 space-y-4">
                   <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
                     <img
-                      src={founderMember?.image || '/images/rajessh_paanday.jpg'}
+                      src={founderMember?.image || '/images/team_raajesh.png'}
                       alt="Rajessh Paanday — Founder & Chief Consultant"
                       className="w-full h-full object-cover object-top hover:scale-103 transition-transform duration-700"
                     />
@@ -416,7 +418,7 @@ export default function AboutUsPage() {
                 <div className="lg:col-span-5 space-y-4">
                   <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
                     <img
-                      src="/images/team_kusum.png"
+                      src={kusumMember?.image || '/images/team_kusum.png'}
                       alt="Kusum Panday — Tarot Card Reader & Wellness Coach"
                       className="w-full h-full object-cover object-top hover:scale-103 transition-transform duration-700"
                     />
@@ -512,7 +514,7 @@ export default function AboutUsPage() {
                 <div className="lg:col-span-5 space-y-4">
                   <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
                     <img
-                      src="/images/team_aayush.png"
+                      src={aayushMember?.image || '/images/team_aayush.png'}
                       alt="Aayush Kumar — Social Media Manager & Brand Strategist"
                       className="w-full h-full object-cover object-top hover:scale-103 transition-transform duration-700"
                     />

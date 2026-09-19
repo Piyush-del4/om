@@ -117,12 +117,12 @@ export function Navbar() {
   { name: 'Batch', path: '/my-batches/join' },
   ]
   : [
-  { name: 'Home', path: '/' },
   { name: 'Services', path: '#', isMega: true, megaType: 'services' },
   { name: 'Horoscope', path: '#', isMega: true, megaType: 'horoscope' },
   { name: 'Free Tools', path: '#', isMega: true, megaType: 'freeTools' },
   { name: 'Appointment', path: '/appointments' },
   { name: 'Shop', path: '/shop' },
+  { name: 'Batch', path: '/my-batches/join' },
  ];
 
  const toggleMenu = () => setIsOpen(!isOpen);

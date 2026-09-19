@@ -55,7 +55,7 @@ export default function RaajeshProfilePage() {
             <div className="lg:col-span-5 space-y-4">
               <div className="relative rounded-2xl overflow-hidden border border-[#E7E0D4] bg-[#F7F3EA] aspect-[4/5] shadow-sm">
                 <img
-                  src={member?.image || '/images/rajessh_paanday.jpg'}
+                  src={member?.image || '/images/team_raajesh.png'}
                   alt="Rajessh Paanday — Founder & Chief Consultant"
                   className="w-full h-full object-cover object-top"
                 />
