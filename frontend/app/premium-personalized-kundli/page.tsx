@@ -4,9 +4,21 @@ import PremiumKundliGeneratorPage from '@/components/ui/PremiumKundliGeneratorPa
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 export const metadata: Metadata = {
-  title: 'Premium Personalized Janam Kundli Report — 20+ Sections | OM Astrology AMC',
-  description: 'Generate your 20+ section personalized Janam Kundli report — Lagna Chart, Chalit Chart, Vimshottari Dasha, Yoga & Dosha analysis, and customized remedies by Rajessh Paanday.',
-  keywords: ['premium kundli report', 'personalized janam kundli', 'kundali PDF download', 'vedic birth chart report', 'OM Astrology AMC'],
+  title: 'Premium Personalized Janam Kundli Report — 20+ Sections Detailed Analysis | OM Astrology AMC',
+  description: 'Generate your 20+ section personalized Janam Kundli report — detailed Kundli report, Lagna Chart, Vimshottari Dasha, Kundli dosha analysis, and customized remedies by Rajessh Paanday.',
+  keywords: [
+    'premium kundli report',
+    'personalized janam kundli',
+    'detailed kundli report',
+    'personalized birth chart',
+    'kundli report',
+    'kundli astrologer mumbai',
+    'kundli consultation india',
+    'kundli consultation mumbai',
+    'personalized kundli mumbai',
+    'janam kundli consultation',
+    'vedic kundli analysis'
+  ],
   openGraph: {
     title: 'Premium Personalized Janam Kundli Report | OM Astrology AMC',
     description: 'Get your comprehensive 20+ section personalized Janam Kundli report created from your exact birth coordinates.',

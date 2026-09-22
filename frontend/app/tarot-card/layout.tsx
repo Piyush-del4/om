@@ -2,14 +2,40 @@ import type { Metadata } from 'next';
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
- title: 'Tarot Card Reading Online — Celtic Cross, Love & Career Guidance',
- description:
- 'Get clear answers about relationships, career, and future through authentic Tarot card readings. One-card, three-card, and Celtic Cross spreads. Best tarot reader online at OM Astrology AMC.',
- keywords: [
- 'tarot reading online', 'tarot consultation', 'best tarot reader', 'celtic cross tarot',
- 'love tarot reading', 'career tarot reading', 'tarot card meanings', 'major arcana',
- 'minor arcana', 'tarot guidance', 'tarot session online', 'relationship tarot',
- ],
+  title: 'Tarot Reading Online — Tarot Card Reader Consultation & Love Tarot | OM Astrology AMC',
+  description:
+    'Get authentic online tarot reading with master reader Kusum Panday. One-card, three-card, love tarot reading, career tarot reading, and tarot guidance online.',
+  keywords: [
+    'tarot reading',
+    'tarot card reading',
+    'tarot reading online',
+    'online tarot reading',
+    'tarot reader',
+    'tarot reader online',
+    'online tarot reader',
+    'tarot card reader',
+    'tarot card reader online',
+    'tarot consultation',
+    'tarot consultation online',
+    'tarot prediction',
+    'tarot guidance',
+    'tarot advice',
+    'love tarot reading',
+    'love tarot',
+    'relationship tarot reading',
+    'marriage tarot reading',
+    'career tarot reading',
+    'money tarot reading',
+    'business tarot reading',
+    'yes or no tarot',
+    'one card tarot reading',
+    'three card tarot reading',
+    'tarot reading for love',
+    'tarot reading for career',
+    'professional tarot reader',
+    'tarot reader Mumbai',
+    'tarot reader India'
+  ],
  openGraph: {
  title: 'Tarot Card Reading Online — OM Astrology AMC',
  description:

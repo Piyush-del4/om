@@ -7,8 +7,11 @@ import { SEOInternalMesh } from '../../components/seo/SEOInternalMesh';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
 
 export const metadata: Metadata = {
-  title: 'Occult Synthesis Guides — Astrology, Numerology, Graphology & Tarot Intersections',
+  title: 'Occult Synthesis Guides — Astrology, Numerology, Graphology & Tarot Intersections | OM Astrology AMC',
   description: 'Explore deep cross-domain guides integrating Vedic Astrology, Chaldean Numerology, Graphology Signature Science, and Tarot Cards for 360-degree spiritual clarity.',
+  alternates: {
+    canonical: 'https://www.omastrologyamc.com/occult-synthesis',
+  },
 };
 
 const SYNTHESIS_CARDS = [

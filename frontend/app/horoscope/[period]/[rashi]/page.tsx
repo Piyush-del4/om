@@ -7,7 +7,55 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { HoroscopeDatabaseLinks } from '@/components/ui/astrology/HoroscopeDatabaseLinks';
 import { getApiUrl } from '@/lib/env';
 
+import { Metadata } from 'next';
+import { BreadcrumbSchema, FAQSchema } from '@/components/seo/JsonLd';
+
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: { params: Promise<{ period: string; rashi: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const { period, rashi } = resolvedParams;
+
+  const validPeriod = horoscopeData.periods.find(p => p.id === period);
+  const validZodiac = horoscopeData.zodiacs.find(z => z.id === rashi);
+
+  if (!validPeriod || !validZodiac) {
+    return { title: 'Horoscope Not Found' };
+  }
+
+  const periodCap = period.charAt(0).toUpperCase() + period.slice(1);
+  const title = `${validZodiac.name} ${periodCap} Horoscope Today — Free Vedic Astrological Predictions | OM Astrology AMC`;
+  const description = `Read accurate free ${validZodiac.name} ${period} horoscope prediction for career, finance, health, love & family life written by expert Vedic astrologer Rajessh Paanday.`;
+  const canonicalUrl = `https://omastrologyamc.com/horoscope/${period}/${rashi}`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      `${validZodiac.name} ${period} horoscope`,
+      `${validZodiac.name} horoscope today`,
+      `${validZodiac.name} rashi rashifal`,
+      'Vedic horoscope reading',
+      'OM Astrology AMC'
+    ],
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: 'OM Astrology AMC',
+      images: [{ url: `https://omastrologyamc.com/images/${validZodiac.image}` }],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
+  };
+}
 
 export default async function HoroscopePage({ params }: { params: Promise<{ period: string; rashi: string }> }) {
   const resolvedParams = await params;
@@ -24,7 +72,6 @@ export default async function HoroscopePage({ params }: { params: Promise<{ peri
   let liveData = null;
   try {
     const apiUrl = getApiUrl();
-    console.log(`Fetching from: ${apiUrl}/astrology/horoscope/latest`);
     const res = await fetch(`${apiUrl}/astrology/horoscope/latest`, { cache: 'no-store' });
     if (res.ok) {
       const parsedData = await res.json();
@@ -36,35 +83,9 @@ export default async function HoroscopePage({ params }: { params: Promise<{ peri
     console.warn("Could not load latest horoscope from backend API", err);
   }
 
-  // If live API data is missing or doesn't have predictions for this period, 
-  // show preparation state instead of outdated/static fallback predictions.
-  if (!liveData || !liveData[period]) {
-    return (
-      <div className="min-h-[60vh] bg-[#FFFDF7] font-sans flex items-center justify-center px-4">
-        <div className="text-center max-w-2xl space-y-6">
-          <div className="w-20 h-20 mx-auto bg-[#FCAF3E]/20 rounded-full flex items-center justify-center mb-6">
-            <span className="text-4xl text-[#E38100]">✧</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-serif font-bold text-[#5A3815]">
-            Reading the Stars...
-          </h1>
-          <p className="text-[#5A3815]/80 text-lg leading-relaxed">
-            Our expert astrologers are currently preparing the precise {validZodiac.name} {period} horoscope for you. Please check back in just a few moments!
-          </p>
-          <div className="pt-8">
-            <Link 
-              href="/horoscope"
-              className="inline-block bg-gradient-to-b from-[#FCAF3E] to-[#F5900F] text-black text-[15px] font-bold px-8 py-3 rounded-sm shadow-[0_2px_4px_rgba(0,0,0,0.2)] hover:brightness-105 transition-all border border-[#E38100]"
-            >
-              Go Back to Zodiac Signs
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const predictionData = liveData;
+  // Use live data if available for this period, otherwise fall back to rich structured dummyPrediction
+  // so search engine crawlers always receive full text content rather than a loading state.
+  const predictionData = (liveData && liveData[period]) ? liveData : horoscopeData.dummyPrediction;
 
   // Helper to format date and title based on period
   const today = new Date();
@@ -91,8 +112,18 @@ export default async function HoroscopePage({ params }: { params: Promise<{ peri
     titleText = <>{validZodiac.name} Yearly 2026</>;
   }
 
+  const generatedFaqs = generateDynamicFAQs(validZodiac, period, predictionData);
+
   return (
     <div className="min-h-screen bg-[#FFFDF7] font-sans">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Horoscope', url: '/horoscope' },
+        { name: `${validZodiac.name} ${period.charAt(0).toUpperCase() + period.slice(1)} Horoscope`, url: `/horoscope/${period}/${rashi}` }
+      ]} />
+      {generatedFaqs && generatedFaqs.length > 0 && (
+        <FAQSchema faqs={generatedFaqs.map(f => ({ question: f.q, answer: f.a }))} />
+      )}
       {/* Top Banner Section (Image 1 Style) */}
       <div className="bg-[#B37B47] text-white py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-12">

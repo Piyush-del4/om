@@ -2,13 +2,22 @@ import type { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
-  title: 'Free Kundali Matching — 36 Guna & Manglik Check',
+  title: 'Free Marriage Compatibility Calculator — 36 Guna Milan & Numerology Marriage Match | OM Astrology AMC',
   description:
-    'Free online marriage compatibility checker. Calculate Ashtakoot 36 Guna milan, Manglik dosha, and matrimonial alignment.',
-  keywords: ['kundali matching', '36 guna milan', 'marriage compatibility', 'manglik dosha check', 'ashtakoot milan'],
+    'Calculate free online marriage compatibility. Ashtakoot 36 Guna Kundali matching and numerology marriage compatibility calculator for love and marital harmony.',
+  keywords: [
+    'marriage compatibility calculator',
+    'numerology marriage compatibility calculator',
+    'marriage numerology compatibility calculator',
+    'kundali matching',
+    '36 guna milan',
+    'marriage compatibility',
+    'manglik dosha check',
+    'ashtakoot milan'
+  ],
   openGraph: {
-    title: 'Free Kundali Matching — OM Astrology AMC',
-    description: 'Calculate Ashtakoot 36 Guna milan, Manglik dosha, and matrimonial alignment free.',
+    title: 'Free Marriage Compatibility Calculator — OM Astrology AMC',
+    description: 'Calculate Ashtakoot 36 Guna milan, Manglik dosha, and marriage numerology compatibility free.',
     url: '/free-tools/marriage-compatibility-checker',
   },
   alternates: { canonical: '/free-tools/marriage-compatibility-checker' },

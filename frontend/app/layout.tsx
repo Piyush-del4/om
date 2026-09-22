@@ -20,14 +20,15 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
- metadataBase: new URL('https://omastrologyamc.com'),
+ metadataBase: new URL('https://www.omastrologyamc.com'),
  title: {
  default: 'OM Astrology AMC — Best Astrologer, Numerologist & Tarot Reader Online',
- template: '%s | OM Astrology AMC',
+ template: '%s',
  },
  description:
  'India\'s trusted astrology consultancy — expert Vedic Astrology readings, Numerology name correction, Tarot card guidance, Graphology & handwriting analysis. Book a 1-on-1 session with 9+ years experienced master consultants. Online video consultations available 7 days a week.',
  keywords: [
+ 'om astrology', 'om asttro', 'omasttro', 'om horoscope', 'omasttro.in', 'om astrology reviews', 'astro amc',
  'best astrologer', 'online astrology consultation', 'vedic astrology', 'numerology consultation',
  'best numerologist', 'tarot reading online', 'best tarot reader', 'graphology analysis',
  'handwriting analysis', 'name correction numerology', 'lucky mobile number', 'marriage matching',
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
  openGraph: {
  type: 'website',
  locale: 'en_IN',
- url: 'https://omastrologyamc.com',
+ url: 'https://www.omastrologyamc.com',
  siteName: 'OM Astrology AMC',
  title: 'OM Astrology AMC — Best Astrologer, Numerologist & Tarot Reader Online',
  description:
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
  'Book 1-on-1 sessions in Astrology, Numerology, Tarot & Graphology with master consultants.',
  },
  alternates: {
- canonical: 'https://omastrologyamc.com',
+ canonical: 'https://www.omastrologyamc.com',
  },
  robots: {
  index: true,

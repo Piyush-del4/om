@@ -8,7 +8,8 @@ import { ArrowLeft } from 'lucide-react';
 import { SEOInternalMesh } from '../../../components/seo/SEOInternalMesh';
 
 import { Metadata } from 'next';
-import { BreadcrumbSchema } from '../../../components/seo/JsonLd';
+import { BreadcrumbSchema, FAQSchema } from '../../../components/seo/JsonLd';
+import { FAQSection } from '../../../components/ui/FAQSection';
 
 const PLANETS = [
   { id: 'sun', name: 'Sun' },
@@ -144,29 +145,24 @@ export default async function TransitPredictionPage({ params }: { params: Promis
           <FormattedText text={data.content} />
         </GoldCard>
 
-        {/* Bottom Planet Selector Bar */}
-        <div className="bg-white border-2 border-amber-200 rounded-2xl p-6 shadow-md space-y-4 text-center">
-          <h4 className="font-serif font-bold text-gray-900 text-base">Explore Other 2026 Planetary Transits</h4>
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
-            {PLANETS.map((p) => {
-              const isActive = p.id === planet;
-              return (
-                <Link
-                  key={`bottom-${p.id}`}
-                  href={`/transit/${p.id}`}
-                  className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all border ${
-                    isActive
-                      ? 'bg-amber-500 text-black border-amber-600 shadow-md font-extrabold'
-                      : 'bg-gray-50 text-gray-800 border-gray-200 hover:bg-amber-50 hover:border-amber-300'
-                  }`}
-                >
-                  <img src={`/images/planets/${p.id}.png?v=5`} alt={p.name} className="w-5 h-5 object-contain" />
-                  {p.name} Transit
-                </Link>
-              );
-            })}
-          </div>
-        </div>
+        {/* FAQ Section */}
+        {(() => {
+          const capitalizedPlanet = planet.charAt(0).toUpperCase() + planet.slice(1);
+          const faqs = [
+            { q: `What is the significance of the ${capitalizedPlanet} transit in 2026?`, a: `The 2026 ${capitalizedPlanet} transit influences major planetary energies across all 12 rashis, impacting career opportunities, emotional harmony, financial growth, and overall vitality.` },
+            { q: `How does the ${capitalizedPlanet} transit affect your birth chart?`, a: `Vedic astrology analyzes the house position of ${capitalizedPlanet} relative to your Moon sign (Rashi) and Lagna to predict specific transit rewards and challenges.` },
+            { q: `Which remedies are recommended during the ${capitalizedPlanet} transit?`, a: `Performing Vedic mantras, charity aligned with ${capitalizedPlanet}, wearing energized gemstones, and consulting master astrologer Rajessh Paanday helps neutralize negative transit effects.` }
+          ];
+          return (
+            <>
+              <FAQSchema faqs={faqs.map(f => ({ question: f.q, answer: f.a }))} />
+              <div className="bg-white p-8 rounded-2xl border border-amber-200 shadow-sm">
+                <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">Frequently Asked Questions — {capitalizedPlanet} Transit</h3>
+                <FAQSection faqs={faqs} />
+              </div>
+            </>
+          );
+        })()}
 
         {/* SEO Internal Mesh */}
         <SEOInternalMesh currentCategory="astrology" />

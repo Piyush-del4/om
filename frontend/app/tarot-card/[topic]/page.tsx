@@ -257,6 +257,8 @@ const TAROT_TOPICS: Record<string, TarotTopicData> = {
   }
 };
 
+import { BreadcrumbSchema, FAQSchema } from '../../../components/seo/JsonLd';
+
 export async function generateStaticParams() {
   return Object.keys(TAROT_TOPICS).map((topic) => ({ topic }));
 }
@@ -265,9 +267,34 @@ export async function generateMetadata({ params }: { params: Promise<{ topic: st
   const { topic } = await params;
   const data = TAROT_TOPICS[topic];
   if (!data) return { title: 'Tarot Topic Not Found' };
+  const canonicalUrl = `https://omastrologyamc.com/tarot-card/${topic}`;
   return {
-    title: `${data.title} | OM Astrology AMC`,
-    description: data.subtitle,
+    title: `${data.title} — Tarot Reading & Symbolism Guide | OM Astrology AMC`,
+    description: `${data.description} Learn card meanings, spread layouts, and intuitive guidance by master tarot reader Kusum Panday.`,
+    keywords: [
+      data.title,
+      'tarot card reading',
+      'major arcana meanings',
+      'love tarot reading',
+      'career tarot',
+      'Kusum Panday'
+    ],
+    openGraph: {
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+      url: canonicalUrl,
+      siteName: 'OM Astrology AMC',
+      images: [{ url: `https://omastrologyamc.com${data.image}` }],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 
@@ -281,6 +308,14 @@ export default async function TarotTopicPage({ params }: { params: Promise<{ top
 
   return (
     <div className="relative min-h-screen bg-white overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-gray-900">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Tarot Card', url: '/tarot-card' },
+        { name: data.title, url: `/tarot-card/${topic}` }
+      ]} />
+      {data.faqs && data.faqs.length > 0 && (
+        <FAQSchema faqs={data.faqs.map(f => ({ question: f.q, answer: f.a }))} />
+      )}
       <div className="max-w-5xl mx-auto space-y-12 relative z-10">
         
         {/* Back Link */}

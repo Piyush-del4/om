@@ -227,6 +227,8 @@ const GRAPHOLOGY_TOPICS: Record<string, TopicData> = {
   }
 };
 
+import { BreadcrumbSchema, FAQSchema } from '../../../components/seo/JsonLd';
+
 export async function generateStaticParams() {
   return Object.keys(GRAPHOLOGY_TOPICS).map((topic) => ({ topic }));
 }
@@ -235,9 +237,34 @@ export async function generateMetadata({ params }: { params: Promise<{ topic: st
   const { topic } = await params;
   const data = GRAPHOLOGY_TOPICS[topic];
   if (!data) return { title: 'Graphology Topic Not Found' };
+  const canonicalUrl = `https://omastrologyamc.com/graphology/${topic}`;
   return {
-    title: `${data.title} | OM Astrology AMC`,
-    description: data.subtitle,
+    title: `${data.title} — Handwriting Analysis Guide | OM Astrology AMC`,
+    description: `${data.description} Learn signature analysis, slant psychology, and graphotherapy techniques by Rajessh Paanday.`,
+    keywords: [
+      data.title,
+      'graphology analysis',
+      'handwriting analysis',
+      'signature correction',
+      'graphotherapy 21 days',
+      'Rajessh Paanday'
+    ],
+    openGraph: {
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+      url: canonicalUrl,
+      siteName: 'OM Astrology AMC',
+      images: [{ url: `https://omastrologyamc.com${data.image}` }],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 
@@ -251,6 +278,14 @@ export default async function GraphologyTopicPage({ params }: { params: Promise<
 
   return (
     <div className="relative min-h-screen bg-white overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-gray-900">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Graphology', url: '/graphology' },
+        { name: data.title, url: `/graphology/${topic}` }
+      ]} />
+      {data.faqs && data.faqs.length > 0 && (
+        <FAQSchema faqs={data.faqs.map(f => ({ question: f.q, answer: f.a }))} />
+      )}
       <div className="max-w-5xl mx-auto space-y-12 relative z-10">
         
         {/* Back Link */}

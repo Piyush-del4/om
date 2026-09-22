@@ -49,6 +49,16 @@ export function OrganizationSchema() {
  'Rudraksha Consultation',
  'Spiritual Healing',
  'Vastu Consultation',
+ 'Astrology Consultation Online',
+ 'Online Astrologer Mumbai',
+ 'Best Astrologer India',
+ 'Janam Kundli Online',
+ 'Chaldean Name Numerology',
+ 'Manglik Dosha Remedies',
+ 'Saturn Sade Sati Analysis',
+ 'Vimshottari Dasha Calculator',
+ 'Ascendant Sign Finder',
+ 'Love Marriage Astrology',
  ],
  };
 

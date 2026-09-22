@@ -2,13 +2,25 @@ import type { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
-  title: 'Lucky Number Calculator — Daily Lucky Digits',
+  title: 'Free Lucky Number Calculator — Check My Lucky Number by Astrology & Numerology | OM Astrology AMC',
   description:
-    'Find your daily lucky numbers for wealth, business, lottery, and personal success based on numerology.',
-  keywords: ['lucky number calculator', 'daily lucky number', 'numerology lucky digits', 'lucky number finder'],
+    'Check your lucky number online for free. Calculate your personal lucky numbers by date of birth and astrology for wealth, career, business, and daily fortune.',
+  keywords: [
+    'lucky number calculator',
+    'check my lucky number',
+    'lucky calculator',
+    'lucky numbers calculator',
+    'luck calculator',
+    'find my lucky number',
+    'calculate lucky number',
+    'lucky number by astrology',
+    'my lucky number astrology',
+    'what is my lucky number astrology',
+    'astronumerology calculator'
+  ],
   openGraph: {
-    title: 'Lucky Number Calculator — OM Astrology AMC',
-    description: 'Find your personal daily lucky numbers for wealth, business, and success.',
+    title: 'Free Lucky Number Calculator — OM Astrology AMC',
+    description: 'Check your personal lucky numbers by date of birth and astrology free.',
     url: '/free-tools/lucky-number-calculator',
   },
   alternates: { canonical: '/free-tools/lucky-number-calculator' },

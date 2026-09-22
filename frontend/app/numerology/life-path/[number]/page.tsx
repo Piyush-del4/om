@@ -219,6 +219,8 @@ const LIFE_PATH_DATA: Record<string, LifePathData> = {
   }
 };
 
+import { BreadcrumbSchema, FAQSchema } from '../../../../components/seo/JsonLd';
+
 export async function generateStaticParams() {
   return Object.keys(LIFE_PATH_DATA).map((number) => ({ number }));
 }
@@ -227,9 +229,33 @@ export async function generateMetadata({ params }: { params: Promise<{ number: s
   const { number } = await params;
   const data = LIFE_PATH_DATA[number];
   if (!data) return { title: 'Life Path Number Not Found' };
+  const canonicalUrl = `https://omastrologyamc.com/numerology/life-path/${number}`;
   return {
-    title: `${data.title} | OM Astrology AMC`,
-    description: data.subtitle,
+    title: `${data.title} — Personality, Career & 2026 Predictions | OM Astrology AMC`,
+    description: `${data.description} Learn Life Path ${number} ruler, lucky colours, career choices, compatible numbers, and 2026 numerology forecast by Kusum Panday.`,
+    keywords: [
+      `Life Path ${number}`,
+      `Life Path Number ${number}`,
+      `Life Path ${number} personality`,
+      `Life Path ${number} compatibility`,
+      `Life Path ${number} 2026 prediction`,
+      'Kusum Panday numerology'
+    ],
+    openGraph: {
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+      url: canonicalUrl,
+      siteName: 'OM Astrology AMC',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 
@@ -243,6 +269,14 @@ export default async function LifePathPage({ params }: { params: Promise<{ numbe
 
   return (
     <div className="relative min-h-screen bg-white overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-gray-900">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Numerology', url: '/numerology' },
+        { name: `Life Path ${number}`, url: `/numerology/life-path/${number}` }
+      ]} />
+      {data.faqs && data.faqs.length > 0 && (
+        <FAQSchema faqs={data.faqs.map(f => ({ question: f.q, answer: f.a }))} />
+      )}
       <div className="max-w-5xl mx-auto space-y-12 relative z-10">
         
         {/* Back Link */}

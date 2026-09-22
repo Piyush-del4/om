@@ -5,8 +5,11 @@ import { DailyPanchangMuhuratWidget } from '@/components/ui/astrology/DailyPanch
 import { SEOInternalMesh } from '@/components/seo/SEOInternalMesh';
 
 export const metadata = {
-  title: 'Daily Horoscope & Zodiac Predictions 2026',
+  title: 'Daily Horoscope & Zodiac Predictions 2026 | OM Astrology AMC',
   description: 'Select your zodiac sign to read your detailed daily, weekly, monthly, and yearly horoscopes for 2026.',
+  alternates: {
+    canonical: 'https://www.omastrologyamc.com/horoscope',
+  },
 };
 
 const rashiInfo = [

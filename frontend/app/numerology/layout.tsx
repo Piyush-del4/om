@@ -2,15 +2,41 @@ import type { Metadata } from 'next';
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
- title: 'Numerology Analysis — Name Correction, Life Path & Lucky Numbers',
- description:
- 'Discover your life path number, check if your name spelling is lucky, and get professional Pythagorean & Chaldean numerology readings for career, love, and success at OM Astrology AMC.',
- keywords: [
- 'numerology consultation', 'best numerologist', 'name correction numerology', 'lucky name numerology',
- 'life path number', 'pythagorean numerology', 'chaldean numerology', 'numerology analysis',
- 'destiny number', 'soul urge number', 'personality number', 'numerology reading online',
- 'name number calculation', 'lucky number',
- ],
+  title: 'Numerology Consultation Online — Name Correction, Life Path & Destiny Number | OM Astrology AMC',
+  description:
+    'Consult expert numerologist Kusum Panday online. Discover your life path number, destiny number, Chaldean name correction, business numerology, and lucky numbers.',
+  keywords: [
+    'numerology',
+    'numerology online',
+    'online numerology',
+    'numerologist',
+    'numerologist online',
+    'numerology consultation',
+    'numerology consultation online',
+    'numerology reading online',
+    'numerology prediction',
+    'numerology report',
+    'numerology expert online',
+    'professional numerologist',
+    'life path number calculation',
+    'destiny number calculation',
+    'expression number',
+    'soul urge number',
+    'personality number',
+    'name numerology',
+    'name correction numerology',
+    'numerology name correction',
+    'business numerology',
+    'company name numerology',
+    'brand name numerology',
+    'mobile number numerology',
+    'numerology for career',
+    'numerology for business',
+    'numerology for marriage',
+    'numerology for success',
+    'numerologist Mumbai',
+    'numerology consultation Mumbai'
+  ],
  openGraph: {
  title: 'Numerology Analysis — OM Astrology AMC',
  description:

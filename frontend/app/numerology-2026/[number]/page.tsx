@@ -8,7 +8,8 @@ import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 
 import { Metadata } from 'next';
-import { BreadcrumbSchema } from '../../../components/seo/JsonLd';
+import { BreadcrumbSchema, FAQSchema } from '../../../components/seo/JsonLd';
+import { FAQSection } from '../../../components/ui/FAQSection';
 
 const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -133,6 +134,24 @@ export default async function NumerologyPredictionPage({ params }: { params: Pro
           </div>
           <FormattedText text={data.content} />
         </GoldCard>
+
+        {/* FAQ Section */}
+        {(() => {
+          const faqs = [
+            { q: `What does Root Number ${number} represent in 2026?`, a: `Root Number ${number} in 2026 reflects specific annual vibrations that guide career decisions, financial opportunities, personal relationships, and spiritual growth based on Chaldean Numerology.` },
+            { q: `How do I know if my Root Number is ${number}?`, a: `If you were born on the ${number}st, ${parseInt(number)+9}th, or ${parseInt(number)+18}th of any month, your birth day reduces to Root Number ${number}.` },
+            { q: `What are the lucky remedies for Numerology Number ${number} in 2026?`, a: `Consulting with master numerologist Kusum Panday for custom name spelling alignment and practicing daily number affirmations helps maximize your positive vibrations.` }
+          ];
+          return (
+            <>
+              <FAQSchema faqs={faqs.map(f => ({ question: f.q, answer: f.a }))} />
+              <div className="bg-white p-8 rounded-2xl border border-amber-200 shadow-sm">
+                <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">Frequently Asked Questions — Number {number}</h3>
+                <FAQSection faqs={faqs} />
+              </div>
+            </>
+          );
+        })()}
 
         {/* Bottom Number Selector Bar */}
         <div className="bg-white border-2 border-amber-200 rounded-2xl p-6 shadow-md space-y-4 text-center">

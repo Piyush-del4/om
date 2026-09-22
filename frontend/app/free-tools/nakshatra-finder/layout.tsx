@@ -2,12 +2,21 @@ import type { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
-  title: 'Free Nakshatra Finder — Birth Star Calculator',
+  title: 'Free Nakshatra Finder Online — Find My Nakshatra & Birth Star Calculator | OM Astrology AMC',
   description:
-    'Find your birth Nakshatra (Janma Nakshatra), ruling planet, and deity from your birth date and time.',
-  keywords: ['nakshatra finder', 'birth star calculator', 'janma nakshatra finder', 'nakshatra lord'],
+    'Find your Nakshatra online for free. Discover your Janma Nakshatra (birth star), Nakshatra Pada, ruling planet, deity, and Dasha sequence using your birth date and time.',
+  keywords: [
+    'nakshatra finder',
+    'find my nakshatra',
+    'calculator nakshatra',
+    'nakshatra dasha calculator',
+    'check nakshatra online',
+    'birth star calculator',
+    'janma nakshatra finder',
+    'star birthday calculator'
+  ],
   openGraph: {
-    title: 'Free Nakshatra Finder — OM Astrology AMC',
+    title: 'Free Nakshatra Finder Online — OM Astrology AMC',
     description: 'Find your birth Nakshatra, ruling planet, and deity from your date and time of birth.',
     url: '/free-tools/nakshatra-finder',
   },

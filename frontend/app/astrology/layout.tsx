@@ -2,15 +2,41 @@ import type { Metadata } from 'next';
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
- title: 'Vedic Astrology Consultation — Birth Chart, Planetary Transit & Horoscope Readings',
- description:
- 'Get expert Vedic Astrology guidance: birth chart analysis, planetary transit predictions, Kundali readings, Vimshottari Dasha timelines, and personalized life path insights from master astrologers at OM Astrology AMC.',
- keywords: [
- 'vedic astrology', 'birth chart analysis', 'kundli analysis', 'horoscope reading',
- 'planetary transit', 'astrology consultation', 'best astrologer', 'online astrology',
- 'vimshottari dasha', 'manglik dosha', 'raj yoga', 'nakshatras', 'vedic remedies',
- 'astrology reading online', 'jyotish consultation',
- ],
+  title: 'Vedic Astrology Consultation Online — Best Astrologer in Mumbai & India | OM Astrology AMC',
+  description:
+    'Consult master Vedic astrologer Rajessh Paanday online. Expert birth chart analysis, Janam Kundli reading, future predictions, astrology remedies, and Jyotish consultation.',
+  keywords: [
+    'astrology',
+    'astrology online',
+    'online astrology',
+    'astrology consultation',
+    'astrology consultation online',
+    'astrologer',
+    'astrologer online',
+    'online astrologer',
+    'best astrologer',
+    'professional astrologer',
+    'astrology services',
+    'astrology reading',
+    'astrology prediction',
+    'life prediction astrology',
+    'detailed astrology analysis',
+    'vedic astrology',
+    'vedic astrologer',
+    'vedic astrology consultation',
+    'indian astrology',
+    'hindu astrology',
+    'jyotish consultation',
+    'jyotish astrologer',
+    'astrology expert online',
+    'astrology consultation india',
+    'astrologer india',
+    'online astrologer india',
+    'astrologer mumbai',
+    'online astrologer mumbai',
+    'astrologer near me',
+    'best astrologer near me'
+  ],
  openGraph: {
  title: 'Vedic Astrology Consultation — OM Astrology AMC',
  description:

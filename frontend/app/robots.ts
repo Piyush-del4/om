@@ -21,7 +21,9 @@ export default function robots(): MetadataRoute.Robots {
         '/forgot-password',
         '/onboarding',
         '/saved-kundlis',
-        '/api/'
+        '/api/',
+        '/*?q=*',
+        '/shop?*'
       ],
     },
     sitemap: 'https://omastrologyamc.com/sitemap.xml',

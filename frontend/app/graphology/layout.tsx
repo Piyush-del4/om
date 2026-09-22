@@ -5,11 +5,13 @@ export const metadata: Metadata = {
  title: 'Graphology & Handwriting Analysis — Personality Reading & Graphotherapy',
  description:
  'Understand your personality, hidden strengths, and habits through scientific handwriting and signature analysis. Improve your mindset with our 21-day Graphotherapy protocol at OM Astrology AMC.',
- keywords: [
- 'graphology analysis', 'handwriting analysis', 'signature analysis', 'graphotherapy',
- 'personality analysis handwriting', 'handwriting reading', 'signature science',
- 'handwriting expert', 'graphology consultation', 'brain writing analysis',
- ],
+  keywords: [
+    'graphology analysis', 'graphology test', 'handwriting analysis', 'zodiac handwriting analysis',
+    'handwriting astrology', 'handwriting readings', 'calligraphy analysis', 'arcade handwriting',
+    'graphotherapy patterns', 'handwriting analysis capital letters', 'signature analysis',
+    'graphotherapy', 'personality analysis handwriting', 'signature science',
+    'handwriting expert', 'graphology consultation', 'brain writing analysis',
+  ],
  openGraph: {
  title: 'Graphology & Handwriting Analysis — OM Astrology AMC',
  description:

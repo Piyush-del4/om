@@ -1,17 +1,66 @@
 import type { Metadata } from 'next';
+import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
- title: 'Marriage Matching — Kundali Milan, 36 Guna & Manglik Dosha Analysis',
- description:
- 'Deep analysis of 36 Gunas, Manglik Dosha, and 7th house compatibility for a lifelong happy union. Expert Kundali Milan at OM Astrology AMC.',
- openGraph: {
- title: 'Marriage Matching & Kundali Milan — OM Astrology AMC',
- description:
- 'Complete marriage compatibility analysis: 36 Guna matching, Manglik Dosha check, and 7th house compatibility assessment.',
- url: '/marriage-matching',
- },
+  title: 'Marriage Astrology & Kundli Matching Consultation — Marriage Compatibility & Timing | OM Astrology AMC',
+  description:
+    'Consult expert marriage astrologer Rajessh Paanday. Comprehensive Kundli matching for marriage, marriage prediction by birth chart, marriage timing prediction, love marriage astrology, and Manglik dosha compatibility.',
+  keywords: [
+    'marriage astrology',
+    'marriage prediction',
+    'marriage prediction astrology',
+    'marriage astrologer',
+    'marriage astrologer online',
+    'marriage astrology consultation',
+    'marriage Kundli',
+    'marriage Kundli matching',
+    'Kundli matching for marriage',
+    'marriage compatibility',
+    'marriage compatibility astrology',
+    'marriage timing astrology',
+    'marriage timing prediction',
+    'when will I get married astrology',
+    'marriage prediction by date of birth',
+    'marriage prediction by birth chart',
+    'love marriage astrology',
+    'love marriage prediction',
+    'arranged marriage astrology',
+    'delayed marriage astrology',
+    'relationship astrology',
+    'love astrology',
+    'marriage advice astrology',
+    'marriage compatibility online',
+    'marriage astrologer India',
+    'marriage astrologer Mumbai',
+    'marriage Kundli Mumbai',
+    'marriage consultation Mumbai'
+  ],
+  openGraph: {
+    title: 'Marriage Astrology & Kundli Matching Consultation — OM Astrology AMC',
+    description: 'Expert Kundli matching for marriage, 36 Guna analysis, and marriage timing predictions.',
+    url: '/marriage-matching',
+  },
+  alternates: {
+    canonical: '/marriage-matching',
+  },
 };
 
 export default function MarriageMatchingLayout({ children }: { children: React.ReactNode }) {
- return children;
+  return (
+    <>
+      <ServiceSchema
+        name="Marriage Astrology & Kundli Matching Consultation"
+        description="Expert Vedic astrology marriage matching, 36 Guna Milan, Manglik dosha balancing, and marriage timing prediction."
+        url="/marriage-matching"
+        category="Astrology"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: '/' },
+          { name: 'Marriage Matching', url: '/marriage-matching' },
+        ]}
+      />
+      {children}
+    </>
+  );
 }

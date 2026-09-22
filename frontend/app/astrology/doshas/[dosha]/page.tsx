@@ -153,6 +153,8 @@ const DOSHA_DATA: Record<string, DoshaData> = {
   }
 };
 
+import { BreadcrumbSchema, FAQSchema } from '../../../../components/seo/JsonLd';
+
 export async function generateStaticParams() {
   return Object.keys(DOSHA_DATA).map((dosha) => ({ dosha }));
 }
@@ -161,9 +163,33 @@ export async function generateMetadata({ params }: { params: Promise<{ dosha: st
   const { dosha } = await params;
   const data = DOSHA_DATA[dosha];
   if (!data) return { title: 'Dosha Not Found' };
+  const canonicalUrl = `https://omastrologyamc.com/astrology/doshas/${dosha}`;
   return {
-    title: `${data.title} | OM Astrology AMC`,
-    description: data.subtitle,
+    title: `${data.title} — Effects & Remedies | OM Astrology AMC`,
+    description: `${data.description} Discover causes, cancellation factors (Bhanga), and authentic Vedic remedies by master astrologer Rajessh Paanday.`,
+    keywords: [
+      data.title,
+      'Vedic astrology doshas',
+      'astrological remedies',
+      'Manglik dosha remedies',
+      'Sade Sati remedies',
+      'Rajessh Paanday'
+    ],
+    openGraph: {
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+      url: canonicalUrl,
+      siteName: 'OM Astrology AMC',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 
@@ -177,6 +203,14 @@ export default async function DoshaPage({ params }: { params: Promise<{ dosha: s
 
   return (
     <div className="relative min-h-screen bg-white overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-gray-900">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Astrology', url: '/astrology' },
+        { name: data.title, url: `/astrology/doshas/${dosha}` }
+      ]} />
+      {data.faqs && data.faqs.length > 0 && (
+        <FAQSchema faqs={data.faqs.map(f => ({ question: f.q, answer: f.a }))} />
+      )}
       <div className="max-w-5xl mx-auto space-y-12 relative z-10">
         
         {/* Back Link */}

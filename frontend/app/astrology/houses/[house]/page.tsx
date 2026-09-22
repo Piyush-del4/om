@@ -315,6 +315,8 @@ const HOUSE_DATA: Record<string, HouseData> = {
   }
 };
 
+import { BreadcrumbSchema, FAQSchema } from '../../../../components/seo/JsonLd';
+
 export async function generateStaticParams() {
   return Object.keys(HOUSE_DATA).map((house) => ({ house }));
 }
@@ -323,9 +325,32 @@ export async function generateMetadata({ params }: { params: Promise<{ house: st
   const { house } = await params;
   const data = HOUSE_DATA[house];
   if (!data) return { title: 'House Not Found' };
+  const canonicalUrl = `https://omastrologyamc.com/astrology/houses/${house}`;
   return {
-    title: `${data.title} | OM Astrology AMC`,
-    description: data.subtitle,
+    title: `${data.title} (${data.sanskritName}) — Kundli Significance | OM Astrology AMC`,
+    description: `${data.description} Learn ${data.house} karakas, planetary placements, body parts governed, and Vedic astrological interpretations by Rajessh Paanday.`,
+    keywords: [
+      data.title,
+      data.sanskritName,
+      `Vedic astrology ${data.house}`,
+      'Kundli houses meaning',
+      'Rajessh Paanday'
+    ],
+    openGraph: {
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+      url: canonicalUrl,
+      siteName: 'OM Astrology AMC',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${data.title} | OM Astrology AMC`,
+      description: data.subtitle,
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 
@@ -339,6 +364,14 @@ export default async function HousePage({ params }: { params: Promise<{ house: s
 
   return (
     <div className="relative min-h-screen bg-white overflow-hidden py-20 px-4 sm:px-6 lg:px-8 text-gray-900">
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Astrology', url: '/astrology' },
+        { name: data.title, url: `/astrology/houses/${house}` }
+      ]} />
+      {data.faqs && data.faqs.length > 0 && (
+        <FAQSchema faqs={data.faqs.map(f => ({ question: f.q, answer: f.a }))} />
+      )}
       <div className="max-w-5xl mx-auto space-y-12 relative z-10">
         
         {/* Back Link */}

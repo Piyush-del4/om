@@ -2,12 +2,34 @@ import type { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
-  title: 'Free Daily Horoscope — Zodiac Predictions Today',
+  title: 'Free Daily Horoscope Today — Horoscope Predictions by Birth Date & Zodiac Sign | OM Astrology AMC',
   description:
-    'Read daily horoscope predictions for Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces.',
-  keywords: ['daily horoscope today', 'zodiac predictions', 'today horoscope', 'rashi bhavishya'],
+    'Read today horoscope, daily horoscope, weekly horoscope, and monthly horoscope predictions online for free. Accurate Vedic horoscope readings for career, love, money, and health.',
+  keywords: [
+    'daily horoscope',
+    'today horoscope',
+    'tomorrow horoscope',
+    'weekly horoscope',
+    'monthly horoscope',
+    'yearly horoscope',
+    'annual horoscope',
+    'free horoscope',
+    'horoscope online',
+    'online horoscope',
+    'horoscope prediction',
+    'horoscope reading',
+    'horoscope analysis',
+    'horoscope consultation',
+    'personalized horoscope reading',
+    'vedic horoscope prediction',
+    'love horoscope',
+    'career horoscope',
+    'finance horoscope',
+    'health horoscope astrology',
+    'horoscope by date of birth'
+  ],
   openGraph: {
-    title: 'Free Daily Horoscope — OM Astrology AMC',
+    title: 'Free Daily Horoscope Today — OM Astrology AMC',
     description: 'Read accurate daily horoscope predictions for all 12 zodiac signs today.',
     url: '/free-tools/daily-horoscope',
   },
