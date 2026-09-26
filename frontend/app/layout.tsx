@@ -88,6 +88,9 @@ export default function RootLayout({
  className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
  >
  <head>
+ <link rel="preconnect" href="https://accounts.google.com" />
+ <link rel="dns-prefetch" href="https://accounts.google.com" />
+ <script src="https://accounts.google.com/gsi/client" async defer></script>
  <OrganizationSchema />
  <LocalBusinessSchema />
  <WebSiteSchema />

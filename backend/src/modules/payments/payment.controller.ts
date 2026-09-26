@@ -20,17 +20,10 @@ export async function createKundliOrder(req: Request, res: Response, next: NextF
       return;
     }
 
-    const amountInPaise = Number(amount || 5000);
-    if (!Number.isFinite(amountInPaise) || amountInPaise <= 0) {
-      res.status(400).json({
-        success: false,
-        error: {
-          code: 'INVALID_AMOUNT',
-          message: 'Amount must be a positive number in paise',
-        },
-      });
-      return;
-    }
+    // Enforce server-side pricing to prevent client-side parameter tampering
+    // Standard Kundli Premium price is fixed at ₹50 (5000 paise) or looked up via tier
+    const KUNDLI_PREMIUM_PRICE_PAISE = 5000;
+    const amountInPaise = KUNDLI_PREMIUM_PRICE_PAISE;
 
     // Truncate userId to last 12 chars to avoid leaking full MongoDB IDs
     const userIdStr = userId.toString();
@@ -49,19 +42,24 @@ export async function createKundliOrder(req: Request, res: Response, next: NextF
         },
       });
     } catch (orderError) {
-      // Fallback to mock order if Razorpay order creation fails (e.g. invalid/expired live keys)
-      logger.warn('⚠️ Razorpay order creation failed, falling back to mock order:', orderError);
-      const mockOrderId = `order_mock_${crypto.randomBytes(8).toString('hex')}`;
-      res.status(200).json({
-        success: true,
-        data: {
-          orderId: mockOrderId,
-          razorpayOrderId: mockOrderId,
-          amount: amountInPaise,
-          currency: 'INR',
-          key: env.RAZORPAY_KEY_ID,
-        },
-      });
+      // Fallback to mock order ONLY in development mode (e.g., when live keys are missing/invalid locally)
+      if (env.NODE_ENV === 'development') {
+        logger.warn('⚠️ Razorpay order creation failed, falling back to mock order in development mode:', orderError);
+        const mockOrderId = `order_mock_${crypto.randomBytes(8).toString('hex')}`;
+        res.status(200).json({
+          success: true,
+          data: {
+            orderId: mockOrderId,
+            razorpayOrderId: mockOrderId,
+            amount: amountInPaise,
+            currency: 'INR',
+            key: env.RAZORPAY_KEY_ID,
+          },
+        });
+      } else {
+        logger.error('❌ Razorpay order creation failed in production:', orderError);
+        throw orderError;
+      }
     }
   } catch (error) {
     next(error);

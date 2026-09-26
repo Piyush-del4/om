@@ -11,6 +11,7 @@ import { GoldButton } from '@/components/ui/GoldButton';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { Lock, Mail, AlertCircle, Eye, EyeOff, User, Phone } from 'lucide-react';
 import { client } from '@/lib/api/client';
+import { GoogleLogin } from '@react-oauth/google';
 import OnboardingWizard from '@/components/onboarding/OnboardingWizard';
 
 // Form Validation Schemas
@@ -50,11 +51,13 @@ interface LoginFormProps {
 }
 
 function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
- const { login } = useAuth();
+ const { login, googleLogin, refreshUser } = useAuth();
  const router = useRouter();
  const [errorMsg, setErrorMsg] = useState('');
  const [isSubmitting, setIsSubmitting] = useState(false);
  const [showPassword, setShowPassword] = useState(false);
+ const [needsPhonePrompt, setNeedsPhonePrompt] = useState(false);
+ const [googlePhone, setGooglePhone] = useState('');
 
  const {
  register,
@@ -83,6 +86,60 @@ function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
  }
  };
 
+ const handleGoogleLoginSuccess = async (credentialResponse: any) => {
+ if (!credentialResponse.credential) return;
+ setErrorMsg('');
+ setIsSubmitting(true);
+ try {
+ const data = await googleLogin(credentialResponse.credential);
+ const user = data?.user;
+ const isNewUser = data?.isNewUser ?? false;
+
+ if (user?.role === 'admin') {
+ router.push('/admin/dashboard');
+ onSuccess();
+ } else if (!isNewUser) {
+ // Existing user with an account: directly show dashboard!
+ router.push('/dashboard');
+ onSuccess();
+ } else {
+ // First time creating account via Google:
+ const isPhoneMissing = !user?.phone || user.phone.trim() === '';
+ if (isPhoneMissing) {
+ setNeedsPhonePrompt(true);
+ } else {
+ router.push('/onboarding');
+ onSuccess();
+ }
+ }
+ } catch (err: any) {
+ const msg = err.response?.data?.error?.message || 'Google Sign-In failed';
+ setErrorMsg(msg);
+ } finally {
+ setIsSubmitting(false);
+ }
+ };
+
+ const handleSaveGooglePhone = async () => {
+ if (!googlePhone || !/^[6-9]\d{9}$/.test(googlePhone)) {
+ setErrorMsg('Please enter a valid 10-digit Indian mobile number (e.g. 9876543210)');
+ return;
+ }
+ setErrorMsg('');
+ setIsSubmitting(true);
+ try {
+ await client.patch('/users/me', { phone: googlePhone });
+ await refreshUser();
+ onSuccess();
+ router.push('/onboarding');
+ } catch (err: any) {
+ const msg = err.response?.data?.error?.message || 'Failed to save phone number. Please try again.';
+ setErrorMsg(msg);
+ } finally {
+ setIsSubmitting(false);
+ }
+ };
+
  return (
  <div className="space-y-6 animate-fade-in">
  <div className="text-center space-y-2">
@@ -101,6 +158,61 @@ function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
  </div>
  )}
 
+ {needsPhonePrompt ? (
+ <div className="space-y-6 animate-fade-in">
+ <div className="space-y-1">
+ <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--gold-light)]">
+ Contact Number *
+ </label>
+ <div className="relative">
+ <span className="absolute left-0 top-1/2 -translate-y-1/2 flex items-center text-gray-600">
+ <Phone className="w-4 h-4" />
+ </span>
+ <input
+ type="tel"
+ required
+ placeholder="e.g. 9876543210"
+ value={googlePhone}
+ onChange={(e) => setGooglePhone(e.target.value)}
+ className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input placeholder-gray-400"
+ />
+ </div>
+ <p className="text-[10px] text-gray-500 font-light mt-1">Please provide your mobile number to complete your account setup and receive consultation updates.</p>
+ </div>
+
+ <div className="pt-2">
+ <GoldButton
+ type="button"
+ variant="filled"
+ fullWidth
+ isLoading={isSubmitting}
+ onClick={handleSaveGooglePhone}
+ className="py-2.5"
+ >
+ Save & Continue to Onboarding →
+ </GoldButton>
+ </div>
+ </div>
+ ) : (
+ <>
+ {/* Google Sign In Option */}
+ <div className="w-full flex items-center justify-center min-h-[44px] pb-2 relative">
+ <GoogleLogin
+ onSuccess={handleGoogleLoginSuccess}
+ onError={() => setErrorMsg('Google login was cancelled or failed.')}
+ theme="outline"
+ shape="pill"
+ size="large"
+ width="360"
+ text="continue_with"
+ />
+ </div>
+
+ <div className="relative flex items-center justify-center my-2">
+ <div className="border-t border-gray-200 w-full" />
+ <span className="bg-white px-3 text-[10px] text-gray-400 font-mono uppercase tracking-wider absolute">or login with email</span>
+ </div>
+
  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
  {/* Email */}
  <div className="space-y-1">
@@ -116,7 +228,7 @@ function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
  required
  placeholder="you@example.com"
  {...register('email')}
- className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input placeholder-neutral-700"
+ className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input placeholder-gray-400"
  />
  </div>
  {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email.message}</p>}
@@ -136,7 +248,7 @@ function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
  required
  placeholder="••••••••"
  {...register('password')}
- className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input auth-input-right placeholder-neutral-700"
+ className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input auth-input-right placeholder-gray-400"
  />
  <button
  type="button"
@@ -169,6 +281,8 @@ function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
  </button>
  </p>
  </div>
+ </>
+ )}
  </div>
  );
 }
@@ -180,7 +294,7 @@ interface RegisterFormProps {
 }
 
 function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
- const { register: authRegister, refreshUser } = useAuth();
+ const { register: authRegister, googleLogin, refreshUser } = useAuth();
  const router = useRouter();
  const [errorMsg, setErrorMsg] = useState('');
  const [infoMsg, setInfoMsg] = useState('');
@@ -189,8 +303,8 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
  const [otpSent, setOtpSent] = useState(false);
  const [otpCode, setOtpCode] = useState('');
- const [showOnboarding, setShowOnboarding] = useState(false);
- const [registeredName, setRegisteredName] = useState('');
+ const [needsPhonePrompt, setNeedsPhonePrompt] = useState(false);
+ const [googlePhone, setGooglePhone] = useState('');
 
  const {
  register,
@@ -200,6 +314,61 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  } = useForm<RegisterFields>({
  resolver: zodResolver(registerSchema),
  });
+
+ const handleGoogleRegisterSuccess = async (credentialResponse: any) => {
+ if (!credentialResponse.credential) return;
+ setErrorMsg('');
+ setInfoMsg('');
+ setIsSubmitting(true);
+ try {
+ const data = await googleLogin(credentialResponse.credential);
+ const user = data?.user;
+ const isNewUser = data?.isNewUser ?? false;
+
+ if (user?.role === 'admin') {
+ router.push('/admin/dashboard');
+ onSuccess();
+ } else if (!isNewUser) {
+ // Existing user with an account: directly show dashboard!
+ router.push('/dashboard');
+ onSuccess();
+ } else {
+ // First time creating account via Google:
+ const isPhoneMissing = !user?.phone || user.phone.trim() === '';
+ if (isPhoneMissing) {
+ setNeedsPhonePrompt(true);
+ } else {
+ router.push('/onboarding');
+ onSuccess();
+ }
+ }
+ } catch (err: any) {
+ const msg = err.response?.data?.error?.message || 'Google Registration failed';
+ setErrorMsg(msg);
+ } finally {
+ setIsSubmitting(false);
+ }
+ };
+
+ const handleSaveGooglePhone = async () => {
+ if (!googlePhone || !/^[6-9]\d{9}$/.test(googlePhone)) {
+ setErrorMsg('Please enter a valid 10-digit Indian mobile number (e.g. 9876543210)');
+ return;
+ }
+ setErrorMsg('');
+ setIsSubmitting(true);
+ try {
+ await client.patch('/users/me', { phone: googlePhone });
+ await refreshUser();
+ onSuccess();
+ router.push('/onboarding');
+ } catch (err: any) {
+ const msg = err.response?.data?.error?.message || 'Failed to save phone number. Please try again.';
+ setErrorMsg(msg);
+ } finally {
+ setIsSubmitting(false);
+ }
+ };
 
  const onSubmit = async (data: RegisterFields) => {
  setErrorMsg('');
@@ -293,7 +462,60 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  </div>
  )}
 
- {!otpSent ? (
+ {needsPhonePrompt ? (
+ <div className="space-y-6 animate-fade-in">
+ <div className="space-y-1">
+ <label className="block text-[10px] font-semibold uppercase tracking-widest text-[var(--gold-light)]">
+ Contact Number *
+ </label>
+ <div className="relative">
+ <span className="absolute left-0 top-1/2 -translate-y-1/2 flex items-center text-gray-600">
+ <Phone className="w-4 h-4" />
+ </span>
+ <input
+ type="tel"
+ required
+ placeholder="e.g. 9876543210"
+ value={googlePhone}
+ onChange={(e) => setGooglePhone(e.target.value)}
+ className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input placeholder-gray-400"
+ />
+ </div>
+ <p className="text-[10px] text-gray-500 font-light mt-1">Please provide your mobile number to complete your account setup and receive consultation updates.</p>
+ </div>
+
+ <div className="pt-2">
+ <GoldButton
+ type="button"
+ variant="filled"
+ fullWidth
+ isLoading={isSubmitting}
+ onClick={handleSaveGooglePhone}
+ className="py-2.5"
+ >
+ Save & Continue to Onboarding →
+ </GoldButton>
+ </div>
+ </div>
+ ) : !otpSent ? (
+ <>
+ {/* Google Register Option */}
+ <div className="w-full flex items-center justify-center min-h-[44px] pb-2 relative">
+ <GoogleLogin
+ onSuccess={handleGoogleRegisterSuccess}
+ onError={() => setErrorMsg('Google registration was cancelled or failed.')}
+ theme="outline"
+ shape="pill"
+ size="large"
+ width="360"
+ text="signup_with"
+ />
+ </div>
+
+ <div className="relative flex items-center justify-center my-2">
+ <div className="border-t border-gray-200 w-full" />
+ <span className="bg-white px-3 text-[10px] text-gray-400 font-mono uppercase tracking-wider absolute">or register with email</span>
+ </div>
  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
  {/* Full Name */}
  <div className="space-y-1">
@@ -307,9 +529,9 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  <input
  type="text"
  required
- placeholder="John Doe"
+ placeholder="Your Full Name"
  {...register('name')}
- className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-neutral-700"
+ className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-gray-400"
  />
  </div>
  {errors.name && <p className="text-red-600 text-xs mt-0.5">{errors.name.message}</p>}
@@ -327,9 +549,9 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  <input
  type="email"
  required
- placeholder="john@example.com"
+ placeholder="you@example.com"
  {...register('email')}
- className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-neutral-700"
+ className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-gray-400"
  />
  </div>
  {errors.email && <p className="text-red-600 text-xs mt-0.5">{errors.email.message}</p>}
@@ -349,7 +571,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  required
  placeholder="e.g. 9876543210"
  {...register('phone')}
- className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-neutral-700"
+ className="w-full input-underline text-gray-900 text-sm py-2 auth-input placeholder-gray-400"
  />
  </div>
  {errors.phone && <p className="text-red-600 text-xs mt-0.5">{errors.phone.message}</p>}
@@ -369,7 +591,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  required
  placeholder="Min 8 chars, 1 upper, 1 number"
  {...register('password')}
- className="w-full input-underline text-gray-900 text-sm py-2 auth-input auth-input-right placeholder-neutral-700"
+ className="w-full input-underline text-gray-900 text-sm py-2 auth-input auth-input-right placeholder-gray-400"
  />
  <button
  type="button"
@@ -396,7 +618,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  required
  placeholder="Confirm password"
  {...register('confirmPassword')}
- className="w-full input-underline text-gray-900 text-sm py-2 auth-input auth-input-right placeholder-neutral-700"
+ className="w-full input-underline text-gray-900 text-sm py-2 auth-input auth-input-right placeholder-gray-400"
  />
  <button
  type="button"
@@ -415,6 +637,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  </GoldButton>
  </div>
  </form>
+ </>
  ) : (
  <div className="space-y-6 animate-fade-in">
  <div className="space-y-1">
@@ -432,7 +655,7 @@ function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) {
  placeholder=""
  value={otpCode}
  onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
- className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input placeholder-neutral-700 tracking-[0.5em] font-mono text-center"
+ className="w-full input-underline text-gray-900 text-sm py-2.5 auth-input placeholder-gray-400 tracking-[0.5em] font-mono text-center"
  />
  </div>
  <p className="text-[10px] text-gray-500 font-light mt-1">Please enter the 6-digit code sent to your email.</p>

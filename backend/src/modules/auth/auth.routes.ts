@@ -13,5 +13,6 @@ authRouter.post('/refresh', authController.refresh);
 authRouter.post('/logout', requireAuth, authController.logout);
 authRouter.post('/forgot-password', validate({ body: schemas.forgotPasswordSchema }), authController.forgotPassword);
 authRouter.post('/reset-password', validate({ body: schemas.resetPasswordSchema }), authController.resetPassword);
+authRouter.post('/google', authController.googleAuth);
 
 export default authRouter;

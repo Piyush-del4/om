@@ -99,6 +99,17 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
     }
 
     // Verify current password
+    if (!user.passwordHash) {
+      res.status(400).json({
+        success: false,
+        error: {
+          code: 'NO_PASSWORD',
+          message: 'Accounts registered via Google do not have a password set.',
+        },
+      });
+      return;
+    }
+
     const isMatch = await bcrypt.compare(currentPassword, user.passwordHash);
     if (!isMatch) {
       res.status(401).json({
@@ -258,16 +269,17 @@ export async function deleteProfile(req: Request, res: Response, next: NextFunct
       return;
     }
 
-    // Hard-delete user and sessions
-    await User.findByIdAndDelete(userId);
+    // Hard-delete user document and all associated active sessions
+    await User.deleteOne({ _id: userId });
     await Session.deleteMany({ userId });
 
-    // Clear auth cookie
-    res.clearCookie('accessToken', {
+    // Clear authentication cookies
+    res.clearCookie('refreshToken', {
       httpOnly: true,
       secure: env.NODE_ENV === 'production',
       sameSite: 'strict',
     });
+    res.clearCookie('accessToken');
 
     res.status(200).json({
       success: true,

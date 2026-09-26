@@ -23,9 +23,6 @@ export function Footer() {
                 <h3 className="font-serif text-lg font-bold text-[#1D1C1A] tracking-wide">
                   OM Astrology AMC
                 </h3>
-                <p className="text-[10px] text-[#A78652] font-mono uppercase tracking-widest font-semibold">
-                  Personal Guidance &amp; Occult Sciences
-                </p>
               </div>
             </div>
             <p className="text-xs text-[#77736D] leading-relaxed max-w-sm">

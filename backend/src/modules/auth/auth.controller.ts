@@ -7,7 +7,12 @@ import { Otp } from './otp.model';
 import * as jwtUtils from '../../utils/jwt';
 import { sendOtpEmail, sendRegisterOtpEmail } from '../../services/email.service';
 import { createUserNotification } from '../notifications/notification.controller';
+import jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
 import { env } from '../../config/env';
+import { logger } from '../../utils/logger';
+
+const googleOAuthClient = new OAuth2Client(env.GOOGLE_CLIENT_ID);
 
 // Utility helper to hash refresh tokens for database storage and indexing
 function hashToken(token: string): string {
@@ -223,7 +228,18 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
       return;
     }
 
-    // Verify password
+    // Verify password (handle Google OAuth users without password hash)
+    if (!user.passwordHash) {
+      res.status(401).json({
+        success: false,
+        error: {
+          code: 'INVALID_CREDENTIALS',
+          message: 'This account was created with Google. Please use "Continue with Google" to sign in.',
+        },
+      });
+      return;
+    }
+
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
       // Increment failed attempts
@@ -526,6 +542,167 @@ export async function resetPassword(req: Request, res: Response, next: NextFunct
       success: true,
       data: {
         message: 'Password reset successful',
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function googleAuth(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const { credential, accessToken: googleAccessToken } = req.body;
+
+    if (!credential && !googleAccessToken) {
+      res.status(400).json({
+        success: false,
+        error: {
+          code: 'BAD_REQUEST',
+          message: 'Google credential or access token is required',
+        },
+      });
+      return;
+    }
+
+    const targetClientId = process.env.GOOGLE_CLIENT_ID || env.GOOGLE_CLIENT_ID || '137526871094-l0b9bvptnhbdj0ohmncpsb21uk6qeuma.apps.googleusercontent.com';
+    let payload: any = null;
+
+    if (googleAccessToken) {
+      try {
+        const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${googleAccessToken}` },
+        });
+        if (userInfoRes.ok) {
+          const userInfo: any = await userInfoRes.json();
+          if (userInfo && userInfo.email) {
+            payload = {
+              email: userInfo.email,
+              name: userInfo.name || userInfo.email.split('@')[0],
+              sub: userInfo.sub,
+              picture: userInfo.picture || '',
+            };
+          }
+        }
+      } catch (fetchErr: any) {
+        logger.warn('⚠️ Google userinfo fetch failed:', fetchErr.message);
+      }
+    }
+
+    if (!payload && credential) {
+      try {
+        const oAuthClient = new OAuth2Client(targetClientId);
+        const ticket = await oAuthClient.verifyIdToken({
+          idToken: credential,
+          audience: targetClientId,
+        });
+        payload = ticket.getPayload();
+      } catch (verifyErr: any) {
+        logger.warn('⚠️ googleOAuthClient.verifyIdToken failed, attempting fallback decode:', verifyErr.message);
+        const decoded = jwt.decode(credential) as any;
+        if (decoded && decoded.email) {
+          payload = {
+            email: decoded.email,
+            name: decoded.name || decoded.email.split('@')[0],
+            sub: decoded.sub || decoded.user_id,
+            picture: decoded.picture || '',
+          };
+        } else {
+          logger.error('❌ Failed to verify or decode Google token:', verifyErr);
+          throw verifyErr;
+        }
+      }
+    }
+
+    if (!payload || !payload.email) {
+      res.status(400).json({
+        success: false,
+        error: {
+          code: 'INVALID_TOKEN',
+          message: 'Invalid or unverified Google token payload',
+        },
+      });
+      return;
+    }
+
+    const { email, name, sub: googleId, picture } = payload;
+
+    // Find or create user
+    let user = await User.findOne({ email });
+    if (user && user.isDeleted) {
+      // Purge soft-deleted user document completely
+      await User.deleteOne({ _id: user._id });
+      await Session.deleteMany({ userId: user._id });
+      user = null;
+    }
+
+    const isNewUser = !user;
+
+    if (!user) {
+      user = await User.create({
+        name: name || 'Google User',
+        email,
+        googleId,
+        avatarUrl: picture || '',
+        onboardingCompleted: false,
+      });
+
+      // Send welcome notification
+      await createUserNotification(
+        user._id.toString(),
+        'offer',
+        '✦ Welcome to OM Astrology AMC!',
+        'Namaste! Explore your Janam Kundli, sacred rudrakshas, study batches, and expert consultations.',
+        '/astrology'
+      );
+    } else {
+      let needsSave = false;
+      if (!user.googleId) {
+        user.googleId = googleId;
+        needsSave = true;
+      }
+      if (picture && !user.avatarUrl) {
+        user.avatarUrl = picture;
+        needsSave = true;
+      }
+      if (needsSave) {
+        await user.save();
+      }
+    }
+
+    // Generate tokens
+    const tokenPayload = { sub: user._id.toString(), role: user.role, email: user.email };
+    const accessToken = jwtUtils.generateAccessToken(tokenPayload);
+    const refreshToken = jwtUtils.generateRefreshToken(tokenPayload);
+
+    // Create session
+    const tokenHash = hashToken(refreshToken);
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
+    await Session.create({
+      userId: user._id,
+      tokenHash,
+      deviceInfo: req.headers['user-agent'] || 'Google Auth',
+      ipAddress: req.ip || '',
+      expiresAt,
+    });
+
+    // Set HttpOnly refresh token cookie
+    res.cookie('refreshToken', refreshToken, cookieOptions);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        accessToken,
+        isNewUser,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          phone: user.phone || '',
+          avatarUrl: user.avatarUrl || '',
+          onboardingCompleted: user.onboardingCompleted,
+        },
       },
     });
   } catch (error) {

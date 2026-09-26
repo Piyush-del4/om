@@ -33,6 +33,7 @@ interface AuthContextType {
  isAdmin: boolean;
  isLoading: boolean;
  login: (email: string, password: string) => Promise<any>;
+ googleLogin: (credential: string) => Promise<any>;
  register: (name: string, email: string, password: string, phone?: string, otp?: string) => Promise<any>;
  logout: () => Promise<void>;
  refreshUser: () => Promise<void>;
@@ -109,6 +110,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
  }
  };
 
+ const googleLogin = async (credential: string) => {
+ try {
+ const response = await client.post('/auth/google', { credential });
+ if (response.data?.success && response.data?.data) {
+ const { accessToken, user: userData } = response.data.data;
+ tokenStore.setToken(accessToken);
+ setUser(userData);
+ return response.data.data;
+ }
+ throw new Error('Google authentication failed');
+ } catch (error) {
+ throw error;
+ }
+ };
+
  const register = async (name: string, email: string, password: string, phone?: string, otp?: string) => {
  try {
  const response = await client.post('/auth/register', { name, email, password, phone, otp });
@@ -141,6 +157,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
  isAdmin: user?.role === 'admin',
  isLoading,
  login,
+ googleLogin,
  register,
  logout,
  refreshUser,

@@ -22,7 +22,7 @@ import {
 export default function ProfilePage() {
   const { user, refreshUser, logout } = useAuth();
 
-  const [activeSubTab, setActiveSubTab] = useState<'coordinates' | 'address' | 'security' | 'danger'>('coordinates');
+  const [activeSubTab, setActiveSubTab] = useState<'coordinates' | 'address' | 'danger'>('coordinates');
 
   const [name, setName] = useState(user?.name || '');
   const [phone, setPhone] = useState(user?.phone || '');
@@ -135,6 +135,7 @@ export default function ProfilePage() {
     try {
       await client.delete('/users/me');
       await logout();
+      window.location.href = '/register';
     } catch (err: any) {
       setDeleteError(err.response?.data?.error?.message || 'Failed to delete account');
       setDeleting(false);
@@ -171,17 +172,6 @@ export default function ProfilePage() {
           >
             <MapPin className="w-3.5 h-3.5" />
             <span>Delivery Address</span>
-          </button>
-          <button
-            onClick={() => setActiveSubTab('security')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5 ${
-              activeSubTab === 'security'
-                ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
-                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-            }`}
-          >
-            <Lock className="w-3.5 h-3.5" />
-            <span>Security & Password</span>
           </button>
           <button
             onClick={() => setActiveSubTab('danger')}
@@ -368,81 +358,7 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* 3. Security & Password Tab */}
-        {activeSubTab === 'security' && (
-          <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-6">
-            <div className="pb-3 border-b border-gray-100">
-              <h3 className="font-serif font-bold text-lg text-gray-900 flex items-center gap-2">
-                <Lock className="w-5 h-5 text-amber-600" />
-                <span>Account Security</span>
-              </h3>
-              <p className="text-gray-500 text-xs mt-0.5">Update your account login password</p>
-            </div>
-
-            {passwordMsg && (
-              <div className="flex items-center gap-2 text-green-700 bg-green-50 border border-green-200 p-3.5 rounded-xl text-xs font-semibold">
-                <CheckCircle className="w-4 h-4 flex-shrink-0 text-green-600" />
-                <span>{passwordMsg}</span>
-              </div>
-            )}
-            {passwordError && (
-              <div className="flex items-center gap-2 text-red-700 bg-red-50 border border-red-200 p-3.5 rounded-xl text-xs font-semibold">
-                <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-600" />
-                <span>{passwordError}</span>
-              </div>
-            )}
-
-            <form onSubmit={handleChangePassword} className="space-y-4 max-w-md">
-              <div className="space-y-1.5">
-                <label className="block text-[11px] font-bold text-gray-700 uppercase tracking-wider">Current Password</label>
-                <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  required
-                  placeholder="••••••••"
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-2.5 text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="block text-[11px] font-bold text-gray-700 uppercase tracking-wider">New Password</label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  required
-                  placeholder="••••••••"
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-2.5 text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="block text-[11px] font-bold text-gray-700 uppercase tracking-wider">Confirm New Password</label>
-                <input
-                  type="password"
-                  value={confirmNewPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
-                  required
-                  placeholder="••••••••"
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-2.5 text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
-                />
-              </div>
-
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={changingPassword}
-                  className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-md transition-colors"
-                >
-                  {changingPassword ? 'Updating...' : 'Update Password'}
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
-        {/* 4. Danger Zone Tab */}
+        {/* Danger Zone Tab */}
         {activeSubTab === 'danger' && (
           <div className="bg-red-50/50 p-6 rounded-3xl border border-red-200 shadow-sm space-y-4">
             <h3 className="font-serif font-bold text-lg text-red-700 flex items-center gap-2">

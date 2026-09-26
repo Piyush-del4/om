@@ -16,7 +16,9 @@ export interface IDefaultAddress {
 export interface IUser extends Document {
   name: string;
   email: string;
-  passwordHash: string;
+  passwordHash?: string;
+  googleId?: string;
+  avatarUrl?: string;
   role: 'user' | 'admin';
   phone?: string;
   failedLoginAttempts: number;
@@ -39,7 +41,9 @@ const UserSchema = new Schema<IUser>(
   {
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    passwordHash: { type: String, required: true },
+    passwordHash: { type: String, required: false },
+    googleId: { type: String, sparse: true },
+    avatarUrl: { type: String, default: '' },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     phone: { type: String, default: '' },
     failedLoginAttempts: { type: Number, default: 0 },
@@ -69,11 +73,6 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-// Soft delete query helpers
-UserSchema.pre(/^find/, function (this: any, next) {
-  this.where({ isDeleted: { $ne: true } });
-  next();
-});
-
+// Clean export
 export const User = model<IUser>('User', UserSchema);
 export default User;

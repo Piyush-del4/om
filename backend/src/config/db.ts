@@ -1,6 +1,14 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
 import { env } from './env';
 import { logger } from '../utils/logger';
+
+// Force Node to use Google/Cloudflare DNS for resolving mongodb+srv:// SRV records
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
+} catch (e) {
+  // Fallback if system DNS lock exists
+}
 
 export async function connectDB(): Promise<void> {
   try {
@@ -17,11 +25,17 @@ export async function connectDB(): Promise<void> {
     });
 
     try {
-      await mongoose.connect(env.MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+      await mongoose.connect(env.MONGODB_URI, { 
+        serverSelectionTimeoutMS: 10000,
+        tlsAllowInvalidCertificates: env.NODE_ENV === 'development',
+      });
     } catch (primaryErr: any) {
       logger.warn(`⚠️ Primary MongoDB Atlas connection failed (${primaryErr.message}). Trying local MongoDB fallback...`);
       const localUri = process.env.LOCAL_MONGODB_URI || 'mongodb://127.0.0.1:27017/om-astrology';
-      await mongoose.connect(localUri, { serverSelectionTimeoutMS: 5000 });
+      await mongoose.connect(localUri, { 
+        serverSelectionTimeoutMS: 5000,
+        tlsAllowInvalidCertificates: env.NODE_ENV === 'development',
+      });
     }
     await seedDefaultAppointmentTypes();
   } catch (error) {

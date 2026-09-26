@@ -29,6 +29,7 @@ const envSchema = z.object({
   GOOGLE_SERVICE_ACCOUNT_EMAIL:       z.string().optional().default(''),
   GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY: z.string().optional().default(''),
   GOOGLE_CALENDAR_ID:                 z.string().optional().default(''),
+  GOOGLE_CLIENT_ID:                   z.string().optional().default(''),
   CLOUDINARY_CLOUD_NAME:              z.string().min(1),
   CLOUDINARY_API_KEY:                 z.string().min(1),
   CLOUDINARY_API_SECRET:              z.string().min(1),

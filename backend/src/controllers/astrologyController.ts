@@ -54,6 +54,17 @@ export const fetchAstrologyData = async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, message: 'Endpoint and data are required.' });
     }
 
+    // SSRF & Key Drain Prevention: Validate endpoint format against allowlist patterns
+    const isAllowedEndpoint = 
+      typeof endpoint === 'string' &&
+      /^[a-zA-Z0-9_\-\/]+$/.test(endpoint) &&
+      !endpoint.includes('..') &&
+      !endpoint.startsWith('/');
+
+    if (!isAllowedEndpoint) {
+      return res.status(400).json({ success: false, message: 'Invalid or unauthorized endpoint parameter.' });
+    }
+
     // 1. Mahadasha & Antardasha -> Calls FreeAstroAPI V2 with FREE_ASTRO_DASHA_API_KEY
     if (endpoint === 'vimsottari/maha-dasas-and-antar-dasas') {
       const v2Endpoint = 'vedic/dasha';

@@ -53,8 +53,10 @@ uploadRouter.post(
       const cleanName = parsedName.name.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
       const uniqueName = `${cleanName}_${Date.now()}`;
 
-      // Determine folder
-      const folder = (req.body.folder as string) || 'uploads';
+      // Determine and sanitize folder to prevent arbitrary path traversal or invalid folder targets
+      const requestedFolder = typeof req.body.folder === 'string' ? req.body.folder : '';
+      const allowedFolders = ['uploads', 'avatars', 'courses', 'blog', 'shop'];
+      const folder = allowedFolders.includes(requestedFolder) ? requestedFolder : 'uploads';
 
       logger.info(`Uploading file ${originalName} to Cloudinary folder "${folder}"...`);
 

@@ -1,11 +1,15 @@
+import { env } from './config/env';
 import express from 'express';
-// Bypass strict SSL checking for local development network/antivirus interference
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-// Suppress the insecure TLS warning in local console
-process.on('warning', (warning) => {
-  if (warning.message.includes('NODE_TLS_REJECT_UNAUTHORIZED')) return;
-  console.warn(warning.stack);
-});
+
+// Bypass strict SSL checking for local development network/antivirus interference only
+if (env.NODE_ENV === 'development') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  // Suppress the insecure TLS warning in local console
+  process.on('warning', (warning) => {
+    if (warning.message.includes('NODE_TLS_REJECT_UNAUTHORIZED')) return;
+    console.warn(warning.stack);
+  });
+}
 import helmet from 'helmet';
 import cors from 'cors';
 import { mongoSanitize } from './middleware/mongoSanitize';
@@ -16,7 +20,6 @@ import * as Sentry from '@sentry/node';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
-import { env } from './config/env';
 import { errorHandler } from './middleware/errorHandler';
 import { logger } from './utils/logger';
 

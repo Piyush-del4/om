@@ -21,6 +21,9 @@ import {
   CheckCircle2,
   AlertCircle,
   User as UserIcon,
+  Eye,
+  Mail,
+  Phone,
 } from 'lucide-react';
 
 // IST time helpers
@@ -73,6 +76,9 @@ export default function AdminAppointmentsPage() {
   const queryClient = useQueryClient();
 
   const [activeTab, setActiveTab] = useState<'offerings' | 'bookings' | 'blocks'>('bookings');
+
+  // Selected Booking for Detail Modal
+  const [selectedBooking, setSelectedBooking] = useState<any | null>(null);
 
   // Form states
   const [editingTypeId, setEditingTypeId] = useState<string | null>(null);
@@ -435,14 +441,21 @@ export default function AdminAppointmentsPage() {
                           <td className="py-3.5 px-4 text-right">
                             <div className="flex items-center justify-end gap-1.5">
                               <button
+                                onClick={() => setSelectedBooking(booking)}
+                                className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 transition-colors flex items-center gap-1 cursor-pointer"
+                              >
+                                <Eye className="w-3.5 h-3.5 text-amber-600" />
+                                <span>Details</span>
+                              </button>
+                              <button
                                 onClick={() => updateStatusMutation.mutate({ apptId: booking._id, status: 'confirmed' })}
-                                className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-colors"
+                                className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-colors cursor-pointer"
                               >
                                 Confirm
                               </button>
                               <button
                                 onClick={() => updateStatusMutation.mutate({ apptId: booking._id, status: 'cancelled' })}
-                                className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 transition-colors"
+                                className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 transition-colors cursor-pointer"
                               >
                                 Cancel
                               </button>
@@ -489,14 +502,21 @@ export default function AdminAppointmentsPage() {
 
                       <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-100">
                         <button
+                          onClick={() => setSelectedBooking(booking)}
+                          className="px-3 py-1 text-xs font-semibold rounded-lg bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1 cursor-pointer"
+                        >
+                          <Eye className="w-3.5 h-3.5 text-amber-600" />
+                          <span>Details</span>
+                        </button>
+                        <button
                           onClick={() => updateStatusMutation.mutate({ apptId: booking._id, status: 'confirmed' })}
-                          className="px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          className="px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 cursor-pointer"
                         >
                           Confirm
                         </button>
                         <button
                           onClick={() => updateStatusMutation.mutate({ apptId: booking._id, status: 'cancelled' })}
-                          className="px-3 py-1 text-xs font-semibold rounded-lg bg-red-50 text-red-700 border border-red-200"
+                          className="px-3 py-1 text-xs font-semibold rounded-lg bg-red-50 text-red-700 border border-red-200 cursor-pointer"
                         >
                           Cancel
                         </button>
@@ -885,6 +905,140 @@ export default function AdminAppointmentsPage() {
                 <p className="text-xs font-semibold text-gray-700">No time slots currently blocked</p>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Appointment Detail Modal */}
+      {selectedBooking && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity"
+          onClick={() => setSelectedBooking(null)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 space-y-5 animate-fade-in border border-gray-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+              <div>
+                <span className="text-[10px] font-mono text-amber-600 font-bold uppercase tracking-wider">
+                  Consultation Booking Details
+                </span>
+                <h3 className="font-serif font-bold text-base text-gray-900">
+                  #{selectedBooking._id?.substring(selectedBooking._id.length - 8).toUpperCase()}
+                </h3>
+              </div>
+              <button
+                onClick={() => setSelectedBooking(null)}
+                className="p-1.5 rounded-xl text-gray-400 hover:text-gray-900 hover:bg-gray-100 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Booker & Client Information */}
+            <div className="bg-gray-50 p-4 rounded-xl space-y-2.5 border border-gray-200">
+              <h4 className="font-bold text-xs text-gray-900 font-mono uppercase tracking-wider">
+                Booker & Client Information
+              </h4>
+              <p className="text-xs font-semibold text-gray-900">
+                {selectedBooking.userId?.name || 'Guest User'}
+              </p>
+              <div className="space-y-1.5 text-xs text-gray-600">
+                <p className="flex items-center gap-2">
+                  <Mail className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                  <span>{selectedBooking.userId?.email || 'N/A'}</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                  <span className="font-mono">{selectedBooking.userId?.phone || 'N/A'}</span>
+                </p>
+              </div>
+
+              {/* Attendee / Birth Details if provided */}
+              {(selectedBooking.attendeeName || selectedBooking.attendeeDateOfBirth || selectedBooking.attendeeBirthTime) && (
+                <div className="pt-2 border-t border-gray-200/80 space-y-1 text-xs">
+                  <p className="text-[10px] font-bold text-amber-700 uppercase tracking-wider">
+                    Attendee / Birth Details
+                  </p>
+                  {selectedBooking.attendeeName && (
+                    <p className="text-gray-800">
+                      <span className="font-semibold">Attendee Name:</span> {selectedBooking.attendeeName}
+                    </p>
+                  )}
+                  {selectedBooking.attendeeDateOfBirth && (
+                    <p className="text-gray-800">
+                      <span className="font-semibold">Date of Birth:</span> {selectedBooking.attendeeDateOfBirth}
+                    </p>
+                  )}
+                  {selectedBooking.attendeeBirthTime && (
+                    <p className="text-gray-800">
+                      <span className="font-semibold">Time of Birth:</span> {selectedBooking.attendeeBirthTime}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Offering & Session Timing */}
+            <div className="bg-amber-50/50 p-4 rounded-xl space-y-2 border border-amber-200/80">
+              <h4 className="font-bold text-xs text-gray-900 font-mono uppercase tracking-wider">
+                Session Details
+              </h4>
+              <div className="space-y-1.5 text-xs text-gray-800">
+                <p className="font-bold text-sm text-gray-900">{selectedBooking.typeName}</p>
+                <p className="flex items-center gap-2 text-amber-700 font-mono font-semibold">
+                  <Clock className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                  <span>
+                    {new Date(selectedBooking.scheduledAt).toLocaleDateString('en-IN', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                    })}{' '}
+                    at {new Date(selectedBooking.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} IST
+                  </span>
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-semibold">Duration:</span> {selectedBooking.duration || 30} Minutes
+                </p>
+                <p className="text-gray-600 font-mono">
+                  <span className="font-semibold font-sans">Amount Paid:</span> ₹
+                  {selectedBooking.pricePaid !== undefined
+                    ? (selectedBooking.pricePaid / 100).toLocaleString()
+                    : selectedBooking.amountPaid !== undefined
+                    ? (selectedBooking.amountPaid / 100).toLocaleString()
+                    : '0'}
+                </p>
+                {selectedBooking.razorpayPaymentId && (
+                  <p className="text-[11px] text-gray-500 font-mono truncate">
+                    <span className="font-sans font-semibold">Razorpay Payment ID:</span> {selectedBooking.razorpayPaymentId}
+                  </p>
+                )}
+                {selectedBooking.razorpayOrderId && (
+                  <p className="text-[11px] text-gray-500 font-mono truncate">
+                    <span className="font-sans font-semibold">Razorpay Order ID:</span> {selectedBooking.razorpayOrderId}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Status Update Control */}
+            <div className="space-y-2 pt-2 border-t border-gray-100">
+              <label className="block text-xs font-bold text-gray-900">Update Booking Status</label>
+              <select
+                value={selectedBooking.status}
+                onChange={(e) => {
+                  const newStatus = e.target.value as 'confirmed' | 'cancelled' | 'pending';
+                  updateStatusMutation.mutate({ apptId: selectedBooking._id, status: newStatus });
+                  setSelectedBooking((prev: any) => (prev ? { ...prev, status: newStatus } : null));
+                }}
+                className="w-full bg-gray-50 border border-gray-200 text-xs rounded-xl py-2 px-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500/30 cursor-pointer font-semibold"
+              >
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
           </div>
         </div>
       )}

@@ -145,9 +145,9 @@ export function Navbar() {
                   <span className="font-serif text-base font-bold tracking-wide text-[#1D1C1A] block leading-tight">
                     OM Astrology AMC
                   </span>
-                  <span className="text-[9px] text-[#A78652] font-mono uppercase tracking-widest block font-semibold">
-                    Occult Consultations
-                  </span>
+
+
+
                 </div>
               </Link>
             </div>

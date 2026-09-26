@@ -16,7 +16,7 @@ const router = express.Router();
 
 // Horoscope
 router.get('/horoscope/latest', getLatestHoroscope);
-router.post('/horoscope/generate', triggerHoroscopeGeneration);
+router.post('/horoscope/generate', requireAuth, requireAdmin, triggerHoroscopeGeneration);
 
 // Proxy for calculations
 router.post('/proxy', fetchAstrologyData);

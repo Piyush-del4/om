@@ -4,7 +4,8 @@ import { Newsletter } from './newsletter.model';
 export const subscribeNewsletter = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email } = req.body;
-    if (!email || !email.includes('@')) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || typeof email !== 'string' || !emailRegex.test(email.trim())) {
       res.status(400).json({ success: false, message: 'Valid email address is required.' });
       return;
     }
