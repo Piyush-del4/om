@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { Hash, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
