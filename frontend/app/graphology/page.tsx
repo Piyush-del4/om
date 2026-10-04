@@ -1,8 +1,5 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { PenTool, Info, Brain, Activity, Target } from 'lucide-react';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
@@ -41,11 +38,7 @@ export default function GraphologyPage() {
  {/* Header Hero Section (Horizontal Layout) */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-8">
  {/* Left Column: Text description */}
- <motion.div
- initial={{ opacity: 0, x: -35 }}
- animate={{ opacity: 1, x: 0 }}
- className="lg:col-span-6 space-y-4 text-left"
- >
+ <div className="lg:col-span-6 space-y-4">
  <span className="text-[#A78652] text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 justify-start">
  <PenTool className="w-3.5 h-3.5" /> Graphology & Signature Science
  </span>
@@ -55,16 +48,12 @@ export default function GraphologyPage() {
  <p className="text-[#77736D] text-sm md:text-base font-light leading-relaxed max-w-lg">
  Your handwriting shows what is happening inside your mind. The way you write — your letter shapes, slant, and pressure — reflects your personality, habits, and emotions. By changing how you write (Graphotherapy), you can actually improve your mindset and behavior.
  </p>
- </motion.div>
+ </div>
 
  {/* Right Column: Signature Analyzer Pad */}
- <motion.div
- initial={{ opacity: 0, x: 35 }}
- animate={{ opacity: 1, x: 0 }}
- className="lg:col-span-6 w-full"
- >
+ <div className="lg:col-span-6">
  <SignatureAnalyzerWidget />
- </motion.div>
+ </div>
  </div>
 
  {/* Section: Brain Writing */}

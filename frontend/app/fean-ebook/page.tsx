@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { EbookContents } from '@/components/ui/astrology/EbookContents';
 

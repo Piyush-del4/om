@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Free Daily Horoscope Today — Horoscope Predictions by Birth Date & Zodiac Sign | OM Astrology AMC',
   description:
-    'Read today horoscope, daily horoscope, weekly horoscope, and monthly horoscope predictions online for free. Accurate Vedic horoscope readings for career, love, money, and health.',
+    'Read free daily horoscope, weekly, and monthly predictions online. Accurate Vedic horoscope readings for career, love, finance, and health guidance.',
   keywords: [
     'daily horoscope',
     'today horoscope',

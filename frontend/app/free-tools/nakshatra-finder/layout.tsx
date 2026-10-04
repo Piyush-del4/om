@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Free Nakshatra Finder Online — Find My Nakshatra & Birth Star Calculator | OM Astrology AMC',
   description:
-    'Find your Nakshatra online for free. Discover your Janma Nakshatra (birth star), Nakshatra Pada, ruling planet, deity, and Dasha sequence using your birth date and time.',
+    'Find your Nakshatra online for free. Discover your Janma Nakshatra (birth star), Pada, ruling planet, and deity using birth date and time.',
   keywords: [
     'nakshatra finder',
     'find my nakshatra',

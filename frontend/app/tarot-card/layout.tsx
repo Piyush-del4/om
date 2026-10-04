@@ -4,7 +4,7 @@ import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/Jso
 export const metadata: Metadata = {
   title: 'Tarot Reading Online — Tarot Card Reader Consultation & Love Tarot | OM Astrology AMC',
   description:
-    'Get authentic online tarot reading with master reader Kusum Panday. One-card, three-card, love tarot reading, career tarot reading, and tarot guidance online.',
+    'Get authentic online tarot reading with master reader Kusum Panday. Three-card spreads, love tarot, career guidance, and intuitive consultations.',
   keywords: [
     'tarot reading',
     'tarot card reading',

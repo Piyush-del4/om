@@ -178,14 +178,9 @@ export default function AboutUsPage() {
       {/* ── 1. BRAND HERO SECTION ──────────────────────────────────────────────── */}
       <section className="relative bg-gradient-to-b from-[#F3EEE6] via-[#FAF8F5] to-[#FAF8F5] pt-16 pb-20 px-4 sm:px-6 lg:px-8 border-b border-[#E7E0D4]">
         <div className="max-w-5xl mx-auto text-center space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-[#6F2935]/10 border border-[#6F2935]/20 text-[#6F2935] text-xs font-mono font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-xs"
-          >
+          <div>
             <Sparkles className="w-3.5 h-3.5 text-[#A78652]" /> About OM Astrology AMC
-          </motion.div>
+          </div>
 
           <motion.h1
             initial={{ opacity: 0, y: 25 }}
@@ -206,12 +201,7 @@ export default function AboutUsPage() {
             OM Astrology AMC brings together traditional Vedic astrology, numerology, graphology, and personalized consultation to help individuals gain clarity, alignment, and confidence across every sphere of life.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-4 pt-4"
-          >
+          <div>
             <Link href="/appointments">
               <GoldButton variant="burgundy" className="py-3 px-7 text-sm font-semibold flex items-center gap-2 shadow-md hover:shadow-lg transition-all">
                 <Calendar className="w-4 h-4" /> Explore Consultations
@@ -224,7 +214,7 @@ export default function AboutUsPage() {
             >
               <Users className="w-4 h-4 text-[#A78652]" /> Meet Our Founder
             </GoldButton>
-          </motion.div>
+          </div>
         </div>
       </section>
 

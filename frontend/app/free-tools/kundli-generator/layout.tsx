@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Free Kundli Generator Online — Janam Kundli Analysis & Birth Chart Reading | OM Astrology AMC',
   description:
-    'Generate your Janam Kundli online for free. Detailed Kundli analysis, birth chart reading, planetary position in Kundli, Kundli dosha analysis, and Dasha timeline.',
+    'Generate your Janam Kundli online for free. Detailed birth chart analysis, planetary positions, Kundli doshas, and Vimshottari Dasha timeline.',
   keywords: [
     'free kundli generator',
     'janam kundali online',

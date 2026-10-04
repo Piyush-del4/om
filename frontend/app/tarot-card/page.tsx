@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Layers, Shield, Sparkles, BookOpen } from 'lucide-react';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
@@ -51,11 +50,7 @@ export default function TarotCardPage() {
 
  <div className="max-w-6xl mx-auto space-y-16 relative z-10">
  {/* Header Hero */}
- <motion.div
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- className="text-center space-y-4"
- >
+ <div>
  <span className="text-[#A78652] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
  <Layers className="w-3.5 h-3.5" /> Tarot Card Guidance
  </span>
@@ -65,7 +60,7 @@ export default function TarotCardPage() {
  <p className="text-[#77736D] text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
  Tarot is not about telling the future. It is a tool that helps you understand your current situation, fears, and choices — so you can make better decisions in life.
  </p>
- </motion.div>
+ </div>
 
  {/* Section: Major vs Minor Arcana */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import { PenTool, CheckCircle2, AlertCircle, Sparkles, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { CategoryBookingWidget } from '@/components/ui/CategoryBookingWidget';
@@ -48,11 +45,7 @@ export default function NameCorrectionPage() {
  
  {/* Header Hero Section */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-8">
- <motion.div
- initial={{ opacity: 0, x: -35 }}
- animate={{ opacity: 1, x: 0 }}
- className="lg:col-span-7 space-y-4 text-left"
- >
+ <div className="lg:col-span-6 space-y-4">
  <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 justify-start">
  <PenTool className="w-3.5 h-3.5" /> Numerology Name Correction
  </span>
@@ -62,13 +55,9 @@ export default function NameCorrectionPage() {
  <p className="text-gray-600 text-sm md:text-base font-light leading-relaxed max-w-lg">
  Your name spelling carries a distinct sound vibration and mathematical frequency. When this frequency matches your birth chart, your path opens up with ease, recognition, and prosperity. If there is a clash, even your hardest efforts can result in delays, struggles, and missed opportunities.
  </p>
- </motion.div>
+ </div>
 
- <motion.div
- initial={{ opacity: 0, x: 35 }}
- animate={{ opacity: 1, x: 0 }}
- className="lg:col-span-5 relative group"
- >
+ <div className="lg:col-span-6 relative group">
  <div className="absolute inset-0 bg-[var(--gold)]/10 rounded-2xl blur-xl group-hover:bg-[var(--gold)]/20 transition-all duration-500"></div>
  <GoldCard flush className="border border-[var(--gold-200)] overflow-hidden">
  <div className="w-full h-64 md:h-72 bg-gray-100 overflow-hidden relative">
@@ -79,7 +68,7 @@ export default function NameCorrectionPage() {
  />
  </div>
  </GoldCard>
- </motion.div>
+ </div>
  </div>
 
  {/* Section: The Science of Sound & Numbers */}

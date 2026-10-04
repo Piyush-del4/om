@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Heart, Star, HelpCircle, ShieldCheck, HeartHandshake, Info } from 'lucide-react';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
@@ -42,12 +39,7 @@ export default function MarriageMatchingPage() {
 
  <div className="max-w-6xl mx-auto space-y-16 relative z-10">
  {/* Header Hero Section */}
- <motion.div
- initial={{ opacity: 0, y: 25 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6 }}
- className="text-center space-y-4 max-w-3xl mx-auto pt-8"
- >
+ <div>
  <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
  <Heart className="w-3.5 h-3.5 text-red-600 fill-red-500 animate-pulse" /> Sacred Union
  </span>
@@ -57,7 +49,7 @@ export default function MarriageMatchingPage() {
  <p className="text-gray-600 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
  Build a foundation of lifelong harmony. We analyze the 36 Gunas, Manglik Dosha, 7th house stability, and D9 charts of both partners to ensure mutual love, prosperity, and family happiness.
  </p>
- </motion.div>
+ </div>
 
  {/* Section: Concept of Kundali Matching */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

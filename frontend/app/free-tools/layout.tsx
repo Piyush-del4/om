@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Free Astrology & Numerology Calculators | OM Astrology AMC',
   description:
-    'Use 100% free Vedic Astrology and Numerology calculators: Kundli generator, marriage compatibility, name numerology, Panchang, Ascendant, and Dasha calculations.',
+    'Free Vedic Astrology & Numerology calculators: Kundli generator, marriage compatibility, name numerology, Panchang, Ascendant, and Dasha tools.',
   keywords: [
     'free astrology calculator', 'free numerology calculator', 'kundli generator',
     'marriage compatibility checker', 'panchang online', 'ascendant calculator',

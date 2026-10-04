@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Lucky Mobile Number Selection — Numerology for Mobile Numbers | OM Astrology AMC',
   description:
-    'Align your mobile number vibration with your driver and conductor numbers to attract wealth, success, and positive energy using numerological science at OM Astrology AMC.',
+    'Align your mobile number with your driver and conductor numbers to attract wealth, success, and positive vibrations through numerological consultation.',
   openGraph: {
     title: 'Lucky Mobile Number Selection — OM Astrology AMC',
     description:

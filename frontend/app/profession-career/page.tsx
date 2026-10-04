@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Briefcase, Star, HelpCircle, ShieldCheck, ChevronRight, Info } from 'lucide-react';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
@@ -43,12 +40,7 @@ export default function ProfessionCareerPage() {
 
  <div className="max-w-6xl mx-auto space-y-16 relative z-10">
  {/* Header Hero Section */}
- <motion.div
- initial={{ opacity: 0, y: 25 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6 }}
- className="text-center space-y-4 max-w-3xl mx-auto pt-8"
- >
+ <div>
  <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
  <Briefcase className="w-3.5 h-3.5 text-[var(--gold)] animate-pulse" /> Career Astrology
  </span>
@@ -58,7 +50,7 @@ export default function ProfessionCareerPage() {
  <p className="text-gray-600 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
  Discover the astrological blueprints of your professional path. Align your career choices with the planetary energies in your 10th house (Karma Bhava) and Amatyakaraka to achieve happiness and abundance.
  </p>
- </motion.div>
+ </div>
 
  {/* Section: Astrological Career Blueprint */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

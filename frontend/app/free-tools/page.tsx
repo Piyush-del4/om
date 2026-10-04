@@ -1,8 +1,5 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { 
   Hash, Star, Heart, Compass, Moon, Sun, Eye, Calendar, 
   BookOpen, CheckCircle2, Activity, Palette, Sparkles, ArrowRight, ShieldCheck 
@@ -37,11 +34,7 @@ export default function FreeToolsHubPage() {
       <div className="max-w-7xl mx-auto space-y-16 relative z-10">
         
         {/* Hero Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4 max-w-3xl mx-auto pt-6"
-        >
+        <div>
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[var(--gold-50)] text-[var(--gold-dark)] border border-[var(--gold-200)]">
             <Sparkles className="w-3.5 h-3.5" /> 100% Free Astrology Utilities
           </span>
@@ -51,19 +44,14 @@ export default function FreeToolsHubPage() {
           <p className="text-gray-600 text-base font-light leading-relaxed">
             Generate precise Kundlis, calculate life path numbers, evaluate marriage compatibility, and track planetary dashas using authentic Vedic and Chaldean formulas.
           </p>
-        </motion.div>
+        </div>
 
         {/* Tools Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {tools.map((tool, idx) => {
             const Icon = tool.icon;
             return (
-              <motion.div
-                key={tool.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.03 }}
-              >
+              <div>
                 <Link href={tool.href} className="group block h-full">
                   <GoldCard className="h-full border border-[var(--gold-200)] p-6 hover:border-[var(--gold)] transition-all duration-300 flex flex-col justify-between group-hover:-translate-y-1 shadow-sm hover:shadow-md">
                     <div>
@@ -89,7 +77,7 @@ export default function FreeToolsHubPage() {
                     </div>
                   </GoldCard>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
         </div>

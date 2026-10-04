@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Free Ascendant Calculator — Calculate Ascendant Sign & Rising Sign Online | OM Astrology AMC',
   description:
-    'Calculate your Ascendant sign (Lagna) online for free. Instantly find your rising sign, 1st house lord, and birth chart Lagna using exact time and place of birth.',
+    'Calculate your Ascendant sign (Lagna) online for free. Find your rising sign, 1st house lord, and birth Lagna using exact time and place of birth.',
   keywords: [
     'ascendant calculator',
     'calculate ascendant',

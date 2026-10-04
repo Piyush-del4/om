@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import { PhoneCall, Star, HelpCircle, ShieldCheck, Hash, Info } from 'lucide-react';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
@@ -44,12 +41,7 @@ export default function LuckyMobilePage() {
 
  <div className="max-w-6xl mx-auto space-y-16 relative z-10">
  {/* Header Hero Section */}
- <motion.div
- initial={{ opacity: 0, y: 25 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6 }}
- className="text-center space-y-4 max-w-3xl mx-auto pt-8"
- >
+ <div>
  <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
  <PhoneCall className="w-3.5 h-3.5 text-[var(--gold)] animate-pulse" /> Digital Vibrations
  </span>
@@ -59,7 +51,7 @@ export default function LuckyMobilePage() {
  <p className="text-gray-600 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
  Your mobile number represents your personal frequency in the digital world. Choose a number that resonates with your birth date to attract business leads, health, harmony, and prosperity.
  </p>
- </motion.div>
+ </div>
 
  {/* Interactive Calculator */}
  <MobileNumerologyCalculator />

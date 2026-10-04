@@ -4,7 +4,7 @@ import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/Jso
 export const metadata: Metadata = {
   title: 'Vedic Astrology Consultation Online — Best Astrologer in Mumbai & India | OM Astrology AMC',
   description:
-    'Consult master Vedic astrologer Rajessh Paanday online. Expert birth chart analysis, Janam Kundli reading, future predictions, astrology remedies, and Jyotish consultation.',
+    'Consult master Vedic astrologer Rajessh Paanday online. Expert Janam Kundli analysis, future predictions, Jyotish consultation, and dosha remedies.',
   keywords: [
     'astrology',
     'astrology online',

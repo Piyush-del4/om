@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Rajessh Paanday — Expert Vedic Astrologer, Numerologist & Graphologist',
   description:
-    'Book a personal consultation with Rajessh Paanday, founder of OM Astrology AMC with 9+ years of experience in Vedic Astrology, Chaldean Numerology, Graphology, Signature Science, and Five Elements Balance.',
+    'Book a personal consultation with Rajessh Paanday, master consultant in Vedic Astrology, Chaldean Numerology, Graphology, and signature science.',
   openGraph: {
     title: 'Consult Rajessh Paanday — OM Astrology AMC',
     description:
@@ -16,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function TeamRaajeshLayout({ children }: { children: React.ReactNode }) {
- return children;
+  return children;
 }

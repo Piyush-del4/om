@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Building2, Star, HelpCircle, ShieldCheck, Landmark, Info } from 'lucide-react';
 import { GoldCard } from '../../components/ui/GoldCard';
 import { CategoryBookingWidget } from '../../components/ui/CategoryBookingWidget';
@@ -44,12 +41,7 @@ export default function CorporateNumerologyPage() {
 
  <div className="max-w-6xl mx-auto space-y-16 relative z-10">
  {/* Header Hero Section */}
- <motion.div
- initial={{ opacity: 0, y: 25 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.6 }}
- className="text-center space-y-4 max-w-3xl mx-auto pt-8"
- >
+ <div>
  <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
  <Building2 className="w-3.5 h-3.5 text-[var(--gold)] animate-pulse" /> Business Alchemy
  </span>
@@ -59,7 +51,7 @@ export default function CorporateNumerologyPage() {
  <p className="text-gray-600 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
  Build a brand that vibrates on the frequency of success. Align your company name, logo colors, and incorporation dates with numerological codes to command authority and smooth gains.
  </p>
- </motion.div>
+ </div>
 
  {/* Section: Concept of Business Numerology */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

@@ -5,7 +5,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 export const metadata: Metadata = {
   title: 'Premium Personalized Janam Kundli Report — 20+ Sections Detailed Analysis | OM Astrology AMC',
-  description: 'Generate your 20+ section personalized Janam Kundli report — detailed Kundli report, Lagna Chart, Vimshottari Dasha, Kundli dosha analysis, and customized remedies by Rajessh Paanday.',
+  description: 'Generate your 20+ section personalized Janam Kundli report — Lagna Chart, Vimshottari Dasha, dosha analysis, and customized remedies by Rajessh Paanday.',
   keywords: [
     'premium kundli report',
     'personalized janam kundli',

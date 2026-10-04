@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Hash, Calendar, Layers, ShieldCheck, Sparkles, HelpCircle, Star, Info, Binary, Check } from 'lucide-react';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { GoldCard } from '../../components/ui/GoldCard';
@@ -82,11 +81,7 @@ export default function NumerologyPage() {
 
       <div className="max-w-6xl mx-auto space-y-16 relative z-10">
         {/* Header Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
+        <div>
           <span className="text-[#A78652] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" /> Pythagorean & Chaldean Systems
           </span>
@@ -96,7 +91,7 @@ export default function NumerologyPage() {
           <p className="text-[#77736D] text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
             Every number in your birth date and name carries a special meaning. Learn how your numbers can guide you to better decisions in life, career, and relationships.
           </p>
-        </motion.div>
+        </div>
 
         {/* Section: Pythagorean vs Chaldean */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -207,11 +202,7 @@ export default function NumerologyPage() {
  const vibrationMeaning = numberMeanings.find((m) => m.num === reducedSingleDigit.toString());
 
  return (
- <motion.div
- initial={{ opacity: 0, y: 10 }}
- animate={{ opacity: 1, y: 0 }}
- className="max-w-xl mx-auto space-y-5 bg-gray-50/45 p-6 rounded-2xl border border-neutral-900/80 backdrop-blur-md"
- >
+ <div>
 
 
  {/* Calculation Summary Grid */}
@@ -249,7 +240,7 @@ export default function NumerologyPage() {
  <p className="text-[10px] text-gray-600 leading-normal">{vibrationMeaning.vibration}</p>
  </div>
  )}
- </motion.div>
+ </div>
  );
  })()}
 

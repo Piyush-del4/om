@@ -4,7 +4,7 @@ import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/Jso
 export const metadata: Metadata = {
   title: 'Numerology Consultation Online — Name Correction, Life Path & Destiny Number | OM Astrology AMC',
   description:
-    'Consult expert numerologist Kusum Panday online. Discover your life path number, destiny number, Chaldean name correction, business numerology, and lucky numbers.',
+    'Consult expert numerologist Kusum Panday online. Life path numbers, Chaldean name correction, business numerology, and lucky vibration analysis.',
   keywords: [
     'numerology',
     'numerology online',

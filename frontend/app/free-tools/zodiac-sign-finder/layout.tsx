@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Free Zodiac Sign Finder — Horoscope Sign Finder & Astrology Sign Calculator | OM Astrology AMC',
   description:
-    'Find your zodiac sign online for free. Instant astrology sign finder and horoscope sign calculator by date of birth to get your sun sign, element, and ruling planet.',
+    'Find your zodiac sign online for free. Instant horoscope sign calculator by date of birth to reveal your Sun sign, element, and ruling planet.',
   keywords: [
     'horoscope sign finder',
     'astrology sign finder',

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Activity, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
 import { GoldButton } from '@/components/ui/GoldButton';
@@ -104,11 +103,7 @@ export default function DashaCalculatorPage() {
  
  {/* Hero */}
  {!result && (
- <motion.div
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- className="text-center space-y-4 pt-8"
- >
+ <div>
  <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
  <Activity className="w-4 h-4" /> Free Utility
  </span>
@@ -118,7 +113,7 @@ export default function DashaCalculatorPage() {
  <p className="text-gray-600 text-sm md:text-base font-light max-w-2xl mx-auto">
  Track your major planetary periods and sub-periods. Enter your details below to calculate your personalized report instantly.
  </p>
- </motion.div>
+ </div>
  )}
 
  {/* Main Form Section */}

@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Free Birth Chart Generator Online — Free Astrology Natal Chart & Horoscope Generator | OM Astrology AMC',
   description:
-    'Generate your free birth chart online. Instant free online astrology chart generator with planetary positions, house placements, and Vedic Kundli chart analysis.',
+    'Generate your free birth chart online. Instant natal chart generator with planetary positions, house placements, and Vedic Kundli chart analysis.',
   keywords: [
     'birth chart generator',
     'free online astrology chart generator',

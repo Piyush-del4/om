@@ -4,7 +4,7 @@ import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/Jso
 export const metadata: Metadata = {
   title: 'Marriage Astrology & Kundli Matching Consultation — Marriage Compatibility & Timing | OM Astrology AMC',
   description:
-    'Consult expert marriage astrologer Rajessh Paanday. Comprehensive Kundli matching for marriage, marriage prediction by birth chart, marriage timing prediction, love marriage astrology, and Manglik dosha compatibility.',
+    'Consult expert astrologer Rajessh Paanday for Kundli marriage matching, 36 Guna Milan, marriage timing predictions, and Manglik dosha remedies.',
   keywords: [
     'marriage astrology',
     'marriage prediction',

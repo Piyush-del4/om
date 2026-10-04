@@ -4,7 +4,7 @@ import { ServiceSchema, BreadcrumbSchema, FAQSchema } from '@/components/seo/Jso
 export const metadata: Metadata = {
  title: 'Graphology & Handwriting Analysis — Personality Reading & Graphotherapy',
  description:
- 'Understand your personality, hidden strengths, and habits through scientific handwriting and signature analysis. Improve your mindset with our 21-day Graphotherapy protocol at OM Astrology AMC.',
+ 'Scientific handwriting and signature analysis by master graphologists. Uncover personality traits and habits with our 21-day Graphotherapy protocol.',
   keywords: [
     'graphology analysis', 'graphology test', 'handwriting analysis', 'zodiac handwriting analysis',
     'handwriting astrology', 'handwriting readings', 'calligraphy analysis', 'arcade handwriting',

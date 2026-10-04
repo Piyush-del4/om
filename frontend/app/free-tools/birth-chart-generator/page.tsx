@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { useAuth } from '@/auth/AuthProvider';
 import { Sparkles, Search, ArrowRight, HelpCircle, Layers } from 'lucide-react';
 import { GoldCard } from '@/components/ui/GoldCard';
@@ -140,11 +139,7 @@ export default function BirthChartGeneratorPage() {
  
  {/* Hero */}
  {!result && (
- <motion.div
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- className="text-center space-y-4 pt-8"
- >
+ <div>
  <span className="text-[var(--gold)] text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
  <Sparkles className="w-4 h-4" /> Free Utility
  </span>
@@ -154,7 +149,7 @@ export default function BirthChartGeneratorPage() {
  <p className="text-gray-600 text-sm md:text-base font-light max-w-2xl mx-auto">
  Generate your free Vedic Birth Chart (Kundli) instantly. Enter your details below to calculate your personalized report instantly.
  </p>
- </motion.div>
+ </div>
  )}
 
  {/* Main Form Section */}

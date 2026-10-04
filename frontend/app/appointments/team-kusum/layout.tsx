@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Kusum Panday — Tarot Card Reader, Relationship Coach & Wellness Expert',
   description:
-    'Book a personal consultation with Kusum Panday, Tarot Card Reader, Relationship Coach, and certified Yoga Teacher at OM Astrology AMC with 7+ years of experience in emotional healing and subconscious guidance.',
+    'Book a personal consultation with Kusum Panday: Tarot Card Reader, Relationship Coach & wellness expert with 7+ years in emotional healing guidance.',
   openGraph: {
     title: 'Consult Kusum Panday — OM Astrology AMC',
     description:
@@ -16,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function TeamKusumLayout({ children }: { children: React.ReactNode }) {
- return children;
+  return children;
 }

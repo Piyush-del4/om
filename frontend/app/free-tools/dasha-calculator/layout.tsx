@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Free Dasha & Mahadasha Calculator Online — Check Current Dasha, Antardasha & Mahadasha | OM Astrology AMC',
   description:
-    'Calculate your current Dasha, Mahadasha, Antardasha and Pratyantardasha timeline free online. Discover what Dasha you are in and check planetary periods based on birth date and Nakshatra.',
+    'Calculate your Vimshottari Dasha, Mahadasha, and Antardasha timeline online for free. Check planetary periods based on birth date and Nakshatra.',
   keywords: [
     'dasha calculator',
     'dasha and mahadasha calculator',

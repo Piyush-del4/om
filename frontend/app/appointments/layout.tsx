@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Book a Consultation — Astrology, Numerology, Tarot & Graphology Sessions',
+  title: 'Book a Consultation — Online Video Sessions | OM Astrology AMC',
   description:
-    'Book a 1-on-1 consultation with expert astrologers, numerologists, and tarot readers at OM Astrology AMC. Online video sessions available 7 days a week with instant slot confirmation.',
+    'Book 1-on-1 consultations with expert astrologers, numerologists, and tarot readers. Online video sessions 7 days a week with instant slot booking.',
   openGraph: {
     title: 'Book a Consultation — OM Astrology AMC',
     description:
@@ -16,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function AppointmentsLayout({ children }: { children: React.ReactNode }) {
- return children;
+  return children;
 }

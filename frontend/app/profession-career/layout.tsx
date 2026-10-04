@@ -4,7 +4,7 @@ import { ServiceSchema, BreadcrumbSchema } from '@/components/seo/JsonLd';
 export const metadata: Metadata = {
   title: 'Career Astrology & Business Astrology Consultation — Job & Career Prediction | OM Astrology AMC',
   description:
-    'Consult expert career astrologer Rajessh Paanday. Detailed career prediction astrology, job prediction by date of birth, government job astrology, business astrology consultation, and 10th house career Kundli analysis.',
+    'Consult career astrologer Rajessh Paanday. Detailed job and business astrology predictions, government job timings, and 10th house Kundli analysis.',
   keywords: [
     'career astrology',
     'career astrologer',
